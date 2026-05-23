@@ -130,6 +130,7 @@ function PortfolioCard({
 }) {
   const primaryTicker = story.affects?.[0]?.ticker
   const primaryStatus = story.affects?.[0]?.status ?? 'holding'
+  const detailHref = `/digest/story/p${index}?digest=${digestId}&index=${index}`
 
   return (
     <div className="card" style={{ marginBottom: 12 }}>
@@ -142,15 +143,19 @@ function PortfolioCard({
         ))}
       </div>
 
-      {/* Headline */}
-      <h2 className="card-headline" style={{ marginBottom: 10, color: 'var(--ink)' }}>
-        {story.headline}
-      </h2>
+      {/* Headline — tappable, opens detail */}
+      <Link href={detailHref} style={{ textDecoration: 'none', display: 'block', marginBottom: 10 }}>
+        <h2 className="card-headline" style={{ color: 'var(--ink)' }}>
+          {story.headline}
+        </h2>
+      </Link>
 
-      {/* Body */}
-      <p style={{ fontSize: 14, color: 'var(--ink-soft)', lineHeight: 1.55, marginBottom: 14 }}>
-        {story.shop_voice}
-      </p>
+      {/* Body — tappable too */}
+      <Link href={detailHref} style={{ textDecoration: 'none', display: 'block', marginBottom: 14 }}>
+        <p style={{ fontSize: 14, color: 'var(--ink-soft)', lineHeight: 1.55 }}>
+          {story.shop_voice.length > 200 ? story.shop_voice.slice(0, 200) + '…' : story.shop_voice}
+        </p>
+      </Link>
 
       {/* Price vs story row */}
       {story.price_vs_story && (
@@ -208,22 +213,26 @@ function PortfolioCard({
 
 // ─── Marination card ──────────────────────────────────────────────────────────
 
-function MarinationCard({ story }: { story: MarinationStory }) {
+function MarinationCard({ story, index, digestId }: { story: MarinationStory; index: number; digestId: string }) {
+  const detailHref = `/digest/story/m${index}?digest=${digestId}&index=${index}`
   return (
-    <div className="card-dark" style={{ marginBottom: 12 }}>
-      <p className="eyebrow" style={{ color: 'rgba(246,243,236,0.5)', marginBottom: 10 }}>
-        {story.label}
-      </p>
-      <h2 className="card-headline" style={{ marginBottom: 10, color: 'var(--cream)' }}>
-        {story.headline}
-      </h2>
-      <p style={{ fontSize: 14, color: 'rgba(246,243,236,0.75)', lineHeight: 1.55, marginBottom: 10 }}>
-        {story.body}
-      </p>
-      <p style={{ fontSize: 12, color: 'rgba(246,243,236,0.4)', fontStyle: 'italic' }}>
-        {story.why_care}
-      </p>
-    </div>
+    <Link href={detailHref} style={{ textDecoration: 'none', display: 'block' }}>
+      <div className="card-dark" style={{ marginBottom: 12 }}>
+        <p className="eyebrow" style={{ color: 'rgba(246,243,236,0.5)', marginBottom: 10 }}>
+          {story.label}
+        </p>
+        <h2 className="card-headline" style={{ marginBottom: 10, color: 'var(--cream)' }}>
+          {story.headline}
+        </h2>
+        <p style={{ fontSize: 14, color: 'rgba(246,243,236,0.75)', lineHeight: 1.55, marginBottom: 10 }}>
+          {story.body.length > 160 ? story.body.slice(0, 160) + '…' : story.body}
+        </p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(246,243,236,0.4)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Read more</span>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6H9.5M7 3.5L9.5 6L7 8.5" stroke="rgba(246,243,236,0.4)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </div>
+      </div>
+    </Link>
   )
 }
 
@@ -369,7 +378,7 @@ export default function DigestPage() {
 
           {/* Marination stories */}
           {marination_stories.map((story, i) => (
-            <MarinationCard key={i} story={story} />
+            <MarinationCard key={i} story={story} index={i} digestId={digest.id} />
           ))}
 
           {/* Footer */}
