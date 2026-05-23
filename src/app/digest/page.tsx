@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import type { DigestPayload, PortfolioStory, MarinationStory } from '@/types'
+import FridayRecap from '@/components/digest/FridayRecap'
 
 // ─── Weight badge ─────────────────────────────────────────────────────────────
 
@@ -292,7 +293,12 @@ export default function DigestPage() {
   useEffect(() => { fetchDigest() }, [fetchDigest])
 
   const now = new Date()
-  const greeting = now.getHours() < 12 ? 'Good morning.' : now.getHours() < 17 ? 'Good afternoon.' : 'Good evening.'
+  const isFriday = now.getDay() === 5
+  const greeting = isFriday
+    ? 'Good morning. Let\'s see how the week landed.'
+    : now.getHours() < 12 ? 'Good morning.'
+    : now.getHours() < 17 ? 'Good afternoon.'
+    : 'Good evening.'
 
   if (loading) {
     return (
