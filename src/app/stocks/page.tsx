@@ -16,6 +16,39 @@ const SECTOR_COLORS: Record<string, string> = {
   'NBFC':         'var(--rust)',
 }
 
+
+function BottomNav({ active }: { active: 'digest' | 'stocks' }) {
+  return (
+    <nav style={{
+      position: 'fixed', bottom: 0, left: 0, right: 0,
+      background: 'var(--cream)', borderTop: '1px solid var(--hairline)',
+      display: 'flex', justifyContent: 'center',
+      paddingBottom: 'env(safe-area-inset-bottom, 8px)', zIndex: 100,
+    }}>
+      {[
+        { href: '/digest', label: 'Digest', id: 'digest', icon: (
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 6h12M4 10h8M4 14h5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
+        )},
+        { href: '/stocks', label: 'Stocks', id: 'stocks', icon: (
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 14l4-4 3 3 4-5 3 2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        )},
+      ].map(item => (
+        <Link key={item.id} href={item.href} style={{
+          flex: 1, maxWidth: 120, display: 'flex', flexDirection: 'column',
+          alignItems: 'center', gap: 3, padding: '10px 0 6px',
+          textDecoration: 'none',
+          color: active === item.id ? 'var(--ink)' : 'var(--muted-2)',
+        }}>
+          {item.icon}
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: active === item.id ? 700 : 400 }}>
+            {item.label}
+          </span>
+        </Link>
+      ))}
+    </nav>
+  )
+}
+
 export default function StocksPage() {
   const [ownedTickers, setOwnedTickers] = useState<string[]>([])
 
@@ -31,7 +64,8 @@ export default function StocksPage() {
   }, [])
 
   return (
-    <main style={{ background: 'var(--cream)', minHeight: '100dvh' }}>
+    <>
+    <main style={{ background: 'var(--cream)', minHeight: '100dvh', paddingBottom: 80 }}>
       <div style={{ maxWidth: 520, margin: '0 auto', padding: '0 16px' }}>
         <div style={{ padding: '52px 0 24px' }}>
           <Link href="/digest" style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--muted)', textDecoration: 'none', marginBottom: 20 }}>
@@ -93,5 +127,7 @@ export default function StocksPage() {
         </div>
       </div>
     </main>
+    <BottomNav active="stocks" />
+    </>
   )
 }
