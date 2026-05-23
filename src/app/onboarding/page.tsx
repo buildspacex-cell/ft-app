@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { LAUNCH_STOCKS } from '@/types'
+import { THESIS_REASONS as SEED_REASONS } from '@/lib/stocks/thesis-seed'
 
 const ONBOARDING_CARDS = [
   {
@@ -32,59 +33,7 @@ const ONBOARDING_CARDS = [
   },
 ]
 
-// Pre-written thesis reasons per NSE stock
-const THESIS_REASONS: Record<string, { id: string; claim: string; measure: string }[]> = {
-  RELIANCE: [
-    { id: 'jio-pricing', claim: 'Jio has pricing power — once you\'re on their network, you pay more without switching', measure: 'Jio ARPU growth QoQ' },
-    { id: 'retail-growth', claim: 'Reliance Retail is the largest retailer in India — physical footprint no competitor can replicate fast', measure: 'Retail revenue growth YoY' },
-    { id: 'new-energy', claim: 'Green energy bet — ₹75,000 crore committed to solar and hydrogen over 5 years', measure: 'New energy capex vs plan' },
-  ],
-  HDFCBANK: [
-    { id: 'npa-quality', claim: 'Best-in-class loan quality — their NPA is consistently lower than every peer', measure: 'Net NPA ratio vs sector avg' },
-    { id: 'casa-ratio', claim: 'Low-cost deposits — 40%+ of deposits come from current and savings accounts, keeping their cost of funds low', measure: 'CASA ratio QoQ' },
-    { id: 'branch-moat', claim: '8,000+ branches across India — physical reach that neo-banks cannot replicate in a decade', measure: 'Branch count growth' },
-  ],
-  TCS: [
-    { id: 'us-bfsi', claim: 'US banking and financial services is their biggest revenue engine — when Wall Street spends on IT, TCS wins', measure: 'BFSI vertical revenue growth' },
-    { id: 'attrition', claim: 'Falling attrition restores margins — at peak they were losing 21% of staff annually; back to normal means less training cost', measure: 'Quarterly attrition rate' },
-    { id: 'ai-deals', claim: 'Large AI transformation deals — the ₹1000 crore+ contracts that only TCS and Infosys can execute at scale', measure: 'Deal TCV QoQ' },
-  ],
-  INFY: [
-    { id: 'cobalt-platform', claim: 'Cobalt cloud platform gives Infosys sticky revenue — clients who migrate onto it rarely leave', measure: 'Cloud segment revenue growth' },
-    { id: 'margin-expansion', claim: 'Operating margins have room to expand as offshore mix increases and attrition normalises', measure: 'EBIT margin QoQ' },
-    { id: 'europe-diversification', claim: 'Strong European client base diversifies away from US macro risk', measure: 'Europe revenue share' },
-  ],
-  HINDUNILVR: [
-    { id: 'rural-recovery', claim: 'Rural India is recovering — HUL\'s mass-market products are first to benefit when rural wages rise', measure: 'Rural volume growth vs urban' },
-    { id: 'premiumisation', claim: 'Premium product mix is growing — people trading up from Lifebuoy to Dove is a structural shift', measure: 'Premium segment revenue share' },
-    { id: 'distribution', claim: 'Reaches 8 million retail outlets — a distribution network built over 90 years that no startup can replicate', measure: 'Direct reach expansion' },
-  ],
-  ONGC: [
-    { id: 'crude-price', claim: 'Every $10 rise in crude oil prices adds ~₹5,000 crore to ONGC\'s profit — simple leveraged play on oil', measure: 'Brent crude price vs netback' },
-    { id: 'domestic-production', claim: 'Domestic production volumes stabilising after years of natural decline at aging fields', measure: 'Domestic oil production volumes' },
-    { id: 'govt-dividend', claim: 'PSU with a consistent dividend payout — government needs the cash, so they pay', measure: 'Dividend yield vs sector' },
-  ],
-  SUNPHARMA: [
-    { id: 'us-specialty', claim: 'US specialty pharma is the growth engine — Ilumya and Cequa are carving real market share in dermatology', measure: 'US specialty revenue growth' },
-    { id: 'india-branded', claim: 'India branded generics business has pricing power — doctors ask for Sun by name, not the generic', measure: 'India branded growth vs IPM' },
-    { id: 'r&d-pipeline', claim: 'Strongest R&D pipeline among Indian pharma — more novel drug candidates than any peer', measure: 'NDA/ANDA filings per year' },
-  ],
-  MARUTI: [
-    { id: 'dealer-moat', claim: 'Dealer network moat — 4,000+ outlets across India that Tata and Hyundai cannot replicate in 5 years', measure: 'Dealer count vs competition' },
-    { id: 'rural-penetration', claim: 'Rural and Tier 3 market penetration — the car brand Indians in small towns buy first', measure: 'Rural sales as % of total' },
-    { id: 'suv-pivot', claim: 'Late but committed SUV pivot — Brezza, Grand Vitara, and Jimny are working; share loss in SUVs is reversing', measure: 'SUV market share QoQ' },
-  ],
-  BAJFINANCE: [
-    { id: 'cross-sell-engine', claim: 'Best cross-sell engine in Indian finance — average customer holds 5+ products; economics get better with each one', measure: 'Products per customer' },
-    { id: 'aum-growth', claim: 'AUM growing 25%+ YoY consistently for a decade — rare compounding at scale', measure: 'AUM growth YoY' },
-    { id: 'digital-first', claim: 'App-first lending model reduces branch cost and reaches younger borrowers with thin credit files', measure: 'Digital disbursals as % of total' },
-  ],
-  WIPRO: [
-    { id: 'europe-recovery', claim: 'Europe business recovery — Capgemini-style transformation deals are coming back as clients resume frozen IT budgets', measure: 'Europe revenue growth QoQ' },
-    { id: 'rishad-restructure', claim: 'New management restructuring — Rishad Premji\'s re-org into four segments is showing early margin improvement', measure: 'EBIT margin trend' },
-    { id: 'consulting-premium', claim: 'Consulting-led deals command higher margins — Wipro\'s push into advisory is a differentiation play from pure IT staff augmentation', measure: 'Consulting revenue as % of total' },
-  ],
-}
+
 
 export default function OnboardingPage() {
   const [step, setStep] = useState(0)
@@ -124,7 +73,7 @@ export default function OnboardingPage() {
 
     // Create thesis for each selected stock
     for (const ticker of selectedStocks) {
-      const allReasons = THESIS_REASONS[ticker] || []
+      const allReasons = SEED_REASONS[ticker] || []
       const accepted = acceptedReasons[ticker] || []
 
       const reasons = allReasons.map(r => ({
@@ -264,7 +213,7 @@ export default function OnboardingPage() {
 
         {selectedStocks.map(ticker => {
           const stock = LAUNCH_STOCKS.find(s => s.ticker === ticker)!
-          const reasons = THESIS_REASONS[ticker] || []
+          const reasons = SEED_REASONS[ticker] || []
           const accepted = acceptedReasons[ticker] || []
 
           return (
