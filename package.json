@@ -28,7 +28,7 @@
     "date-fns": "^4.1.0",
     "next": "15.3.2",
     "next-pwa": "^5.6.0",
-    "onesignal-node": "^2.2.4",
+    "onesignal-node": "^3.4.0",
     "posthog-js": "^1.230.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
