@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
-// ─── US Phone mockup — NYSE/NASDAQ stocks ─────────────────────────────────────
+// ─── US Phone mockup - NYSE/NASDAQ stocks ─────────────────────────────────────
 
 function PhoneMockup({ screen = 'digest' }: { screen?: 'digest' | 'detail' }) {
   return (
@@ -50,8 +50,8 @@ function USDigestScreen() {
           </span>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 7, color: 'var(--muted)' }}>↗ Open</span>
         </div>
-        <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 12, letterSpacing: '-0.018em', lineHeight: 1.2, color: 'var(--ink)', marginBottom: 5 }}>The Fed held rates — but the tone shifted. Two of your stocks noticed.</p>
-        <p style={{ fontSize: 9, color: 'var(--ink-soft)', lineHeight: 1.4, marginBottom: 8 }}>Powell said "patient" three more times than last meeting. That word is doing a lot of work — banks earn more when rates stay high, and your JPM thesis depends on exactly that.</p>
+        <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 12, letterSpacing: '-0.018em', lineHeight: 1.2, color: 'var(--ink)', marginBottom: 5 }}>The Fed held rates - but the tone shifted. Two of your stocks noticed.</p>
+        <p style={{ fontSize: 9, color: 'var(--ink-soft)', lineHeight: 1.4, marginBottom: 8 }}>Powell said "patient" three more times than last meeting. That word is doing a lot of work - banks earn more when rates stay high, and your JPM thesis depends on exactly that.</p>
         <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 8 }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 6.5, color: 'var(--muted)', letterSpacing: '0.08em' }}>AFFECTS</span>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, background: 'var(--sage-tint)', padding: '1px 7px', borderRadius: 4, fontFamily: 'var(--font-mono)', fontSize: 8, fontWeight: 700, color: 'var(--sage)' }}>
@@ -93,16 +93,16 @@ function USDetailScreen() {
       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--sage-tint)', color: 'var(--sage)', fontFamily: 'var(--font-mono)', fontSize: 6.5, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '2px 6px', borderRadius: 20, marginBottom: 8 }}>
         <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor', flexShrink: 0 }} />GOOD SIGN
       </span>
-      <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 15, letterSpacing: '-0.025em', lineHeight: 1.15, color: 'var(--ink)', margin: '8px 0 8px' }}>Apple&apos;s services revenue hit a new record — the shift away from hardware is working.</h2>
+      <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 15, letterSpacing: '-0.025em', lineHeight: 1.15, color: 'var(--ink)', margin: '8px 0 8px' }}>Apple&apos;s services revenue hit a new record - the shift away from hardware is working.</h2>
       <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--sage-tint)', padding: '3px 8px 3px 6px', borderRadius: 20, fontFamily: 'var(--font-mono)', fontSize: 7.5, fontWeight: 700, color: 'var(--sage)' }}>
           <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor', flexShrink: 0 }} />AAPL · holding
         </span>
       </div>
-      <p style={{ fontSize: 10, color: 'var(--ink-soft)', lineHeight: 1.45, marginBottom: 10 }}>Services — App Store, iCloud, Apple Pay — grew 14% this quarter. That&apos;s the reason you own Apple: recurring revenue that doesn&apos;t depend on someone buying a new phone.</p>
+      <p style={{ fontSize: 10, color: 'var(--ink-soft)', lineHeight: 1.45, marginBottom: 10 }}>Services - App Store, iCloud, Apple Pay - grew 14% this quarter. That&apos;s the reason you own Apple: recurring revenue that doesn&apos;t depend on someone buying a new phone.</p>
       <div style={{ background: 'var(--card)', border: '1px solid var(--hairline)', borderRadius: 11, padding: '10px', marginBottom: 8 }}>
         <p style={{ fontFamily: 'var(--font-mono)', fontSize: 6.5, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>HOW THIS HITS YOUR AAPL THESIS</p>
-        <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 11, letterSpacing: '-0.015em', lineHeight: 1.3, color: 'var(--ink)', marginBottom: 7 }}>&ldquo;Services becoming the growth engine — less dependent on iPhone cycles.&rdquo;</p>
+        <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 11, letterSpacing: '-0.015em', lineHeight: 1.3, color: 'var(--ink)', marginBottom: 7 }}>&ldquo;Services becoming the growth engine - less dependent on iPhone cycles.&rdquo;</p>
         <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 5 }}>
           <span style={{ width: 18, height: 18, borderRadius: '50%', background: 'var(--sage)', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 700, flexShrink: 0 }}>✓</span>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, color: 'var(--ink)' }}>Holding · Services +14% YoY</span>
@@ -170,7 +170,7 @@ function EmailForm({ dark = false }: { dark?: boolean }) {
 
   if (status === 'done') return (
     <div style={{ background: dark ? 'rgba(91,122,85,0.2)' : 'var(--sage-tint)', borderRadius: 999, padding: '14px 22px', display: 'inline-block' }}>
-      <p style={{ color: dark ? '#7fb87a' : 'var(--sage)', fontWeight: 600, fontSize: 15, margin: 0 }}>✓ You&apos;re on the list — check your inbox.</p>
+      <p style={{ color: dark ? '#7fb87a' : 'var(--sage)', fontWeight: 600, fontSize: 15, margin: 0 }}>✓ You&apos;re on the list - check your inbox.</p>
     </div>
   )
 
@@ -301,11 +301,11 @@ export default function USPage() {
                   We don&apos;t say buy.<br />
                   We don&apos;t say sell.<br />
                   <span style={{ color: 'var(--coral-deep)', fontSize: 'clamp(26px, 3.4vw, 46px)', fontWeight: 800, lineHeight: 1.08, letterSpacing: '-0.042em', display: 'block', marginTop: '0.2em' }}>
-                    We tell you whether the reasons you trusted are still true — and help you find reasons worth trusting in the first place.
+                    We tell you whether the reasons you trusted are still true - and help you find reasons worth trusting in the first place.
                   </span>
                 </h1>
                 <p style={{ fontSize: 18, fontWeight: 400, lineHeight: 1.4, letterSpacing: '-0.01em', color: 'var(--ink-soft)', margin: '0 0 28px', maxWidth: 520 }}>
-                  Anything that happens in the world — Fed rate decisions, earnings misses, supply chain shocks — we connect it to the stocks in your portfolio and explain what it means for the specific reason you own them.
+                  Anything that happens in the world - Fed rate decisions, earnings misses, supply chain shocks - we connect it to the stocks in your portfolio and explain what it means for the specific reason you own them.
                 </p>
                 <div id="waitlist"><EmailForm /></div>
               </div>
@@ -366,9 +366,9 @@ export default function USPage() {
             <p style={{ fontSize: 19, color: 'var(--muted)', maxWidth: 580, margin: '0 0 56px', lineHeight: 1.5 }}>No charts to read. No trading you can do here. No &ldquo;AI stock picks.&rdquo; Just three things, well.</p>
             <div className="ft-steps">
               {[
-                { n: '01', h: 'Explain the business like a shop on your street.', p: 'What they sell, who buys it, how much they keep. Numbers always come paired with a plain sentence — never on their own.', badge: 'No jargon, ever' },
-                { n: '02', h: 'Write the 3–5 reasons you might want to own it.', p: "You read them, decide which you actually believe, keep those. The reasons you keep become your thesis — a contract with yourself, in words you understand.", badge: 'You curate · we draft' },
-                { n: '03', h: 'Check whether those reasons still hold.', p: "When the Fed moves, when earnings drop, when a supply chain story breaks — we check if any of it touches a reason in your thesis. Every morning. Not just on earnings day.", badge: 'You decide · we notice' },
+                { n: '01', h: 'Explain the business like a shop on your street.', p: 'What they sell, who buys it, how much they keep. Numbers always come paired with a plain sentence - never on their own.', badge: 'No jargon, ever' },
+                { n: '02', h: 'Write the 3–5 reasons you might want to own it.', p: "You read them, decide which you actually believe, keep those. The reasons you keep become your thesis - a contract with yourself, in words you understand.", badge: 'You curate · we draft' },
+                { n: '03', h: 'Check whether those reasons still hold.', p: "When the Fed moves, when earnings drop, when a supply chain story breaks - we check if any of it touches a reason in your thesis. Every morning. Not just on earnings day.", badge: 'You decide · we notice' },
               ].map(s => (
                 <div key={s.n} className="ft-step">
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 36, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--coral-deep)', lineHeight: 1, marginBottom: 18 }}>{s.n}</div>
@@ -394,7 +394,7 @@ export default function USPage() {
                 { from: 'Net interest margin · JPMorgan', metric: '2.7%', to: '27¢ of every $10 JPMorgan lends stays with them after paying depositors. That gap is how a bank makes money.' },
                 { from: 'Net margin · Apple', metric: '26%', to: '26¢ from every dollar Apple takes in is theirs to keep. That\'s what a software-like margin looks like on a hardware company.' },
                 { from: 'Same-store sales · Starbucks', metric: '+4%', to: 'People paid more for the same latte without grumbling. The brand still has enough pull to raise prices.' },
-                { from: 'Services revenue · Apple', metric: '+14%', to: 'App Store, iCloud, Apple Pay — growing 14% while iPhone sales were flat. That\'s the reason people own Apple in 2026.' },
+                { from: 'Services revenue · Apple', metric: '+14%', to: 'App Store, iCloud, Apple Pay - growing 14% while iPhone sales were flat. That\'s the reason people own Apple in 2026.' },
                 { from: 'Operating leverage · Microsoft', metric: '43%', to: 'Revenue grew 17%. Profit grew 23%. The gap between those two numbers is why software businesses compound.' },
                 { from: 'Free cash flow yield · Alphabet', metric: '5.2%', to: 'For every $100 of market value, Alphabet generates $5.20 in free cash each year. That\'s the real return on owning it.' },
                 { from: 'Debt-to-equity · Tesla', metric: '0.08×', to: 'Tesla owes just 8 cents for every dollar of shareholder equity. A company this lightly leveraged can survive a rough year.' },
@@ -422,19 +422,19 @@ export default function USPage() {
                   A 7am push.<br />A 60-second read.<br /><span style={{ color: 'var(--coral-deep)' }}>Then it leaves you alone.</span>
                 </h2>
                 <p style={{ fontSize: 19, color: 'var(--ink-soft)', margin: '0 0 32px', lineHeight: 1.5, maxWidth: 520 }}>
-                  The world doesn&apos;t stop moving just because you&apos;re not watching. Every morning we scan everything — Fed decisions, earnings, macro moves — and filter it down to what touches the specific reasons you chose to own each stock.
+                  The world doesn&apos;t stop moving just because you&apos;re not watching. Every morning we scan everything - Fed decisions, earnings, macro moves - and filter it down to what touches the specific reasons you chose to own each stock.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
                   {[
-                    { label: 'Connected to your thesis', text: "When the Fed holds rates and Powell sounds hawkish, we don't send you a rate story — we tell you which reason in your JPM or BofA thesis just got stronger." },
-                    { label: 'Price vs. story', text: "When the market moves but your thesis hasn't changed, we notice — and explain the disconnect in one sentence." },
+                    { label: 'Connected to your thesis', text: "When the Fed holds rates and Powell sounds hawkish, we don't send you a rate story - we tell you which reason in your JPM or BofA thesis just got stronger." },
+                    { label: 'Price vs. story', text: "When the market moves but your thesis hasn't changed, we notice - and explain the disconnect in one sentence." },
                     { label: '"How did this land?"', text: 'One tap per card teaches the system what you find useful. Friday\'s digest shows what changed because of you.' },
                     { label: 'Quiet days are a feature', text: 'When nothing affects your portfolio, we tell you so. We never invent urgency.' },
                   ].map(item => (
                     <div key={item.label} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
                       <div style={{ width: 30, height: 30, borderRadius: 8, background: 'var(--coral-tint)', color: 'var(--coral-deep)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontWeight: 700, fontSize: 14 }}>✓</div>
                       <div style={{ fontSize: 16, color: 'var(--ink-soft)', lineHeight: 1.45 }}>
-                        <strong style={{ color: 'var(--ink)', fontWeight: 600 }}>{item.label}</strong> — {item.text}
+                        <strong style={{ color: 'var(--ink)', fontWeight: 600 }}>{item.label}</strong> - {item.text}
                       </div>
                     </div>
                   ))}
@@ -457,9 +457,9 @@ export default function USPage() {
             <p style={{ fontSize: 19, color: 'var(--ink-soft)', maxWidth: 620, margin: '0 0 56px', lineHeight: 1.45 }}>These rules are enforced in code, not just in spirit.</p>
             <div className="ft-never-grid">
               {[
-                { tag: 'Promise 01', h: 'We never tell you what to buy.', p: 'No price targets. No "strong buy" calls. No predictions. We describe whether the reasons you own a company still hold — the decision is always yours.' },
-                { tag: 'Promise 02', h: 'We never hide the source.', p: "Every story shows exactly what we read to write it — the SEC filing, the earnings call, the article. If we can't cite a source, we don't write the story." },
-                { tag: 'Promise 03', h: 'We never manufacture urgency.', p: 'Most financial media is built to make you panic. Urgency here is reserved for moments a reason in your thesis actually breaks — and that\'s rare.' },
+                { tag: 'Promise 01', h: 'We never tell you what to buy.', p: 'No price targets. No "strong buy" calls. No predictions. We describe whether the reasons you own a company still hold - the decision is always yours.' },
+                { tag: 'Promise 02', h: 'We never hide the source.', p: "Every story shows exactly what we read to write it - the SEC filing, the earnings call, the article. If we can't cite a source, we don't write the story." },
+                { tag: 'Promise 03', h: 'We never manufacture urgency.', p: 'Most financial media is built to make you panic. Urgency here is reserved for moments a reason in your thesis actually breaks - and that\'s rare.' },
               ].map(n => (
                 <div key={n.tag} className="ft-never-item">
                   <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--rust-tint)', color: 'var(--rust)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)', fontSize: 26, fontWeight: 700, marginBottom: 24, flexShrink: 0 }}>×</div>
@@ -529,10 +529,10 @@ export default function USPage() {
             <div style={{ maxWidth: 820 }}>
               {[
                 { q: 'Is this investment advice?', a: 'No. We never say buy or sell. We explain businesses, help you write down why you\'d own them, and tell you whether those reasons still hold. Every action is yours.' },
-                { q: 'Who writes the stories and theses?', a: 'A two-stage AI pipeline grounded in real SEC filings, earnings calls, and news sources — refined with a hand-written voice. Every story shows its sources.' },
+                { q: 'Who writes the stories and theses?', a: 'A two-stage AI pipeline grounded in real SEC filings, earnings calls, and news sources - refined with a hand-written voice. Every story shows its sources.' },
                 { q: 'What stocks do you cover at launch?', a: 'A hand-picked set of NYSE and NASDAQ stocks across consumer, tech, financials, healthcare, and industrials. We expand based on what the waitlist tells us they own.' },
-                { q: 'Will you sell my data?', a: 'No. Your feedback trains your filter, never anyone else\'s. We charge users for a paid tier eventually — that\'s it.' },
-                { q: 'Is there a mobile app?', a: 'At launch, we ship as a web app that installs to your home screen — push notifications and all. Native iOS and Android come next.' },
+                { q: 'Will you sell my data?', a: 'No. Your feedback trains your filter, never anyone else\'s. We charge users for a paid tier eventually - that\'s it.' },
+                { q: 'Is there a mobile app?', a: 'At launch, we ship as a web app that installs to your home screen - push notifications and all. Native iOS and Android come next.' },
                 { q: 'Free or paid?', a: 'Free at launch. The daily check stays free forever. A future paid tier adds unlimited theses and a Sunday deep dive.' },
               ].map((faq, i, arr) => (
                 <div key={i} className="ft-faq-item" style={i === arr.length - 1 ? { borderBottom: '1px solid var(--hairline)' } : {}}>

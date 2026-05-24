@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
-// ─── Phone mockup — fixed status bar, proper iOS layout ──────────────────────
+// ─── Phone mockup - fixed status bar, proper iOS layout ──────────────────────
 
 function PhoneMockup({ screen = 'digest' }: { screen?: 'digest' | 'detail' }) {
   return (
@@ -15,7 +15,7 @@ function PhoneMockup({ screen = 'digest' }: { screen?: 'digest' | 'detail' }) {
       {/* Outer frame ring */}
       <div style={{ position: 'absolute', inset: 0, borderRadius: 42, boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.08)', zIndex: 30, pointerEvents: 'none' }} />
 
-      {/* Status bar row — split into 3 zones so dynamic island sits in the middle */}
+      {/* Status bar row - split into 3 zones so dynamic island sits in the middle */}
       <div style={{
         display: 'grid', gridTemplateColumns: '1fr auto 1fr',
         alignItems: 'center',
@@ -93,7 +93,7 @@ function DigestScreen() {
           </span>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 7, color: 'var(--muted)' }}>↗ Open</span>
         </div>
-        <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 12, letterSpacing: '-0.018em', lineHeight: 1.2, color: 'var(--ink)', marginBottom: 5 }}>HDFC Bank&apos;s bad loans ticked up — agri stress, not a structural crack.</p>
+        <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 12, letterSpacing: '-0.018em', lineHeight: 1.2, color: 'var(--ink)', marginBottom: 5 }}>HDFC Bank&apos;s bad loans ticked up - agri stress, not a structural crack.</p>
         <p style={{ fontSize: 9, color: 'var(--ink-soft)', lineHeight: 1.4, marginBottom: 8 }}>Net NPA rose to 0.39% from 0.31% last quarter. The cause is farm loans in stressed districts, not the urban branch network you see on your street.</p>
         <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 8 }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 6.5, color: 'var(--muted)', letterSpacing: '0.08em' }}>AFFECTS</span>
@@ -136,16 +136,16 @@ function DetailScreen() {
       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--rust-tint)', color: 'var(--rust)', fontFamily: 'var(--font-mono)', fontSize: 6.5, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '2px 6px', borderRadius: 20, marginBottom: 8 }}>
         <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor', flexShrink: 0 }} />WORTH YOUR ATTENTION
       </span>
-      <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 15, letterSpacing: '-0.025em', lineHeight: 1.15, color: 'var(--ink)', margin: '8px 0 8px' }}>HDFC Bank&apos;s bad loans ticked up — agri stress, not a structural crack.</h2>
+      <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 15, letterSpacing: '-0.025em', lineHeight: 1.15, color: 'var(--ink)', margin: '8px 0 8px' }}>HDFC Bank&apos;s bad loans ticked up - agri stress, not a structural crack.</h2>
       <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--rust-tint)', padding: '3px 8px 3px 6px', borderRadius: 20, fontFamily: 'var(--font-mono)', fontSize: 7.5, fontWeight: 700, color: 'var(--rust)' }}>
           <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor', flexShrink: 0 }} />HDFCBANK · wobbling
         </span>
       </div>
-      <p style={{ fontSize: 10, color: 'var(--ink-soft)', lineHeight: 1.45, marginBottom: 10 }}>Net NPA rose to 0.39% from 0.31% last quarter. The cause is farm loans in stressed districts — not the urban branch network. That&apos;s the specific reason you owned HDFC Bank.</p>
+      <p style={{ fontSize: 10, color: 'var(--ink-soft)', lineHeight: 1.45, marginBottom: 10 }}>Net NPA rose to 0.39% from 0.31% last quarter. The cause is farm loans in stressed districts - not the urban branch network. That&apos;s the specific reason you owned HDFC Bank.</p>
       <div style={{ background: 'var(--card)', border: '1px solid var(--hairline)', borderRadius: 11, padding: '10px', marginBottom: 8 }}>
         <p style={{ fontFamily: 'var(--font-mono)', fontSize: 6.5, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>HOW THIS HITS YOUR HDFCBANK THESIS</p>
-        <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 11, letterSpacing: '-0.015em', lineHeight: 1.3, color: 'var(--ink)', marginBottom: 7 }}>&ldquo;Best-in-class loan quality — NPA consistently below every peer.&rdquo;</p>
+        <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 11, letterSpacing: '-0.015em', lineHeight: 1.3, color: 'var(--ink)', marginBottom: 7 }}>&ldquo;Best-in-class loan quality - NPA consistently below every peer.&rdquo;</p>
         <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 5 }}>
           <span style={{ width: 18, height: 18, borderRadius: '50%', background: 'var(--amber)', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 700, flexShrink: 0 }}>~</span>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, color: 'var(--ink)' }}>Wobbling · Net NPA 0.39%</span>
@@ -206,7 +206,7 @@ function EmailForm({ dark = false }: { dark?: boolean }) {
 
   if (status === 'done') return (
     <div style={{ background: dark ? 'rgba(91,122,85,0.2)' : 'var(--sage-tint)', borderRadius: 999, padding: '14px 22px', display: 'inline-block' }}>
-      <p style={{ color: dark ? '#7fb87a' : 'var(--sage)', fontWeight: 600, fontSize: 15, margin: 0 }}>✓ You&apos;re on the list — check your inbox.</p>
+      <p style={{ color: dark ? '#7fb87a' : 'var(--sage)', fontWeight: 600, fontSize: 15, margin: 0 }}>✓ You&apos;re on the list - check your inbox.</p>
     </div>
   )
 
@@ -275,7 +275,7 @@ function Eyebrow({ label, dark = false }: { label: string; dark?: boolean }) {
 export default function HomePage() {
   return (
     <>
-      {/* Responsive styles injected inline — works in all browsers without PostCSS */}
+      {/* Responsive styles injected inline - works in all browsers without PostCSS */}
       <style>{`
         * { box-sizing: border-box; }
         .ft-landing { background: var(--cream); font-family: var(--font-sans); color: var(--ink); overflow-x: hidden; }
@@ -374,11 +374,11 @@ export default function HomePage() {
                     display: 'block',
                     marginTop: '0.2em',
                   }}>
-                    We tell you whether the reasons you trusted are still true — and help you find reasons worth trusting in the first place.
+                    We tell you whether the reasons you trusted are still true - and help you find reasons worth trusting in the first place.
                   </span>
                 </h1>
                 <p style={{ fontSize: 18, fontWeight: 400, lineHeight: 1.4, letterSpacing: '-0.01em', color: 'var(--ink-soft)', margin: '0 0 28px', maxWidth: 520 }}>
-                  Anything that happens in the world — RBI rate calls, monsoon forecasts, oil moves — we connect it to the companies in your portfolio and explain what it means for the specific reason you own them.
+                  Anything that happens in the world - RBI rate calls, monsoon forecasts, oil moves - we connect it to the companies in your portfolio and explain what it means for the specific reason you own them.
                 </p>
                 <div id="waitlist"><EmailForm /></div>
               </div>
@@ -441,9 +441,9 @@ export default function HomePage() {
             <p style={{ fontSize: 19, color: 'var(--muted)', maxWidth: 580, margin: '0 0 56px', lineHeight: 1.5 }}>No charts to read. No trading you can do here. No &ldquo;AI stock picks.&rdquo; Just three things, well.</p>
             <div className="ft-steps">
               {[
-                { n: '01', h: 'Explain the business like a shop on the street.', p: 'What they sell, who buys it, how much they keep. Numbers always come paired with an English sentence — never on their own.', badge: 'No jargon, ever' },
-                { n: '02', h: 'Write the 3–5 reasons you might want to own it.', p: "You read them, decide which you actually believe, keep those. The reasons you keep become your thesis — a contract with yourself, in words you understand.", badge: 'You curate · we draft' },
-                { n: '03', h: 'Check whether those reasons still hold.', p: "When the RBI moves rates, when oil spikes, when a monsoon forecast drops — we check if any of it touches a reason in your thesis. Every morning. Not just on earnings day.", badge: 'You decide · we notice' },
+                { n: '01', h: 'Explain the business like a shop on the street.', p: 'What they sell, who buys it, how much they keep. Numbers always come paired with an English sentence - never on their own.', badge: 'No jargon, ever' },
+                { n: '02', h: 'Write the 3–5 reasons you might want to own it.', p: "You read them, decide which you actually believe, keep those. The reasons you keep become your thesis - a contract with yourself, in words you understand.", badge: 'You curate · we draft' },
+                { n: '03', h: 'Check whether those reasons still hold.', p: "When the RBI moves rates, when oil spikes, when a monsoon forecast drops - we check if any of it touches a reason in your thesis. Every morning. Not just on earnings day.", badge: 'You decide · we notice' },
               ].map(s => (
                 <div key={s.n} className="ft-step">
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 36, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--coral-deep)', lineHeight: 1, marginBottom: 18 }}>{s.n}</div>
@@ -469,10 +469,10 @@ export default function HomePage() {
             <div className="ft-translations">
               {[
                 { from: 'Operating cash flow · Reliance', metric: '₹1.2L cr', to: 'Reliance generated ₹1.2 lakh crore in cash from operations last year. That\'s the fuel that funds Jio, Retail, and the green energy bet simultaneously.' },
-                { from: 'Net debt / EBITDA', metric: '1.8×', to: 'They owe less than two years of earnings — comfortable cushion.' },
+                { from: 'Net debt / EBITDA', metric: '1.8×', to: 'They owe less than two years of earnings - comfortable cushion.' },
                 { from: 'Same-store sales', metric: '+4%', to: 'People paid more without grumbling. The brand still has pull.' },
-                { from: 'Net interest margin', metric: '3.8%', to: '₹3.80 of every ₹100 they lend stays with them — that\'s how a bank breathes.' },
-                { from: 'CASA ratio · HDFC Bank', metric: '42%', to: '42 out of every 100 rupees with HDFC came from current or savings accounts — people who parked money, not seekers of high interest. Cheap deposits mean fatter margins.' },
+                { from: 'Net interest margin', metric: '3.8%', to: '₹3.80 of every ₹100 they lend stays with them - that\'s how a bank breathes.' },
+                { from: 'CASA ratio · HDFC Bank', metric: '42%', to: '42 out of every 100 rupees with HDFC came from current or savings accounts - people who parked money, not seekers of high interest. Cheap deposits mean fatter margins.' },
                 { from: 'Volume growth', metric: '+7%', to: '7% more packets of biscuits walked out the door this year than last.' },
                 { from: 'Dividend yield', metric: '1.8%', to: 'For every $100 of stock, $1.80 lands in your account each year.' },
               ].map((t, i) => (
@@ -499,19 +499,19 @@ export default function HomePage() {
                   A 7am push.<br />A 60-second read.<br /><span style={{ color: 'var(--coral-deep)' }}>Then it leaves you alone.</span>
                 </h2>
                 <p style={{ fontSize: 19, color: 'var(--ink-soft)', margin: '0 0 32px', lineHeight: 1.5, maxWidth: 520 }}>
-                  The world doesn't stop moving just because you're not watching. Every morning we scan everything — macro moves, earnings, policy decisions, commodity prices — and filter it down to what touches the specific reasons you chose to own each stock.
+                  The world doesn't stop moving just because you're not watching. Every morning we scan everything - macro moves, earnings, policy decisions, commodity prices - and filter it down to what touches the specific reasons you chose to own each stock.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
                   {[
-                    { label: 'Connected to your thesis', text: "When the RBI changes rates, we don't send you a macro story — we tell you which reason in your HDFC Bank or Bajaj Finance thesis just got stronger or weaker." },
-                    { label: 'Price vs. story', text: "When the market moves but your thesis hasn't, we notice — and explain the disconnect in one sentence." },
+                    { label: 'Connected to your thesis', text: "When the RBI changes rates, we don't send you a macro story - we tell you which reason in your HDFC Bank or Bajaj Finance thesis just got stronger or weaker." },
+                    { label: 'Price vs. story', text: "When the market moves but your thesis hasn't, we notice - and explain the disconnect in one sentence." },
                     { label: '"How did this land?"', text: 'One tap per card teaches the system what you find useful. Friday\'s digest shows what changed because of you.' },
                     { label: 'Quiet days are a feature', text: 'When nothing affects your portfolio, we tell you so. We never invent urgency.' },
                   ].map(item => (
                     <div key={item.label} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
                       <div style={{ width: 30, height: 30, borderRadius: 8, background: 'var(--coral-tint)', color: 'var(--coral-deep)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontWeight: 700, fontSize: 14 }}>✓</div>
                       <div style={{ fontSize: 16, color: 'var(--ink-soft)', lineHeight: 1.45 }}>
-                        <strong style={{ color: 'var(--ink)', fontWeight: 600 }}>{item.label}</strong> — {item.text}
+                        <strong style={{ color: 'var(--ink)', fontWeight: 600 }}>{item.label}</strong> - {item.text}
                       </div>
                     </div>
                   ))}
@@ -534,9 +534,9 @@ export default function HomePage() {
             <p style={{ fontSize: 19, color: 'var(--ink-soft)', maxWidth: 620, margin: '0 0 56px', lineHeight: 1.45 }}>These rules are enforced in code, not just in spirit.</p>
             <div className="ft-never-grid">
               {[
-                { tag: 'Promise 01', h: 'We never tell you what to buy.', p: 'No price targets. No "strong buy" calls. No predictions. We describe whether the reasons you bought a company still hold — the decision is always yours.' },
-                { tag: 'Promise 02', h: 'We never hide the source.', p: "Every story shows you exactly what we read to write it — the filing, the earnings call, the article. If we can't cite a source, we don't write the story." },
-                { tag: 'Promise 03', h: 'We never manufacture urgency.', p: 'Most financial media is built to make you panic. Urgency is reserved for moments a reason in your thesis actually breaks — and that\'s rare.' },
+                { tag: 'Promise 01', h: 'We never tell you what to buy.', p: 'No price targets. No "strong buy" calls. No predictions. We describe whether the reasons you bought a company still hold - the decision is always yours.' },
+                { tag: 'Promise 02', h: 'We never hide the source.', p: "Every story shows you exactly what we read to write it - the filing, the earnings call, the article. If we can't cite a source, we don't write the story." },
+                { tag: 'Promise 03', h: 'We never manufacture urgency.', p: 'Most financial media is built to make you panic. Urgency is reserved for moments a reason in your thesis actually breaks - and that\'s rare.' },
               ].map(n => (
                 <div key={n.tag} className="ft-never-item">
                   <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--rust-tint)', color: 'var(--rust)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)', fontSize: 26, fontWeight: 700, marginBottom: 24, flexShrink: 0 }}>×</div>
@@ -608,10 +608,10 @@ export default function HomePage() {
               {[
                 { q: 'Is this investment advice?', a: 'No. We never say buy or sell. We explain businesses, help you write down why you\'d own them, and tell you whether those reasons still hold. Every action is yours.' },
                 { q: 'Who writes the stories and theses?', a: 'A two-stage AI pipeline grounded in real filings and news sources, with a hand-written voice. Every story shows its sources. You can flag anything that doesn\'t sound right.' },
-                { q: 'What markets do you cover?', a: 'At launch, a hand-picked set of NSE and BSE stocks — across FMCG, banks, IT services, pharma, energy, and auto. We expand based on what the waitlist tells us they own.' },
-                { q: 'Will you sell my data?', a: 'No. Your feedback trains your filter, never anyone else\'s. We charge users for a paid tier eventually — that\'s it.' },
-                { q: 'Is there a mobile app?', a: 'At launch, we ship as a web app that installs to your home screen — push notifications and all. Native iOS and Android come once we know exactly what to build.' },
-                { q: 'Free or paid?', a: 'Free at launch. The daily check stays free forever. A future paid tier adds unlimited theses and a Sunday "deep dive" — nothing that hurts the core habit.' },
+                { q: 'What markets do you cover?', a: 'At launch, a hand-picked set of NSE and BSE stocks - across FMCG, banks, IT services, pharma, energy, and auto. We expand based on what the waitlist tells us they own.' },
+                { q: 'Will you sell my data?', a: 'No. Your feedback trains your filter, never anyone else\'s. We charge users for a paid tier eventually - that\'s it.' },
+                { q: 'Is there a mobile app?', a: 'At launch, we ship as a web app that installs to your home screen - push notifications and all. Native iOS and Android come once we know exactly what to build.' },
+                { q: 'Free or paid?', a: 'Free at launch. The daily check stays free forever. A future paid tier adds unlimited theses and a Sunday "deep dive" - nothing that hurts the core habit.' },
               ].map((faq, i, arr) => (
                 <div key={i} className="ft-faq-item" style={i === arr.length - 1 ? { borderBottom: '1px solid var(--hairline)' } : {}}>
                   <h3 style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 21, letterSpacing: '-0.025em', margin: '0 0 10px' }}>{faq.q}</h3>
