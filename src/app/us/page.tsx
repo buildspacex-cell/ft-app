@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
 
 // ─── US Phone mockup - NYSE/NASDAQ stocks ─────────────────────────────────────
 
@@ -152,7 +151,7 @@ function CountrySwitcher({ active }: { active: 'in' | 'us' }) {
 
 // ─── Email form ───────────────────────────────────────────────────────────────
 
-function EmailForm({ dark = false }: { dark?: boolean }) {
+function EmailForm({ dark = false, source = 'landing-us' }: { dark?: boolean; source?: string }) {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
 
@@ -160,12 +159,12 @@ function EmailForm({ dark = false }: { dark?: boolean }) {
     e.preventDefault()
     if (!email) return
     setStatus('loading')
-    const supabase = createClient()
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: `${window.location.origin}/onboarding` },
+    const res = await fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, source }),
     })
-    setStatus(error ? 'error' : 'done')
+    setStatus(res.ok ? 'done' : 'error')
   }
 
   if (status === 'done') return (
@@ -307,7 +306,7 @@ export default function USPage() {
                 <p style={{ fontSize: 18, fontWeight: 400, lineHeight: 1.4, letterSpacing: '-0.01em', color: 'var(--ink-soft)', margin: '0 0 28px', maxWidth: 520 }}>
                   Anything that happens in the world - Fed rate decisions, earnings misses, supply chain shocks - we connect it to the stocks in your portfolio and explain what it means for the specific reason you own them.
                 </p>
-                <div id="waitlist"><EmailForm /></div>
+                <div id="waitlist"><EmailForm source="landing-us-hero" /></div>
               </div>
               <div className="ft-hero-phone" style={{ paddingTop: 8 }}>
                 <PhoneMockup screen="digest" />
@@ -556,7 +555,7 @@ export default function USPage() {
             <p style={{ fontSize: 19, color: 'rgba(246,243,236,0.72)', maxWidth: 540, margin: '0 auto 40px', lineHeight: 1.4 }}>
               Join the private beta. We&apos;ll email you when the first cohort opens.
             </p>
-            <div style={{ display: 'flex', justifyContent: 'center' }}><EmailForm dark /></div>
+            <div style={{ display: 'flex', justifyContent: 'center' }}><EmailForm dark source="landing-us-cta" /></div>
             <p style={{ marginTop: 24, fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.06em', color: 'rgba(246,243,236,0.45)' }}>
               No spam. No &ldquo;growth hacks.&rdquo; One email when we launch.
             </p>

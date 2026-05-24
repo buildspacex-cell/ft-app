@@ -91,6 +91,11 @@ export default function OnboardingPage() {
       })
     }
 
+    // Mark waitlist entry as converted
+    await supabase.from('waitlist')
+      .update({ converted: true })
+      .eq('email', user.email)
+
     // Update user timezone
     await supabase.from('users').upsert({
       id: user.id,

@@ -112,3 +112,20 @@ insert into stocks (ticker, name, exchange, sector) values
   ('BAJFINANCE',  'Bajaj Finance',               'NSE', 'NBFC'),
   ('WIPRO',       'Wipro',                       'NSE', 'IT Services')
 on conflict (ticker) do nothing;
+
+-- ─── waitlist ─────────────────────────────────────────────────────────────────
+-- Captures every email submission from the landing page immediately,
+-- before the magic link is clicked. Source tracks which form/page.
+create table if not exists waitlist (
+  id         uuid primary key default gen_random_uuid(),
+  email      text not null,
+  source     text default 'landing-in',  -- landing-in, landing-us, hero, footer
+  created_at timestamptz default now(),
+  converted  boolean default false,       -- true once they complete onboarding
+  unique(email)
+);
+
+-- Service role only for writes, no RLS needed for a simple waitlist
+alter table waitlist enable row level security;
+create policy "Service role can manage waitlist"
+  on waitlist for all using (auth.role() = 'service_role');

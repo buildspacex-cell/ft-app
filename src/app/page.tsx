@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
 
 // ─── Phone mockup - fixed status bar, proper iOS layout ──────────────────────
 
@@ -188,7 +187,7 @@ function CountrySwitcher({ active }: { active: 'in' | 'us' }) {
 
 // ─── Email form ───────────────────────────────────────────────────────────────
 
-function EmailForm({ dark = false }: { dark?: boolean }) {
+function EmailForm({ dark = false, source = 'landing-in' }: { dark?: boolean; source?: string }) {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
 
@@ -196,12 +195,12 @@ function EmailForm({ dark = false }: { dark?: boolean }) {
     e.preventDefault()
     if (!email) return
     setStatus('loading')
-    const supabase = createClient()
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: `${window.location.origin}/onboarding` },
+    const res = await fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, source }),
     })
-    setStatus(error ? 'error' : 'done')
+    setStatus(res.ok ? 'done' : 'error')
   }
 
   if (status === 'done') return (
@@ -380,7 +379,7 @@ export default function HomePage() {
                 <p style={{ fontSize: 18, fontWeight: 400, lineHeight: 1.4, letterSpacing: '-0.01em', color: 'var(--ink-soft)', margin: '0 0 28px', maxWidth: 520 }}>
                   Anything that happens in the world - RBI rate calls, monsoon forecasts, oil moves - we connect it to the companies in your portfolio and explain what it means for the specific reason you own them.
                 </p>
-                <div id="waitlist"><EmailForm /></div>
+                <div id="waitlist"><EmailForm source="landing-in-hero" /></div>
               </div>
               <div className="ft-hero-phone" style={{ paddingTop: 8 }}>
                 <PhoneMockup screen="digest" />
