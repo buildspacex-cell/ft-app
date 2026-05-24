@@ -641,6 +641,69 @@ export default function HomePage() {
           </div>
         </section>
 
+
+        {/* ── SAMPLE DIGEST HOOK ── */}
+        <section className="ft-section" style={{ background: 'var(--paper)', borderTop: '1px solid var(--hairline)' }}>
+          <div className="ft-wrap">
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
+              <div>
+                <Eyebrow label="See it before you sign up" />
+                <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(32px, 4.5vw, 52px)', letterSpacing: '-0.04em', lineHeight: 1.0, margin: '0 0 20px' }}>
+                  What does your<br />
+                  <span style={{ color: 'var(--coral-deep)' }}>7am actually look like?</span>
+                </h2>
+                <p style={{ fontSize: 17, color: 'var(--ink-soft)', lineHeight: 1.5, marginBottom: 28, maxWidth: 440 }}>
+                  One stock. One news event. The complete journey from owning HDFC Bank to understanding exactly what happened overnight - and whether your reason for owning it still holds.
+                </p>
+                <a href="/sample" style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 10,
+                  padding: '14px 24px', borderRadius: 14,
+                  background: 'var(--ink)', color: 'var(--cream)',
+                  fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 700,
+                  textDecoration: 'none', letterSpacing: '-0.01em',
+                }}>
+                  See a real morning digest
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8H13M9 4L13 8L9 12" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
+                <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 12 }}>No signup required.</p>
+              </div>
+
+              {/* Mini preview */}
+              <div style={{ background: 'var(--card)', borderRadius: 18, padding: '20px', border: '1px solid var(--hairline)', position: 'relative', overflow: 'hidden' }}>
+                {/* Fade out bottom */}
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 80, background: 'linear-gradient(to top, var(--card), transparent)', zIndex: 5, borderRadius: '0 0 18px 18px' }} />
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--muted)', letterSpacing: '0.08em' }}>MON, JUNE 16 · 7:00 AM</span>
+                </div>
+                <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 18, letterSpacing: '-0.025em', lineHeight: 1.15, color: 'var(--ink)', marginBottom: 4 }}>
+                  Good morning.<br />
+                  <span style={{ color: 'var(--coral)' }}>Two for your portfolio.</span>
+                </p>
+                <p style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 14 }}>Quick read. No panic. Nothing in here tells you what to do.</p>
+
+                <div style={{ background: 'var(--paper)', border: '1px solid var(--hairline)', borderRadius: 12, padding: '12px 14px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--amber-tint)', color: 'var(--amber)', fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '2px 7px', borderRadius: 20 }}>
+                      <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor' }} />
+                      Worth knowing
+                    </span>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 700, color: 'var(--amber)', padding: '2px 7px', background: 'var(--amber-tint)', borderRadius: 5 }}>HDFCBANK</span>
+                  </div>
+                  <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 13, letterSpacing: '-0.018em', lineHeight: 1.2, color: 'var(--ink)', marginBottom: 6 }}>
+                    HDFC Bank&apos;s bad loans ticked up - agri stress, not a structural crack.
+                  </p>
+                  <p style={{ fontSize: 11, color: 'var(--ink-soft)', lineHeight: 1.45 }}>
+                    Of every ₹100 HDFC lent out, 42 paise went bad this quarter - up from 31 paise. The cause is farm loans in stressed districts...
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ── FEATURE SPOTLIGHT ── */}
         <section id="morning" className="ft-section" style={{ padding: '120px 0' }}>
           <div className="ft-wrap">
