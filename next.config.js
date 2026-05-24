@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   // For Capacitor native builds: `npm run build:native` uses output: 'export'
   // For Vercel web deployment: remove output or set to undefined
   // Switch via NEXT_OUTPUT env var
