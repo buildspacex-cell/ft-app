@@ -83,6 +83,31 @@ Never: "consider trimming", "reduce exposure", "add on dips"
 - tailwind: mild positive for a thesis reason
 - quiet: relevant but low urgency
 
+## Plain English rule — no naked jargon
+Every financial term, acronym, or metric must be explained in plain English the 
+first time it appears in a story. Format: term followed immediately by its meaning.
+
+Examples:
+✓ "ARPU (the average amount each subscriber pays per month) rose to ₹195"
+✓ "Net NPA (of every ₹100 lent, this is how many paise went bad) is 0.39%"
+✓ "EBITDA (roughly: the cash the business generates before taxes and accounting)"
+✓ "CASA ratio (the share of deposits that come from current and savings accounts - cheap money)"
+✓ "Free cash flow (the actual cash left over after running the business and investing in it)"
+
+Terms that ALWAYS need an explanation the first time:
+ARPU, NPA, EBITDA, CASA, NIM, AUM, TCV, CAGR, PAT, ROE, ROA, EBIT, capex, opex,
+churn, margin, yield, spread, delinquency, provisioning, disbursals, throughput
+
+Never: "ARPU rose to ₹195" (naked)
+Always: "ARPU (the average monthly revenue per subscriber) rose to ₹195"
+
+For hyperlinks, wrap explained terms in this exact format:
+[[TERM|plain explanation]]
+
+Example: "[[ARPU|average monthly revenue per subscriber]] rose to ₹195"
+
+The app will convert [[TERM|explanation]] into a tappable tooltip for users.
+
 ## Output format
 You must output ONLY valid JSON — no preamble, no markdown, no explanation.
 The schema is defined in the function call.
@@ -102,7 +127,7 @@ export const FEW_SHOT_EXAMPLES = [
       weight: "heads-up",
       headline: "HDFC Bank's bad loans ticked up - agri stress, not a structural crack",
       affects: [{ ticker: "HDFCBANK", status: "wobbling" }],
-      shop_voice: "Of every ₹100 HDFC lent out, 39 paise went bad this quarter - up from 31 paise last quarter. The cause is farm loans in stressed districts, not the urban branch network you see on your street. One quarter doesn't move the needle on a bank built over 30 years. Worth watching the next two quarters to see if it's seasonal or something more.",
+      shop_voice: "[[Net NPA|of every ₹100 lent, this is how many paise went bad]] rose to 0.39% this quarter - that's 39 paise in every ₹100, up from 31 paise last quarter. The cause is farm loans in stressed districts, not the urban branch network you see on your street. One quarter doesn't move the needle on a bank built over 30 years. Worth watching the next two quarters to see if it's seasonal or something more.",
       thesis_reason_id: "npa-quality",
       sources: ["https://example.com/hdfcbank-q4-2024"]
     }
@@ -132,7 +157,7 @@ export const FEW_SHOT_EXAMPLES = [
       weight: "heads-up",
       headline: "Jio raised prices, made more per user, and lost 4 million subscribers - the thesis has two parts and they're pointing in different directions",
       affects: [{ ticker: "RELIANCE", status: "wobbling" }],
-      shop_voice: "The thesis has two parts here. First part: pricing power. ARPU jumped from ₹165 to ₹195 - that's ₹30 more per subscriber per month, times 480 million people. The 'people will pay more' reason is intact. Second part: stickiness. 4.2 million people walked to Airtel instead of paying - the highest single-month exit in 3 years. The 'nobody leaves because switching is a hassle' reason is wobbling. Both signals are real. One holding, one wobbling.",
+      shop_voice: "The thesis has two parts here. First part: pricing power. [[ARPU|the average amount each Jio subscriber pays per month]] jumped from ₹165 to ₹195 - that's ₹30 more per subscriber, times 480 million people. The 'people will pay more' reason is intact. Second part: stickiness. 4.2 million people walked to Airtel instead of paying - the highest single-month [[churn|subscribers who cancelled and left]] in 3 years. The 'nobody leaves' reason is wobbling. Both signals are real. One holding, one wobbling.",
       thesis_reason_id: "jio-pricing-power",
       sources: ["https://example.com/trai-data"]
     }
@@ -162,7 +187,7 @@ export const FEW_SHOT_EXAMPLES = [
       weight: "tailwind",
       headline: "Bajaj Finance quarterly results - three reasons tracked, three still holding",
       affects: [{ ticker: "BAJFINANCE", status: "holding" }],
-      shop_voice: "Three reasons. Here is where each one landed this quarter: (1) AUM growth - holding. ₹3.7 lakh crore in loans outstanding, up 29% from last year. The compounding machine is running. (2) Cross-sell engine - holding. Each customer now holds 5.8 products on average - up from 5.2. The person who came for a TV EMI is now also holding a personal loan and an FD. (3) Digital-first - holding. 71 out of every 100 rupees disbursed went through the app, not a branch. All three reasons intact. Quiet quarter in the best way.",
+      shop_voice: "Three reasons. Here is where each one landed this quarter: (1) [[AUM|total value of all loans Bajaj has given out]] growth - holding. ₹3.7 lakh crore in loans outstanding, up 29% from last year. The compounding machine is running. (2) Cross-sell engine - holding. Each customer now holds 5.8 products on average - up from 5.2. The person who came for a TV EMI is now also holding a personal loan and an FD. (3) Digital-first - holding. 71 out of every 100 rupees [[disbursed|sent out as loans]] went through the app, not a branch. All three reasons intact. Quiet quarter in the best way.",
       sources: ["https://example.com/bajfinance-q2"]
     }
   },

@@ -4,6 +4,7 @@ import { useEffect, useState, use } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
+import JargonText from '@/components/digest/JargonText'
 import type { DigestPayload, PortfolioStory, MarinationStory, Thesis, ThesisReason } from '@/types'
 
 // ─── Weight badge ─────────────────────────────────────────────────────────────
@@ -486,13 +487,14 @@ export default function StoryDetailPage({
         )}
 
         {/* Body text */}
-        <p style={{
-          fontFamily: 'var(--font-sans)', fontSize: 16.5, lineHeight: 1.52,
-          letterSpacing: '-0.005em', color: 'var(--ink-soft)',
-          margin: '0 0 6px',
-        }}>
-          {isPortfolio ? (story as PortfolioStory).shop_voice : (story as MarinationStory).body}
-        </p>
+        <JargonText
+          text={isPortfolio ? (story as PortfolioStory).shop_voice : (story as MarinationStory).body}
+          style={{
+            fontFamily: 'var(--font-sans)', fontSize: 16.5, lineHeight: 1.52,
+            letterSpacing: '-0.005em', color: 'var(--ink-soft)',
+            display: 'block', marginBottom: 6,
+          }}
+        />
 
         {/* Why care (marination) */}
         {!isPortfolio && (story as MarinationStory).why_care && (

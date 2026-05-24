@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import type { DigestPayload, PortfolioStory, MarinationStory } from '@/types'
+import JargonText from '@/components/digest/JargonText'
 import FridayRecap from '@/components/digest/FridayRecap'
 
 // ─── Weight badge ─────────────────────────────────────────────────────────────
