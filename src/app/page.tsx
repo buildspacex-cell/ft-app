@@ -185,6 +185,79 @@ function CountrySwitcher({ active }: { active: 'in' | 'us' }) {
   )
 }
 
+
+// ─── Wish question — shown after stock pick ───────────────────────────────────
+
+function WishQuestion({ dark = false }: { dark?: boolean }) {
+  const [wish, setWish] = useState('')
+  const [saved, setSaved] = useState(false)
+
+  function saveWish() {
+    if (!wish.trim() || saved) return
+    setSaved(true)
+    // will POST once env vars set
+  }
+
+  const label = dark ? 'rgba(246,243,236,0.7)' : 'var(--muted)'
+  const strong = dark ? 'var(--cream)' : 'var(--ink)'
+
+  if (saved) return (
+    <p style={{ fontSize: 14, color: label, lineHeight: 1.5 }}>
+      Thank you. That is exactly the kind of thing we are building for.
+    </p>
+  )
+
+  return (
+    <div>
+      <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: dark ? 'rgba(246,243,236,0.45)' : 'var(--muted)', marginBottom: 10 }}>
+        One more
+      </p>
+      <p style={{ fontSize: 14, fontWeight: 600, letterSpacing: '-0.01em', color: strong, marginBottom: 6, lineHeight: 1.4 }}>
+        What is one thing you wish you understood better about a stock you own?
+      </p>
+      <p style={{ fontSize: 12.5, color: label, marginBottom: 12, lineHeight: 1.45 }}>
+        Not features — just tell us where you feel lost. &ldquo;I never know if bad news actually matters.&rdquo; &ldquo;I bought it but I can&apos;t explain why.&rdquo; Anything like that.
+      </p>
+      <textarea
+        value={wish}
+        onChange={e => setWish(e.target.value)}
+        placeholder="e.g. I never know if a news story is actually relevant to what I own..."
+        rows={3}
+        style={{
+          width: '100%', padding: '10px 12px', borderRadius: 10,
+          border: dark ? '1px solid rgba(246,243,236,0.16)' : '1px solid var(--hairline)',
+          background: dark ? 'rgba(246,243,236,0.06)' : 'var(--paper)',
+          fontFamily: 'var(--font-sans)', fontSize: 13.5, lineHeight: 1.5,
+          color: dark ? 'var(--cream)' : 'var(--ink)',
+          outline: 'none', resize: 'none', marginBottom: 10,
+          boxSizing: 'border-box',
+        }}
+      />
+      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, alignItems: 'center' }}>
+        <button
+          onClick={() => setSaved(true)}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 13, color: label, padding: 0 }}
+        >
+          Skip
+        </button>
+        <button
+          onClick={saveWish}
+          disabled={!wish.trim()}
+          style={{
+            padding: '9px 18px', borderRadius: 10, border: 'none',
+            background: wish.trim() ? 'var(--coral)' : (dark ? 'rgba(246,243,236,0.1)' : 'var(--hairline)'),
+            color: wish.trim() ? '#fff' : label,
+            fontFamily: 'var(--font-sans)', fontSize: 13.5, fontWeight: 600,
+            cursor: wish.trim() ? 'pointer' : 'not-allowed',
+          }}
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  )
+}
+
 // ─── Email form ───────────────────────────────────────────────────────────────
 
 function EmailForm({ dark = false, source = 'landing-in' }: { dark?: boolean; source?: string }) {
