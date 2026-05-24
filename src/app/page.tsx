@@ -200,9 +200,92 @@ function EmailForm({ dark = false, source = 'landing-in' }: { dark?: boolean; so
     setStatus('done')
   }
 
+  const [stock, setStock] = useState('')
+  const [stockSaved, setStockSaved] = useState(false)
+
+  async function saveStock() {
+    if (!stock || stockSaved) return
+    setStockSaved(true)
+    // will POST to API once env vars set
+  }
+
   if (status === 'done') return (
-    <div style={{ background: dark ? 'rgba(91,122,85,0.2)' : 'var(--sage-tint)', borderRadius: 999, padding: '14px 22px', display: 'inline-block' }}>
-      <p style={{ color: dark ? '#7fb87a' : 'var(--sage)', fontWeight: 600, fontSize: 15, margin: 0 }}>✓ You&apos;re on the list - check your inbox.</p>
+    <div style={{
+      background: dark ? 'rgba(246,243,236,0.06)' : 'var(--card)',
+      border: dark ? '1px solid rgba(246,243,236,0.14)' : '1px solid var(--hairline)',
+      borderRadius: 18, padding: '20px 22px', maxWidth: 480,
+    }}>
+      {/* Confirm + date */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, marginBottom: 18, paddingBottom: 18, borderBottom: dark ? '1px solid rgba(246,243,236,0.1)' : '1px solid var(--hairline)' }}>
+        <div style={{ width: 34, height: 34, borderRadius: '50%', flexShrink: 0, background: 'var(--sage)', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, fontWeight: 700 }}>✓</div>
+        <div>
+          <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 16, letterSpacing: '-0.015em', color: dark ? 'var(--cream)' : 'var(--ink)', marginBottom: 5 }}>
+            You&apos;re on the list.
+          </p>
+          <p style={{ fontSize: 13.5, lineHeight: 1.5, color: dark ? 'rgba(246,243,236,0.65)' : 'var(--muted)', margin: 0 }}>
+            The first cohort opens <strong style={{ color: 'var(--coral)', fontWeight: 600 }}>June 6th</strong>. We&apos;ll email you that morning with your magic link.
+          </p>
+        </div>
+      </div>
+
+      {/* One question */}
+      {!stockSaved ? (
+        <div>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: dark ? 'rgba(246,243,236,0.45)' : 'var(--muted)', marginBottom: 10 }}>
+            One quick question
+          </p>
+          <p style={{ fontSize: 14, fontWeight: 600, letterSpacing: '-0.01em', color: dark ? 'var(--cream)' : 'var(--ink)', marginBottom: 12, lineHeight: 1.4 }}>
+            Which stock do you most want us to cover first?
+          </p>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <select
+              value={stock} onChange={e => setStock(e.target.value)}
+              style={{
+                flex: 1, padding: '10px 12px', borderRadius: 10,
+                border: dark ? '1px solid rgba(246,243,236,0.16)' : '1px solid var(--hairline)',
+                background: dark ? 'rgba(246,243,236,0.08)' : 'var(--paper)',
+                fontFamily: 'var(--font-sans)', fontSize: 14,
+                color: dark ? 'var(--cream)' : 'var(--ink)',
+                outline: 'none', cursor: 'pointer',
+              }}
+            >
+              
+              <option value="">Pick a stock...</option>
+              <optgroup label="NSE India">
+                <option value="RELIANCE">Reliance Industries</option>
+                <option value="HDFCBANK">HDFC Bank</option>
+                <option value="TCS">Tata Consultancy Services</option>
+                <option value="INFY">Infosys</option>
+                <option value="HINDUNILVR">Hindustan Unilever</option>
+                <option value="MARUTI">Maruti Suzuki</option>
+                <option value="SUNPHARMA">Sun Pharmaceutical</option>
+                <option value="BAJFINANCE">Bajaj Finance</option>
+                <option value="WIPRO">Wipro</option>
+                <option value="ONGC">ONGC</option>
+              </optgroup>
+              <option value="OTHER">Something else</option>
+            </select>
+            <button
+              onClick={saveStock} disabled={!stock}
+              style={{
+                padding: '10px 16px', borderRadius: 10, border: 'none',
+                background: stock ? 'var(--coral)' : (dark ? 'rgba(246,243,236,0.1)' : 'var(--hairline)'),
+                color: stock ? '#fff' : (dark ? 'rgba(246,243,236,0.3)' : 'var(--muted)'),
+                fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 600,
+                cursor: stock ? 'pointer' : 'not-allowed', flexShrink: 0,
+              }}
+            >
+              Tell us
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <p style={{ fontSize: 14, color: dark ? 'rgba(246,243,236,0.7)' : 'var(--muted)', margin: 0, lineHeight: 1.4 }}>
+            Got it. We&apos;ll make sure <strong style={{ color: dark ? 'var(--cream)' : 'var(--ink)', fontWeight: 600 }}>{stock}</strong> is ready on day one.
+          </p>
+        </div>
+      )}
     </div>
   )
 
