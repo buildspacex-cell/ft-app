@@ -343,7 +343,7 @@ export default function HomePage() {
                   <span style={{ color: 'var(--coral-deep)' }}>We tell you whether the reasons you trusted are still true.</span>
                 </h1>
                 <p style={{ fontSize: 18, fontWeight: 400, lineHeight: 1.4, letterSpacing: '-0.01em', color: 'var(--ink-soft)', margin: '0 0 28px', maxWidth: 520 }}>
-                  Every morning, get a 60-second read on the companies you own: what changed, why it matters, and whether your original reason for owning them still holds.
+                  Anything that happens in the world — RBI rate calls, monsoon forecasts, oil moves — we connect it to the companies in your portfolio and explain what it means for the specific reason you own them.
                 </p>
                 <div id="waitlist"><EmailForm /></div>
               </div>
@@ -408,7 +408,7 @@ export default function HomePage() {
               {[
                 { n: '01', h: 'Explain the business like a shop on the street.', p: 'What they sell, who buys it, how much they keep. Numbers always come paired with an English sentence — never on their own.', badge: 'No jargon, ever' },
                 { n: '02', h: 'Write the 3–5 reasons you might want to own it.', p: "You read them, decide which you actually believe, keep those. The reasons you keep become your thesis — a contract with yourself, in words you understand.", badge: 'You curate · we draft' },
-                { n: '03', h: 'Check whether those reasons still hold.', p: "Every quarter when results come out. Every morning when news affects them. We never tell you what to do — only whether what you bought into is still true.", badge: 'You decide · we notice' },
+                { n: '03', h: 'Check whether those reasons still hold.', p: "When the RBI moves rates, when oil spikes, when a monsoon forecast drops — we check if any of it touches a reason in your thesis. Every morning. Not just on earnings day.", badge: 'You decide · we notice' },
               ].map(s => (
                 <div key={s.n} className="ft-step">
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 36, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--coral-deep)', lineHeight: 1, marginBottom: 18 }}>{s.n}</div>
@@ -464,7 +464,7 @@ export default function HomePage() {
                   A 7am push.<br />A 60-second read.<br /><span style={{ color: 'var(--coral-deep)' }}>Then it leaves you alone.</span>
                 </h2>
                 <p style={{ fontSize: 19, color: 'var(--ink-soft)', margin: '0 0 32px', lineHeight: 1.5, maxWidth: 520 }}>
-                  Every morning, we scan news, filings, and trusted sources — then send only what matters to what you own.
+                  The world doesn't stop moving just because you're not watching. Every morning we scan everything — macro moves, earnings, policy decisions, commodity prices — and filter it down to what touches the specific reasons you chose to own each stock.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
                   {[
