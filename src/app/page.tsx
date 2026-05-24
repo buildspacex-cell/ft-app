@@ -79,30 +79,30 @@ function DigestScreen() {
     <div style={{ padding: '8px 16px 20px', overflow: 'hidden', height: 'calc(100% - 82px)' }}>
       <p style={{ fontFamily: 'var(--font-mono)', fontSize: 8, color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 6 }}>TUESDAY, JUNE 3, 2026</p>
       <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 17, lineHeight: 1.15, letterSpacing: '-0.025em', color: 'var(--ink)', marginBottom: 5 }}>
-        Good morning.<br /><span style={{ color: 'var(--coral)' }}>Three for your portfolio.</span><br />Two for your education.
+        Good morning.<br /><span style={{ color: 'var(--coral)' }}>Two for your portfolio.</span><br />Two for your education.
       </h2>
       <p style={{ fontSize: 9.5, color: 'var(--muted)', marginBottom: 10, lineHeight: 1.4 }}>Quick read. No panic. Nothing in here tells you what to do.</p>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 7 }}>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 7, color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>FOR YOUR PORTFOLIO</span>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 7, color: 'var(--muted)' }}>3 stories</span>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 7, color: 'var(--muted)' }}>2 stories</span>
       </div>
       <div style={{ background: 'var(--card)', border: '1px solid var(--hairline)', borderRadius: 12, padding: '10px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 7 }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--rust-tint)', color: 'var(--rust)', fontFamily: 'var(--font-mono)', fontSize: 6.5, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '2px 6px', borderRadius: 20 }}>
-            <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor', flexShrink: 0 }} />WORTH YOUR ATTENTION
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--amber-tint)', color: 'var(--amber)', fontFamily: 'var(--font-mono)', fontSize: 6.5, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '2px 6px', borderRadius: 20 }}>
+            <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor', flexShrink: 0 }} />WORTH KNOWING
           </span>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 7, color: 'var(--muted)' }}>↗ Open</span>
         </div>
-        <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 12, letterSpacing: '-0.018em', lineHeight: 1.2, color: 'var(--ink)', marginBottom: 5 }}>Brazil&apos;s coffee belt got hit by a second frost.</p>
-        <p style={{ fontSize: 9, color: 'var(--ink-soft)', lineHeight: 1.4, marginBottom: 8 }}>Bean futures jumped another 8% overnight. This is the same problem your Brewline thesis already flagged last quarter.</p>
+        <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 12, letterSpacing: '-0.018em', lineHeight: 1.2, color: 'var(--ink)', marginBottom: 5 }}>HDFC Bank&apos;s bad loans ticked up — agri stress, not a structural crack.</p>
+        <p style={{ fontSize: 9, color: 'var(--ink-soft)', lineHeight: 1.4, marginBottom: 8 }}>Net NPA rose to 0.39% from 0.31% last quarter. The cause is farm loans in stressed districts, not the urban branch network you see on your street.</p>
         <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 8 }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 6.5, color: 'var(--muted)', letterSpacing: '0.08em' }}>AFFECTS</span>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, background: 'var(--rust-tint)', padding: '1px 7px', borderRadius: 4, fontFamily: 'var(--font-mono)', fontSize: 8, fontWeight: 700, color: 'var(--rust)' }}>
-            BRWL <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor', flexShrink: 0 }} />
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, background: 'var(--amber-tint)', padding: '1px 7px', borderRadius: 4, fontFamily: 'var(--font-mono)', fontSize: 8, fontWeight: 700, color: 'var(--amber)' }}>
+            HDFCBANK <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor', flexShrink: 0 }} />
           </span>
         </div>
         <div style={{ background: 'var(--cream)', borderRadius: 8, padding: '7px 8px', border: '1px solid var(--hairline)' }}>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 6, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 5 }}>PRICE VS. STORY · BRWL</p>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 6, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 5 }}>PRICE VS. STORY · HDFCBANK</p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, marginBottom: 5 }}>
             <div style={{ paddingRight: 8, borderRight: '1px solid var(--hairline)' }}>
               <p style={{ fontFamily: 'var(--font-mono)', fontSize: 6, color: 'var(--muted)', marginBottom: 2 }}>THE STORY</p>
@@ -110,10 +110,10 @@ function DigestScreen() {
             </div>
             <div style={{ paddingLeft: 8 }}>
               <p style={{ fontFamily: 'var(--font-mono)', fontSize: 6, color: 'var(--muted)', marginBottom: 2 }}>THE PRICE</p>
-              <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 11, color: 'var(--rust)', letterSpacing: '-0.015em' }}>↓ 2.4%</p>
+              <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 11, color: 'var(--rust)', letterSpacing: '-0.015em' }}>↓ 1.8%</p>
             </div>
           </div>
-          <p style={{ fontSize: 8, color: 'var(--coral-deep)', fontWeight: 500, lineHeight: 1.35 }}>Market started to notice what your thesis already knew.</p>
+          <p style={{ fontSize: 8, color: 'var(--coral-deep)', fontWeight: 500, lineHeight: 1.35 }}>One quarter doesn&apos;t move a bank built over 30 years. Watch the next two.</p>
         </div>
         <div style={{ display: 'flex', gap: 5, marginTop: 8, paddingTop: 8, borderTop: '1px solid var(--hairline)', flexWrap: 'wrap' }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 6, color: 'var(--muted)', letterSpacing: '0.06em', alignSelf: 'center' }}>HOW DID THIS LAND?</span>
@@ -136,25 +136,25 @@ function DetailScreen() {
       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--rust-tint)', color: 'var(--rust)', fontFamily: 'var(--font-mono)', fontSize: 6.5, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '2px 6px', borderRadius: 20, marginBottom: 8 }}>
         <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor', flexShrink: 0 }} />WORTH YOUR ATTENTION
       </span>
-      <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 15, letterSpacing: '-0.025em', lineHeight: 1.15, color: 'var(--ink)', margin: '8px 0 8px' }}>Brazil&apos;s coffee belt got hit by a second frost.</h2>
+      <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 15, letterSpacing: '-0.025em', lineHeight: 1.15, color: 'var(--ink)', margin: '8px 0 8px' }}>HDFC Bank&apos;s bad loans ticked up — agri stress, not a structural crack.</h2>
       <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--rust-tint)', padding: '3px 8px 3px 6px', borderRadius: 20, fontFamily: 'var(--font-mono)', fontSize: 7.5, fontWeight: 700, color: 'var(--rust)' }}>
           <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor', flexShrink: 0 }} />BRWL · broken
         </span>
       </div>
-      <p style={{ fontSize: 10, color: 'var(--ink-soft)', lineHeight: 1.45, marginBottom: 10 }}>Bean futures jumped another 8% overnight. This is the same problem your Brewline thesis flagged last quarter — getting worse, not better.</p>
+      <p style={{ fontSize: 10, color: 'var(--ink-soft)', lineHeight: 1.45, marginBottom: 10 }}>Net NPA rose to 0.39% from 0.31% last quarter. The cause is farm loans in stressed districts — not the urban branch network. That&apos;s the specific reason you owned HDFC Bank.</p>
       <div style={{ background: 'var(--card)', border: '1px solid var(--hairline)', borderRadius: 11, padding: '10px', marginBottom: 8 }}>
-        <p style={{ fontFamily: 'var(--font-mono)', fontSize: 6.5, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>HOW THIS HITS YOUR BREWLINE THESIS</p>
-        <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 11, letterSpacing: '-0.015em', lineHeight: 1.3, color: 'var(--ink)', marginBottom: 7 }}>&ldquo;Coffee bean costs stay under 22% of revenue.&rdquo;</p>
+        <p style={{ fontFamily: 'var(--font-mono)', fontSize: 6.5, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>HOW THIS HITS YOUR HDFCBANK THESIS</p>
+        <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 11, letterSpacing: '-0.015em', lineHeight: 1.3, color: 'var(--ink)', marginBottom: 7 }}>&ldquo;Best-in-class loan quality — NPA consistently below every peer.&rdquo;</p>
         <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 5 }}>
-          <span style={{ width: 18, height: 18, borderRadius: '50%', background: 'var(--rust)', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 700, flexShrink: 0 }}>✕</span>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, color: 'var(--ink)' }}>Broken · 24.5%</span>
+          <span style={{ width: 18, height: 18, borderRadius: '50%', background: 'var(--amber)', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 700, flexShrink: 0 }}>~</span>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, color: 'var(--ink)' }}>Wobbling · Net NPA 0.39%</span>
         </div>
-        <p style={{ fontSize: 8.5, color: 'var(--coral-deep)', fontWeight: 500, lineHeight: 1.35 }}>This frost makes recovery less likely soon.</p>
+        <p style={{ fontSize: 8.5, color: 'var(--coral-deep)', fontWeight: 500, lineHeight: 1.35 }}>One quarter of agri stress. Watch if it persists next quarter.</p>
       </div>
       <div style={{ background: 'var(--cream-deep)', borderRadius: 10, padding: '9px 10px' }}>
         <p style={{ fontFamily: 'var(--font-mono)', fontSize: 6.5, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6 }}>WHAT WE READ</p>
-        {['Reuters · Brazil frost damages 2026 arabica', 'ICE Futures · arabica May +8.2%', 'Bloomberg · roasters warn of price hikes'].map((s, i) => (
+        {['HDFC Bank Q4 FY25 results · investor presentation', 'RBI · district-level agri NPA data Q4', 'Moneycontrol · HDFC asset quality analysis'].map((s, i) => (
           <p key={i} style={{ fontFamily: 'var(--font-mono)', fontSize: 7.5, color: 'var(--ink-soft)', marginBottom: 2 }}>· {s}</p>
         ))}
       </div>
