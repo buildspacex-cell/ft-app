@@ -369,11 +369,11 @@ export default function HomePage() {
           <div className="ft-wrap" style={{ textAlign: 'center' }}>
             <Eyebrow label="Why we exist" />
             <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 64px)', letterSpacing: '-0.04em', lineHeight: 1.02, margin: '14px auto 22px', maxWidth: 900, color: 'var(--ink)' }}>
-              Every other stock app tells you what to <em>buy</em>.<br />
-              <span style={{ color: 'var(--coral-deep)' }}>We tell you what you bought.</span>
+              Every other app gives you a tip.<br />
+              <span style={{ color: 'var(--coral-deep)' }}>We give you an understanding.</span>
             </h2>
             <p style={{ maxWidth: 540, margin: '0 auto', fontSize: 18, lineHeight: 1.5, color: 'var(--ink-soft)' }}>
-              Most retail investors can name the ticker but can&apos;t explain the business. You deserve to actually understand what&apos;s in front of you.
+              Before you buy, we explain what the company actually does. After you buy, we tell you whether the reason you trusted is still true. Most apps do neither.
             </p>
           </div>
         </section>
