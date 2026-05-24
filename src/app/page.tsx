@@ -7,13 +7,13 @@ import { createClient } from '@/lib/supabase/client'
 function PhoneMockup({ screen = 'digest' }: { screen?: 'digest' | 'detail' }) {
   return (
     <div style={{
-      width: 313, height: 681, borderRadius: 48, overflow: 'hidden',
+      width: 280, height: 580, borderRadius: 42, overflow: 'hidden',
       position: 'relative', background: 'var(--paper)',
-      boxShadow: '0 40px 80px rgba(0,0,0,0.18), 0 0 0 1.5px rgba(0,0,0,0.12)',
+      boxShadow: '0 32px 64px rgba(0,0,0,0.16), 0 0 0 1.5px rgba(0,0,0,0.1)',
       flexShrink: 0,
     }}>
       {/* Outer frame ring */}
-      <div style={{ position: 'absolute', inset: 0, borderRadius: 48, boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.08)', zIndex: 30, pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', inset: 0, borderRadius: 42, boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.08)', zIndex: 30, pointerEvents: 'none' }} />
 
       {/* Status bar row — split into 3 zones so dynamic island sits in the middle */}
       <div style={{
@@ -76,7 +76,7 @@ function PhoneMockup({ screen = 'digest' }: { screen?: 'digest' | 'detail' }) {
 
 function DigestScreen() {
   return (
-    <div style={{ padding: '8px 16px 20px', overflow: 'hidden', height: 'calc(100% - 82px)' }}>
+    <div style={{ padding: '8px 16px 20px', overflow: 'hidden', height: 'calc(100% - 78px)' }}>
       <p style={{ fontFamily: 'var(--font-mono)', fontSize: 8, color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 6 }}>TUESDAY, JUNE 3, 2026</p>
       <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 17, lineHeight: 1.15, letterSpacing: '-0.025em', color: 'var(--ink)', marginBottom: 5 }}>
         Good morning.<br /><span style={{ color: 'var(--coral)' }}>Two for your portfolio.</span><br />Two for your education.
@@ -128,7 +128,7 @@ function DigestScreen() {
 
 function DetailScreen() {
   return (
-    <div style={{ padding: '8px 16px 20px', overflow: 'hidden', height: 'calc(100% - 82px)' }}>
+    <div style={{ padding: '8px 16px 20px', overflow: 'hidden', height: 'calc(100% - 78px)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
         <span style={{ background: 'var(--card)', border: '1px solid var(--hairline)', borderRadius: 999, padding: '4px 10px', fontFamily: 'var(--font-mono)', fontSize: 7.5, color: 'var(--ink)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>← Digest</span>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 7.5, color: 'var(--muted)' }}>BRWL thesis ↗</span>
@@ -256,7 +256,7 @@ export default function HomePage() {
         * { box-sizing: border-box; }
         .ft-landing { background: var(--cream); font-family: var(--font-sans); color: var(--ink); overflow-x: hidden; }
         .ft-nav-links { display: flex; }
-        .ft-hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 60px; align-items: center; }
+        .ft-hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: flex-start; }
         .ft-hero-phone { justify-self: center; }
         .ft-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
         .ft-moments { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; position: relative; }
@@ -332,22 +332,22 @@ export default function HomePage() {
         </nav>
 
         {/* ── HERO ── */}
-        <section className="ft-section" style={{ padding: '60px 0 100px' }}>
+        <section className="ft-section" style={{ padding: '48px 0 72px' }}>
           <div className="ft-wrap">
-            <div className="ft-hero-grid">
+            <div className="ft-hero-grid" style={{ alignItems: 'flex-start' }}>
               <div>
                 <Eyebrow label="For people who don't speak finance" />
-                <h1 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(44px, 6.5vw, 84px)', lineHeight: 0.93, letterSpacing: '-0.052em', margin: '18px 0 28px', color: 'var(--ink)' }}>
+                <h1 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(40px, 5.5vw, 72px)', lineHeight: 0.93, letterSpacing: '-0.052em', margin: '14px 0 22px', color: 'var(--ink)' }}>
                   We don&apos;t say buy.<br />
                   We don&apos;t say sell.<br />
                   <span style={{ color: 'var(--coral-deep)' }}>We tell you whether the reasons you trusted are still true.</span>
                 </h1>
-                <p style={{ fontSize: 21, fontWeight: 400, lineHeight: 1.4, letterSpacing: '-0.01em', color: 'var(--ink-soft)', margin: '0 0 36px', maxWidth: 520 }}>
+                <p style={{ fontSize: 18, fontWeight: 400, lineHeight: 1.4, letterSpacing: '-0.01em', color: 'var(--ink-soft)', margin: '0 0 28px', maxWidth: 520 }}>
                   Every morning, get a 60-second read on the companies you own: what changed, why it matters, and whether your original reason for owning them still holds.
                 </p>
                 <div id="waitlist"><EmailForm /></div>
               </div>
-              <div className="ft-hero-phone">
+              <div className="ft-hero-phone" style={{ paddingTop: 8 }}>
                 <PhoneMockup screen="digest" />
               </div>
             </div>
