@@ -159,12 +159,21 @@ function EmailForm({ dark = false, source = 'landing-us' }: { dark?: boolean; so
     e.preventDefault()
     if (!email) return
     setStatus('loading')
-    const res = await fetch('/api/waitlist', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, source }),
-    })
-    setStatus(res.ok ? 'done' : 'error')
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        console.error('[waitlist form] Error response:', res.status, data)
+      }
+      setStatus(res.ok ? 'done' : 'error')
+    } catch (err) {
+      console.error('[waitlist form] Fetch failed:', err)
+      setStatus('error')
+    }
   }
 
   if (status === 'done') return (
