@@ -131,7 +131,7 @@ function DetailScreen() {
     <div style={{ padding: '8px 16px 20px', overflow: 'hidden', height: 'calc(100% - 78px)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
         <span style={{ background: 'var(--card)', border: '1px solid var(--hairline)', borderRadius: 999, padding: '4px 10px', fontFamily: 'var(--font-mono)', fontSize: 7.5, color: 'var(--ink)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>← Digest</span>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 7.5, color: 'var(--muted)' }}>BRWL thesis ↗</span>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 7.5, color: 'var(--muted)' }}>HDFCBANK thesis ↗</span>
       </div>
       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--rust-tint)', color: 'var(--rust)', fontFamily: 'var(--font-mono)', fontSize: 6.5, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '2px 6px', borderRadius: 20, marginBottom: 8 }}>
         <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor', flexShrink: 0 }} />WORTH YOUR ATTENTION
@@ -139,7 +139,7 @@ function DetailScreen() {
       <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 15, letterSpacing: '-0.025em', lineHeight: 1.15, color: 'var(--ink)', margin: '8px 0 8px' }}>HDFC Bank&apos;s bad loans ticked up — agri stress, not a structural crack.</h2>
       <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--rust-tint)', padding: '3px 8px 3px 6px', borderRadius: 20, fontFamily: 'var(--font-mono)', fontSize: 7.5, fontWeight: 700, color: 'var(--rust)' }}>
-          <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor', flexShrink: 0 }} />BRWL · broken
+          <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor', flexShrink: 0 }} />HDFCBANK · wobbling
         </span>
       </div>
       <p style={{ fontSize: 10, color: 'var(--ink-soft)', lineHeight: 1.45, marginBottom: 10 }}>Net NPA rose to 0.39% from 0.31% last quarter. The cause is farm loans in stressed districts — not the urban branch network. That&apos;s the specific reason you owned HDFC Bank.</p>
@@ -468,11 +468,11 @@ export default function HomePage() {
             </p>
             <div className="ft-translations">
               {[
-                { from: 'Net margin', metric: '18%', to: '18¢ from every $1 of coffee they sell is theirs to keep.' },
+                { from: 'Operating cash flow · Reliance', metric: '₹1.2L cr', to: 'Reliance generated ₹1.2 lakh crore in cash from operations last year. That\'s the fuel that funds Jio, Retail, and the green energy bet simultaneously.' },
                 { from: 'Net debt / EBITDA', metric: '1.8×', to: 'They owe less than two years of earnings — comfortable cushion.' },
                 { from: 'Same-store sales', metric: '+4%', to: 'People paid more without grumbling. The brand still has pull.' },
                 { from: 'Net interest margin', metric: '3.8%', to: '₹3.80 of every ₹100 they lend stays with them — that\'s how a bank breathes.' },
-                { from: 'Bean cost % of revenue', metric: '24.5%', to: 'Frost in Brazil hit their suppliers. Worth knowing — not forever.' },
+                { from: 'CASA ratio · HDFC Bank', metric: '42%', to: '42 out of every 100 rupees with HDFC came from current or savings accounts — people who parked money, not seekers of high interest. Cheap deposits mean fatter margins.' },
                 { from: 'Volume growth', metric: '+7%', to: '7% more packets of biscuits walked out the door this year than last.' },
                 { from: 'Dividend yield', metric: '1.8%', to: 'For every $100 of stock, $1.80 lands in your account each year.' },
               ].map((t, i) => (
@@ -503,7 +503,7 @@ export default function HomePage() {
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
                   {[
-                    { label: 'Connected to your thesis', text: "When Brazil's coffee belt frosts, we tell you which reason in your thesis just got worse — not generic coffee news." },
+                    { label: 'Connected to your thesis', text: "When the RBI changes rates, we don't send you a macro story — we tell you which reason in your HDFC Bank or Bajaj Finance thesis just got stronger or weaker." },
                     { label: 'Price vs. story', text: "When the market moves but your thesis hasn't, we notice — and explain the disconnect in one sentence." },
                     { label: '"How did this land?"', text: 'One tap per card teaches the system what you find useful. Friday\'s digest shows what changed because of you.' },
                     { label: 'Quiet days are a feature', text: 'When nothing affects your portfolio, we tell you so. We never invent urgency.' },
