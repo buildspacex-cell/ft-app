@@ -373,7 +373,7 @@ export default function HomePage() {
               <span style={{ color: 'var(--coral-deep)' }}>We give you an understanding.</span>
             </h2>
             <p style={{ maxWidth: 540, margin: '0 auto', fontSize: 18, lineHeight: 1.5, color: 'var(--ink-soft)' }}>
-              Before you buy, we explain what the company actually does. After you buy, we tell you whether the reason you trusted is still true. Most apps do neither.
+              Most retail investors can name the ticker but can&apos;t explain the business. You deserve to understand exactly what you own.
             </p>
           </div>
         </section>
