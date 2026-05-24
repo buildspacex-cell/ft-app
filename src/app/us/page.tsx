@@ -260,7 +260,7 @@ function EmailForm({ dark = false, source = 'landing-us' }: { dark?: boolean; so
             You&apos;re on the list.
           </p>
           <p style={{ fontSize: 13.5, lineHeight: 1.5, color: dark ? 'rgba(246,243,236,0.65)' : 'var(--muted)', margin: 0 }}>
-            The first cohort opens <strong style={{ color: 'var(--coral)', fontWeight: 600 }}>June 6th</strong>. We&apos;ll email you that morning with your magic link.
+            The first cohort opens <strong style={{ color: 'var(--coral)', fontWeight: 600 }}>June 24th</strong>. We&apos;ll email you that morning with your magic link.
           </p>
         </div>
       </div>
