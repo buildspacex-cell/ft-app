@@ -340,8 +340,18 @@ export default function HomePage() {
                 <h1 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(40px, 5.5vw, 72px)', lineHeight: 0.93, letterSpacing: '-0.052em', margin: '14px 0 22px', color: 'var(--ink)' }}>
                   We don&apos;t say buy.<br />
                   We don&apos;t say sell.<br />
-                  <span style={{ color: 'var(--coral-deep)' }}>We tell you whether the reasons you trusted are still true —</span><br />
-                  <span style={{ color: 'var(--coral-deep)', fontStyle: 'italic' }}>and help you find reasons worth trusting in the first place.</span>
+                  <span style={{
+                    color: 'var(--coral-deep)',
+                    fontStyle: 'italic',
+                    fontSize: 'clamp(26px, 3.4vw, 46px)',
+                    fontWeight: 700,
+                    lineHeight: 1.08,
+                    letterSpacing: '-0.03em',
+                    display: 'block',
+                    marginTop: '0.2em',
+                  }}>
+                    We tell you whether the reasons you trusted are still true — and help you find reasons worth trusting in the first place.
+                  </span>
                 </h1>
                 <p style={{ fontSize: 18, fontWeight: 400, lineHeight: 1.4, letterSpacing: '-0.01em', color: 'var(--ink-soft)', margin: '0 0 28px', maxWidth: 520 }}>
                   Anything that happens in the world — RBI rate calls, monsoon forecasts, oil moves — we connect it to the companies in your portfolio and explain what it means for the specific reason you own them.
