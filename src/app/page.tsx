@@ -342,11 +342,10 @@ export default function HomePage() {
                   We don&apos;t say sell.<br />
                   <span style={{
                     color: 'var(--coral-deep)',
-                    fontStyle: 'italic',
                     fontSize: 'clamp(26px, 3.4vw, 46px)',
-                    fontWeight: 700,
+                    fontWeight: 800,
                     lineHeight: 1.08,
-                    letterSpacing: '-0.03em',
+                    letterSpacing: '-0.042em',
                     display: 'block',
                     marginTop: '0.2em',
                   }}>
