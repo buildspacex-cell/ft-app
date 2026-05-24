@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/server'
 
 export async function POST(req: NextRequest) {
-  const { email, source = 'landing-in' } = await req.json()
+  const { email, source = 'landing-in', stock_interest } = await req.json()
 
   if (!email || !email.includes('@')) {
     return NextResponse.json({ error: 'Invalid email' }, { status: 400 })
@@ -13,7 +13,10 @@ export async function POST(req: NextRequest) {
   // 1. Store in waitlist immediately — even if they never click the magic link
   const { error: waitlistError } = await supabase
     .from('waitlist')
-    .upsert({ email, source }, { onConflict: 'email', ignoreDuplicates: false })
+    .upsert(
+      { email, source, ...(stock_interest ? { stock_interest } : {}) },
+      { onConflict: 'email', ignoreDuplicates: false }
+    )
 
   if (waitlistError) {
     console.error('Waitlist insert error:', waitlistError)
