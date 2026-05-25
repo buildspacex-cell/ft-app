@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fundamentally True - See how it works - Data Patterns</title>
+  <title>Fundamentally True - Data Patterns - How it works</title>
   <style>
     :root {
       --cream:#f6f3ec; --cream-deep:#eee7da; --card:#fffdf8; --ink:#171717; --ink-soft:#393632;
@@ -272,6 +272,27 @@
     .waiting-list { margin-top: 12px; }
     .holding-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
 
+  
+
+    /* ── Extra for new narrative panels ── */
+    .panic-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: rgba(246,243,236,.06); border: 1px solid rgba(246,243,236,.12); border-radius: 10px; margin-bottom: 7px; }
+    .panic-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+    .panic-text { font-size: 14px; color: rgba(246,243,236,.7); line-height: 1.4; }
+    .q-card { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; background: var(--card); border: 1px solid var(--hairline); border-radius: 14px; margin-bottom: 10px; opacity: 0.45; transition: opacity .3s; }
+    .q-card.active { opacity: 1; border-color: var(--coral); }
+    .q-card.done { opacity: 1; border-color: var(--sage); }
+    .q-num { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--coral); min-width: 28px; flex-shrink: 0; }
+    .q-card.done .q-num { color: var(--sage); }
+    .q-text { font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -.015em; line-height: 1.3; }
+    .intervention-line { font-size: clamp(26px,4vw,38px); font-weight: 800; letter-spacing: -.04em; line-height: 1.05; color: var(--ink); margin-bottom: 14px; }
+    .forward-hook { margin-top: 20px; padding: 14px 16px; background: var(--ink); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; }
+    .forward-hook p { font-size: 15px; font-weight: 600; color: var(--cream); letter-spacing: -.015em; }
+    .forward-hook span { font-size: 20px; color: var(--coral); flex-shrink: 0; }
+    .q-eyebrow { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+    .q-eyebrow-num { font-family: var(--mono); font-size: 22px; font-weight: 800; color: var(--coral); }
+    .q-eyebrow-label { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+    .payoff-banner { background: var(--sage-tint); border: 1px solid rgba(91,122,85,.3); border-radius: 14px; padding: 14px 16px; margin-bottom: 16px; }
+    .payoff-banner p { font-size: 15px; font-weight: 600; color: var(--sage); margin: 0; }
   </style>
 </head>
 <body>
@@ -286,91 +307,126 @@
 
 <div class="track" id="track">
 
-  <!-- ═══ PANEL 0: THE FRAME ═══ -->
-  <div class="panel" style="background:var(--cream)">
-    <div class="panel-inner" style="justify-content:center">
-      <div class="ch-label">
-        <span class="ch-dot"></span>
-        Fundamentally True - Data Patterns - NSE
-      </div>
-      <h2 style="margin-bottom:8px">Before you own any stock,<br>you should be able to answer<br><span style="color:var(--coral)">5 questions.</span></h2>
-      <p class="lede" style="margin-bottom:32px">This page answers all 5 for a real NSE company - Data Patterns, a defence electronics specialist. In plain English. No jargon.</p>
-
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--card);border:1px solid var(--hairline);border-radius:14px">
-          <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--coral);min-width:28px;flex-shrink:0">Q1</span>
-          <span style="font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.015em">What does this company actually do?</span>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--card);border:1px solid var(--hairline);border-radius:14px">
-          <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--coral);min-width:28px;flex-shrink:0">Q2</span>
-          <span style="font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.015em">How does it make money - and is the money actually arriving?</span>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--card);border:1px solid var(--hairline);border-radius:14px">
-          <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--coral);min-width:28px;flex-shrink:0">Q3</span>
-          <span style="font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.015em">Why would this still matter in 5 years?</span>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--card);border:1px solid var(--hairline);border-radius:14px">
-          <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--coral);min-width:28px;flex-shrink:0">Q4</span>
-          <span style="font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-.015em">Is the price fair - or is the story already priced in?</span>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--ink);border:1.5px solid var(--ink);border-radius:14px">
-          <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--coral);min-width:28px;flex-shrink:0">Q5</span>
-          <span style="font-size:15px;font-weight:600;color:var(--cream);letter-spacing:-.015em">What is your one reason for owning this - and will you know if it changes?</span>
-        </div>
-      </div>
-
-      <p style="font-size:13px;color:var(--muted);margin-top:20px;font-style:italic;text-align:center">Most people can answer Q1. Almost nobody can answer Q5.</p>
-    </div>
-  </div>
-
-  <!-- ═══ PANEL 1: THE HOOK ═══ -->
+  <!-- ═══ PANEL 1: THE CHAOS ═══ -->
   <div class="panel" style="background:var(--ink)">
     <div class="panel-inner" style="justify-content:center">
       <div class="ch-label" style="color:rgba(246,243,236,.4)">
-        <span class="ch-dot" style="background:rgba(246,243,236,.3)"></span>
-        Fundamentally True - Data Patterns
+        <span class="ch-dot" style="background:rgba(246,243,236,.25)"></span>
+        Tuesday, June 3, 2026 · 7:00am IST
       </div>
-      <h1 style="color:var(--cream);margin-bottom:22px">
-        You own a stock.<br>Something happened<br>
-        <span style="color:var(--coral)">overnight.</span>
-      </h1>
-      <p class="lede" style="color:rgba(246,243,236,.7);margin-bottom:32px">
-        Before markets open, we found something. By 7am, we translated it into the only question that matters: does this touch the reason you own it?
-      </p>
-      <p style="color:rgba(246,243,236,.5);font-size:14px">Swipe or use arrows to follow the story →</p>
 
-      <!-- Portfolio map preview -->
-      <div class="map-grid" style="margin-top:28px">
-        <div class="map-tile touched">
-          <span class="pulse amber"></span>
-          <div><b style="color:var(--ink)">Data Patterns</b><span>Defence electronics - reason touched today</span></div>
+      <h1 style="color:var(--cream);margin-bottom:8px">
+        You wake up.<br>
+        <span style="color:var(--coral)">Your phone is already moving.</span>
+      </h1>
+
+      <div style="margin:20px 0;background:rgba(246,243,236,.06);border:1px solid rgba(246,243,236,.12);border-radius:16px;padding:16px 18px">
+        <p style="font-family:var(--mono);font-size:9px;color:rgba(246,243,236,.4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px">Portfolio · 7:01am</p>
+        <div class="map-grid">
+          <div class="map-tile touched" style="background:rgba(184,136,40,.15);border-color:var(--amber)">
+            <span class="pulse amber"></span>
+            <div><b style="color:var(--cream)">Data Patterns</b><span style="color:rgba(246,243,236,.5)">Defence electronics · glowing amber</span></div>
+          </div>
+          <div class="map-tile" style="background:rgba(246,243,236,.04);border-color:rgba(246,243,236,.1)">
+            <span class="pulse" style="background:rgba(91,122,85,.5)"></span>
+            <div><b style="color:var(--cream)">HDFC Bank</b><span style="color:rgba(246,243,236,.4)">Quiet today</span></div>
+          </div>
+          <div class="map-tile" style="background:rgba(246,243,236,.04);border-color:rgba(246,243,236,.1)">
+            <span class="pulse" style="background:rgba(91,122,85,.5)"></span>
+            <div><b style="color:var(--cream)">TCS</b><span style="color:rgba(246,243,236,.4)">Quiet today</span></div>
+          </div>
+          <div class="map-tile" style="background:rgba(246,243,236,.04);border-color:rgba(246,243,236,.1)">
+            <span class="pulse" style="background:rgba(246,243,236,.25)"></span>
+            <div><b style="color:var(--cream)">Maruti</b><span style="color:rgba(246,243,236,.4)">Needs check</span></div>
+          </div>
         </div>
-        <div class="map-tile" style="background:rgba(246,243,236,.04);border-color:rgba(246,243,236,.1)">
-          <span class="pulse" style="background:rgba(91,122,85,.6)"></span>
-          <div><b style="color:var(--cream)">HDFC Bank</b><span style="color:rgba(246,243,236,.45)">Loan quality - quiet today</span></div>
-        </div>
-        <div class="map-tile" style="background:rgba(246,243,236,.04);border-color:rgba(246,243,236,.1)">
-          <span class="pulse" style="background:rgba(91,122,85,.6)"></span>
-          <div><b style="color:var(--cream)">TCS</b><span style="color:rgba(246,243,236,.45)">BFSI revenue - quiet today</span></div>
-        </div>
-        <div class="map-tile" style="background:rgba(246,243,236,.04);border-color:rgba(246,243,236,.1)">
-          <span class="pulse" style="background:rgba(246,243,236,.3)"></span>
-          <div><b style="color:var(--cream)">Maruti</b><span style="color:rgba(246,243,236,.45)">Dealer network - needs check</span></div>
-        </div>
+      </div>
+
+      <p style="font-size:17px;color:rgba(246,243,236,.75);line-height:1.5;margin-bottom:20px">
+        A defence procurement headline just dropped. Data Patterns is amber. The noise begins immediately.
+      </p>
+
+      <div class="panic-item">
+        <span class="panic-dot" style="background:var(--rust)"></span>
+        <span class="panic-text">"Should I sell before it drops further?"</span>
+      </div>
+      <div class="panic-item">
+        <span class="panic-dot" style="background:var(--amber)"></span>
+        <span class="panic-text">"What are people saying on the forums?"</span>
+      </div>
+      <div class="panic-item">
+        <span class="panic-dot" style="background:var(--amber)"></span>
+        <span class="panic-text">"Is the thesis broken? Was it ever solid?"</span>
+      </div>
+      <div class="panic-item">
+        <span class="panic-dot" style="background:var(--muted)"></span>
+        <span class="panic-text">"Why did I buy this in the first place?"</span>
+      </div>
+
+      <div class="forward-hook" style="margin-top:24px">
+        <p>There is a better way to wake up to this.</p>
+        <span>→</span>
       </div>
     </div>
   </div>
 
-  <!-- ═══ PANEL 2: THE BUSINESS ═══ -->
+  <!-- ═══ PANEL 2: THE INTERVENTION ═══ -->
   <div class="panel" style="background:var(--cream)">
-    <div class="panel-inner">
+    <div class="panel-inner" style="justify-content:center">
       <div class="ch-label">
         <span class="ch-dot"></span>
-        <span style="font-family:var(--mono);font-size:11px;font-weight:800;color:var(--coral)">Q1</span>
-        <span class="ch-badge">READ ONCE</span>
+        The only thing that actually helps
       </div>
-      <h2>What does this company actually do?</h2>
-      <p class="lead">Data Patterns does not make the tank. It does not make the missile. It works on the electronics that help defence and space systems see, think, talk, and respond.</p>
+
+      <div class="intervention-line">Stop.</div>
+      <div class="intervention-line" style="color:var(--coral)">Don't look at the chart.</div>
+      <div class="intervention-line">Look at the business.</div>
+
+      <p style="font-size:18px;line-height:1.5;color:var(--muted);margin:20px 0 24px;max-width:520px">
+        Every investor who held through something scary and came out right had one thing: a reason. Not a feeling. A reason. Here are the 5 questions that build one.
+      </p>
+
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div class="q-card active">
+          <span class="q-num">Q1</span>
+          <span class="q-text">What does this company actually sell?</span>
+        </div>
+        <div class="q-card">
+          <span class="q-num">Q2</span>
+          <span class="q-text">Where does the next rupee come from?</span>
+        </div>
+        <div class="q-card">
+          <span class="q-num">Q3</span>
+          <span class="q-text">Can the story be trusted?</span>
+        </div>
+        <div class="q-card">
+          <span class="q-num">Q4</span>
+          <span class="q-text">Is the price already too high?</span>
+        </div>
+        <div class="q-card" style="background:var(--ink);border-color:var(--ink)">
+          <span class="q-num" style="color:var(--coral)">Q5</span>
+          <span class="q-text" style="color:var(--cream)">Why do you personally hold it - and will you know if that changes?</span>
+        </div>
+      </div>
+
+      <p style="font-size:13px;color:var(--muted);margin-top:18px;font-style:italic;text-align:center">Most people can answer Q1. Almost nobody can answer Q5.</p>
+    </div>
+  </div>
+
+  <!-- ═══ PANEL 3: Q1 THE BUSINESS ═══ -->
+  <div class="panel" style="background:var(--cream)">
+    <div class="panel-inner">
+      <div class="q-eyebrow">
+        <span class="q-eyebrow-num">Q1</span>
+        <div>
+          <span class="q-eyebrow-label">What does this company actually sell?</span>
+          <div style="font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:.06em;margin-top:2px">Data Patterns · NSE Defence Electronics</div>
+        </div>
+      </div>
+
+      <h2>The brain and nerves of every defence system India builds.</h2>
+
+      <p class="lead">Data Patterns does not make the tank. It does not make the missile. It designs the electronics that make those systems see, think, talk, and respond.</p>
 
       <div class="machine">
         <div class="machine-node">
@@ -387,30 +443,57 @@
           <b>Mission system</b>
           <span>Can now sense, process, guide, communicate</span>
         </div>
+
+      <div class="card" style="margin-top:12px">
+        <h3>The body analogy</h3>
+        <p>If a defence system were a human body, the metal platform is the body. The radar is the eyes. The communication system is the voice. The processors and electronics are the brain and nerves. Data Patterns works in that brain-and-nerves layer.</p>
       </div>
 
-      <div class="card"><h3>The body analogy</h3><p>If a defence system were a human body, the metal platform is the body. The radar is the eyes. The communication system is the voice. The processors and electronics are the brain and nerves. Data Patterns works in that brain-and-nerves layer.</p></div>
       <div class="card">
         <h3>Why trust matters more than advertising</h3>
-        <p>In a phone, a glitch is annoying. In a radar or satellite, a glitch is mission failure. That is why qualification, engineering depth, and past execution matter more than price.</p>
+        <p>In a phone, a glitch is annoying. In a radar or satellite, a glitch is mission failure. That is why qualification, engineering depth, and past execution matter more than price. A company that has delivered before gets the next contract. A new entrant spends 5 years proving itself.</p>
       </div>
-      <div class="card">
-        <h3>Why revenue arrives in batches</h3>
-        <p>This is not like selling soap every day. It is closer to building parts for a space mission: long conversations, careful testing, big orders, slow delivery. Revenue is lumpy by design.</p>
+
+      <div class="forward-hook">
+        <p>Now you know what it does. But does it make money?</p>
+        <span>→</span>
       </div>
     </div>
   </div>
 
-  <!-- ═══ PANEL 3: THE MONEY ═══ -->
+  <!-- ═══ PANEL 4: Q2 THE MONEY ═══ -->
   <div class="panel" style="background:var(--cream)">
     <div class="panel-inner">
-      <div class="ch-label">
-        <span class="ch-dot"></span>
-        <span style="font-family:var(--mono);font-size:11px;font-weight:800;color:var(--coral)">Q2 — part 1</span>
-        <span class="ch-badge">READ ONCE</span>
+      <div class="q-eyebrow">
+        <span class="q-eyebrow-num">Q2</span>
+        <span class="q-eyebrow-label">Where does the next rupee come from?</span>
       </div>
-      <h2>How does it make money?</h2>
+
+      <h2>Three revenue streams. One clear engine.</h2>
       <p class="lead">Every rupee Data Patterns made last year came from one of three places. The mix tells you what kind of business this really is.</p>
+
+      <div class="bar-wrap">
+        <p class="bar-label-text">Revenue mix</p>
+        <div class="bar-row">
+          <span class="bar-name">Production orders</span>
+          <div class="bar-track"><div class="bar-fill" style="width:55%;background:var(--coral)"></div></div>
+          <span class="bar-val" style="color:var(--coral)">~55%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">Design & development</span>
+          <div class="bar-track"><div class="bar-fill" style="width:30%;background:var(--ink)"></div></div>
+          <span class="bar-val">~30%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">Space & satellite</span>
+          <div class="bar-track"><div class="bar-fill" style="width:15%;background:var(--sage)"></div></div>
+          <span class="bar-val" style="color:var(--sage)">~15%</span>
+        </div>
+      </div>
+
+      <div class="story-card highlight" style="margin-top:10px">
+        <p style="font-size:14px;font-weight:500;margin:0">The rhythm: long conversations, careful testing, big orders, then delivery over 12-18 months. Revenue grows slowly then suddenly.</p>
+      </div>
 
       <div class="bar-wrap">
         <p class="bar-label-text">Revenue mix</p>
@@ -459,19 +542,23 @@
         </div>
         <p style="font-size:11px;color:var(--muted);margin-top:6px;font-style:italic">Indigenization target: 75% domestic by FY27. Growing pie, growing share.</p>
       </div>
+
+      <div class="forward-hook" style="margin-top:12px">
+        <p>Revenue looks right. But is the cash actually arriving?</p>
+        <span>→</span>
+      </div>
     </div>
   </div>
 
-  <!-- ═══ PANEL 4: THE PROOF ═══ -->
+  <!-- ═══ PANEL 5: Q3 THE PROOF ═══ -->
   <div class="panel" style="background:var(--cream)">
     <div class="panel-inner">
-      <div class="ch-label">
-        <span class="ch-dot"></span>
-        <span style="font-family:var(--mono);font-size:11px;font-weight:800;color:var(--coral)">Q2 — part 2</span>
-        <span class="ch-badge">READ ONCE</span>
+      <div class="q-eyebrow">
+        <span class="q-eyebrow-num">Q3</span>
+        <span class="q-eyebrow-label">Can the story be trusted?</span>
       </div>
-      <h2>And is the money actually arriving?</h2>
-      <p class="lead">A headline tells you what happened outside the house. The accounts show the footprints inside. The story has to leave proof.</p>
+
+      <h2>A headline tells you what happened outside the house.<br><span style="color:var(--coral)">The accounts show the footprints inside.</span></h2>
 
       <div class="card">
         <h3>Promised work becoming delivered work</h3>
@@ -484,7 +571,7 @@
           <span style="height:100%" class="hi"></span>
         </div>
         <div class="metric-row" style="margin-top:6px"><strong>Promised work</strong><span>Up QoQ</span></div>
-        <p style="font-size:12px;color:var(--muted);font-style:italic;margin-top:4px">Trending up - but delivery needs to keep pace with promises.</p>
+        <p style="font-size:12px;color:var(--muted);font-style:italic;margin-top:4px">Trending up - but delivery needs to keep pace with the promises.</p>
       </div>
 
       <div class="card">
@@ -492,16 +579,15 @@
         <div class="metric-row"><strong>Money left after direct costs</strong><span>58%</span></div>
         <p style="font-size:12px;color:var(--muted);margin:-4px 0 8px;font-style:italic">₹58 of every ₹100 earned stays after paying for the engineering work itself. Healthy for this kind of business.</p>
         <div class="metric-row"><strong>Operating money left</strong><span>34%</span></div>
-        <p style="font-size:12px;color:var(--muted);margin:-4px 0 0;font-style:italic">After salaries, overheads, and running costs — ₹34 remains. That is what funds growth and eventually reaches shareholders.</p>
+        <p style="font-size:12px;color:var(--muted);margin:-4px 0 0;font-style:italic">After salaries and overheads - ₹34 remains. That is what funds growth.</p>
       </div>
 
       <div class="card">
         <h3>Cash following profit</h3>
         <div class="metric-row"><strong>Money waiting with customers</strong><span>₹210 Cr</span></div>
-        <p style="font-size:12px;color:var(--muted);margin:-4px 0 8px;font-style:italic">Customers owe them ₹210 crore for work already delivered. At this revenue pace, that is roughly 3 months of sales sitting uncollected.</p>
+        <p style="font-size:12px;color:var(--muted);margin:-4px 0 8px;font-style:italic">Customers owe ₹210 crore for work already delivered - roughly 3 months of sales uncollected.</p>
         <div class="metric-row"><strong>Cash from operations</strong><span>₹72 Cr</span></div>
-        <p style="font-size:12px;color:var(--muted);margin:-4px 0 8px;font-style:italic">Only ₹72 crore actually arrived as cash this quarter. The profit looks bigger on paper than in the bank.</p>
-        <p style="font-size:12px;color:var(--amber);font-weight:600;margin-top:4px">Cash is not yet following profit cleanly. Government customers pay slowly. Watch if this normalises next quarter.</p>
+        <p style="font-size:12px;color:var(--amber);font-weight:600;margin-top:6px">Cash is not yet following profit cleanly. Government customers pay slowly. Watch next quarter.</p>
       </div>
 
       <div class="card" style="border-color:var(--amber);background:rgba(184,136,40,0.04)">
@@ -516,79 +602,24 @@
         <div class="metric-row"><strong>Execution cycle</strong><span style="color:var(--muted)">12-24 months per program</span></div>
         <p style="font-size:12px;color:var(--amber);font-weight:500;margin-top:10px;font-style:italic">This is not a red flag. It is the honest shape of this business. Every reason you save gets checked against this reality.</p>
       </div>
-    </div>
-  </div>
 
-
-
-  <!-- ═══ PANEL Q3: WHY DOES IT MATTER IN 5 YEARS ═══ -->
-  <div class="panel" style="background:var(--cream)">
-    <div class="panel-inner">
-      <div class="ch-label">
-        <span class="ch-dot"></span>
-        <span style="font-family:var(--mono);font-size:11px;font-weight:800;color:var(--coral)">Q3</span>
-        <span class="ch-badge">READ ONCE</span>
-      </div>
-      <h2>Why would this still matter in 5 years?</h2>
-      <p class="lead">A good business today can still be irrelevant tomorrow. The structural question is whether the tailwind behind it is durable - or already priced in and fading.</p>
-
-      <div class="card">
-        <h3>The big bet: India builds its own defence brain</h3>
-        <p>India has imported most of its defence electronics for decades. The government wants 75% of defence procurement to come from domestic suppliers by FY27. That is not a corporate plan - it is national policy. And the electronics layer is exactly where Data Patterns sits.</p>
-
-        <div class="bar-wrap" style="margin-top:14px">
-          <p class="bar-label-text">India defence budget (Rs. lakh crore)</p>
-          <div class="def-bar-row">
-            <span class="def-bar-yr">FY21</span>
-            <div class="def-bar-track"><div class="def-bar-fill" style="width:52%;background:var(--ink);opacity:.35"></div></div>
-            <span class="def-bar-val">4.78</span>
-          </div>
-          <div class="def-bar-row">
-            <span class="def-bar-yr">FY23</span>
-            <div class="def-bar-track"><div class="def-bar-fill" style="width:62%;background:var(--ink);opacity:.55"></div></div>
-            <span class="def-bar-val">5.94</span>
-          </div>
-          <div class="def-bar-row">
-            <span class="def-bar-yr">FY25</span>
-            <div class="def-bar-track"><div class="def-bar-fill" style="width:72%;background:var(--ink);opacity:.75"></div></div>
-            <span class="def-bar-val">6.21</span>
-          </div>
-          <div class="def-bar-row">
-            <span class="def-bar-yr">FY26E</span>
-            <div class="def-bar-track"><div class="def-bar-fill" style="width:84%;background:var(--coral)"></div></div>
-            <span class="def-bar-val" style="color:var(--coral)">7.20</span>
-          </div>
-          <p style="font-size:12px;color:var(--muted);margin-top:6px;font-style:italic">Growing pie. And the domestic share of that pie is mandated to grow. Data Patterns makes the electronics that go inside it.</p>
-        </div>
-      </div>
-
-      <div class="card" style="padding:0;overflow:hidden"><div style="padding:14px 16px"><h3>The structural bets</h3></div><div class="grid-2"><div class="future-card"><h3>Indigenization</h3><p>If India keeps replacing imported defence electronics with domestic suppliers, specialized companies get a larger opportunity pool.</p></div><div class="future-card"><h3>Electronics intensity</h3><p>Modern defence is less about metal alone and more about sensors, processors, communication, guidance, and electronic warfare.</p></div><div class="future-card"><h3>Space and satellites</h3><p>As satellites become more important for communication, mapping, surveillance, and navigation, space-grade electronics become more valuable.</p></div><div class="future-card"><h3>The risk</h3><p>Government orders can be delayed, programs can move slowly, and high expectations can run ahead of actual delivery.</p></div></div></div>
-      
-      <div class="card">
-        <h3>Electronics intensity is rising</h3>
-        <p>Modern defence is less about metal and more about sensors, processors, guidance, and communication. Every platform - radar, satellite, aircraft, missile - needs more electronics than the previous generation. That is a structural tailwind for specialists.</p>
-      </div>
-
-      <div class="card" style="border-color:var(--amber);background:rgba(184,136,40,0.04)">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-          <div style="width:22px;height:22px;border-radius:50%;background:var(--amber-tint);color:var(--amber);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">!</div>
-          <span style="font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)">The risk</span>
-        </div>
-        <p style="margin:0">Government programs can be delayed, reduced, or redirected. A company whose 5-year story depends entirely on policy continuity is always one budget cycle away from a slower quarter. That is the honest shape of this opportunity.</p>
+      <div class="forward-hook">
+        <p>Story checks out. But are you paying too much for it?</p>
+        <span>→</span>
       </div>
     </div>
   </div>
 
-  <!-- ═══ PANEL 5: THE PRICE ═══ -->
+  <!-- ═══ PANEL 6: Q4 THE PRICE ═══ -->
   <div class="panel" style="background:var(--cream)">
     <div class="panel-inner">
-      <div class="ch-label">
-        <span class="ch-dot"></span>
-        <span style="font-family:var(--mono);font-size:11px;font-weight:800;color:var(--coral)">Q4</span>
-        <span class="ch-badge">READ ONCE</span>
+      <div class="q-eyebrow">
+        <span class="q-eyebrow-num">Q4</span>
+        <span class="q-eyebrow-label">Is the price already too high?</span>
       </div>
-      <h2>Is the price fair - or is the story already priced in?</h2>
-      <p class="lead">A great house in a great neighbourhood can still be a bad deal if you pay too much. Business quality and buying price are two different questions.</p>
+
+      <h2>A great house in a great neighbourhood can still be a bad deal if you pay too much.</h2>
+      <p class="lead">Business quality and entry price are two completely different questions. This is the one most people skip.</p>
 
       <div style="margin:20px 0 24px">
         <p style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">How much growth the price is already assuming</p>
@@ -623,46 +654,34 @@
         <p style="font-size:12px;color:var(--coral-deep);font-weight:500;margin-top:10px;font-style:italic">The entire defence sector has re-rated upward. Data Patterns is expensive relative to its own history and slightly above peers — not a bubble, but the market has moved ahead of proof.</p>
       </div>
 
-      <div class="story-card highlight">
-        <p style="font-size:15px;font-weight:500;line-height:1.4;margin:0">The story looks expensive, not impossible. The market is already giving credit for defence localization, complex electronics, and future order growth.</p>
-      </div>
-
-      <div class="card">
+      <div class="card" style="margin-top:12px">
         <h3>What the price is asking for</h3>
         <div class="metric-row"><strong>Price vs earnings</strong><span style="color:var(--amber)">High</span></div>
         <div class="metric-row"><strong>Price vs sales</strong><span style="color:var(--amber)">Demanding</span></div>
         <div class="metric-row"><strong>Growth needed to justify</strong><span style="color:var(--rust)">Strong</span></div>
-        <p style="font-size:12px;color:var(--coral-deep);font-weight:500;margin-top:10px;font-style:italic">This does not say avoid. It says the bar is high. If the company executes cleanly, the price may make sense. If execution wobbles, the price has less forgiveness.</p>
+        <p style="font-size:12px;color:var(--coral-deep);font-weight:500;margin-top:10px;font-style:italic">This does not say avoid. It says the bar is high. If execution wobbles, the price has less forgiveness.</p>
       </div>
 
-      <div class="card">
-        <h3>The confidence arrow</h3>
-        <div style="display:flex;align-items:center;gap:16px;padding:12px 0">
-          <div style="text-align:center;flex:1">
-            <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:4px">BEFORE TODAY</div>
-            <div style="font-size:15px;font-weight:700;color:var(--ink)">Neutral</div>
-          </div>
-          <div style="font-size:22px;color:var(--coral)">→</div>
-          <div style="text-align:center;flex:1">
-            <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:4px">AFTER TODAY</div>
-            <div style="font-size:15px;font-weight:700;color:var(--amber)">Slightly supported</div>
-          </div>
-        </div>
-        <p style="font-size:12px;color:var(--muted);margin:0">The radar headline supports the theme but has not moved the price case yet.</p>
+      <div class="forward-hook">
+        <p>Now the hardest question. Why do <em>you</em> hold it?</p>
+        <span>→</span>
       </div>
     </div>
   </div>
 
-  <!-- ═══ PANEL 6: THE REASONS ═══ -->
+  <!-- ═══ PANEL 7: Q5 YOUR REASON ═══ -->
   <div class="panel" style="background:var(--cream)">
     <div class="panel-inner">
-      <div class="ch-label">
-        <span class="ch-dot" style="background:var(--coral)"></span>
-        <span style="font-family:var(--mono);font-size:11px;font-weight:800;color:var(--coral)">Q5</span>
-        <span class="ch-badge active">YOUR TURN</span>
+      <div class="q-eyebrow">
+        <span class="q-eyebrow-num" style="font-size:28px">Q5</span>
+        <div>
+          <span class="q-eyebrow-label" style="font-size:10px">Why do you hold it - and will you know if that changes?</span>
+          <div style="font-family:var(--mono);font-size:8px;color:var(--coral);letter-spacing:.06em;margin-top:2px;font-weight:700">THIS IS WHERE MOST PEOPLE STOP</div>
+        </div>
       </div>
-      <h2>What is your one reason - and will you know if it changes?</h2>
-      <p style="font-size:14px;color:var(--muted);margin-bottom:16px">We wrote the reasons someone might own Data Patterns. Toggle off the ones you do not believe. The ones you keep - we track those. Every morning. Only when something touches them.</p>
+
+      <h2>Your reason is the only thing that matters when the headline hits.</h2>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:18px">We wrote 6 reasons someone might hold Data Patterns. Toggle off the ones you do not believe. The ones you keep - we track those. Every morning. Only when something touches them.</p>
 
       <div id="reasons-list">
         <button class="reason-btn on" onclick="toggleReason(this)">
@@ -721,27 +740,36 @@
         </button>
       </div>
 
-      
-      <h3>These are the reasons being watched.</h3><p>Policy, defence orders, results, money left after costs, money waiting, cash coming in, and price expectations now matter only if they touch these beliefs.</p><div class="beliefs"><div class="belief"><span>01</span> India localizes more defence electronics.</div><div class="belief"><span>02</span> Data Patterns wins complex programs.</div><div class="belief"><span>03</span> Specialization protects money left behind.</div><div class="belief"><span>04</span> Promised work converts without delays.</div><div class="belief"><span>05</span> Cash follows profit.</div><div class="belief"><span>06</span> Price leaves room for reality.</div></div>
-        <button class="save-btn" onclick="saveThesis()">
+      <div style="margin-top:14px;padding:14px 16px;background:var(--ink);color:var(--cream);border-radius:14px;display:flex;align-items:center;gap:14px" id="save-thesis-cta">
+        <div style="flex:1">
+          <p style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,243,236,.5);margin-bottom:4px" id="save-thesis-label">6 of 6 reasons kept</p>
+          <p style="font-size:16px;font-weight:600;letter-spacing:-.015em">Save these. We watch them every morning.</p>
+        </div>
+        <button class="save-btn" onclick="saveThesisAndReveal()">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7H11M7.5 3.5L11 7L7.5 10.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
-      <div class="saved-box" id="save-thesis-saved">
-        <p>Thesis saved. Tracking 4 reasons.</p>
-        <p style="font-size:13px;color:var(--sage);opacity:.8">That is the reason we track. Every morning. Only when something touches it - one card. Then we leave you alone.</p>
+
+      <div style="display:none;margin-top:14px;padding:14px 16px;background:var(--sage-tint);border:1px solid rgba(91,122,85,.3);border-radius:14px" id="save-thesis-saved">
+        <p style="color:var(--sage);font-weight:600;font-size:15px;margin-bottom:4px">Thesis saved.</p>
+        <p style="font-size:13px;color:var(--sage);opacity:.8">Now - remember that 7am headline? Here is how we handled it for you.</p>
       </div>
     </div>
   </div>
 
-      <!-- ═══ PANEL 7: THE MORNING ═══ -->
+  <!-- ═══ PANEL 8: THE PAYOFF ═══ -->
   <div class="panel" style="background:var(--cream)">
     <div class="panel-inner">
       <div class="ch-label">
         <span class="ch-dot" style="background:var(--coral)"></span>
-        <span style="font-family:var(--mono);font-size:11px;font-weight:800;color:var(--coral)">Q5 in action</span>
+        <span style="font-family:var(--mono);font-size:11px;font-weight:800;color:var(--coral)">The same headline. Handled differently.</span>
         <span class="ch-badge active">THIS IS YOUR CARD</span>
       </div>
+
+      <div class="payoff-banner">
+        <p>You saved your reasons. Now watch what happens to that 7am panic.</p>
+      </div>
+
       <p style="font-size:14px;color:var(--muted);margin-bottom:18px">A news event overnight. Your reason gets checked. Here is exactly what lands on your phone.</p>
 
 
@@ -753,54 +781,46 @@
         <div class="source-box"><div class="mini-label">What we read</div><p style="font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--ink-soft);margin:8px 0 0">· Defence procurement update<br>· Company announcements scan<br>· Results and promised-work watchlist</p></div>
         <div class="source-box"><div class="mini-label">What we are waiting for next</div><div class="waiting-list"><div>Company announcement naming participation</div><div>Promised-work movement in the next results</div><div>Management commentary on radar or electronics programs</div><div>Cash and delivery quality in the next quarter</div><div>Whether the price cools down or proof catches up</div></div></div>
         <div class="feedback"><button>Useful</button><button>Already knew</button><button>Noise</button></div><div class="feedback-note">If you mark this as noise, we will only surface it again if Data Patterns is directly named, promised work moves, or the price-reality gap changes.</div>
-      </div>
-
-      
     </div>
   </div>
 
-<!-- ═══ PANEL 8: THE PHRASE ═══ -->
+  <!-- ═══ PANEL 9: THE PHRASE ═══ -->
   <div class="panel" style="background:var(--cream)">
     <div class="panel-inner">
       <div class="ch-label">
         <span class="ch-dot"></span>
-        Chapter 9 - Plain English
+        One phrase you heard today
       </div>
-      <h2>One term. One minute.<br>You own it now.</h2>
-      <p style="font-size:14px;color:var(--muted);margin-bottom:20px">Every digest includes one plain-English explainer - a term you will hear today, finally explained in a way that actually lands.</p>
-
+      <h2>Promised work.</h2>
+      <p class="lead">Every digest includes one plain-English explainer - a term you will hear today, finally explained so it actually lands.</p>
       <div class="phrase-card">
         <div class="phrase-label">The phrase of the day</div>
         <div class="phrase-title">Promised work - the restaurant booking analogy.</div>
         <div class="phrase-body">Promised work is like a restaurant's confirmed bookings for the next few months. It is not cash yet. But it tells you how much work is already lined up. For Data Patterns, it matters because projects are large, specialized, and delivered over time. A full pipeline means the revenue story is already written - it just needs to arrive.</div>
         <div class="phrase-foot">Knowing what this means is enough. You do not need to do anything with it.</div>
       </div>
-
-      <div class="card" style="margin-top:12px">
-        <h3 style="font-size:15px">Why this matters to your thesis</h3>
-        <p>When promised work grows quarter after quarter, it means new orders are coming in faster than old ones are being delivered. That is how a business in this category builds momentum. When promised work stops growing, it is the first signal worth watching - before the revenue line shows anything.</p>
-      </div>
     </div>
   </div>
 
-  <!-- ═══ PANEL 9: THE CTA ═══ -->
+  <!-- ═══ PANEL 10: THE CTA ═══ -->
   <div class="panel" style="background:var(--ink)">
     <div class="panel-inner" style="justify-content:center;text-align:center">
       <div class="ch-label" style="color:rgba(246,243,236,.4);justify-content:center">
-        <span class="ch-dot" style="background:rgba(246,243,236,.3)"></span>
+        <span class="ch-dot" style="background:rgba(246,243,236,.25)"></span>
         Every weekday - 7am IST - NSE India
       </div>
-      <h1 style="color:var(--cream);margin-bottom:16px">
+
+      <h1 style="color:var(--cream);margin-bottom:8px">
         This is what lands<br>on your phone.<br>
-        <span style="color:var(--coral)">Every time it matters.</span>
+        <span style="color:var(--coral)">Quiet days are a feature.</span>
       </h1>
-      <p style="font-size:16px;color:rgba(246,243,236,.65);max-width:440px;margin:0 auto 32px;line-height:1.5">
-        Understand it once. We stay quiet until an event touches a reason you saved. First cohort opens June 24th. Free during beta.
-      </p>
+      <p style="font-size:17px;color:rgba(246,243,236,.65);max-width:440px;margin:0 auto 14px;line-height:1.5">Go back to sleep. We find you only when your reason is touched.</p>
+      <p style="font-size:15px;color:rgba(246,243,236,.5);margin-bottom:32px">First cohort opens June 24th. Free during beta.</p>
+
       <a href="https://ft-app-beta.vercel.app/#waitlist" style="display:inline-flex;align-items:center;gap:8px;padding:15px 30px;border-radius:999px;background:var(--coral);color:#fff;font-family:var(--sans);font-size:16px;font-weight:700;text-decoration:none;letter-spacing:-.01em">
         Get early access →
       </a>
-      <p style="font-family:var(--mono);font-size:11px;color:rgba(246,243,236,.35);margin-top:18px;letter-spacing:.04em">No spam. One email when we launch.</p>
+      <p style="font-family:var(--mono);font-size:11px;color:rgba(246,243,236,.3);margin-top:18px;letter-spacing:.04em">No spam. One email when we launch.</p>
     </div>
   </div>
 
@@ -811,7 +831,7 @@
   <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>← Prev</button>
   <div>
     <div class="nav-dots" id="nav-dots"></div>
-    <div class="panel-counter" id="panel-counter">1 / 8</div>
+    <div class="panel-counter" id="panel-counter">1 / 10</div>
   </div>
   <button class="nav-btn primary" id="btn-next" onclick="navigate(1)">Next →</button>
 </div>
@@ -825,7 +845,6 @@
   const btnNext = document.getElementById('btn-next');
   let current = 0;
 
-  // Build dots
   panels.forEach((_, i) => {
     const dot = document.createElement('button');
     dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
@@ -834,17 +853,25 @@
   });
 
   function updateUI() {
-    const dots = dotsContainer.querySelectorAll('.nav-dot');
-    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    dotsContainer.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === current));
     counter.textContent = (current + 1) + ' / ' + panels.length;
     btnPrev.disabled = current === 0;
-    // Last panel: change Next to "Get early access"
     if (current === panels.length - 1) {
       btnNext.textContent = 'Get early access →';
       btnNext.onclick = () => window.location.href = 'https://ft-app-beta.vercel.app/#waitlist';
     } else {
       btnNext.textContent = 'Next →';
       btnNext.onclick = () => navigate(1);
+    }
+    // Update Q-card states in Panel 2 based on current panel
+    const qCards = document.querySelectorAll('.q-card');
+    if (qCards.length === 5) {
+      const qMap = [2, 3, 4, 5, 6]; // panels that answer each Q
+      qCards.forEach((card, i) => {
+        card.classList.remove('active', 'done');
+        if (current === qMap[i]) card.classList.add('active');
+        else if (current > qMap[i]) card.classList.add('done');
+      });
     }
   }
 
@@ -856,14 +883,12 @@
 
   function navigate(dir) { goTo(current + dir); }
 
-  // Keyboard navigation
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
     if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
   });
 
-  // Sync dots with scroll
-  const observer = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting && e.intersectionRatio > 0.5) {
         current = Array.from(panels).indexOf(e.target);
@@ -873,7 +898,6 @@
   }, { threshold: 0.5 });
   panels.forEach(p => observer.observe(p));
 
-  // Touch/swipe support — only trigger horizontal nav when gesture is clearly horizontal
   let touchStartX = 0, touchStartY = 0;
   track.addEventListener('touchstart', e => {
     touchStartX = e.touches[0].clientX;
@@ -882,32 +906,40 @@
   track.addEventListener('touchend', e => {
     const diffX = touchStartX - e.changedTouches[0].clientX;
     const diffY = touchStartY - e.changedTouches[0].clientY;
-    // Only navigate if horizontal movement is dominant and significant
-    if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY) * 2) {
-      navigate(diffX > 0 ? 1 : -1);
-    }
+    if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY) * 2) navigate(diffX > 0 ? 1 : -1);
   }, { passive: true });
 
-  // Interactive: reason toggles
+  // Reason toggle
   function toggleReason(btn) {
     btn.classList.toggle('off');
     const on = document.querySelectorAll('#reasons-list .reason-btn:not(.off)').length;
-    document.getElementById('save-label').textContent = on + ' of 4 reasons kept';
-    const saveBtn = document.querySelector('.save-btn');
-    saveBtn.style.background = on >= 2 ? 'var(--coral)' : 'rgba(246,243,236,.15)';
+    const lbl = document.getElementById('save-thesis-label');
+    if (lbl) lbl.textContent = on + ' of 6 reasons kept';
+    const saveBtn = document.querySelector('#save-thesis-cta .save-btn');
+    if (saveBtn) saveBtn.style.background = on >= 2 ? 'var(--coral)' : 'rgba(246,243,236,.15)';
   }
 
-  function saveThesis() {
+  // Save thesis and auto-advance to payoff panel
+  function saveThesisAndReveal() {
     const on = document.querySelectorAll('#reasons-list .reason-btn:not(.off)').length;
     if (on < 2) return;
     document.getElementById('save-thesis-cta').style.display = 'none';
     document.getElementById('save-thesis-saved').style.display = 'block';
+    // Auto advance to payoff after 1.5s
+    setTimeout(() => goTo(7), 1500);
   }
 
-  function selectFeedback() {
-    document.getElementById('feedback-chips').style.display = 'none';
-    document.getElementById('feedback-saved').style.display = 'block';
-  }
+  // Feedback chips
+  document.addEventListener('click', e => {
+    if (e.target.matches('.feedback button') || e.target.closest('.feedback button')) {
+      const wrap = e.target.closest('.feedback');
+      if (wrap) wrap.innerHTML = '<span style="font-family:var(--mono);font-size:12px;color:var(--sage)">✓ Saved - teaches your filter</span>';
+    }
+    if (e.target.matches('[data-feedback]')) {
+      const chips = e.target.closest('.feedback-chips, .feedback');
+      if (chips) chips.innerHTML = '<span style="font-family:var(--mono);font-size:12px;color:var(--sage)">✓ Saved - teaches your filter</span>';
+    }
+  });
 
   updateUI();
 </script>
