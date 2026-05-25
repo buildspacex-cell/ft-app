@@ -664,16 +664,65 @@
       <h2>What is your one reason - and will you know if it changes?</h2>
       <p style="font-size:14px;color:var(--muted);margin-bottom:16px">We wrote the reasons someone might own Data Patterns. Toggle off the ones you do not believe. The ones you keep - we track those. Every morning. Only when something touches them.</p>
 
-      <div class="reasons">
-<div class="reason"><div class="reason-num">1</div><div><b>India’s defence electronics localization keeps growing.</b><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: policy moves, domestic programs, and local supplier wins</div><div class="weakens">Gets weaker if domestic programs slow down, imports remain dominant, or larger players capture most of the work.</div></div></div>
-<div class="reason"><div class="reason-num">2</div><div><b>Data Patterns keeps winning complex, high-trust programs.</b><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: new wins, quality of work, and where the work is coming from</div><div class="weakens">Gets weaker if wins become smaller, less complex, delayed, or concentrated in fewer programs.</div></div></div>
-<div class="reason"><div class="reason-num">3</div><div><b>Specialized engineering protects money left behind better than plain manufacturing.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: money left after costs, type of work, and delivery pressure</div><div class="weakens">Gets weaker if more work becomes low-margin production, costs rise, or delivery pressure eats into money left behind.</div></div></div>
-<div class="reason"><div class="reason-num">4</div><div><b>Promised work becomes delivered work without major delays.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: promised work becoming delivered work, and whether timelines slip</div><div class="weakens">Gets weaker if promised work piles up but delivery does not follow.</div></div></div>
-<div class="reason"><div class="reason-num">5</div><div><b>The money story stays clean — cash follows profit and customers do not take too long to pay.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: cash coming in, money waiting, materials piled up, and cash stuck inside the business</div><div class="weakens">Gets weaker if profits rise but cash does not, or if too much money stays waiting with customers.</div></div></div>
-<div class="reason"><div class="reason-num">6</div><div><b>The price does not already assume a perfect future.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: price compared to earnings, price compared to sales, growth needed, and room for disappointment</div><div class="weakens">Gets weaker if the stock price runs far ahead while proof from orders, money left behind, and cash does not keep up.</div></div></div>
+      <div id="reasons-list">
+        <button class="reason-btn on" onclick="toggleReason(this)">
+          <div class="reason-num">1</div>
+          <div style="flex:1">
+            <div class="reason-claim">India’s defence electronics localization keeps growing.</div>
+            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="reason-sub" style="margin-top:6px">Watches: policy moves, domestic programs, and local supplier wins</div>
+          </div>
+          <div class="check-circle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="reason-btn on" onclick="toggleReason(this)">
+          <div class="reason-num">2</div>
+          <div style="flex:1">
+            <div class="reason-claim">Data Patterns keeps winning complex, high-trust programs.</div>
+            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="reason-sub" style="margin-top:6px">Watches: new wins, quality of work, and where the work is coming from</div>
+          </div>
+          <div class="check-circle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="reason-btn on" onclick="toggleReason(this)">
+          <div class="reason-num">3</div>
+          <div style="flex:1">
+            <div class="reason-claim">Specialized engineering protects money left behind better than plain manufacturing.</div>
+            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot empty"></span></div>
+            <div class="reason-sub" style="margin-top:6px">Watches: money left after costs, type of work, and delivery pressure</div>
+          </div>
+          <div class="check-circle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="reason-btn on" onclick="toggleReason(this)">
+          <div class="reason-num">4</div>
+          <div style="flex:1">
+            <div class="reason-claim">Promised work becomes delivered work without major delays.</div>
+            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot empty"></span></div>
+            <div class="reason-sub" style="margin-top:6px">Watches: promised work becoming delivered work, and whether timelines slip</div>
+          </div>
+          <div class="check-circle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="reason-btn on" onclick="toggleReason(this)">
+          <div class="reason-num">5</div>
+          <div style="flex:1">
+            <div class="reason-claim">The money story stays clean — cash follows profit and customers do not take too long to pay.</div>
+            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot empty"></span></div>
+            <div class="reason-sub" style="margin-top:6px">Watches: cash coming in, money waiting, materials piled up, and cash stuck inside the business</div>
+          </div>
+          <div class="check-circle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="reason-btn on" onclick="toggleReason(this)">
+          <div class="reason-num">6</div>
+          <div style="flex:1">
+            <div class="reason-claim">The price does not already assume a perfect future.</div>
+            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot empty"></span></div>
+            <div class="reason-sub" style="margin-top:6px">Watches: price compared to earnings, price compared to sales, growth needed, and room for disappointment</div>
+          </div>
+          <div class="check-circle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
       </div>
+
       
-      <div class="lock"><div class="mini-label">Thesis saved</div><h3>These are the reasons being watched.</h3><p>Policy, defence orders, results, money left after costs, money waiting, cash coming in, and price expectations now matter only if they touch these beliefs.</p><div class="beliefs"><div class="belief"><span>01</span> India localizes more defence electronics.</div><div class="belief"><span>02</span> Data Patterns wins complex programs.</div><div class="belief"><span>03</span> Specialization protects money left behind.</div><div class="belief"><span>04</span> Promised work converts without delays.</div><div class="belief"><span>05</span> Cash follows profit.</div><div class="belief"><span>06</span> Price leaves room for reality.</div></div>
+      <h3>These are the reasons being watched.</h3><p>Policy, defence orders, results, money left after costs, money waiting, cash coming in, and price expectations now matter only if they touch these beliefs.</p><div class="beliefs"><div class="belief"><span>01</span> India localizes more defence electronics.</div><div class="belief"><span>02</span> Data Patterns wins complex programs.</div><div class="belief"><span>03</span> Specialization protects money left behind.</div><div class="belief"><span>04</span> Promised work converts without delays.</div><div class="belief"><span>05</span> Cash follows profit.</div><div class="belief"><span>06</span> Price leaves room for reality.</div></div>
         <button class="save-btn" onclick="saveThesis()">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7H11M7.5 3.5L11 7L7.5 10.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
