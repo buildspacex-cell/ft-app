@@ -51,14 +51,16 @@
     }
     .panel-inner {
       width: 100%; max-width: 720px; margin: 0 auto;
-      padding: 40px 32px 120px;
+      padding: 56px 32px 132px;
       overflow-y: scroll; overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
       overscroll-behavior: contain;
-      display: flex; flex-direction: column; justify-content: flex-start;
+      display: flex; flex-direction: column; justify-content: flex-start !important;
       height: 100%;
       contain: layout;
     }
+    .panel-inner::-webkit-scrollbar { display: none; }
 
     /* ── Chapter label ── */
     .ch-label {
@@ -167,7 +169,7 @@
     .feedback-saved { display: none; font-family: var(--mono); font-size: 12px; color: var(--sage); }
 
     /* ── Confidence ── */
-    .confidence { display: flex; align-items: center; gap: 16px; background: var(--cream); border-radius: 12px; padding: 12px 14px; margin: 12px 0; }
+    .confidence { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; background: var(--cream); border-radius: 12px; padding: 10px; margin: 14px 0 0; }
     .conf-side { text-align: center; flex: 1; }
     .conf-arrow { font-size: 22px; color: var(--muted); }
     .move-arrow { font-size: 22px; color: var(--coral); }
@@ -217,7 +219,7 @@
     .phrase-foot { font-size: 12px; color: rgba(246,243,236,.35); font-style: italic; }
 
     @media (max-width: 600px) {
-      .panel-inner { padding: 28px 18px 90px; }
+      .panel-inner { padding: 32px 18px 104px; }
       .panel h1 { font-size: 36px; }
       .panel h2 { font-size: 24px; }
       .machine { flex-direction: column; }
@@ -255,7 +257,8 @@
     .phone-small{font-size:12px;line-height:1.43;color:var(--ink-soft)}
 
     /* Prevent original content from overflowing panels */
-    .digest, .news, .reasons, .lock, .beliefs { overflow: hidden; }
+    .news, .reasons, .lock, .beliefs { overflow: hidden; }
+    .digest { overflow: visible; }
     .step-header { display: flex; gap: 15px; align-items: flex-start; margin-bottom: 22px; overflow: hidden; }
     .weakens, .track, .reason { overflow: hidden; word-wrap: break-word; }
     .feedback { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
@@ -271,21 +274,27 @@
     .part { text-align: center; background: var(--cream-deep); border-radius: 10px; padding: 10px; }
     .waiting-list { margin-top: 12px; }
     .holding-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .confidence .side { background: var(--card); border: 1px solid var(--hairline); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+    .confidence .side b { display: block; font-size: 14px; line-height: 1.2; color: var(--ink); }
+    .confidence .move { color: var(--coral); font-size: 20px; font-weight: 700; line-height: 1; }
 
   
 
+    @keyframes fadeHint { 0%{opacity:.6} 60%{opacity:.6} 100%{opacity:0;pointer-events:none} }
     /* ── Extra for new narrative panels ── */
     .panic-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: rgba(246,243,236,.06); border: 1px solid rgba(246,243,236,.12); border-radius: 10px; margin-bottom: 7px; }
     .panic-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
     .panic-text { font-size: 14px; color: rgba(246,243,236,.7); line-height: 1.4; }
-    .q-card { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; background: var(--card); border: 1px solid var(--hairline); border-radius: 14px; margin-bottom: 10px; opacity: 0.45; transition: opacity .3s; }
+    .q-card { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; background: var(--card); border: 1px solid var(--hairline); border-radius: 14px; margin-bottom: 10px; opacity: 1; transition: border-color .3s, background .3s; }
     .q-card.active { opacity: 1; border-color: var(--coral); }
     .q-card.done { opacity: 1; border-color: var(--sage); }
     .q-num { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--coral); min-width: 28px; flex-shrink: 0; }
     .q-card.done .q-num { color: var(--sage); }
     .q-text { font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -.015em; line-height: 1.3; }
     .intervention-line { font-size: clamp(26px,4vw,38px); font-weight: 800; letter-spacing: -.04em; line-height: 1.05; color: var(--ink); margin-bottom: 14px; }
-    .forward-hook { margin-top: 20px; padding: 14px 16px; background: var(--ink); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; }
+    .forward-hook { margin-top: 20px; padding: 14px 16px; background: var(--ink); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; width: 100%; border: none; cursor: pointer; text-align: left; font-family: var(--sans); }
+    .forward-hook:hover { background: #242424; }
+    .forward-hook:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; }
     .forward-hook p { font-size: 15px; font-weight: 600; color: var(--cream); letter-spacing: -.015em; }
     .forward-hook span { font-size: 20px; color: var(--coral); flex-shrink: 0; }
     .q-eyebrow { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
@@ -293,6 +302,26 @@
     .q-eyebrow-label { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
     .payoff-banner { background: var(--sage-tint); border: 1px solid rgba(91,122,85,.3); border-radius: 14px; padding: 14px 16px; margin-bottom: 16px; }
     .payoff-banner p { font-size: 15px; font-weight: 600; color: var(--sage); margin: 0; }
+    .alert-stack { display: flex; flex-direction: column; gap: 8px; margin: 8px 0 16px; }
+    .alert-chip { display: flex; align-items: flex-start; gap: 9px; align-self: flex-start; background: rgba(217,119,87,.12); border: 1px solid rgba(217,119,87,.35); border-radius: 14px; padding: 10px 13px; }
+    .alert-chip.alt { background: rgba(184,136,40,.12); border-color: rgba(184,136,40,.36); }
+    .alert-chip-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--coral); flex-shrink: 0; margin-top: 4px; }
+    .alert-chip.alt .alert-chip-dot { background: var(--amber); }
+    .alert-chip-text { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--coral); line-height: 1.35; }
+    .alert-chip.alt .alert-chip-text { color: var(--amber); }
+    .payoff-card { background: var(--card); border: 1px solid var(--hairline); border-radius: 18px; padding: 18px 20px; margin-bottom: 12px; }
+    .payoff-card-label { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: var(--cream-deep); color: var(--muted); font-family: var(--mono); font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 12px; }
+    .payoff-card-label.amber { background: var(--amber-tint); color: var(--amber); }
+    .payoff-card-label.rust { background: var(--rust-tint); color: var(--rust); }
+    .payoff-card h3 { font-size: 20px; line-height: 1.18; letter-spacing: -.025em; margin: 0 0 10px; }
+    .payoff-status { margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: var(--cream-deep); color: var(--ink); font-weight: 700; font-size: 14px; }
+    .synthesis-card { background: var(--ink); color: var(--cream); border-radius: 18px; padding: 20px; margin-top: 14px; }
+    .synthesis-card p { color: rgba(246,243,236,.76); }
+    .synthesis-line { font-size: 24px; line-height: 1.12; font-weight: 800; letter-spacing: -.035em; color: var(--cream); margin: 0 0 6px; }
+    .synthesis-line span { color: var(--coral); }
+    .synthesis-grid { display: grid; grid-template-columns: 92px 1fr; gap: 8px 12px; margin: 16px 0; padding: 14px; border-radius: 14px; background: rgba(246,243,236,.06); }
+    .synthesis-grid div { font-size: 13px; line-height: 1.35; }
+    .synthesis-grid div:nth-child(odd) { font-family: var(--mono); font-size: 10px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; color: rgba(246,243,236,.42); }
   </style>
 </head>
 <body>
@@ -312,13 +341,25 @@
     <div class="panel-inner" style="justify-content:center">
       <div class="ch-label" style="color:rgba(246,243,236,.4)">
         <span class="ch-dot" style="background:rgba(246,243,236,.25)"></span>
-        Tuesday, June 3, 2026 · 7:00am IST
+        7:01 AM · DATA PATTERNS · NSE
       </div>
 
-      <h1 style="color:var(--cream);margin-bottom:8px">
+      <h1 style="color:var(--cream);margin-bottom:8px;font-size:clamp(36px,5.5vw,68px)">
         You wake up.<br>
-        <span style="color:var(--coral)">Your phone is already moving.</span>
+        <span style="color:rgba(246,243,236,.5);font-size:.75em">Data Patterns is</span><br>
+        <span style="color:var(--amber)">glowing amber.</span>
       </h1>
+
+      <div class="alert-stack">
+        <div class="alert-chip">
+          <span class="alert-chip-dot"></span>
+          <span class="alert-chip-text">Defence Ministry reviews imported radar hardware rules</span>
+        </div>
+        <div class="alert-chip alt">
+          <span class="alert-chip-dot"></span>
+          <span class="alert-chip-text">Data Patterns radar electronics delivery shifts to Q3 after platform testing delay</span>
+        </div>
+      </div>
 
       <div style="margin:20px 0;background:rgba(246,243,236,.06);border:1px solid rgba(246,243,236,.12);border-radius:16px;padding:16px 18px">
         <p style="font-family:var(--mono);font-size:9px;color:rgba(246,243,236,.4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px">Portfolio · 7:01am</p>
@@ -343,29 +384,33 @@
       </div>
 
       <p style="font-size:17px;color:rgba(246,243,236,.75);line-height:1.5;margin-bottom:20px">
-        A defence procurement headline just dropped. Data Patterns is amber. The noise begins immediately.
+        You know it is a defence stock. You do not know if the sector is in trouble, if Data Patterns is affected, or if revenue just moved. But your portfolio map is glowing amber, and the chart is already moving.
       </p>
 
       <div class="panic-item">
         <span class="panic-dot" style="background:var(--rust)"></span>
-        <span class="panic-text">"Should I sell before it drops further?"</span>
+        <span class="panic-text">"Is the sector in trouble?"</span>
       </div>
       <div class="panic-item">
         <span class="panic-dot" style="background:var(--amber)"></span>
-        <span class="panic-text">"What are people saying on the forums?"</span>
+        <span class="panic-text">"Is Data Patterns affected?"</span>
       </div>
       <div class="panic-item">
         <span class="panic-dot" style="background:var(--amber)"></span>
-        <span class="panic-text">"Is the thesis broken? Was it ever solid?"</span>
+        <span class="panic-text">"Is revenue delayed?"</span>
       </div>
       <div class="panic-item">
         <span class="panic-dot" style="background:var(--muted)"></span>
-        <span class="panic-text">"Why did I buy this in the first place?"</span>
+        <span class="panic-text">"Should I sell?"</span>
       </div>
 
-      <div class="forward-hook" style="margin-top:24px">
-        <p>There is a better way to wake up to this.</p>
+      <button class="forward-hook" style="margin-top:24px" onclick="navigate(1)" aria-label="Go to next panel">
+        <p>There is a calmer way to wake up to this.</p>
         <span>→</span>
+      </button>
+      <div id="swipe-hint" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;animation:fadeHint 3s ease 1s forwards">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9H15M11 5L15 9L11 13" stroke="rgba(246,243,236,.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-family:var(--mono);font-size:10px;color:rgba(246,243,236,.5);letter-spacing:.1em;text-transform:uppercase">Swipe or tap Next</span>
       </div>
     </div>
   </div>
@@ -375,37 +420,37 @@
     <div class="panel-inner" style="justify-content:center">
       <div class="ch-label">
         <span class="ch-dot"></span>
-        The only thing that actually helps
+        THE FIVE QUESTIONS
       </div>
 
-      <div class="intervention-line">Stop.</div>
-      <div class="intervention-line" style="color:var(--coral)">Don't look at the chart.</div>
-      <div class="intervention-line">Look at the business.</div>
+      <p style="font-size:clamp(48px,6.5vw,86px);font-weight:850;letter-spacing:-.065em;line-height:.9;color:var(--ink);margin-bottom:8px">Stop.</p>
+      <p style="font-size:clamp(30px,4.2vw,56px);font-weight:700;letter-spacing:-.045em;line-height:.96;color:var(--muted);margin-bottom:8px">Don&#39;t look at the chart.</p>
+      <p style="font-size:clamp(48px,6.5vw,86px);font-weight:850;letter-spacing:-.065em;line-height:.9;color:var(--coral)">Look at the<br>business.</p>
 
       <p style="font-size:18px;line-height:1.5;color:var(--muted);margin:20px 0 24px;max-width:520px">
-        Every investor who held through something scary and came out right had one thing: a reason. Not a feeling. A reason. Here are the 5 questions that build one.
+        Before you buy. Before you sell. Before you panic. Ask the Five Questions.
       </p>
 
       <div style="display:flex;flex-direction:column;gap:8px">
         <div class="q-card active">
           <span class="q-num">Q1</span>
-          <span class="q-text">What does this company actually sell?</span>
+          <span class="q-text"><span style="font-family:var(--mono);font-size:9px;color:var(--coral);letter-spacing:.1em;text-transform:uppercase">The Business</span><br>What does this company actually sell?</span>
         </div>
         <div class="q-card">
           <span class="q-num">Q2</span>
-          <span class="q-text">Where does the next rupee come from?</span>
+          <span class="q-text"><span style="font-family:var(--mono);font-size:9px;color:var(--coral);letter-spacing:.1em;text-transform:uppercase">The Money</span><br>Where does the next rupee come from?</span>
         </div>
         <div class="q-card">
           <span class="q-num">Q3</span>
-          <span class="q-text">Can the story be trusted?</span>
+          <span class="q-text"><span style="font-family:var(--mono);font-size:9px;color:var(--coral);letter-spacing:.1em;text-transform:uppercase">The Trust</span><br>Can the story be trusted?</span>
         </div>
         <div class="q-card">
           <span class="q-num">Q4</span>
-          <span class="q-text">Is the price already too high?</span>
+          <span class="q-text"><span style="font-family:var(--mono);font-size:9px;color:var(--coral);letter-spacing:.1em;text-transform:uppercase">The Price</span><br>Is the story already too expensive?</span>
         </div>
         <div class="q-card" style="background:var(--ink);border-color:var(--ink)">
           <span class="q-num" style="color:var(--coral)">Q5</span>
-          <span class="q-text" style="color:var(--cream)">Why do you personally hold it - and will you know if that changes?</span>
+          <span class="q-text" style="color:var(--cream)"><span style="font-family:var(--mono);font-size:9px;color:var(--coral);letter-spacing:.1em;text-transform:uppercase">The Reason</span><br>Why would you hold it - and what would change that?</span>
         </div>
       </div>
 
@@ -443,6 +488,7 @@
           <b>Mission system</b>
           <span>Can now sense, process, guide, communicate</span>
         </div>
+      </div>
 
       <div class="card" style="margin-top:12px">
         <h3>The body analogy</h3>
@@ -454,10 +500,10 @@
         <p>In a phone, a glitch is annoying. In a radar or satellite, a glitch is mission failure. That is why qualification, engineering depth, and past execution matter more than price. A company that has delivered before gets the next contract. A new entrant spends 5 years proving itself.</p>
       </div>
 
-      <div class="forward-hook">
+      <button class="forward-hook" onclick="navigate(1)" aria-label="Go to next panel">
         <p>Now you know what it does. But does it make money?</p>
         <span>→</span>
-      </div>
+      </button>
     </div>
   </div>
 
@@ -543,10 +589,10 @@
         <p style="font-size:11px;color:var(--muted);margin-top:6px;font-style:italic">Indigenization target: 75% domestic by FY27. Growing pie, growing share.</p>
       </div>
 
-      <div class="forward-hook" style="margin-top:12px">
+      <button class="forward-hook" style="margin-top:12px" onclick="navigate(1)" aria-label="Go to next panel">
         <p>Revenue looks right. But is the cash actually arriving?</p>
         <span>→</span>
-      </div>
+      </button>
     </div>
   </div>
 
@@ -603,10 +649,10 @@
         <p style="font-size:12px;color:var(--amber);font-weight:500;margin-top:10px;font-style:italic">This is not a red flag. It is the honest shape of this business. Every reason you save gets checked against this reality.</p>
       </div>
 
-      <div class="forward-hook">
+      <button class="forward-hook" onclick="navigate(1)" aria-label="Go to next panel">
         <p>Story checks out. But are you paying too much for it?</p>
         <span>→</span>
-      </div>
+      </button>
     </div>
   </div>
 
@@ -662,10 +708,10 @@
         <p style="font-size:12px;color:var(--coral-deep);font-weight:500;margin-top:10px;font-style:italic">This does not say avoid. It says the bar is high. If execution wobbles, the price has less forgiveness.</p>
       </div>
 
-      <div class="forward-hook">
+      <button class="forward-hook" onclick="navigate(1)" aria-label="Go to next panel">
         <p>Now the hardest question. Why do <em>you</em> hold it?</p>
         <span>→</span>
-      </div>
+      </button>
     </div>
   </div>
 
@@ -762,42 +808,49 @@
     <div class="panel-inner">
       <div class="ch-label">
         <span class="ch-dot" style="background:var(--coral)"></span>
-        <span style="font-family:var(--mono);font-size:11px;font-weight:800;color:var(--coral)">The same headline. Handled differently.</span>
+        <span style="font-family:var(--mono);font-size:11px;font-weight:800;color:var(--coral)">The same alerts. Handled differently.</span>
         <span class="ch-badge active">THIS IS YOUR CARD</span>
       </div>
 
       <div class="payoff-banner">
         <p>You saved your reasons. Now watch what happens to that 7am panic.</p>
       </div>
-
-      <p style="font-size:14px;color:var(--muted);margin-bottom:18px">A news event overnight. Your reason gets checked. Here is exactly what lands on your phone.</p>
-
-
-      <div class="digest"><span class="chip">Relevant, not thesis-changing</span><h3>Radar order cleared — good for the theme, not proof for Data Patterns yet.</h3><p style="font-size:16px;line-height:1.6;color:var(--ink-soft)">Think of this like hearing that a city is building a new airport. It is good news for construction suppliers generally, but you still need to know who got the contract. This radar program supports the defence-electronics theme. It does not yet prove Data Patterns will benefit directly.</p>
-        <div class="status-box"><div class="mini-label">How this touches your Data Patterns reason</div><p><b>“India’s defence electronics localization keeps growing.”</b></p><div class="status-line"><span class="status-icon">~</span><span><b>Where the reason stands: Supported, not confirmed</b> · Direct company link unknown</span></div><p style="font-size:14px;color:var(--coral-deep);font-weight:650;margin:0">The reason is directionally supported. It becomes stronger only if Data Patterns is named, wins a related order, or shows promised-work expansion in this area.</p><div class="confidence"><div class="side"><div class="mini-label">Before</div><b>Neutral</b></div><div class="move">→</div><div class="side"><div class="mini-label">Now</div><b style="color:var(--amber)">Slightly supported</b></div></div></div>
-        <div class="status-box"><div class="mini-label">Trust check</div><p><b>The next proof will not be the headline. It will be whether the business shows it.</b></p><div class="before-after"><div class="ba"><div class="mini-label">Promised work</div><b>Watch</b></div><div class="ba"><div class="mini-label">Money waiting</div><b class="accent">Check</b></div><div class="ba"><div class="mini-label">Cash coming in</div><b>Needed</b></div></div><p style="font-size:14px;color:var(--coral-deep);font-weight:650;margin:12px 0 0">If the theme is real, it should eventually show up as stronger promised work, clean delivery, money left after costs, and cash following profit.</p><details class="raw-toggle"><summary>Show the raw numbers</summary><div class="raw-data"><div class="metric-row"><strong>Promised work</strong><span>Up QoQ</span><div class="spark"></div></div><div class="metric-row"><strong>Money waiting</strong><span>High</span><div class="spark"></div></div><div class="metric-row"><strong>Cash coming in</strong><span>Needs next quarter</span><div class="spark"></div></div></div></details></div>
-        <div class="status-box"><div class="mini-label">Price sense</div><p><b>The story is good, but the price is asking for a lot of it to come true.</b></p><div class="before-after"><div class="ba"><div class="mini-label">Business story</div><b>Strong</b></div><div class="ba"><div class="mini-label">Price comfort</div><b class="accent">Low</b></div><div class="ba"><div class="mini-label">Room for error</div><b style="color:var(--amber)">Thin</b></div></div><p style="font-size:14px;color:var(--coral-deep);font-weight:650;margin:12px 0 0">This does not change the company story. It changes the patience needed. A demanding price needs cleaner execution.</p></div>
-        <div class="so-what"><h3>The calm read</h3><p style="font-size:15px;line-height:1.5;color:var(--ink-soft);margin:0">You do not need to react to this headline. It supports the world story, but it has not changed the company story yet.</p></div>
-        <div class="source-box"><div class="mini-label">What we read</div><p style="font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--ink-soft);margin:8px 0 0">· Defence procurement update<br>· Company announcements scan<br>· Results and promised-work watchlist</p></div>
-        <div class="source-box"><div class="mini-label">What we are waiting for next</div><div class="waiting-list"><div>Company announcement naming participation</div><div>Promised-work movement in the next results</div><div>Management commentary on radar or electronics programs</div><div>Cash and delivery quality in the next quarter</div><div>Whether the price cools down or proof catches up</div></div></div>
-        <div class="feedback"><button>Useful</button><button>Already knew</button><button>Noise</button></div><div class="feedback-note">If you mark this as noise, we will only surface it again if Data Patterns is directly named, promised work moves, or the price-reality gap changes.</div>
-    </div>
-  </div>
-
-  <!-- ═══ PANEL 9: THE PHRASE ═══ -->
-  <div class="panel" style="background:var(--cream)">
-    <div class="panel-inner">
-      <div class="ch-label">
-        <span class="ch-dot"></span>
-        One phrase you heard today
+      <div style="text-align:center;padding:14px 0 6px">
+        <p style="font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">Same headline.</p>
+        <p style="font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--coral)">Different morning.</p>
       </div>
-      <h2>Promised work.</h2>
-      <p class="lead">Every digest includes one plain-English explainer - a term you will hear today, finally explained so it actually lands.</p>
-      <div class="phrase-card">
-        <div class="phrase-label">The phrase of the day</div>
-        <div class="phrase-title">Promised work - the restaurant booking analogy.</div>
-        <div class="phrase-body">Promised work is like a restaurant's confirmed bookings for the next few months. It is not cash yet. But it tells you how much work is already lined up. For Data Patterns, it matters because projects are large, specialized, and delivered over time. A full pipeline means the revenue story is already written - it just needs to arrive.</div>
-        <div class="phrase-foot">Knowing what this means is enough. You do not need to do anything with it.</div>
+
+      <p style="font-size:14px;color:var(--muted);margin-bottom:18px">Two alerts arrived overnight. One is macro noise. One is a short-term headwind. Neither is the same as a broken reason.</p>
+
+      <div class="payoff-card">
+        <span class="payoff-card-label amber">Macro noise</span>
+        <h3>Radar hardware review sounds close - but it does not touch Data Patterns' electronics layer.</h3>
+        <p>The review is about imported hardware and platform components. Data Patterns' saved reason is about indigenous electronic processing, communication systems, and mission electronics. Same defence world. Different business layer.</p>
+        <div class="payoff-status">Sector touched. Company reason not broken.</div>
+      </div>
+
+      <div class="payoff-card">
+        <span class="payoff-card-label rust">Short-term headwind</span>
+        <h3>Delivery moved to Q3 - timing risk increased, order still visible.</h3>
+        <p>The delivery shift comes from platform-level testing delays, not rejection of Data Patterns' electronic subsystem. The order is not cancelled. The work is still visible, but the revenue may arrive later.</p>
+        <div class="payoff-status">Delayed, not broken.</div>
+      </div>
+
+      <div class="synthesis-card">
+        <div class="synthesis-line">The sector got noisy.</div>
+        <div class="synthesis-line">The calendar moved.</div>
+        <div class="synthesis-line"><span>The reason did not break.</span></div>
+
+        <div class="synthesis-grid">
+          <div>Layer</div><div>Read</div>
+          <div>Sector</div><div>No direct hit</div>
+          <div>Company</div><div>Delivery timing pushed</div>
+          <div>Money</div><div>Watch cash and money waiting</div>
+          <div>Price</div><div>Less room for delays</div>
+          <div>Reason</div><div>Touched, not broken</div>
+        </div>
+
+        <p style="margin:0">The macro alert was noise. The micro alert is a timing headwind. The reason did not break.</p>
       </div>
     </div>
   </div>
@@ -877,11 +930,17 @@
 
   function goTo(index) {
     current = Math.max(0, Math.min(panels.length - 1, index));
-    panels[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    panels[current].scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'start' });
+    const inner = panels[current].querySelector('.panel-inner');
+    if (inner) inner.scrollTop = 0;
     updateUI();
   }
 
-  function navigate(dir) { goTo(current + dir); }
+  function navigate(dir) {
+    const hint = document.getElementById('swipe-hint');
+    if (hint) hint.style.display = 'none';
+    goTo(current + dir);
+  }
 
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
