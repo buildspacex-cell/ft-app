@@ -54,9 +54,10 @@
       padding: 40px 32px 120px;
       overflow-y: scroll; overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
-      overscroll-behavior-y: contain;
+      overscroll-behavior: contain;
       display: flex; flex-direction: column; justify-content: flex-start;
       height: 100%;
+      contain: layout;
     }
 
     /* ── Chapter label ── */
@@ -252,6 +253,25 @@
     .step-header{display:flex;gap:15px;align-items:flex-start;margin-bottom:22px}
     .side{background:var(--card);border:1px solid var(--hairline);border-radius:14px;padding:12px}
     .phone-small{font-size:12px;line-height:1.43;color:var(--ink-soft)}
+
+    /* Prevent original content from overflowing panels */
+    .digest, .news, .reasons, .lock, .beliefs { overflow: hidden; }
+    .step-header { display: flex; gap: 15px; align-items: flex-start; margin-bottom: 22px; overflow: hidden; }
+    .weakens, .track, .reason { overflow: hidden; word-wrap: break-word; }
+    .feedback { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+    .feedback button { padding: 7px 13px; border-radius: 20px; border: 1px solid var(--hairline); background: transparent; font-family: var(--sans); font-size: 12px; color: var(--muted); cursor: pointer; }
+    .digest h3 { font-size: 17px; font-weight: 700; letter-spacing: -.02em; line-height: 1.2; color: var(--ink); margin-bottom: 10px; }
+    .digest p { font-size: 14px; line-height: 1.55; color: var(--ink-soft); }
+    .holding { background: var(--sage-tint); border: 1px solid rgba(91,122,85,.3); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+    .so-what { margin-top: 12px; padding: 14px; background: var(--cream-deep); border-radius: 12px; }
+    .so-what h3 { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+    .source-box { background: var(--cream-deep); border-radius: 10px; padding: 10px 12px; margin-top: 10px; }
+    .tip { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 8px; }
+    .three-parts { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 12px 0; }
+    .part { text-align: center; background: var(--cream-deep); border-radius: 10px; padding: 10px; }
+    .waiting-list { margin-top: 12px; }
+    .holding-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
+
   </style>
 </head>
 <body>
@@ -369,7 +389,7 @@
         </div>
       </div>
 
-      <div class="card"><h3>The body analogy</h3><p>If a defence system were a human body, the metal platform is the body. The radar is the eyes. The communication system is the voice. The processors and electronics are the brain and nerves. Data Patterns works in that brain-and-nerves layer.</p></div></div>
+      <div class="card"><h3>The body analogy</h3><p>If a defence system were a human body, the metal platform is the body. The radar is the eyes. The communication system is the voice. The processors and electronics are the brain and nerves. Data Patterns works in that brain-and-nerves layer.</p></div>
       <div class="card">
         <h3>Why trust matters more than advertising</h3>
         <p>In a phone, a glitch is annoying. In a radar or satellite, a glitch is mission failure. That is why qualification, engineering depth, and past execution matter more than price.</p>
@@ -675,7 +695,7 @@
       </div>
       <p style="font-size:14px;color:var(--muted);margin-bottom:18px">A news event overnight. Your reason gets checked. Here is exactly what lands on your phone.</p>
 
-<div class="step-badge active">8</div><div><div class="mini-label">7:00am</div><h2>The morning note</h2></div></div>
+
       <div class="digest"><span class="chip">Relevant, not thesis-changing</span><h3>Radar order cleared — good for the theme, not proof for Data Patterns yet.</h3><p style="font-size:16px;line-height:1.6;color:var(--ink-soft)">Think of this like hearing that a city is building a new airport. It is good news for construction suppliers generally, but you still need to know who got the contract. This radar program supports the defence-electronics theme. It does not yet prove Data Patterns will benefit directly.</p>
         <div class="status-box"><div class="mini-label">How this touches your Data Patterns reason</div><p><b>“India’s defence electronics localization keeps growing.”</b></p><div class="status-line"><span class="status-icon">~</span><span><b>Where the reason stands: Supported, not confirmed</b> · Direct company link unknown</span></div><p style="font-size:14px;color:var(--coral-deep);font-weight:650;margin:0">The reason is directionally supported. It becomes stronger only if Data Patterns is named, wins a related order, or shows promised-work expansion in this area.</p><div class="confidence"><div class="side"><div class="mini-label">Before</div><b>Neutral</b></div><div class="move">→</div><div class="side"><div class="mini-label">Now</div><b style="color:var(--amber)">Slightly supported</b></div></div></div>
         <div class="status-box"><div class="mini-label">Trust check</div><p><b>The next proof will not be the headline. It will be whether the business shows it.</b></p><div class="before-after"><div class="ba"><div class="mini-label">Promised work</div><b>Watch</b></div><div class="ba"><div class="mini-label">Money waiting</div><b class="accent">Check</b></div><div class="ba"><div class="mini-label">Cash coming in</div><b>Needed</b></div></div><p style="font-size:14px;color:var(--coral-deep);font-weight:650;margin:12px 0 0">If the theme is real, it should eventually show up as stronger promised work, clean delivery, money left after costs, and cash following profit.</p><details class="raw-toggle"><summary>Show the raw numbers</summary><div class="raw-data"><div class="metric-row"><strong>Promised work</strong><span>Up QoQ</span><div class="spark"></div></div><div class="metric-row"><strong>Money waiting</strong><span>High</span><div class="spark"></div></div><div class="metric-row"><strong>Cash coming in</strong><span>Needs next quarter</span><div class="spark"></div></div></div></details></div>
