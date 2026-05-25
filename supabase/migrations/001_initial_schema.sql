@@ -122,7 +122,8 @@ create table if not exists waitlist (
   source     text default 'landing-in',  -- landing-in, landing-us, hero, footer
   created_at timestamptz default now(),
   converted       boolean default false,  -- true once they complete onboarding
-  stock_interest  text                   -- which stock they want covered first
+  stock_interest  text,                  -- which stock they want covered first
+  wish_text       text                   -- free text: what they wish they understood
   unique(email)
 );
 

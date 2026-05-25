@@ -315,10 +315,11 @@ function EmailForm({ dark = false, source = 'landing-us' }: { dark?: boolean; so
           </div>
         </div>
       ) : (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <p style={{ fontSize: 14, color: dark ? 'rgba(246,243,236,0.7)' : 'var(--muted)', margin: 0, lineHeight: 1.4 }}>
-            Got it. We&apos;ll make sure <strong style={{ color: dark ? 'var(--cream)' : 'var(--ink)', fontWeight: 600 }}>{stock}</strong> is ready on day one.
+        <div>
+          <p style={{ fontSize: 13, color: dark ? 'rgba(246,243,236,0.6)' : 'var(--muted)', marginBottom: 16, lineHeight: 1.4 }}>
+            Got it. We&apos;ll make sure <strong style={{ color: dark ? 'var(--cream)' : 'var(--ink)', fontWeight: 600 }}>{stock === 'OTHER' ? 'your pick' : stock}</strong> is ready on day one.
           </p>
+          <WishQuestion dark={dark} />
         </div>
       )}
     </div>

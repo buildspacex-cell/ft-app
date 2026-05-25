@@ -11,10 +11,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
   }
 
-  const { email, source = 'landing-in', stock_interest } = body as {
+  const { email, source = 'landing-in', stock_interest, wish_text } = body as {
     email?: string
     source?: string
     stock_interest?: string
+    wish_text?: string
   }
 
   console.log('[waitlist] Submission received:', { email, source, stock_interest })
