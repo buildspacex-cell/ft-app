@@ -262,24 +262,67 @@ function WishQuestion({ dark = false }: { dark?: boolean }) {
 }
 
 
-// ─── Phone step — shown after wish question ───────────────────────────────────
+// ─── Phone step — with country selector and validation ───────────────────────
 
-function PhoneStep({ dark = false }: { dark?: boolean }) {
+const COUNTRIES = [
+  { code: 'IN', flag: '🇮🇳', name: 'India',          dial: '+91',  pattern: /^[6-9]\d{9}$/ },
+  { code: 'US', flag: '🇺🇸', name: 'United States',  dial: '+1',   pattern: /^[2-9]\d{9}$/ },
+  { code: 'GB', flag: '🇬🇧', name: 'United Kingdom', dial: '+44',  pattern: /^\d{10}$/ },
+  { code: 'SG', flag: '🇸🇬', name: 'Singapore',      dial: '+65',  pattern: /^[689]\d{7}$/ },
+  { code: 'AE', flag: '🇦🇪', name: 'UAE',             dial: '+971', pattern: /^[5]\d{8}$/ },
+  { code: 'AU', flag: '🇦🇺', name: 'Australia',       dial: '+61',  pattern: /^[4]\d{8}$/ },
+  { code: 'CA', flag: '🇨🇦', name: 'Canada',          dial: '+1',   pattern: /^[2-9]\d{9}$/ },
+  { code: 'DE', flag: '🇩🇪', name: 'Germany',         dial: '+49',  pattern: /^\d{10,11}$/ },
+  { code: 'OTHER', flag: '🌍', name: 'Other',         dial: '+',    pattern: /^\d{6,15}$/ },
+]
+
+function PhoneStep({ dark = false, defaultCountry = 'IN' }: { dark?: boolean; defaultCountry?: string }) {
+  const [countryCode, setCountryCode] = useState(defaultCountry)
   const [phone, setPhone] = useState('')
   const [saved, setSaved] = useState(false)
+  const [error, setError] = useState('')
+
+  const country = COUNTRIES.find(c => c.code === countryCode) || COUNTRIES[0]
+
+  function validate(num: string) {
+    const digits = num.replace(/\D/g, '')
+    if (!digits) return ''
+    if (!country.pattern.test(digits)) {
+      return countryCode === 'OTHER'
+        ? 'Enter a valid number (6-15 digits)'
+        : `Enter a valid ${country.name} number`
+    }
+    return ''
+  }
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const val = e.target.value.replace(/[^0-9\s\-()]/g, '')
+    setPhone(val)
+    if (error) setError(validate(val))
+  }
+
+  function handleBlur() {
+    if (phone.trim()) setError(validate(phone))
+  }
 
   async function savePhone() {
+    const err = validate(phone)
+    if (err) { setError(err); return }
     if (!phone.trim() || saved) return
     setSaved(true)
+    const full = `${country.dial} ${phone.trim()}`
     fetch('/api/waitlist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone }),
+      body: JSON.stringify({ phone: full }),
     }).catch(() => {})
   }
 
   const subtle = dark ? 'rgba(246,243,236,0.6)' : 'var(--muted)'
   const strong = dark ? 'var(--cream)' : 'var(--ink)'
+  const inputBg = dark ? 'rgba(246,243,236,0.06)' : 'var(--paper)'
+  const inputBorder = dark ? '1px solid rgba(246,243,236,0.16)' : '1px solid var(--hairline)'
+  const isValid = !validate(phone) && phone.trim().length > 0
 
   if (saved) return (
     <p style={{ fontSize: 14, color: subtle, lineHeight: 1.5, marginTop: 16 }}>
@@ -295,47 +338,80 @@ function PhoneStep({ dark = false }: { dark?: boolean }) {
       <p style={{ fontSize: 14, fontWeight: 600, letterSpacing: '-0.01em', color: strong, marginBottom: 6, lineHeight: 1.4 }}>
         We&apos;d love to call you.
       </p>
-      <p style={{ fontSize: 13.5, color: subtle, marginBottom: 14, lineHeight: 1.5 }}>
-        Not a sales call — 15 minutes where you talk and we listen. What stocks do you own? What confuses you about them? Your answers will shape what we build. WhatsApp number if you&apos;re open to it.
+      <p style={{ fontSize: 13.5, color: subtle, marginBottom: 16, lineHeight: 1.5 }}>
+        Not a sales call - 15 minutes where you talk and we listen. What stocks do you own? What confuses you about them? Your answers will shape what we build. WhatsApp number if you&apos;re open to it.
       </p>
-      <div style={{ display: 'flex', gap: 8 }}>
+
+      {/* Country + number row */}
+      <div style={{ display: 'flex', gap: 8, marginBottom: error ? 6 : 10 }}>
+        {/* Country selector */}
+        <select
+          value={countryCode}
+          onChange={e => { setCountryCode(e.target.value); setPhone(''); setError('') }}
+          style={{
+            padding: '10px 10px', borderRadius: 10, flexShrink: 0,
+            border: inputBorder, background: inputBg,
+            fontFamily: 'var(--font-sans)', fontSize: 14,
+            color: dark ? 'var(--cream)' : 'var(--ink)',
+            outline: 'none', cursor: 'pointer',
+            minWidth: 80,
+          }}
+        >
+          {COUNTRIES.map(c => (
+            <option key={c.code} value={c.code}>{c.flag} {c.dial}</option>
+          ))}
+        </select>
+
+        {/* Number input */}
         <input
           type="tel"
           value={phone}
-          onChange={e => setPhone(e.target.value)}
-          placeholder="+91 98765 43210"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder={countryCode === 'IN' ? '98765 43210' : countryCode === 'US' ? '(555) 000-0000' : 'your number'}
           style={{
-            flex: 1, padding: '10px 12px', borderRadius: 10,
-            border: dark ? '1px solid rgba(246,243,236,0.16)' : '1px solid var(--hairline)',
-            background: dark ? 'rgba(246,243,236,0.06)' : 'var(--paper)',
+            flex: 1, padding: '10px 12px', borderRadius: 10, minWidth: 0,
+            border: error ? '1px solid var(--rust)' : isValid ? '1px solid var(--sage)' : inputBorder,
+            background: inputBg,
             fontFamily: 'var(--font-sans)', fontSize: 14,
             color: dark ? 'var(--cream)' : 'var(--ink)',
-            outline: 'none',
+            outline: 'none', transition: 'border-color 0.15s',
           }}
         />
+
+        {/* Send button */}
         <button
           onClick={savePhone}
-          disabled={!phone.trim()}
           style={{
             padding: '10px 16px', borderRadius: 10, border: 'none',
-            background: phone.trim() ? 'var(--coral)' : (dark ? 'rgba(246,243,236,0.1)' : 'var(--hairline)'),
-            color: phone.trim() ? '#fff' : subtle,
+            background: isValid ? 'var(--coral)' : (dark ? 'rgba(246,243,236,0.1)' : 'var(--hairline)'),
+            color: isValid ? '#fff' : subtle,
             fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 600,
-            cursor: phone.trim() ? 'pointer' : 'not-allowed', flexShrink: 0,
+            cursor: isValid ? 'pointer' : 'not-allowed', flexShrink: 0,
+            transition: 'background 0.15s',
           }}
         >
           Send
         </button>
       </div>
+
+      {/* Validation error */}
+      {error && (
+        <p style={{ fontSize: 12, color: 'var(--rust)', marginBottom: 8, letterSpacing: '-0.005em' }}>
+          {error}
+        </p>
+      )}
+
       <button
         onClick={() => setSaved(true)}
-        style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 12, color: subtle, padding: '8px 0 0', display: 'block' }}
+        style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 12, color: subtle, padding: '2px 0', display: 'block' }}
       >
         Skip
       </button>
     </div>
   )
 }
+
 
 // ─── Email form ───────────────────────────────────────────────────────────────
 
