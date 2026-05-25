@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fundamentally True — See how it works · Data Patterns</title>
+  <title>Fundamentally True - See how it works · Data Patterns</title>
   <style>
     :root{
       --cream:#f6f3ec; --cream-deep:#eee7da; --card:#fffdf8; --ink:#171717; --ink-soft:#393632; --muted:#777068;
@@ -37,6 +37,8 @@
     @media(max-width:900px){.hero,.grid-2,.three-parts,.map-grid,.price-cards{grid-template-columns:1fr}.simple-machine{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}.before-after{grid-template-columns:1fr}.ba{border-right:0;border-bottom:1px solid var(--hairline)}.ba:last-child{border-bottom:0}.nav .brand span{display:none}}
   
     /* Card reveal system */
+    .chapter-section { opacity: 0; transform: translateY(24px); transition: opacity 0.55s cubic-bezier(.16,1,.3,1), transform 0.55s cubic-bezier(.16,1,.3,1); }
+    .chapter-section.visible { opacity: 1; transform: translateY(0); }
     .chapter { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .chapter.visible { opacity: 1; transform: translateY(0); }
     .chapter-card { background: var(--card); border: 1px solid var(--hairline); border-radius: 20px; overflow: hidden; margin-bottom: 12px; }
@@ -138,7 +140,7 @@
       <div class="mini-panel" style="background:var(--coral-tint);border-color:rgba(217,119,87,.28)"><div class="mini-label">Why this showed up today</div><h3>You added Data Patterns because India’s defence theme sounded interesting.</h3><p>We turned that curiosity into a company story, a future story, a price check, and a few reasons that can actually be watched.</p></div>
       <div class="portfolio-map"><div class="mini-label">Your portfolio map</div><h3>Only the reasons you saved are being watched.</h3><p>Data Patterns is one tile in a larger view. Each company has its own reasons, and the morning note only wakes you up when something touches one of them.</p><div class="map-grid"><div class="holding"><div class="holding-top"><b>Data Patterns</b><i class="pulse amber"></i></div><span>Defence electronics · reason touched today</span></div><div class="holding"><div class="holding-top"><b>HDFC Bank</b><i class="pulse sage"></i></div><span>Loan quality · quiet today</span></div><div class="holding"><div class="holding-top"><b>CDSL</b><i class="pulse sage"></i></div><span>Demat growth · quiet today</span></div><div class="holding"><div class="holding-top"><b>Dixon</b><i class="pulse"></i></div><span>Manufacturing margins · needs check</span></div></div></div>
 
-      <div class="divider"></div>
+      <div class="chapter-section"><div class="divider"></div>
       <div class="step-header"><div class="step-badge">1</div><div><div class="mini-label" style="display:flex;align-items:center;gap:8px">Chapter 1 · Business Story <span style="background:var(--ink);color:#fff;font-family:var(--mono);font-size:8px;font-weight:700;padding:2px 7px;border-radius:999px;letter-spacing:.06em;white-space:nowrap">READ ONCE</span></div><h2>What Data Patterns actually does</h2></div></div>
       <p class="lead" style="font-size:17px;margin-bottom:18px">Data Patterns does not make the tank. It does not make the missile. It works on the electronics that help defence and space systems see, think, talk, and respond.</p>
       <div class="analogy"><h3>The body analogy</h3><p>If a defence system were a human body, the metal platform is the body. The radar is the eyes. The communication system is the voice. The processors and electronics are the brain and nerves. Data Patterns works in that brain-and-nerves layer.</p></div>
@@ -147,7 +149,8 @@
       <div class="story-card"><h3>Why trust matters</h3><p>In a phone, a glitch is annoying. In a radar, satellite, or aircraft system, a glitch can be mission failure. That is why qualification, engineering depth, and past execution matter more than advertising.</p></div>
       <div class="story-card"><h3>Why revenue can be lumpy</h3><p>This is not like selling soap every day. It is more like building parts for a space mission or a railway signalling system: orders arrive in batches, testing takes time, and delivery depends on program schedules.</p></div>
 
-      <div class="divider"></div>
+      </div>
+<div class="chapter-section"><div class="divider"></div>
       <div class="step-header"><div class="step-badge">2</div><div><div class="mini-label">Chapter 2 · Money Map</div><h2>How the money comes in</h2></div></div>
       <p class="lead" style="font-size:17px;margin-bottom:18px">The money comes in slowly, then suddenly. First, the company designs and qualifies a specialized system. Then, if the program moves ahead, production orders follow.</p>
       <div class="stream"><div class="stream-row"><div class="stream-color" style="background:var(--ink)"></div><div><h3>Design and development</h3><p>Engineering work for specialized defence and aerospace systems.</p></div><div class="pct">01</div></div></div>
@@ -155,19 +158,21 @@
       <div class="stream"><div class="stream-row"><div class="stream-color" style="background:var(--sage)"></div><div><h3>Space and satellite work</h3><p>Electronics that must survive harsh operating conditions.</p></div><div class="pct">03</div></div></div>
       <div class="story-card" style="background:var(--coral-tint);border-color:rgba(217,119,87,.28)"><h3>The rhythm</h3><p>It is not like selling soap every day. It is closer to building parts for a space mission: long conversations, careful testing, big orders, and delivery over time.</p></div>
 
-      <div class="divider"></div>
+      </div>
+<div class="chapter-section"><div class="divider"></div>
       <div class="step-header"><div class="step-badge">3</div><div><div class="mini-label">Chapter 3 · Trust Check</div><h2>Can the story be trusted?</h2></div></div>
       <p class="lead" style="font-size:17px;margin-bottom:18px">The story has to leave proof. For a company like Data Patterns, the proof is simple: promised work should become delivered work, delivered work should leave money behind, and money should eventually come in.</p>
-      <div class="analogy"><h3>The footprint analogy</h3><p>A headline tells you what happened outside the house. The accounts show the footprints inside. If work is growing but money is not coming in, something is dragging. If the company says it is doing high-value work but keeps less money from each rupee, the work may be getting harder. If materials pile up, it may be preparing for delivery — or carrying risk.</p></div>
+      <div class="analogy"><h3>The footprint analogy</h3><p>A headline tells you what happened outside the house. The accounts show the footprints inside. If work is growing but money is not coming in, something is dragging. If the company says it is doing high-value work but keeps less money from each rupee, the work may be getting harder. If materials pile up, it may be preparing for delivery - or carrying risk.</p></div>
       <div class="grid-2"><div class="future-card"><h3>Promises vs delivery</h3><p>Promised work is not the same as delivered work. The question is whether what customers promised is actually turning into completed work.</p><details class="raw-toggle"><summary>Show the raw numbers</summary><div class="raw-data"><div class="metric-row"><strong>Promised work</strong><span>₹1,000 Cr</span><div class="spark"></div></div><div class="metric-row"><strong>Delivered work</strong><span>₹420 Cr</span><div class="spark"></div></div><div class="metric-row"><strong>Conversion</strong><span>42%</span><div class="spark"></div></div></div></details></div><div class="future-card"><h3>Money left behind</h3><p>Specialized work should leave decent money after costs. If less money is left behind, the work may be getting more ordinary, more expensive, or harder to deliver.</p><details class="raw-toggle"><summary>Show the raw numbers</summary><div class="raw-data"><div class="metric-row"><strong>Money left after direct costs</strong><span>58%</span><div class="spark"></div></div><div class="metric-row"><strong>Operating money left</strong><span>34%</span><div class="spark"></div></div><div class="metric-row"><strong>Direction</strong><span>Stable</span><div class="spark"></div></div></div></details></div><div class="future-card"><h3>Money still waiting</h3><p>Sometimes the work is done, but the money has not arrived yet. If customers take longer to pay, the story can look good while cash feels tight.</p><details class="raw-toggle"><summary>Show the raw numbers</summary><div class="raw-data"><div class="metric-row"><strong>Money waiting</strong><span>₹210 Cr</span><div class="spark"></div></div><div class="metric-row"><strong>Waiting time</strong><span>96 days</span><div class="spark"></div></div><div class="metric-row"><strong>Direction</strong><span>Watch</span><div class="spark"></div></div></div></details></div><div class="future-card"><h3>Money stuck inside the business</h3><p>Materials, unfinished work, and unpaid bills show whether growth is smooth or cash-hungry. Growth that traps too much money inside the business needs watching.</p><details class="raw-toggle"><summary>Show the raw numbers</summary><div class="raw-data"><div class="metric-row"><strong>Materials held</strong><span>₹145 Cr</span><div class="spark"></div></div><div class="metric-row"><strong>Cash from operations</strong><span>₹72 Cr</span><div class="spark"></div></div><div class="metric-row"><strong>Cash vs profit</strong><span>Needs check</span><div class="spark"></div></div></div></details></div></div>
       <div class="story-card" style="background:var(--coral-tint);border-color:rgba(217,119,87,.28)"><h3>The trust read</h3><p>The clean version is simple: promised work becomes delivered work, the company keeps enough money after costs, customers do not take too long to pay, and cash eventually follows profit. If one of these breaks, the reason needs a closer look.</p></div>
 
-      <div class="divider"></div>
+      </div>
+<div class="chapter-section"><div class="divider"></div>
       <div class="step-header"><div class="step-badge">4</div><div><div class="mini-label">Chapter 4 · Future Story</div><h2>Why this company could matter over the next decade</h2></div></div>
       <p class="lead" style="font-size:17px">India wants more of its defence and space capability built at home. If more of the electronic intelligence layer moves to domestic specialists, Data Patterns becomes part of a larger national story.</p>
       <div class="grid-2"><div class="future-card"><!-- India defence spend chart -->
           <div class="chart-wrap">
-            <p class="chart-label">India defence budget — Rs. lakh crore</p>
+            <p class="chart-label">India defence budget - Rs. lakh crore</p>
             <div class="bar-row">
               <span class="bar-label" style="font-family:var(--mono);font-size:11px">FY21</span>
               <div class="bar-track"><div class="bar-fill" style="width:52%;background:var(--ink);opacity:0.4"></div></div>
@@ -188,12 +193,13 @@
               <div class="bar-track"><div class="bar-fill" style="width:84%;background:var(--coral)"></div></div>
               <span class="bar-value" style="font-size:11px;color:var(--coral)">7.20</span>
             </div>
-            <p style="font-size:12px;color:var(--muted);margin-top:8px;font-style:italic">And the indigenization target is 75% by FY27 — meaning domestic suppliers get a growing share of a growing pie.</p>
+            <p style="font-size:12px;color:var(--muted);margin-top:8px;font-style:italic">And the indigenization target is 75% by FY27 - meaning domestic suppliers get a growing share of a growing pie.</p>
           </div>
           <h3>Indigenization</h3><p>If India keeps replacing imported defence electronics with domestic suppliers, specialized companies get a larger opportunity pool.</p></div><div class="future-card"><h3>Electronics intensity</h3><p>Modern defence is less about metal alone and more about sensors, processors, communication, guidance, and electronic warfare.</p></div><div class="future-card"><h3>Space and satellites</h3><p>As satellites become more important for communication, mapping, surveillance, and navigation, space-grade electronics become more valuable.</p></div><div class="future-card"><h3>The risk</h3><p>Government orders can be delayed, programs can move slowly, and high expectations can run ahead of actual delivery.</p></div></div>
-      <div class="future-thesis"><div class="mini-label">Future story to watch</div><p><b>Data Patterns benefits if India builds more of its defence and space electronics at home — but only if the company keeps winning complex programs and executes them on time.</b></p></div>
+      <div class="future-thesis"><div class="mini-label">Future story to watch</div><p><b>Data Patterns benefits if India builds more of its defence and space electronics at home - but only if the company keeps winning complex programs and executes them on time.</b></p></div>
 
-      <div class="divider"></div>
+      </div>
+<div class="chapter-section"><div class="divider"></div>
       <div class="step-header"><div class="step-badge">5</div><div><div class="mini-label">Chapter 5 · Price Sense</div><h2>Is the story already too expensive?</h2></div></div>
       <p class="lead" style="font-size:17px;margin-bottom:18px">A great company can still be a hard purchase if the price already assumes everything goes right. The question is not just “is the story good?” It is “how much of the good story is already in the price?”</p>
       <div class="analogy"><h3>The house analogy</h3><p>A great house in a great neighborhood can still be a bad deal if you pay too much for it. The house may be wonderful. The problem is the price. Stocks work the same way: business quality and buying price are two different questions.</p></div>
@@ -202,24 +208,27 @@
 
       <div class="divider"></div>
       <div class="mini-panel"><div class="mini-label">Before you choose</div><h3>A good reason has four parts.</h3><div class="three-parts"><div class="part"><b>The world</b><span>India builds more defence electronics at home.</span></div><div class="part"><b>The company</b><span>Data Patterns wins complex, high-trust work.</span></div><div class="part"><b>The money story</b><span>Promised work becomes delivered work, and cash follows profit.</span></div><div class="part"><b>The price</b><span>The story is not already priced for perfection.</span></div></div></div>
-      <div class="divider"></div>
+      </div>
+<div class="chapter-section"><div class="divider"></div>
       <div class="step-header"><div class="step-badge">6</div><div><div class="mini-label">Chapter 6 · Your Reasons</div><h2>Choose what you believe</h2></div></div>
-      <p class="lead" style="font-size:17px;margin-bottom:18px">By now the company is no longer just a ticker. It has become a few beliefs you can actually name — about the world around it, the company itself, whether the money story stays clean, and whether the price leaves enough room for reality.</p>
+      <p class="lead" style="font-size:17px;margin-bottom:18px">By now the company is no longer just a ticker. It has become a few beliefs you can actually name - about the world around it, the company itself, whether the money story stays clean, and whether the price leaves enough room for reality.</p>
       <div class="reason"><div class="reason-num">1</div><div><b>India’s defence electronics localization keeps growing.</b><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: policy moves, domestic programs, and local supplier wins</div><div class="weakens">Gets weaker if domestic programs slow down, imports remain dominant, or larger players capture most of the work.</div></div></div>
       <div class="reason"><div class="reason-num">2</div><div><b>Data Patterns keeps winning complex, high-trust programs.</b><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: new wins, quality of work, and where the work is coming from</div><div class="weakens">Gets weaker if wins become smaller, less complex, delayed, or concentrated in fewer programs.</div></div></div>
       <div class="reason"><div class="reason-num">3</div><div><b>Specialized engineering protects money left behind better than plain manufacturing.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: money left after costs, type of work, and delivery pressure</div><div class="weakens">Gets weaker if more work becomes low-margin production, costs rise, or delivery pressure eats into money left behind.</div></div></div>
       <div class="reason"><div class="reason-num">4</div><div><b>Promised work becomes delivered work without major delays.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: promised work becoming delivered work, and whether timelines slip</div><div class="weakens">Gets weaker if promised work piles up but delivery does not follow.</div></div></div>
-      <div class="reason"><div class="reason-num">5</div><div><b>The money story stays clean — cash follows profit and customers do not take too long to pay.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: cash coming in, money waiting, materials piled up, and cash stuck inside the business</div><div class="weakens">Gets weaker if profits rise but cash does not, or if too much money stays waiting with customers.</div></div></div>
+      <div class="reason"><div class="reason-num">5</div><div><b>The money story stays clean - cash follows profit and customers do not take too long to pay.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: cash coming in, money waiting, materials piled up, and cash stuck inside the business</div><div class="weakens">Gets weaker if profits rise but cash does not, or if too much money stays waiting with customers.</div></div></div>
       <div class="reason"><div class="reason-num">6</div><div><b>The price does not already assume a perfect future.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: price compared to earnings, price compared to sales, growth needed, and room for disappointment</div><div class="weakens">Gets weaker if the stock price runs far ahead while proof from orders, money left behind, and cash does not keep up.</div></div></div>
       <div class="lock"><div class="mini-label">Thesis saved</div><h3>These are the reasons being watched.</h3><p>Policy, defence orders, results, money left after costs, money waiting, cash coming in, and price expectations now matter only if they touch these beliefs.</p><div class="beliefs"><div class="belief"><span>01</span> India localizes more defence electronics.</div><div class="belief"><span>02</span> Data Patterns wins complex programs.</div><div class="belief"><span>03</span> Specialization protects money left behind.</div><div class="belief"><span>04</span> Promised work converts without delays.</div><div class="belief"><span>05</span> Cash follows profit.</div><div class="belief"><span>06</span> Price leaves room for reality.</div></div></div>
 
-      <div class="divider"></div>
+      </div>
+<div class="chapter-section"><div class="divider"></div>
       <div class="step-header"><div class="step-badge">7</div><div><div class="mini-label">5:30am</div><h2>A headline arrives before you wake up</h2></div></div>
       <div class="news"><div class="mini-label">Monday · 5:30am IST · Caught by scanner</div><h3>Defence ministry clears a new radar procurement program. Domestic electronics suppliers are expected to participate, but Data Patterns’ direct exposure has not been confirmed yet.</h3><span class="chip">Connects to reason #1</span><div class="source-row"><span class="source">· Ministry release</span><span class="source">· Defence procurement update</span><span class="source">· Company watchlist scan</span></div></div>
 
-      <div class="divider"></div>
+      </div>
+<div class="chapter-section"><div class="divider"></div>
       <div class="step-header"><div class="step-badge active">8</div><div><div class="mini-label" style="display:flex;align-items:center;gap:8px">7:00am <span style="background:var(--coral);color:#fff;font-family:var(--mono);font-size:8px;font-weight:700;padding:2px 7px;border-radius:999px;letter-spacing:.06em;white-space:nowrap">THIS IS YOUR CARD</span></div><h2>The morning note</h2></div></div>
-      <div class="digest"><span class="chip">Relevant, not thesis-changing</span><h3>Radar order cleared — good for the theme, not proof for Data Patterns yet.</h3><p style="font-size:16px;line-height:1.6;color:var(--ink-soft)">Think of this like hearing that a city is building a new airport. It is good news for construction suppliers generally, but you still need to know who got the contract. This radar program supports the defence-electronics theme. It does not yet prove Data Patterns will benefit directly.</p>
+      <div class="digest"><span class="chip">Relevant, not thesis-changing</span><h3>Radar order cleared - good for the theme, not proof for Data Patterns yet.</h3><p style="font-size:16px;line-height:1.6;color:var(--ink-soft)">Think of this like hearing that a city is building a new airport. It is good news for construction suppliers generally, but you still need to know who got the contract. This radar program supports the defence-electronics theme. It does not yet prove Data Patterns will benefit directly.</p>
         <div class="status-box"><div class="mini-label">How this touches your Data Patterns reason</div><p><b>“India’s defence electronics localization keeps growing.”</b></p><div class="status-line"><span class="status-icon">~</span><span><b>Where the reason stands: Supported, not confirmed</b> · Direct company link unknown</span></div><p style="font-size:14px;color:var(--coral-deep);font-weight:650;margin:0">The reason is directionally supported. It becomes stronger only if Data Patterns is named, wins a related order, or shows promised-work expansion in this area.</p><div class="confidence"><div class="side"><div class="mini-label">Before</div><b>Neutral</b></div><div class="move">→</div><div class="side"><div class="mini-label">Now</div><b style="color:var(--amber)">Slightly supported</b></div></div></div>
         <div class="status-box"><div class="mini-label">Trust check</div><p><b>The next proof will not be the headline. It will be whether the business shows it.</b></p><div class="before-after"><div class="ba"><div class="mini-label">Promised work</div><b>Watch</b></div><div class="ba"><div class="mini-label">Money waiting</div><b class="accent">Check</b></div><div class="ba"><div class="mini-label">Cash coming in</div><b>Needed</b></div></div><p style="font-size:14px;color:var(--coral-deep);font-weight:650;margin:12px 0 0">If the theme is real, it should eventually show up as stronger promised work, clean delivery, money left after costs, and cash following profit.</p><details class="raw-toggle"><summary>Show the raw numbers</summary><div class="raw-data"><div class="metric-row"><strong>Promised work</strong><span>Up QoQ</span><div class="spark"></div></div><div class="metric-row"><strong>Money waiting</strong><span>High</span><div class="spark"></div></div><div class="metric-row"><strong>Cash coming in</strong><span>Needs next quarter</span><div class="spark"></div></div></div></details></div>
         <div class="status-box"><div class="mini-label">Price sense</div><p><b>The story is good, but the price is asking for a lot of it to come true.</b></p><div class="before-after"><div class="ba"><div class="mini-label">Business story</div><b>Strong</b></div><div class="ba"><div class="mini-label">Price comfort</div><b class="accent">Low</b></div><div class="ba"><div class="mini-label">Room for error</div><b style="color:var(--amber)">Thin</b></div></div><p style="font-size:14px;color:var(--coral-deep);font-weight:650;margin:12px 0 0">This does not change the company story. It changes the patience needed. A demanding price needs cleaner execution.</p></div>
@@ -229,10 +238,12 @@
         <div class="feedback"><button>Useful</button><button>Already knew</button><button>Noise</button></div><div class="feedback-note">If you mark this as noise, we will only surface it again if Data Patterns is directly named, promised work moves, or the price-reality gap changes.</div>
       </div>
 
-      <div class="divider"></div>
+      </div>
+<div class="chapter-section"><div class="divider"></div>
       <div class="step-header"><div class="step-badge">9</div><div><div class="mini-label">One plain-English idea from the morning</div><h2>Promised work</h2></div></div>
       <div class="dark-card" style="background:var(--ink)"><div class="mini-label">Plain English</div><h3>The restaurant booking analogy</h3><p style="font-size:17px;color:rgba(246,243,236,.76);line-height:1.55">Promised work is like a restaurant’s confirmed bookings for the next few months. It is not cash in the bank yet, but it tells you how much work is already lined up. For a company like Data Patterns, it matters because projects can be large, specialized, and delivered over time.</p></div>
-      <div class="cta"><div class="mini-label">Every weekday · 7am IST · NSE India</div><h2>A calmer way to follow what you own.</h2><p>Understand it once. We find you only when something touches your reason. First cohort opens June 24th.</p><a class="primary" href="https://ft-app-beta.vercel.app/#waitlist">Get early access →</a></div>
+      </div>
+<div class="cta"><div class="mini-label">Every weekday · 7am IST · NSE India</div><h2>A calmer way to follow what you own.</h2><p>Understand it once. We find you only when something touches your reason. First cohort opens June 24th.</p><a class="primary" href="https://ft-app-beta.vercel.app/#waitlist">Get early access →</a></div>
     </section>
   </main>
 
@@ -248,8 +259,6 @@
     }, { threshold: 0.08 });
 
     document.querySelectorAll('.chapter-section').forEach((el, i) => {
-      el.classList.add('chapter');
-      el.style.transitionDelay = '0.05s';
       observer.observe(el);
     });
 
