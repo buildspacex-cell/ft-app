@@ -202,9 +202,12 @@ function WishQuestion({ dark = false }: { dark?: boolean }) {
   const strong = dark ? 'var(--cream)' : 'var(--ink)'
 
   if (saved) return (
-    <p style={{ fontSize: 14, color: label, lineHeight: 1.5 }}>
-      Thank you. That is exactly the kind of thing we are building for.
-    </p>
+    <div>
+      <p style={{ fontSize: 14, color: label, lineHeight: 1.5, marginBottom: 0 }}>
+        Thank you. That is exactly the kind of thing we are building for.
+      </p>
+      <PhoneStep dark={dark} />
+    </div>
   )
 
   return (
@@ -254,6 +257,82 @@ function WishQuestion({ dark = false }: { dark?: boolean }) {
           Send
         </button>
       </div>
+    </div>
+  )
+}
+
+
+// ─── Phone step — shown after wish question ───────────────────────────────────
+
+function PhoneStep({ dark = false }: { dark?: boolean }) {
+  const [phone, setPhone] = useState('')
+  const [saved, setSaved] = useState(false)
+
+  async function savePhone() {
+    if (!phone.trim() || saved) return
+    setSaved(true)
+    fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone }),
+    }).catch(() => {})
+  }
+
+  const subtle = dark ? 'rgba(246,243,236,0.6)' : 'var(--muted)'
+  const strong = dark ? 'var(--cream)' : 'var(--ink)'
+
+  if (saved) return (
+    <p style={{ fontSize: 14, color: subtle, lineHeight: 1.5, marginTop: 16 }}>
+      Perfect. We&apos;ll WhatsApp you before June 24th.
+    </p>
+  )
+
+  return (
+    <div style={{ marginTop: 20, paddingTop: 18, borderTop: dark ? '1px solid rgba(246,243,236,0.1)' : '1px solid var(--hairline)' }}>
+      <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: subtle, marginBottom: 10 }}>
+        One more thing
+      </p>
+      <p style={{ fontSize: 14, fontWeight: 600, letterSpacing: '-0.01em', color: strong, marginBottom: 6, lineHeight: 1.4 }}>
+        We&apos;d love to call you.
+      </p>
+      <p style={{ fontSize: 13.5, color: subtle, marginBottom: 14, lineHeight: 1.5 }}>
+        Not a sales call — 15 minutes where you talk and we listen. What stocks do you own? What confuses you about them? Your answers will shape what we build. WhatsApp number if you&apos;re open to it.
+      </p>
+      <div style={{ display: 'flex', gap: 8 }}>
+        <input
+          type="tel"
+          value={phone}
+          onChange={e => setPhone(e.target.value)}
+          placeholder="+91 98765 43210"
+          style={{
+            flex: 1, padding: '10px 12px', borderRadius: 10,
+            border: dark ? '1px solid rgba(246,243,236,0.16)' : '1px solid var(--hairline)',
+            background: dark ? 'rgba(246,243,236,0.06)' : 'var(--paper)',
+            fontFamily: 'var(--font-sans)', fontSize: 14,
+            color: dark ? 'var(--cream)' : 'var(--ink)',
+            outline: 'none',
+          }}
+        />
+        <button
+          onClick={savePhone}
+          disabled={!phone.trim()}
+          style={{
+            padding: '10px 16px', borderRadius: 10, border: 'none',
+            background: phone.trim() ? 'var(--coral)' : (dark ? 'rgba(246,243,236,0.1)' : 'var(--hairline)'),
+            color: phone.trim() ? '#fff' : subtle,
+            fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 600,
+            cursor: phone.trim() ? 'pointer' : 'not-allowed', flexShrink: 0,
+          }}
+        >
+          Send
+        </button>
+      </div>
+      <button
+        onClick={() => setSaved(true)}
+        style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 12, color: subtle, padding: '8px 0 0', display: 'block' }}
+      >
+        Skip
+      </button>
     </div>
   )
 }

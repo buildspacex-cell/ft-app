@@ -123,7 +123,8 @@ create table if not exists waitlist (
   created_at timestamptz default now(),
   converted       boolean default false,  -- true once they complete onboarding
   stock_interest  text,                  -- which stock they want covered first
-  wish_text       text                   -- free text: what they wish they understood
+  wish_text       text,                  -- free text: what they wish they understood
+  phone           text                   -- whatsapp number for founder interviews
   unique(email)
 );
 
