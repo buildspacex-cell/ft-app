@@ -176,9 +176,6 @@ function WishQuestion({ dark = false, defaultCountry = 'IN' }: { dark?: boolean;
 
   return (
     <div>
-      <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: dark ? 'rgba(246,243,236,0.45)' : 'var(--muted)', marginBottom: 10 }}>
-        One more
-      </p>
       <p style={{ fontSize: 14, fontWeight: 600, letterSpacing: '-0.01em', color: strong, marginBottom: 6, lineHeight: 1.4 }}>
         What is one thing you wish you understood better about a stock you own?
       </p>
