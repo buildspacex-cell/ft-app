@@ -174,11 +174,11 @@ function WishesBar() {
   // Seed quotes shown before any real signups exist
   const SEEDS = [
     "I never know if a news story about a company I own is actually relevant or just noise.",
-    "I bought HDFC Bank because someone said it was safe — I still can't explain why.",
-    "Every time results come out I don't know if the numbers are good or bad.",
-    "I wish I understood what a company actually does before I invested in it.",
-    "I check the price every day but I have no idea what I'm looking for.",
-    "I own Reliance but I couldn't tell you how they make money.",
+    "I bought HDFC Bank because someone said it was safe. I still cannot explain why.",
+    "Every time results come out I do not know if the numbers are good or bad.",
+    "I own Reliance but I could not tell you how they make money.",
+    "I check the price every day but I have no idea what I am looking for.",
+    "I bought it but I cannot explain what it does to someone who does not invest.",
   ]
 
   useEffect(() => {
@@ -213,7 +213,7 @@ function WishesBar() {
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16, flexWrap: 'wrap' }}>
           <div style={{ flexShrink: 0 }}>
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(246,243,236,0.4)', marginBottom: 4 }}>
-              {count > 0 ? `${count} people on the list` : 'What people want to understand'}
+              {count > 0 ? `${count} people on the list` : '5 questions. Most people can\'t answer the last one.'}
             </p>
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(246,243,236,0.3)', letterSpacing: '0.06em' }}>
               in their own words
@@ -802,7 +802,7 @@ export default function HomePage() {
                     See the full experience - no signup required
                   </p>
                   <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 18, letterSpacing: '-0.025em', color: 'var(--cream)', margin: 0, lineHeight: 1.2 }}>
-                    How do you go from owning a stock to actually understanding it - and knowing when something matters?
+                    Can you answer 5 questions about a stock you own? Most people can answer the first one. Almost nobody can answer the last.
                   </p>
                 </div>
               </div>
