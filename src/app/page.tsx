@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ─── Phone mockup - fixed status bar, proper iOS layout ──────────────────────
 
@@ -161,6 +161,95 @@ function DetailScreen() {
   )
 }
 
+
+
+// ─── Wishes bar — rotating real quotes from waitlist ─────────────────────────
+
+function WishesBar() {
+  const [wishes, setWishes] = useState<string[]>([])
+  const [count, setCount] = useState(0)
+  const [idx, setIdx] = useState(0)
+  const [visible, setVisible] = useState(true)
+
+  // Seed quotes shown before any real signups exist
+  const SEEDS = [
+    "I never know if a news story about a company I own is actually relevant or just noise.",
+    "I bought HDFC Bank because someone said it was safe — I still can't explain why.",
+    "Every time results come out I don't know if the numbers are good or bad.",
+    "I wish I understood what a company actually does before I invested in it.",
+    "I check the price every day but I have no idea what I'm looking for.",
+    "I own Reliance but I couldn't tell you how they make money.",
+  ]
+
+  useEffect(() => {
+    fetch('/api/waitlist/wishes')
+      .then(r => r.json())
+      .then(data => {
+        if (data.wishes?.length > 0) {
+          setWishes(data.wishes)
+        }
+        if (data.count > 0) setCount(data.count)
+      })
+      .catch(() => {})
+  }, [])
+
+  const quotes = wishes.length > 0 ? wishes : SEEDS
+
+  // Rotate every 4 seconds with fade
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setVisible(false)
+      setTimeout(() => {
+        setIdx(i => (i + 1) % quotes.length)
+        setVisible(true)
+      }, 400)
+    }, 4000)
+    return () => clearInterval(timer)
+  }, [quotes.length])
+
+  return (
+    <section style={{ background: 'var(--ink)', borderTop: '1px solid rgba(246,243,236,0.08)' }}>
+      <div className="ft-wrap" style={{ padding: '20px 28px' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16, flexWrap: 'wrap' }}>
+          <div style={{ flexShrink: 0 }}>
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(246,243,236,0.4)', marginBottom: 4 }}>
+              {count > 0 ? `${count} people on the list` : 'What people want to understand'}
+            </p>
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(246,243,236,0.3)', letterSpacing: '0.06em' }}>
+              in their own words
+            </p>
+          </div>
+          <div style={{ width: '1px', background: 'rgba(246,243,236,0.1)', alignSelf: 'stretch', flexShrink: 0 }} />
+          <p style={{
+            fontSize: 15, fontWeight: 500, letterSpacing: '-0.01em', lineHeight: 1.45,
+            color: 'rgba(246,243,236,0.85)',
+            transition: 'opacity 0.4s ease',
+            opacity: visible ? 1 : 0,
+            flex: 1, minWidth: 200,
+            fontStyle: 'italic',
+          }}>
+            &ldquo;{quotes[idx]}&rdquo;
+          </p>
+          {/* Dot indicators */}
+          <div style={{ display: 'flex', gap: 5, alignItems: 'center', flexShrink: 0, alignSelf: 'center' }}>
+            {quotes.slice(0, Math.min(quotes.length, 6)).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => { setVisible(false); setTimeout(() => { setIdx(i); setVisible(true) }, 400) }}
+                style={{
+                  width: i === idx ? 16 : 5, height: 5, borderRadius: 999,
+                  background: i === idx ? 'var(--coral)' : 'rgba(246,243,236,0.2)',
+                  border: 'none', cursor: 'pointer', padding: 0,
+                  transition: 'all 0.3s ease',
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
 
 // ─── Country switcher ─────────────────────────────────────────────────────────
 
@@ -728,6 +817,8 @@ export default function HomePage() {
             </a>
           </div>
         </section>
+
+        <WishesBar />
 
         {/* ── PULL QUOTE ── */}
         <section className="ft-section" style={{ background: 'var(--paper)', borderTop: '1px solid var(--hairline)', borderBottom: '1px solid var(--hairline)' }}>
