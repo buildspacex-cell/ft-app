@@ -222,6 +222,36 @@
       .machine { flex-direction: column; }
       .bar-name { width: 110px; font-size: 11px; }
     }
+  
+    /* Restored from original */
+    .lock{background:var(--ink);color:var(--cream);border-radius:22px;padding:24px;margin-top:18px}
+    .beliefs{display:grid;gap:9px;margin-top:18px}
+    .belief{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:13px 14px;display:flex;gap:10px}
+    .raw-toggle{margin-top:12px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;background:var(--cream)}
+    .raw-data{padding:0 14px 14px}
+    .so-what,.analogy,.mini-panel{background:var(--card);border:1px solid var(--hairline);border-radius:18px;padding:18px 20px;margin-bottom:12px}
+    .feedback-note{background:var(--sage-tint);border:1px solid rgba(91,122,85,.26);border-radius:14px;padding:12px 14px;margin-top:12px;font-size:13px;color:var(--sage);font-weight:650}
+    .source-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+    .source-box,.so-what,.analogy,.mini-panel{background:var(--card);border:1px solid var(--hairline);border-radius:18px;padding:18px 20px;margin-bottom:12px}
+    .news,.digest,.status-box,.source-box,.so-what,.analogy,.mini-panel{background:var(--card);border:1px solid var(--hairline);border-radius:18px;padding:18px 20px;margin-bottom:12px}
+    .price-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+    .price-card{background:var(--cream);border:1px solid var(--hairline);border-radius:16px;padding:14px}
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px}
+    .future-card,.stream,.news,.digest,.status-box,.source-box,.so-what,.analogy,.mini-panel{background:var(--card);border:1px solid var(--hairline);border-radius:18px;padding:18px 20px;margin-bottom:12px}
+    .weakens{margin-top:10px;padding-top:10px;border-top:1px solid rgba(246,243,236,.16);font-size:12px;line-height:1.4;color:rgba(246,243,236,.58)}
+    .status-line{display:flex;align-items:center;gap:10px;margin:12px 0}
+    .holding{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px}
+    .tip{color:var(--coral-deep);border-bottom:1px dotted var(--coral);font-weight:650}
+    .three-parts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
+    .part{background:var(--cream);border:1px solid var(--hairline);border-radius:16px;padding:15px}
+    .pct{margin-left:auto;font-family:var(--mono);font-size:24px;font-weight:800}
+    .stream-color{width:10px;height:44px;border-radius:4px}
+    .stream-row{display:flex;align-items:center;gap:12px}
+    .analogy,.mini-panel{background:var(--card);border:1px solid var(--hairline);border-radius:18px;padding:18px 20px;margin-bottom:12px}
+    .step-badge{width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--cream);display:grid;place-items:center;font-family:var(--mono);font-size:13px;font-weight:800;flex:0 0 auto}
+    .step-header{display:flex;gap:15px;align-items:flex-start;margin-bottom:22px}
+    .side{background:var(--card);border:1px solid var(--hairline);border-radius:14px;padding:12px}
+    .phone-small{font-size:12px;line-height:1.43;color:var(--ink-soft)}
   </style>
 </head>
 <body>
@@ -339,6 +369,7 @@
         </div>
       </div>
 
+      <div class="card"><h3>The body analogy</h3><p>If a defence system were a human body, the metal platform is the body. The radar is the eyes. The communication system is the voice. The processors and electronics are the brain and nerves. Data Patterns works in that brain-and-nerves layer.</p></div></div>
       <div class="card">
         <h3>Why trust matters more than advertising</h3>
         <p>In a phone, a glitch is annoying. In a radar or satellite, a glitch is mission failure. That is why qualification, engineering depth, and past execution matter more than price.</p>
@@ -511,6 +542,8 @@
         </div>
       </div>
 
+      <div class="card" style="padding:0;overflow:hidden"><div style="padding:14px 16px"><h3>The structural bets</h3></div><div class="grid-2"><div class="future-card"><h3>Indigenization</h3><p>If India keeps replacing imported defence electronics with domestic suppliers, specialized companies get a larger opportunity pool.</p></div><div class="future-card"><h3>Electronics intensity</h3><p>Modern defence is less about metal alone and more about sensors, processors, communication, guidance, and electronic warfare.</p></div><div class="future-card"><h3>Space and satellites</h3><p>As satellites become more important for communication, mapping, surveillance, and navigation, space-grade electronics become more valuable.</p></div><div class="future-card"><h3>The risk</h3><p>Government orders can be delayed, programs can move slowly, and high expectations can run ahead of actual delivery.</p></div></div></div>
+      
       <div class="card">
         <h3>Electronics intensity is rising</h3>
         <p>Modern defence is less about metal and more about sensors, processors, guidance, and communication. Every platform - radar, satellite, aircraft, missile - needs more electronics than the previous generation. That is a structural tailwind for specialists.</p>
@@ -611,50 +644,16 @@
       <h2>What is your one reason - and will you know if it changes?</h2>
       <p style="font-size:14px;color:var(--muted);margin-bottom:16px">We wrote the reasons someone might own Data Patterns. Toggle off the ones you do not believe. The ones you keep - we track those. Every morning. Only when something touches them.</p>
 
-      <div id="reasons-list">
-        <button class="reason-btn on" onclick="toggleReason(this)">
-          <div class="reason-num">1</div>
-          <div style="flex:1">
-            <div class="reason-claim">India's defence electronics localization keeps growing.</div>
-            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-            <div class="reason-sub">Watches: policy moves, domestic program wins</div>
-          </div>
-          <div class="check-circle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="reason-btn on" onclick="toggleReason(this)">
-          <div class="reason-num">2</div>
-          <div style="flex:1">
-            <div class="reason-claim">Data Patterns keeps winning complex, high-trust programs.</div>
-            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-            <div class="reason-sub">Watches: new wins, quality of work, program diversity</div>
-          </div>
-          <div class="check-circle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="reason-btn on" onclick="toggleReason(this)">
-          <div class="reason-num">3</div>
-          <div style="flex:1">
-            <div class="reason-claim">Specialization protects money left behind better than plain manufacturing.</div>
-            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot empty"></span></div>
-            <div class="reason-sub">Watches: gross margin, type of work, delivery pressure</div>
-          </div>
-          <div class="check-circle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
-        <button class="reason-btn on" onclick="toggleReason(this)">
-          <div class="reason-num">4</div>
-          <div style="flex:1">
-            <div class="reason-claim">Promised work converts to delivered work without major delays.</div>
-            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot empty"></span></div>
-            <div class="reason-sub">Watches: promised work becoming delivered work each quarter</div>
-          </div>
-          <div class="check-circle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </button>
+      <div class="reasons">
+<div class="reason"><div class="reason-num">1</div><div><b>India’s defence electronics localization keeps growing.</b><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: policy moves, domestic programs, and local supplier wins</div><div class="weakens">Gets weaker if domestic programs slow down, imports remain dominant, or larger players capture most of the work.</div></div></div>
+<div class="reason"><div class="reason-num">2</div><div><b>Data Patterns keeps winning complex, high-trust programs.</b><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: new wins, quality of work, and where the work is coming from</div><div class="weakens">Gets weaker if wins become smaller, less complex, delayed, or concentrated in fewer programs.</div></div></div>
+<div class="reason"><div class="reason-num">3</div><div><b>Specialized engineering protects money left behind better than plain manufacturing.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: money left after costs, type of work, and delivery pressure</div><div class="weakens">Gets weaker if more work becomes low-margin production, costs rise, or delivery pressure eats into money left behind.</div></div></div>
+<div class="reason"><div class="reason-num">4</div><div><b>Promised work becomes delivered work without major delays.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: promised work becoming delivered work, and whether timelines slip</div><div class="weakens">Gets weaker if promised work piles up but delivery does not follow.</div></div></div>
+<div class="reason"><div class="reason-num">5</div><div><b>The money story stays clean — cash follows profit and customers do not take too long to pay.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: cash coming in, money waiting, materials piled up, and cash stuck inside the business</div><div class="weakens">Gets weaker if profits rise but cash does not, or if too much money stays waiting with customers.</div></div></div>
+<div class="reason"><div class="reason-num">6</div><div><b>The price does not already assume a perfect future.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: price compared to earnings, price compared to sales, growth needed, and room for disappointment</div><div class="weakens">Gets weaker if the stock price runs far ahead while proof from orders, money left behind, and cash does not keep up.</div></div></div>
       </div>
-
-      <div class="save-cta" id="save-thesis-cta">
-        <div style="flex:1">
-          <p style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,243,236,.5);margin-bottom:4px" id="save-label">4 of 4 reasons kept</p>
-          <p style="font-size:16px;font-weight:600;letter-spacing:-.015em;color:var(--cream)">Track this. We'll check it every morning.</p>
-        </div>
+      
+      <div class="lock"><div class="mini-label">Thesis saved</div><h3>These are the reasons being watched.</h3><p>Policy, defence orders, results, money left after costs, money waiting, cash coming in, and price expectations now matter only if they touch these beliefs.</p><div class="beliefs"><div class="belief"><span>01</span> India localizes more defence electronics.</div><div class="belief"><span>02</span> Data Patterns wins complex programs.</div><div class="belief"><span>03</span> Specialization protects money left behind.</div><div class="belief"><span>04</span> Promised work converts without delays.</div><div class="belief"><span>05</span> Cash follows profit.</div><div class="belief"><span>06</span> Price leaves room for reality.</div></div>
         <button class="save-btn" onclick="saveThesis()">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7H11M7.5 3.5L11 7L7.5 10.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
@@ -666,138 +665,32 @@
     </div>
   </div>
 
-  <!-- ═══ PANEL 7: THE MORNING ═══ -->
+      <!-- ═══ PANEL 7: THE MORNING ═══ -->
   <div class="panel" style="background:var(--cream)">
     <div class="panel-inner">
       <div class="ch-label">
         <span class="ch-dot" style="background:var(--coral)"></span>
-        Q5 in action <span class="ch-badge active">THIS IS YOUR CARD</span>
+        <span style="font-family:var(--mono);font-size:11px;font-weight:800;color:var(--coral)">Q5 in action</span>
+        <span class="ch-badge active">THIS IS YOUR CARD</span>
       </div>
-      <p style="font-size:14px;color:var(--muted);margin-bottom:14px">A news event overnight. Your reason gets checked. Here is exactly what lands on your phone.</p>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:18px">A news event overnight. Your reason gets checked. Here is exactly what lands on your phone.</p>
 
-      <!-- Raw noise → filtered card visual -->
-      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-bottom:18px">
-
-        <!-- Raw noise column -->
-        <div style="background:var(--cream-deep);border:1px solid var(--hairline);border-radius:14px;padding:12px">
-          <p style="font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">2,400+ sources scanned</p>
-          <div style="display:flex;flex-direction:column;gap:4px">
-            <div style="display:flex;align-items:center;gap:6px;opacity:0.35">
-              <div style="width:4px;height:4px;border-radius:50%;background:var(--muted);flex-shrink:0"></div>
-              <span style="font-size:10px;color:var(--muted);line-height:1.3">Fed holds rates steady</span>
-            </div><div style="display:flex;align-items:center;gap:6px;opacity:0.3">
-              <div style="width:4px;height:4px;border-radius:50%;background:var(--muted);flex-shrink:0"></div>
-              <span style="font-size:10px;color:var(--muted);line-height:1.3">Nifty closes flat</span>
-            </div><div style="display:flex;align-items:center;gap:6px;opacity:0.25">
-              <div style="width:4px;height:4px;border-radius:50%;background:var(--muted);flex-shrink:0"></div>
-              <span style="font-size:10px;color:var(--muted);line-height:1.3">Oil prices tick up 0.4%</span>
-            </div><div style="display:flex;align-items:center;gap:6px;opacity:0.2">
-              <div style="width:4px;height:4px;border-radius:50%;background:var(--muted);flex-shrink:0"></div>
-              <span style="font-size:10px;color:var(--muted);line-height:1.3">IT sector Q2 preview</span>
-            </div><div style="display:flex;align-items:center;gap:6px;opacity:0.35">
-              <div style="width:4px;height:4px;border-radius:50%;background:var(--muted);flex-shrink:0"></div>
-              <span style="font-size:10px;color:var(--muted);line-height:1.3">MoD procurement circular</span>
-            </div><div style="display:flex;align-items:center;gap:6px;opacity:0.2">
-              <div style="width:4px;height:4px;border-radius:50%;background:var(--muted);flex-shrink:0"></div>
-              <span style="font-size:10px;color:var(--muted);line-height:1.3">Dollar index steady</span>
-            </div><div style="display:flex;align-items:center;gap:6px;opacity:0.25">
-              <div style="width:4px;height:4px;border-radius:50%;background:var(--muted);flex-shrink:0"></div>
-              <span style="font-size:10px;color:var(--muted);line-height:1.3">SEBI circular on disclosures</span>
-            </div><div style="display:flex;align-items:center;gap:6px;opacity:0.2">
-              <div style="width:4px;height:4px;border-radius:50%;background:var(--muted);flex-shrink:0"></div>
-              <span style="font-size:10px;color:var(--muted);line-height:1.3">PSU bank rally cools</span>
-            </div><div style="display:flex;align-items:center;gap:6px;opacity:0.3">
-              <div style="width:4px;height:4px;border-radius:50%;background:var(--muted);flex-shrink:0"></div>
-              <span style="font-size:10px;color:var(--muted);line-height:1.3">Global PMI data released</span>
-            </div><div style="display:flex;align-items:center;gap:6px;opacity:0.25">
-              <div style="width:4px;height:4px;border-radius:50%;background:var(--muted);flex-shrink:0"></div>
-              <span style="font-size:10px;color:var(--muted);line-height:1.3">Retail forum: DATA target?</span>
-            </div><div style="display:flex;align-items:center;gap:6px;opacity:0.2">
-              <div style="width:4px;height:4px;border-radius:50%;background:var(--muted);flex-shrink:0"></div>
-              <span style="font-size:10px;color:var(--muted);line-height:1.3">FII outflows continue</span>
-            </div><div style="display:flex;align-items:center;gap:6px;opacity:0.25">
-              <div style="width:4px;height:4px;border-radius:50%;background:var(--muted);flex-shrink:0"></div>
-              <span style="font-size:10px;color:var(--muted);line-height:1.3">Monsoon progress update</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Filter arrow -->
-        <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-          <div style="width:28px;height:28px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M7 3L10 6L7 9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <span style="font-family:var(--mono);font-size:7px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;line-height:1.4">filtered<br>to you</span>
-        </div>
-
-        <!-- What reached you -->
-        <div style="background:var(--coral-tint);border:1.5px solid var(--coral);border-radius:14px;padding:12px">
-          <p style="font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral-deep);margin-bottom:8px">1 story for you</p>
-          <div style="display:flex;align-items:flex-start;gap:6px">
-            <div style="width:5px;height:5px;border-radius:50%;background:var(--coral);flex-shrink:0;margin-top:4px"></div>
-            <span style="font-size:11px;color:var(--ink);font-weight:600;line-height:1.35">MoD radar procurement — touches your reason #1</span>
-          </div>
-          <p style="font-size:10px;color:var(--coral-deep);margin-top:8px;font-weight:500">Because you saved: "India localizes defence electronics."</p>
-        </div>
+<div class="step-badge active">8</div><div><div class="mini-label">7:00am</div><h2>The morning note</h2></div></div>
+      <div class="digest"><span class="chip">Relevant, not thesis-changing</span><h3>Radar order cleared — good for the theme, not proof for Data Patterns yet.</h3><p style="font-size:16px;line-height:1.6;color:var(--ink-soft)">Think of this like hearing that a city is building a new airport. It is good news for construction suppliers generally, but you still need to know who got the contract. This radar program supports the defence-electronics theme. It does not yet prove Data Patterns will benefit directly.</p>
+        <div class="status-box"><div class="mini-label">How this touches your Data Patterns reason</div><p><b>“India’s defence electronics localization keeps growing.”</b></p><div class="status-line"><span class="status-icon">~</span><span><b>Where the reason stands: Supported, not confirmed</b> · Direct company link unknown</span></div><p style="font-size:14px;color:var(--coral-deep);font-weight:650;margin:0">The reason is directionally supported. It becomes stronger only if Data Patterns is named, wins a related order, or shows promised-work expansion in this area.</p><div class="confidence"><div class="side"><div class="mini-label">Before</div><b>Neutral</b></div><div class="move">→</div><div class="side"><div class="mini-label">Now</div><b style="color:var(--amber)">Slightly supported</b></div></div></div>
+        <div class="status-box"><div class="mini-label">Trust check</div><p><b>The next proof will not be the headline. It will be whether the business shows it.</b></p><div class="before-after"><div class="ba"><div class="mini-label">Promised work</div><b>Watch</b></div><div class="ba"><div class="mini-label">Money waiting</div><b class="accent">Check</b></div><div class="ba"><div class="mini-label">Cash coming in</div><b>Needed</b></div></div><p style="font-size:14px;color:var(--coral-deep);font-weight:650;margin:12px 0 0">If the theme is real, it should eventually show up as stronger promised work, clean delivery, money left after costs, and cash following profit.</p><details class="raw-toggle"><summary>Show the raw numbers</summary><div class="raw-data"><div class="metric-row"><strong>Promised work</strong><span>Up QoQ</span><div class="spark"></div></div><div class="metric-row"><strong>Money waiting</strong><span>High</span><div class="spark"></div></div><div class="metric-row"><strong>Cash coming in</strong><span>Needs next quarter</span><div class="spark"></div></div></div></details></div>
+        <div class="status-box"><div class="mini-label">Price sense</div><p><b>The story is good, but the price is asking for a lot of it to come true.</b></p><div class="before-after"><div class="ba"><div class="mini-label">Business story</div><b>Strong</b></div><div class="ba"><div class="mini-label">Price comfort</div><b class="accent">Low</b></div><div class="ba"><div class="mini-label">Room for error</div><b style="color:var(--amber)">Thin</b></div></div><p style="font-size:14px;color:var(--coral-deep);font-weight:650;margin:12px 0 0">This does not change the company story. It changes the patience needed. A demanding price needs cleaner execution.</p></div>
+        <div class="so-what"><h3>The calm read</h3><p style="font-size:15px;line-height:1.5;color:var(--ink-soft);margin:0">You do not need to react to this headline. It supports the world story, but it has not changed the company story yet.</p></div>
+        <div class="source-box"><div class="mini-label">What we read</div><p style="font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--ink-soft);margin:8px 0 0">· Defence procurement update<br>· Company announcements scan<br>· Results and promised-work watchlist</p></div>
+        <div class="source-box"><div class="mini-label">What we are waiting for next</div><div class="waiting-list"><div>Company announcement naming participation</div><div>Promised-work movement in the next results</div><div>Management commentary on radar or electronics programs</div><div>Cash and delivery quality in the next quarter</div><div>Whether the price cools down or proof catches up</div></div></div>
+        <div class="feedback"><button>Useful</button><button>Already knew</button><button>Noise</button></div><div class="feedback-note">If you mark this as noise, we will only surface it again if Data Patterns is directly named, promised work moves, or the price-reality gap changes.</div>
       </div>
 
-      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.08em;margin-bottom:14px">TUESDAY, JUNE 3, 2026</div>
-
-      <div class="card">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">
-          <span class="chip"><span class="cdot"></span>Relevant, not thesis-changing</span>
-          <span style="font-family:var(--mono);font-size:9px;color:var(--muted)">DATA</span>
-        </div>
-        <div class="digest-headline">Radar order cleared - good for the theme, not proof for Data Patterns yet.</div>
-        <p>Think of this like hearing that a city is building a new airport. Good news for construction suppliers - but you still need to know who got the contract. This supports the theme. It does not yet prove Data Patterns will benefit directly.</p>
-
-        <div class="thesis-box">
-          <div class="thesis-label">How this touches your reason</div>
-          <div class="thesis-claim">"India's defence electronics localization keeps growing."</div>
-          <div class="status-row">
-            <div class="status-icon">~</div>
-            <span style="font-family:var(--mono);font-size:11px;color:var(--amber);font-weight:600">Supported</span>
-            <span style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-left:6px">- not confirmed yet</span>
-          </div>
-          <p style="font-size:12px;color:var(--coral-deep);font-weight:500;margin-top:8px">The reason gets stronger only if Data Patterns is named, wins a related order, or shows promised-work expansion.</p>
-        </div>
-
-        <div class="pvs-box">
-          <div style="font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:9px">Price vs. story - DATA since last quarter</div>
-          <div class="pvs-grid">
-            <div class="pvs-left">
-              <div class="pvs-sub">THE STORY</div>
-              <div class="pvs-val-amber">Supported</div>
-            </div>
-            <div class="pvs-right">
-              <div class="pvs-sub">THE PRICE</div>
-              <div class="pvs-val-rust">↑ 4.2%</div>
-            </div>
-          </div>
-          <div class="pvs-reading">Price moved on theme. Story hasn't confirmed yet. Worth watching.</div>
-        </div>
-
-        <div class="sources-box">
-          <div style="font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px">What we read</div>
-          <p style="font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-bottom:2px">- Ministry of Defence procurement release</p>
-          <p style="font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-bottom:2px">- Defence procurement update scan</p>
-          <p style="font-family:var(--mono);font-size:11px;color:var(--ink-soft)">- Company announcements watchlist</p>
-        </div>
-
-        <div>
-          <div style="font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">How did this land?</div>
-          <div class="feedback-chips" id="feedback-chips">
-            <button class="fb-chip" onclick="selectFeedback()">Useful</button>
-            <button class="fb-chip" onclick="selectFeedback()">Noise</button>
-            <button class="fb-chip" onclick="selectFeedback()">Knew</button>
-          </div>
-          <div class="feedback-saved" id="feedback-saved">✓ Saved - teaches your filter</div>
-        </div>
-      </div>
+      
     </div>
   </div>
 
-  <!-- ═══ PANEL 8: THE PHRASE ═══ -->
+<!-- ═══ PANEL 8: THE PHRASE ═══ -->
   <div class="panel" style="background:var(--cream)">
     <div class="panel-inner">
       <div class="ch-label">
