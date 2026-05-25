@@ -163,7 +163,7 @@ function DetailScreen() {
 
 
 
-// ─── Wishes bar — rotating real quotes from waitlist ─────────────────────────
+// ─── Wishes bar - rotating real quotes from waitlist ─────────────────────────
 
 function WishesBar() {
   const [wishes, setWishes] = useState<string[]>([])
@@ -275,7 +275,7 @@ function CountrySwitcher({ active }: { active: 'in' | 'us' }) {
 }
 
 
-// ─── Wish question — shown after stock pick ───────────────────────────────────
+// ─── Wish question - shown after stock pick ───────────────────────────────────
 
 function WishQuestion({ dark = false }: { dark?: boolean }) {
   const [wish, setWish] = useState('')
@@ -305,7 +305,7 @@ function WishQuestion({ dark = false }: { dark?: boolean }) {
         What is one thing you wish you understood better about a stock you own?
       </p>
       <p style={{ fontSize: 12.5, color: label, marginBottom: 12, lineHeight: 1.45 }}>
-        Not features — just tell us where you feel lost. &ldquo;I never know if bad news actually matters.&rdquo; &ldquo;I bought it but I can&apos;t explain why.&rdquo; Anything like that.
+        Not features - just tell us where you feel lost. &ldquo;I never know if bad news actually matters.&rdquo; &ldquo;I bought it but I can&apos;t explain why.&rdquo; Anything like that.
       </p>
       <textarea
         value={wish}
@@ -348,7 +348,7 @@ function WishQuestion({ dark = false }: { dark?: boolean }) {
 }
 
 
-// ─── Phone step — with country selector and validation ───────────────────────
+// ─── Phone step - with country selector and validation ───────────────────────
 
 const COUNTRIES = [
   { code: 'IN', flag: '🇮🇳', name: 'India',          dial: '+91',  pattern: /^[6-9]\d{9}$/ },
