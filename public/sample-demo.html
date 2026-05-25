@@ -1,323 +1,685 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fundamentally True - See how it works · Data Patterns</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fundamentally True - See how it works - Data Patterns</title>
   <style>
-    :root{
-      --cream:#f6f3ec; --cream-deep:#eee7da; --card:#fffdf8; --ink:#171717; --ink-soft:#393632; --muted:#777068;
-      --hairline:#ddd4c6; --hairline-soft:#e9e1d6; --coral:#d97757; --coral-deep:#bf5d43; --coral-tint:#f6e3da;
-      --sage:#5b7a55; --sage-tint:#e7efe2; --amber:#b88828; --amber-tint:#f1e3bd; --rust:#b54835;
-      --mono:"SF Mono", "Roboto Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
-      --sans:Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    :root {
+      --cream:#f6f3ec; --cream-deep:#eee7da; --card:#fffdf8; --ink:#171717; --ink-soft:#393632;
+      --muted:#777068; --muted-2:#999186; --hairline:#ddd4c6; --hairline-soft:#e9e1d6;
+      --coral:#d97757; --coral-deep:#bf5d43; --coral-tint:#f6e3da;
+      --sage:#5b7a55; --sage-tint:#e7efe2; --amber:#b88828; --amber-tint:#f1e3bd;
+      --rust:#b54835; --rust-tint:#f0d4cb;
+      --mono:"SF Mono","Roboto Mono",ui-monospace,Menlo,monospace;
+      --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
     }
-    *{box-sizing:border-box} html{scroll-behavior:smooth}
-    body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased} a{color:inherit}
-    .nav{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:14px 22px;background:rgba(246,243,236,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--hairline-soft)}
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;letter-spacing:-.02em}.logo{width:30px;height:30px;border-radius:8px;background:var(--ink);color:var(--cream);display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:800}
-    .nav-cta{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--cream);text-decoration:none;border-radius:999px;padding:10px 18px;font-weight:750;font-size:14px}
-    .wrap{max-width:1180px;margin:0 auto;padding:54px 24px 86px}.sample-wrap{max-width:780px;margin:0 auto;padding:52px 20px 80px}
-    .eyebrow{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:9px;margin-bottom:16px}.eyebrow:before{content:"";width:20px;height:1px;background:var(--coral)}
-    h1,h2,h3,p{margin-top:0}.accent{color:var(--coral-deep)}
-    .hero{display:grid;grid-template-columns:1.04fr .96fr;gap:42px;align-items:center;min-height:calc(100vh - 70px)}.hero h1{font-size:clamp(48px,7vw,94px);line-height:.92;letter-spacing:-.07em;margin-bottom:22px;font-weight:850}.hero p{font-size:22px;line-height:1.42;color:var(--ink-soft);max-width:680px;letter-spacing:-.02em}
-    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;align-items:center}.primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:15px 24px;text-decoration:none;font-weight:780;letter-spacing:-.01em;background:var(--ink);color:var(--cream)}
-    .phone{width:min(380px,100%);margin:0 auto;border:3px solid #d8d1c7;border-radius:38px;background:#fbf7ef;box-shadow:0 34px 70px rgba(23,23,23,.16);padding:20px 16px 18px}.phone-top{height:28px;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:800;margin-bottom:16px}.island{width:112px;height:26px;background:#000;border-radius:999px}.signal{font-size:11px;color:#333}.mini-label{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}.phone h3{font-size:21px;line-height:1.08;letter-spacing:-.03em;margin:8px 0}.phone-card,.thesis-mini{background:var(--card);border:1px solid var(--hairline);border-radius:16px;padding:14px;margin-top:12px}.thesis-mini{background:var(--cream);border-radius:13px;padding:12px}.phone-small{font-size:12px;line-height:1.43;color:var(--ink-soft)}.chip{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:999px;font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;background:var(--amber-tint);color:var(--amber)}.status-row{display:flex;align-items:center;gap:8px;margin-top:9px}.status-icon{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--amber);color:#fff;font-weight:900}
-    .lead{font-size:21px;line-height:1.45;color:var(--ink-soft);max-width:760px;letter-spacing:-.02em}.divider{height:1px;background:var(--hairline);margin:54px 0}.step-header{display:flex;gap:15px;align-items:flex-start;margin-bottom:22px}.step-badge{width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--cream);display:grid;place-items:center;font-family:var(--mono);font-size:13px;font-weight:800;flex:0 0 auto}.step-badge.active{background:var(--coral)}.step-header h2{font-size:29px;letter-spacing:-.035em;line-height:1.08;margin:2px 0 0}.sample-intro h1{font-size:clamp(38px,6vw,66px);line-height:.95;letter-spacing:-.06em;margin-bottom:16px}.sample-intro p{font-size:18px;line-height:1.5;color:var(--ink-soft);max-width:640px}
-    .story-card,.future-card,.stream,.news,.digest,.status-box,.source-box,.so-what,.analogy,.mini-panel{background:var(--card);border:1px solid var(--hairline);border-radius:18px;padding:18px 20px;margin-bottom:12px}.story-card h3,.future-card h3,.stream h3,.mini-panel h3{font-size:20px;letter-spacing:-.025em;margin:0 0 8px}.story-card p,.future-card p,.stream p,.mini-panel p{font-size:15px;line-height:1.55;color:var(--ink-soft);margin:0}.analogy{background:var(--coral-tint);border-color:rgba(217,119,87,.28)}.analogy h3{font-size:20px;letter-spacing:-.025em;margin-bottom:8px}.analogy p{font-size:16px;line-height:1.55;color:var(--ink-soft);margin:0}
-    .simple-machine{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:center;background:var(--card);border:1px solid var(--hairline);border-radius:22px;padding:18px;margin-bottom:16px}.machine-node{padding:16px;border-radius:16px;background:var(--cream);text-align:center}.machine-node b{display:block;font-size:17px;letter-spacing:-.02em}.machine-node span{display:block;margin-top:4px;font-size:12px;color:var(--muted)}.arrow{font-size:24px;color:var(--coral-deep);font-weight:800}
-    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px}.three-parts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}.part{background:var(--cream);border:1px solid var(--hairline);border-radius:16px;padding:15px}.part b{display:block;font-size:16px;letter-spacing:-.02em;margin-bottom:6px}.part span{font-size:13px;line-height:1.4;color:var(--muted)}
-    .stream-row{display:flex;align-items:center;gap:12px}.stream-color{width:10px;height:44px;border-radius:4px}.pct{margin-left:auto;font-family:var(--mono);font-size:24px;font-weight:800}.future-thesis,.lock{background:var(--ink);color:var(--cream);border-radius:22px;padding:24px;margin-top:18px}.future-thesis p,.lock p{color:rgba(246,243,236,.72);line-height:1.5;margin:0}.lock h3{font-size:28px;letter-spacing:-.04em;margin-bottom:8px}.beliefs{display:grid;gap:9px;margin-top:18px}.belief{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:13px 14px;display:flex;gap:10px}.belief span{font-family:var(--mono);color:var(--coral);font-weight:800}
-    .reason{display:flex;gap:14px;align-items:flex-start;background:var(--ink);color:var(--cream);border:1px solid var(--ink);border-radius:18px;padding:16px;margin-bottom:10px}.reason-num{width:30px;height:30px;border-radius:50%;background:var(--cream);color:var(--ink);display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:800;flex:0 0 auto}.reason b{display:block;font-size:16px;line-height:1.28;letter-spacing:-.02em;margin-bottom:7px}.dots{display:flex;gap:4px;margin-bottom:7px}.dot{width:7px;height:7px;border-radius:50%;background:var(--coral)}.track{font-family:var(--mono);font-size:11px;color:rgba(246,243,236,.45)}.weakens{margin-top:10px;padding-top:10px;border-top:1px solid rgba(246,243,236,.16);font-size:12px;line-height:1.4;color:rgba(246,243,236,.58)}
-    .news{background:var(--cream-deep)}.news h3{font-size:21px;letter-spacing:-.025em;line-height:1.25}.source-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}.source{font-family:var(--mono);font-size:11px;color:var(--muted)}.digest{padding:24px}.digest h3{font-size:27px;line-height:1.08;letter-spacing:-.035em;margin:13px 0}.tip{color:var(--coral-deep);border-bottom:1px dotted var(--coral);font-weight:650}.status-box,.source-box{background:var(--cream);padding:16px;margin-top:14px}.status-line{display:flex;align-items:center;gap:10px;margin:12px 0}.status-line b{color:var(--amber)}.before-after{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;margin-top:14px}.ba{padding:13px;background:var(--card);border-right:1px solid var(--hairline)}.ba:last-child{border-right:0}.ba b{display:block;font-size:18px;margin-top:4px}.so-what{background:var(--coral-tint);border-color:rgba(217,119,87,.3);margin-top:14px}.so-what h3{font-size:20px;margin-bottom:8px}.confidence{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-top:12px}.confidence .side{background:var(--card);border:1px solid var(--hairline);border-radius:14px;padding:12px}.confidence .move{font-size:22px;color:var(--coral-deep);font-weight:900;text-align:center}
-    .portfolio-map{background:var(--ink);color:var(--cream);border-radius:24px;padding:22px;margin:18px 0 12px}.portfolio-map h3{font-size:24px;letter-spacing:-.035em;margin:4px 0 8px}.portfolio-map p{font-size:14px;line-height:1.5;color:rgba(246,243,236,.68);margin:0}.map-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.holding{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px}.holding-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.holding b{font-size:15px}.holding span{font-family:var(--mono);font-size:9px;color:rgba(246,243,236,.46);text-transform:uppercase;letter-spacing:.1em}.pulse{width:9px;height:9px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 5px rgba(217,119,87,.16)}.pulse.sage{background:var(--sage);box-shadow:0 0 0 5px rgba(91,122,85,.18)}.pulse.amber{background:var(--amber);box-shadow:0 0 0 5px rgba(184,136,40,.18)}
-    .price-sense{background:var(--card);border:1px solid var(--hairline);border-radius:22px;padding:22px;margin-top:18px}.price-meter{height:14px;border-radius:999px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr 1fr;margin:16px 0 10px;border:1px solid var(--hairline)}.price-meter span:nth-child(1){background:var(--sage-tint)}.price-meter span:nth-child(2){background:var(--amber-tint)}.price-meter span:nth-child(3){background:var(--coral-tint)}.price-marker{width:18px;height:18px;border-radius:50%;background:var(--ink);border:3px solid var(--cream);box-shadow:0 0 0 1px var(--ink);position:relative;left:71%;top:-26px}.price-labels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:-12px}.price-labels div{font-size:12px;color:var(--muted)}.price-labels b{display:block;color:var(--ink);font-size:13px;margin-bottom:2px}.price-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}.price-card{background:var(--cream);border:1px solid var(--hairline);border-radius:16px;padding:14px}.price-card b{display:block;font-size:15px;letter-spacing:-.02em;margin-bottom:5px}.price-card span{font-size:13px;line-height:1.4;color:var(--muted)}
-    .raw-toggle{margin-top:12px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden;background:var(--cream)}.raw-toggle summary{cursor:pointer;padding:12px 14px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--coral-deep);font-weight:800;list-style:none}.raw-toggle summary::-webkit-details-marker{display:none}.raw-toggle summary:after{content:'+';float:right;font-size:14px}.raw-toggle[open] summary:after{content:'–'}.raw-data{padding:0 14px 14px}.metric-row{display:grid;grid-template-columns:1.1fr .9fr 1.2fr;gap:8px;padding:10px 0;border-top:1px solid var(--hairline);font-family:var(--mono);font-size:11px;color:var(--ink-soft)}.metric-row strong{font-family:var(--sans);font-size:13px;letter-spacing:-.01em}.spark{height:8px;border-radius:999px;background:linear-gradient(90deg,var(--sage) 0 48%,var(--amber) 48% 72%,var(--coral) 72% 100%);opacity:.8}
-    .waiting-list{display:grid;gap:8px;margin-top:10px}.waiting-list div{background:var(--card);border:1px solid var(--hairline);border-radius:12px;padding:10px 12px;font-size:14px;color:var(--ink-soft)}.feedback{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--hairline);padding-top:16px;margin-top:16px}.feedback button{border:1px solid var(--hairline);background:transparent;border-radius:999px;padding:9px 14px;color:var(--muted);font-weight:650}.feedback-note{background:var(--sage-tint);border:1px solid rgba(91,122,85,.26);border-radius:14px;padding:12px 14px;margin-top:12px;font-size:13px;color:var(--sage);font-weight:650}.cta{background:var(--ink);color:var(--cream);border-radius:26px;padding:38px 30px;text-align:center;margin-top:54px}.cta h2{font-size:clamp(30px,5vw,48px);line-height:1;letter-spacing:-.055em;margin-bottom:14px}.cta p{color:rgba(246,243,236,.66);font-size:16px;line-height:1.5}.cta .primary{background:var(--coral);margin-top:12px}
-    @media(max-width:900px){.hero,.grid-2,.three-parts,.map-grid,.price-cards{grid-template-columns:1fr}.simple-machine{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}.before-after{grid-template-columns:1fr}.ba{border-right:0;border-bottom:1px solid var(--hairline)}.ba:last-child{border-bottom:0}.nav .brand span{display:none}}
-  
-    /* Card reveal system */
-    .chapter-section { opacity: 0; transform: translateY(24px); transition: opacity 0.55s cubic-bezier(.16,1,.3,1), transform 0.55s cubic-bezier(.16,1,.3,1); }
-    .chapter-section.visible { opacity: 1; transform: translateY(0); }
-    .chapter { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
-    .chapter.visible { opacity: 1; transform: translateY(0); }
-    .chapter-card { background: var(--card); border: 1px solid var(--hairline); border-radius: 20px; overflow: hidden; margin-bottom: 12px; }
-    .chapter-card-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; cursor: pointer; user-select: none; }
-    .chapter-card-header:hover { background: var(--cream-deep); }
-    .chapter-card-body { padding: 0 20px 20px; display: none; }
-    .chapter-card.open .chapter-card-body { display: block; }
-    .chapter-card.open .chapter-chevron { transform: rotate(180deg); }
-    .chapter-chevron { transition: transform 0.2s ease; color: var(--muted); flex-shrink: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; background: var(--cream); font-family: var(--sans); }
 
-    /* Tighter prose */
-    .chapter p { font-size: 15px; line-height: 1.55; color: var(--ink-soft); margin-bottom: 10px; }
-    .chapter p:last-child { margin-bottom: 0; }
-    .chapter h3 { font-size: 16px; font-weight: 650; letter-spacing: -.02em; color: var(--ink); margin: 16px 0 6px; }
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 24px;
+      background: rgba(246,243,236,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--hairline-soft);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .nav-badge { width: 26px; height: 26px; border-radius: 7px; background: var(--ink); color: var(--cream); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 10px; font-weight: 700; }
+    .nav-name { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
+    .nav-cta { font-family: var(--sans); font-size: 13px; font-weight: 600; background: var(--coral); color: #fff; padding: 8px 16px; border-radius: 999px; text-decoration: none; }
 
-    /* Chart styles */
-    .chart-wrap { margin: 16px 0; }
-    .chart-label { font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    /* ── Scroll track ── */
+    .track {
+      position: fixed; top: 54px; left: 0; right: 0; bottom: 0;
+      display: flex; overflow-x: scroll; overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .track::-webkit-scrollbar { display: none; }
+
+    /* ── Panels ── */
+    .panel {
+      min-width: 100vw; width: 100vw; height: 100%;
+      scroll-snap-align: start;
+      display: flex; align-items: stretch;
+      flex-shrink: 0; position: relative;
+    }
+    .panel-inner {
+      width: 100%; max-width: 720px; margin: 0 auto;
+      padding: 40px 32px 100px;
+      overflow-y: auto; overflow-x: hidden;
+      display: flex; flex-direction: column; justify-content: flex-start;
+    }
+
+    /* ── Chapter label ── */
+    .ch-label {
+      font-family: var(--mono); font-size: 9px; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 18px;
+    }
+    .ch-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--coral); flex-shrink: 0; }
+    .ch-badge { background: var(--ink); color: var(--cream); font-family: var(--mono); font-size: 8px; font-weight: 700; padding: 2px 7px; border-radius: 999px; letter-spacing: .06em; white-space: nowrap; }
+    .ch-badge.active { background: var(--coral); }
+
+    /* ── Typography ── */
+    .panel h1 { font-size: clamp(38px,5.5vw,64px); font-weight: 850; letter-spacing: -.055em; line-height: .93; color: var(--ink); margin-bottom: 20px; }
+    .panel h1 .accent { color: var(--coral); }
+    .panel h2 { font-size: clamp(26px,3.5vw,38px); font-weight: 750; letter-spacing: -.04em; line-height: 1.0; color: var(--ink); margin-bottom: 16px; }
+    .panel h3 { font-size: 17px; font-weight: 650; letter-spacing: -.025em; color: var(--ink); margin: 16px 0 6px; }
+    .panel p { font-size: 15px; line-height: 1.55; color: var(--ink-soft); margin-bottom: 10px; }
+    .panel p.lead { font-size: 18px; line-height: 1.48; color: var(--ink-soft); letter-spacing: -.015em; margin-bottom: 18px; }
+    .lede { font-size: 17px; line-height: 1.5; color: var(--muted); letter-spacing: -.01em; max-width: 560px; }
+
+    /* ── Cards ── */
+    .card { background: var(--card); border: 1px solid var(--hairline); border-radius: 16px; padding: 16px 18px; margin-bottom: 10px; }
+    .card h3 { margin-top: 0; }
+    .dark-card { background: var(--ink); border-radius: 20px; padding: 24px 22px; margin-bottom: 10px; }
+
+    /* ── Story cards ── */
+    .story-card { background: var(--cream-deep); border: 1px solid var(--hairline); border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; }
+    .story-card.highlight { background: var(--coral-tint); border-color: rgba(217,119,87,.3); }
+
+    /* ── Machine diagram ── */
+    .machine { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 16px 0; }
+    .machine-node { background: var(--cream); border: 1px solid var(--hairline); border-radius: 12px; padding: 12px 14px; flex: 1; min-width: 120px; }
+    .machine-node b { display: block; font-size: 14px; letter-spacing: -.02em; color: var(--ink); margin-bottom: 3px; }
+    .machine-node span { font-size: 11px; color: var(--muted); }
+    .arrow { font-size: 20px; color: var(--coral-deep); font-weight: 800; flex-shrink: 0; }
+
+    /* ── Revenue bars ── */
+    .bar-wrap { margin: 16px 0; }
+    .bar-label-text { font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
     .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-    .bar-label { font-size: 12px; color: var(--ink-soft); width: 140px; flex-shrink: 0; text-align: right; }
+    .bar-name { font-size: 12px; color: var(--ink-soft); width: 150px; flex-shrink: 0; text-align: right; }
     .bar-track { flex: 1; height: 10px; background: var(--hairline); border-radius: 99px; overflow: hidden; }
-    .bar-fill { height: 100%; border-radius: 99px; transition: width 0.8s cubic-bezier(.16,1,.3,1); }
-    .bar-value { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--ink); width: 40px; flex-shrink: 0; }
-    .compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
-    .compare-col { text-align: center; }
-    .compare-num { font-size: 32px; font-weight: 800; letter-spacing: -.04em; line-height: 1; margin-bottom: 4px; }
-    .compare-label { font-size: 11px; color: var(--muted); }
-    .compare-note { font-size: 12px; color: var(--coral-deep); font-weight: 500; margin-top: 8px; font-style: italic; }
-    .spark-bar { display: flex; align-items: flex-end; gap: 2px; height: 40px; }
-    .spark-bar span { flex: 1; border-radius: 2px 2px 0 0; background: var(--coral); opacity: 0.3; transition: opacity .2s; }
-    .spark-bar span.hi { opacity: 1; }
-    .metric-card { background: var(--cream-deep); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-    .metric-card .mk { font-size: 13px; color: var(--ink-soft); }
-    .metric-card .mv { font-family: var(--mono); font-size: 15px; font-weight: 700; color: var(--ink); }
-    .metric-card .mt { font-size: 11px; color: var(--coral-deep); font-weight: 500; margin-top: 2px; }
+    .bar-fill { height: 100%; border-radius: 99px; transition: width .9s cubic-bezier(.16,1,.3,1); }
+    .bar-val { font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--ink); width: 38px; flex-shrink: 0; }
 
+    /* ── Metrics ── */
+    .metric-row { display: flex; align-items: flex-start; justify-content: space-between; padding: 11px 14px; background: var(--cream-deep); border-radius: 10px; margin-bottom: 7px; }
+    .metric-row strong { font-size: 13px; color: var(--ink-soft); font-weight: 500; }
+    .metric-row span { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--ink); }
+
+    /* ── Defence spend bars ── */
+    .def-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+    .def-bar-yr { font-family: var(--mono); font-size: 10px; color: var(--muted); width: 38px; flex-shrink: 0; }
+    .def-bar-track { flex: 1; height: 8px; background: var(--hairline); border-radius: 99px; overflow: hidden; }
+    .def-bar-fill { height: 100%; border-radius: 99px; }
+    .def-bar-val { font-family: var(--mono); font-size: 11px; color: var(--ink); width: 34px; flex-shrink: 0; }
+
+    /* ── Price meter ── */
+    .price-meter-wrap { margin: 18px 0; }
+    .price-gradient { position: relative; height: 14px; background: linear-gradient(to right, var(--sage-tint), var(--amber-tint), var(--rust-tint)); border-radius: 99px; margin-bottom: 6px; }
+    .price-marker { position: absolute; top: -5px; width: 2px; height: 24px; background: var(--ink); border-radius: 2px; left: 72%; }
+    .price-marker-label { position: absolute; top: 22px; left: 60%; font-family: var(--mono); font-size: 9px; color: var(--ink); font-weight: 700; white-space: nowrap; }
+    .price-range { display: flex; justify-content: space-between; margin-top: 28px; }
+    .price-range span { font-family: var(--mono); font-size: 9px; }
+
+    /* ── Reasons ── */
+    .reason-btn { display: flex; gap: 12px; align-items: flex-start; padding: 13px 14px; border-radius: 13px; margin-bottom: 8px; width: 100%; background: var(--ink); border: 1.5px solid var(--ink); cursor: pointer; text-align: left; transition: all .15s; }
+    .reason-btn.off { background: var(--card); border-color: var(--hairline); }
+    .reason-num { width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+    .reason-btn .reason-num { background: var(--cream); color: var(--ink); }
+    .reason-btn.off .reason-num { background: var(--ink); color: var(--cream); }
+    .reason-claim { font-size: 13px; font-weight: 600; letter-spacing: -.015em; line-height: 1.3; color: var(--cream); }
+    .reason-btn.off .reason-claim { color: var(--ink); }
+    .reason-sub { font-family: var(--mono); font-size: 10px; color: rgba(246,243,236,.45); margin-top: 5px; }
+    .reason-btn.off .reason-sub { color: var(--muted); }
+    .dots { display: flex; gap: 3px; margin-top: 6px; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); }
+    .dot.empty { background: var(--hairline); }
+    .check-circle { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; border: 1.5px solid var(--sage); background: var(--sage); display: flex; align-items: center; justify-content: center; margin-left: auto; }
+    .reason-btn.off .check-circle { border-color: var(--hairline); background: transparent; }
+    .save-cta { margin-top: 12px; padding: 14px 16px; background: var(--ink); color: var(--cream); border-radius: 14px; display: flex; align-items: center; gap: 12px; }
+    .save-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--coral); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .saved-box { display: none; padding: 14px 16px; background: var(--sage-tint); border: 1px solid rgba(91,122,85,.3); border-radius: 14px; margin-top: 12px; }
+    .saved-box p:first-child { color: var(--sage); font-weight: 600; font-size: 14px; margin-bottom: 3px; }
+
+    /* ── Digest card ── */
+    .chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 20px; background: var(--amber-tint); color: var(--amber); font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .chip .cdot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+    .digest-headline { font-size: 19px; font-weight: 750; letter-spacing: -.03em; line-height: 1.1; color: var(--ink); margin: 10px 0 12px; }
+    .thesis-box { background: var(--cream); border: 1px solid var(--hairline); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+    .thesis-label { font-family: var(--mono); font-size: 8px; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 7px; }
+    .thesis-claim { font-size: 13px; font-weight: 600; letter-spacing: -.015em; color: var(--ink); margin-bottom: 8px; }
+    .status-row { display: flex; align-items: center; gap: 7px; }
+    .status-icon { width: 22px; height: 22px; border-radius: 50%; background: var(--amber); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+    .pvs-box { background: var(--cream); border: 1px solid var(--hairline); border-radius: 12px; padding: 11px 13px; margin-bottom: 10px; }
+    .pvs-grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .pvs-left { padding-right: 12px; border-right: 1px solid var(--hairline); }
+    .pvs-right { padding-left: 12px; }
+    .pvs-sub { font-family: var(--mono); font-size: 8px; color: var(--muted); margin-bottom: 3px; }
+    .pvs-val-amber { font-size: 15px; font-weight: 700; color: var(--amber); letter-spacing: -.02em; }
+    .pvs-val-rust { font-size: 15px; font-weight: 700; color: var(--rust); letter-spacing: -.02em; }
+    .pvs-reading { font-size: 12px; color: var(--coral-deep); font-weight: 500; margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--hairline); line-height: 1.4; }
+    .sources-box { background: var(--cream-deep); border-radius: 10px; padding: 9px 11px; margin-bottom: 12px; }
+    .feedback-chips { display: flex; gap: 7px; flex-wrap: wrap; }
+    .fb-chip { padding: 7px 13px; border-radius: 20px; border: 1px solid var(--hairline); background: transparent; font-family: var(--sans); font-size: 12px; font-weight: 500; color: var(--muted); cursor: pointer; }
+    .feedback-saved { display: none; font-family: var(--mono); font-size: 12px; color: var(--sage); }
+
+    /* ── Confidence ── */
+    .confidence { display: flex; align-items: center; gap: 16px; background: var(--cream); border-radius: 12px; padding: 12px 14px; margin: 12px 0; }
+    .conf-side { text-align: center; flex: 1; }
+    .conf-arrow { font-size: 22px; color: var(--muted); }
+    .move-arrow { font-size: 22px; color: var(--coral); }
+
+    /* ── Before/after ── */
+    .before-after { display: flex; gap: 10px; margin: 12px 0; flex-wrap: wrap; }
+    .ba { background: var(--cream-deep); border-radius: 10px; padding: 10px 12px; flex: 1; min-width: 80px; text-align: center; }
+    .ba .mini-label { font-family: var(--mono); font-size: 8px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px; }
+
+    /* ── Navigation controls ── */
+    .nav-controls {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 24px 18px;
+      background: rgba(246,243,236,0.95); backdrop-filter: blur(12px);
+      border-top: 1px solid var(--hairline-soft);
+    }
+    .nav-dots { display: flex; gap: 6px; align-items: center; }
+    .nav-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--hairline); border: none; cursor: pointer; padding: 0; transition: all .25s; }
+    .nav-dot.active { width: 18px; border-radius: 3px; background: var(--coral); }
+    .nav-btn { display: flex; align-items: center; gap: 6px; background: none; border: 1px solid var(--hairline); border-radius: 999px; padding: 8px 14px; font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--ink); cursor: pointer; transition: all .15s; }
+    .nav-btn:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+    .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .nav-btn.primary { background: var(--coral); color: #fff; border-color: var(--coral); }
+    .nav-btn.primary:hover { background: var(--coral-deep); border-color: var(--coral-deep); }
+    .panel-counter { font-family: var(--mono); font-size: 11px; color: var(--muted); min-width: 50px; text-align: center; }
+
+    /* ── Spark bars ── */
+    .spark-bars { display: flex; align-items: flex-end; gap: 3px; height: 36px; margin: 10px 0; }
+    .spark-bars span { flex: 1; border-radius: 2px 2px 0 0; background: var(--coral); opacity: .25; }
+    .spark-bars span.hi { opacity: 1; }
+
+    /* ── Portfolio map (panel 1) ── */
+    .map-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 14px 0; }
+    .map-tile { background: var(--card); border: 1px solid var(--hairline); border-radius: 12px; padding: 11px 13px; display: flex; align-items: flex-start; gap: 8px; }
+    .map-tile.touched { border-color: var(--amber); background: var(--amber-tint); }
+    .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--sage); flex-shrink: 0; margin-top: 3px; }
+    .pulse.amber { background: var(--amber); }
+    .map-tile b { font-size: 13px; letter-spacing: -.015em; color: var(--ink); display: block; margin-bottom: 2px; }
+    .map-tile span { font-size: 11px; color: var(--muted); }
+
+    /* ── Phrase of day ── */
+    .phrase-card { background: var(--ink); border-radius: 18px; padding: 22px 20px; }
+    .phrase-label { font-family: var(--mono); font-size: 9px; color: rgba(246,243,236,.4); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; }
+    .phrase-title { font-size: 18px; font-weight: 700; letter-spacing: -.025em; color: var(--cream); margin-bottom: 10px; line-height: 1.15; }
+    .phrase-body { font-size: 14px; color: rgba(246,243,236,.75); line-height: 1.55; margin-bottom: 8px; }
+    .phrase-foot { font-size: 12px; color: rgba(246,243,236,.35); font-style: italic; }
+
+    @media (max-width: 600px) {
+      .panel-inner { padding: 28px 18px 90px; }
+      .panel h1 { font-size: 36px; }
+      .panel h2 { font-size: 24px; }
+      .machine { flex-direction: column; }
+      .bar-name { width: 110px; font-size: 11px; }
+    }
   </style>
 </head>
 <body>
-  <nav class="nav"><a class="brand" href="#"><span class="logo">FT</span><span>Fundamentally True</span></a><a class="nav-cta" href="https://ft-app-beta.vercel.app/#waitlist">Get early access →</a></nav>
-  <main>
-    <section class="wrap" style="min-height:auto;padding-bottom:0;padding-top:52px">
-      <div class="eyebrow">How Fundamentally True works</div>
-      <h1 style="font-size:clamp(42px,6.5vw,84px);line-height:.93;letter-spacing:-.065em;margin-bottom:18px;font-weight:850">
-        Understand it once.<br><span class="accent">We find you when it matters.</span>
+
+<nav>
+  <a href="https://ft-app-beta.vercel.app" class="nav-logo">
+    <div class="nav-badge">FT</div>
+    <span class="nav-name">Fundamentally True</span>
+  </a>
+  <a href="https://ft-app-beta.vercel.app/#waitlist" class="nav-cta">Get early access</a>
+</nav>
+
+<div class="track" id="track">
+
+  <!-- ═══ PANEL 1: THE HOOK ═══ -->
+  <div class="panel" style="background:var(--ink)">
+    <div class="panel-inner" style="justify-content:center">
+      <div class="ch-label" style="color:rgba(246,243,236,.4)">
+        <span class="ch-dot" style="background:rgba(246,243,236,.3)"></span>
+        Fundamentally True - Data Patterns
+      </div>
+      <h1 style="color:var(--cream);margin-bottom:22px">
+        You own a stock.<br>Something happened<br>
+        <span style="color:var(--coral)">overnight.</span>
       </h1>
-      <p style="font-size:19px;line-height:1.48;color:var(--ink-soft);max-width:620px;letter-spacing:-.02em;margin-bottom:42px">
-        The 9 chapters below are read once. After that, we stay quiet until an event touches a reason you saved. When it does, one card. 60 seconds. Then we leave you alone.
+      <p class="lede" style="color:rgba(246,243,236,.7);margin-bottom:32px">
+        Before markets open, we found something. By 7am, we translated it into the only question that matters: does this touch the reason you own it?
       </p>
-      <div style="display:grid;grid-template-columns:1fr 56px 1fr;align-items:stretch;background:var(--card);border:1px solid var(--hairline);border-radius:24px;overflow:hidden;margin-bottom:52px">
-        <div style="padding:28px">
-          <div style="font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:7px"><span style="width:8px;height:8px;border-radius:50%;background:var(--ink);display:inline-block;flex-shrink:0"></span>Read once</div>
-          <p style="font-size:21px;font-weight:750;letter-spacing:-.03em;line-height:1.1;margin-bottom:10px;color:var(--ink)">The deep understanding</p>
-          <p style="font-size:14px;line-height:1.5;color:var(--muted);margin-bottom:22px">What the company does, how it makes money, whether the numbers can be trusted, and the reasons worth watching.</p>
-          <div style="position:relative;height:90px;margin-bottom:12px">
-            <div style="position:absolute;top:0;left:0;right:0;height:60px;background:var(--hairline-soft);border:1px solid var(--hairline);border-radius:12px"></div>
-            <div style="position:absolute;top:8px;left:4px;right:4px;height:60px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:12px"></div>
-            <div style="position:absolute;top:16px;left:8px;right:8px;height:60px;background:var(--cream);border:1px solid var(--hairline);border-radius:12px;display:flex;align-items:center;padding:0 14px;gap:10px">
-              <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--muted)">CH 6</span>
-              <span style="font-size:13px;font-weight:600;color:var(--ink-soft)">Your reasons - choose what you believe</span>
-            </div>
-          </div>
-          <p style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.04em">9 chapters · done once · lives in the app</p>
+      <p style="color:rgba(246,243,236,.5);font-size:14px">Swipe or use arrows to follow the story →</p>
+
+      <!-- Portfolio map preview -->
+      <div class="map-grid" style="margin-top:28px">
+        <div class="map-tile touched">
+          <span class="pulse amber"></span>
+          <div><b style="color:var(--ink)">Data Patterns</b><span>Defence electronics - reason touched today</span></div>
         </div>
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--cream-deep);border-left:1px solid var(--hairline);border-right:1px solid var(--hairline);gap:10px">
-          <span style="font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);writing-mode:vertical-rl;transform:rotate(180deg)">then</span>
-          <div style="width:32px;height:32px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7H11M7.5 3.5L11 7L7.5 10.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span style="font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);writing-mode:vertical-rl">only when</span>
+        <div class="map-tile" style="background:rgba(246,243,236,.04);border-color:rgba(246,243,236,.1)">
+          <span class="pulse" style="background:rgba(91,122,85,.6)"></span>
+          <div><b style="color:var(--cream)">HDFC Bank</b><span style="color:rgba(246,243,236,.45)">Loan quality - quiet today</span></div>
         </div>
-        <div style="padding:28px;background:var(--cream-deep)">
-          <div style="font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:7px"><span style="width:8px;height:8px;border-radius:50%;background:var(--coral);display:inline-block;flex-shrink:0"></span>Only when it matters</div>
-          <p style="font-size:21px;font-weight:750;letter-spacing:-.03em;line-height:1.1;margin-bottom:10px;color:var(--ink)">One card. 60 seconds.</p>
-          <p style="font-size:14px;line-height:1.5;color:var(--muted);margin-bottom:22px">When an event touches a reason you saved - and only then. Then we leave you alone.</p>
-          <div style="background:var(--card);border:1px solid var(--hairline);border-radius:14px;padding:14px;margin-bottom:12px">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span class="chip" style="font-size:8px;padding:3px 8px">Worth knowing</span><span style="font-family:var(--mono);font-size:9px;color:var(--muted)">DATA · 7:01AM</span></div>
-            <p style="font-size:13px;font-weight:700;line-height:1.2;color:var(--ink);margin-bottom:8px;letter-spacing:-.015em">Radar order cleared - good for the theme, not proof yet.</p>
-            <div style="background:var(--cream);border-radius:8px;padding:9px 10px;margin-bottom:10px">
-              <p style="font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px">Your reason #1</p>
-              <p style="font-size:11px;font-weight:600;color:var(--ink);margin-bottom:6px">"India localizes defence electronics."</p>
-              <div style="display:flex;align-items:center;gap:6px"><span style="width:20px;height:20px;border-radius:50%;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">~</span><span style="font-size:11px;font-weight:600;color:var(--amber)">Supported · not confirmed yet</span></div>
-            </div>
-            <div style="display:flex;gap:6px">
-              <button class="chip" data-feedback="useful" style="font-size:10px;cursor:pointer;border:1px solid var(--hairline);background:transparent;border-radius:999px;padding:5px 10px;color:var(--muted)">Useful</button>
-              <button class="chip" data-feedback="noise" style="font-size:10px;cursor:pointer;border:1px solid var(--hairline);background:transparent;border-radius:999px;padding:5px 10px;color:var(--muted)">Noise</button>
-              <button class="chip" data-feedback="knew" style="font-size:10px;cursor:pointer;border:1px solid var(--hairline);background:transparent;border-radius:999px;padding:5px 10px;color:var(--muted)">Knew</button>
-            </div>
-          </div>
-          <p style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.04em">quiet days stay quiet</p>
+        <div class="map-tile" style="background:rgba(246,243,236,.04);border-color:rgba(246,243,236,.1)">
+          <span class="pulse" style="background:rgba(91,122,85,.6)"></span>
+          <div><b style="color:var(--cream)">TCS</b><span style="color:rgba(246,243,236,.45)">BFSI revenue - quiet today</span></div>
+        </div>
+        <div class="map-tile" style="background:rgba(246,243,236,.04);border-color:rgba(246,243,236,.1)">
+          <span class="pulse" style="background:rgba(246,243,236,.3)"></span>
+          <div><b style="color:var(--cream)">Maruti</b><span style="color:rgba(246,243,236,.45)">Dealer network - needs check</span></div>
         </div>
       </div>
-      <div style="text-align:center;margin-bottom:60px">
-        <p style="font-size:15px;color:var(--muted);margin-bottom:16px">Scroll through the 9 chapters below.</p>
-        <a class="primary" href="#sample" style="font-size:15px">See the full experience ↓</a>
+    </div>
+  </div>
+
+  <!-- ═══ PANEL 2: THE BUSINESS ═══ -->
+  <div class="panel" style="background:var(--cream)">
+    <div class="panel-inner">
+      <div class="ch-label">
+        <span class="ch-dot"></span>
+        Chapter 1 <span class="ch-badge">READ ONCE</span>
       </div>
-    </section>
+      <h2>What Data Patterns actually does</h2>
+      <p class="lead">Data Patterns does not make the tank. It does not make the missile. It works on the electronics that help defence and space systems see, think, talk, and respond.</p>
 
-    <section class="sample-wrap" id="sample">
-      <div class="sample-intro"><div class="eyebrow">A real morning · Data Patterns</div><h1>Before the market opens, <span class="accent">the story is already moving.</span></h1><p>At 5:30am, a defence update lands. By 7am, it is translated into the only question that matters: does this touch the reason you cared about Data Patterns?</p></div>
-      <div class="mini-panel" style="background:var(--coral-tint);border-color:rgba(217,119,87,.28)"><div class="mini-label">Why this showed up today</div><h3>You added Data Patterns because India’s defence theme sounded interesting.</h3><p>We turned that curiosity into a company story, a future story, a price check, and a few reasons that can actually be watched.</p></div>
-      <div class="portfolio-map"><div class="mini-label">Your portfolio map</div><h3>Only the reasons you saved are being watched.</h3><p>Data Patterns is one tile in a larger view. Each company has its own reasons, and the morning note only wakes you up when something touches one of them.</p><div class="map-grid"><div class="holding"><div class="holding-top"><b>Data Patterns</b><i class="pulse amber"></i></div><span>Defence electronics · reason touched today</span></div><div class="holding"><div class="holding-top"><b>HDFC Bank</b><i class="pulse sage"></i></div><span>Loan quality · quiet today</span></div><div class="holding"><div class="holding-top"><b>CDSL</b><i class="pulse sage"></i></div><span>Demat growth · quiet today</span></div><div class="holding"><div class="holding-top"><b>Dixon</b><i class="pulse"></i></div><span>Manufacturing margins · needs check</span></div></div></div>
-
-      <div class="chapter-section"><div class="divider"></div>
-      <div class="step-header"><div class="step-badge">1</div><div><div class="mini-label" style="display:flex;align-items:center;gap:8px">Chapter 1 · Business Story <span style="background:var(--ink);color:#fff;font-family:var(--mono);font-size:8px;font-weight:700;padding:2px 7px;border-radius:999px;letter-spacing:.06em;white-space:nowrap">READ ONCE</span></div><h2>What Data Patterns actually does</h2></div></div>
-      <p class="lead" style="font-size:17px;margin-bottom:18px">Data Patterns does not make the tank. It does not make the missile. It works on the electronics that help defence and space systems see, think, talk, and respond.</p>
-      <div class="analogy"><h3>The body analogy</h3><p>If a defence system were a human body, the metal platform is the body. The radar is the eyes. The communication system is the voice. The processors and electronics are the brain and nerves. Data Patterns works in that brain-and-nerves layer.</p></div>
-      <div class="simple-machine"><div class="machine-node"><b>Defence need</b><span>Radar, satellite, aircraft, missile, EW</span></div><div class="arrow">→</div><div class="machine-node"><b>Data Patterns</b><span>Designs high-reliability electronics</span></div><div class="arrow">→</div><div class="machine-node"><b>Mission system</b><span>Can sense, process, guide, or communicate</span></div></div>
-      <div class="story-card"><h3>What they sell</h3><p>Think of the custom electronic modules, processing boards, radar sub-systems, and space-grade electronics that sit inside larger defence and aerospace programs.</p></div>
-      <div class="story-card"><h3>Why trust matters</h3><p>In a phone, a glitch is annoying. In a radar, satellite, or aircraft system, a glitch can be mission failure. That is why qualification, engineering depth, and past execution matter more than advertising.</p></div>
-      <div class="story-card"><h3>Why revenue can be lumpy</h3><p>This is not like selling soap every day. It is more like building parts for a space mission or a railway signalling system: orders arrive in batches, testing takes time, and delivery depends on program schedules.</p></div>
-
+      <div class="machine">
+        <div class="machine-node">
+          <b>Defence need</b>
+          <span>Radar, satellite, aircraft, missile</span>
+        </div>
+        <div class="arrow">→</div>
+        <div class="machine-node" style="border-color:var(--coral);background:var(--coral-tint)">
+          <b>Data Patterns</b>
+          <span>Designs the high-reliability electronics</span>
+        </div>
+        <div class="arrow">→</div>
+        <div class="machine-node">
+          <b>Mission system</b>
+          <span>Can now sense, process, guide, communicate</span>
+        </div>
       </div>
-<div class="chapter-section"><div class="divider"></div>
-      <div class="step-header"><div class="step-badge">2</div><div><div class="mini-label">Chapter 2 · Money Map</div><h2>How the money comes in</h2></div></div>
-      <p class="lead" style="font-size:17px;margin-bottom:18px">The money comes in slowly, then suddenly. First, the company designs and qualifies a specialized system. Then, if the program moves ahead, production orders follow.</p>
-      <div class="stream"><div class="stream-row"><div class="stream-color" style="background:var(--ink)"></div><div><h3>Design and development</h3><p>Engineering work for specialized defence and aerospace systems.</p></div><div class="pct">01</div></div></div>
-      <div class="stream"><div class="stream-row"><div class="stream-color" style="background:var(--coral)"></div><div><h3>Production orders</h3><p>Once a module is accepted, larger program orders can follow.</p></div><div class="pct">02</div></div></div>
-      <div class="stream"><div class="stream-row"><div class="stream-color" style="background:var(--sage)"></div><div><h3>Space and satellite work</h3><p>Electronics that must survive harsh operating conditions.</p></div><div class="pct">03</div></div></div>
-      <div class="story-card" style="background:var(--coral-tint);border-color:rgba(217,119,87,.28)"><h3>The rhythm</h3><p>It is not like selling soap every day. It is closer to building parts for a space mission: long conversations, careful testing, big orders, and delivery over time.</p></div>
 
+      <div class="card">
+        <h3>Why trust matters more than advertising</h3>
+        <p>In a phone, a glitch is annoying. In a radar or satellite, a glitch is mission failure. That is why qualification, engineering depth, and past execution matter more than price.</p>
       </div>
-<div class="chapter-section"><div class="divider"></div>
-      <div class="step-header"><div class="step-badge">3</div><div><div class="mini-label">Chapter 3 · Trust Check</div><h2>Can the story be trusted?</h2></div></div>
-      <p class="lead" style="font-size:17px;margin-bottom:18px">The story has to leave proof. For a company like Data Patterns, the proof is simple: promised work should become delivered work, delivered work should leave money behind, and money should eventually come in.</p>
-      <div class="analogy"><h3>The footprint analogy</h3><p>A headline tells you what happened outside the house. The accounts show the footprints inside. If work is growing but money is not coming in, something is dragging. If the company says it is doing high-value work but keeps less money from each rupee, the work may be getting harder. If materials pile up, it may be preparing for delivery - or carrying risk.</p></div>
-      <div class="grid-2"><div class="future-card"><h3>Promises vs delivery</h3><p>Promised work is not the same as delivered work. The question is whether what customers promised is actually turning into completed work.</p><details class="raw-toggle"><summary>Show the raw numbers</summary><div class="raw-data"><div class="metric-row"><strong>Promised work</strong><span>₹1,000 Cr</span><div class="spark"></div></div><div class="metric-row"><strong>Delivered work</strong><span>₹420 Cr</span><div class="spark"></div></div><div class="metric-row"><strong>Conversion</strong><span>42%</span><div class="spark"></div></div></div></details></div><div class="future-card"><h3>Money left behind</h3><p>Specialized work should leave decent money after costs. If less money is left behind, the work may be getting more ordinary, more expensive, or harder to deliver.</p><details class="raw-toggle"><summary>Show the raw numbers</summary><div class="raw-data"><div class="metric-row"><strong>Money left after direct costs</strong><span>58%</span><div class="spark"></div></div><div class="metric-row"><strong>Operating money left</strong><span>34%</span><div class="spark"></div></div><div class="metric-row"><strong>Direction</strong><span>Stable</span><div class="spark"></div></div></div></details></div><div class="future-card"><h3>Money still waiting</h3><p>Sometimes the work is done, but the money has not arrived yet. If customers take longer to pay, the story can look good while cash feels tight.</p><details class="raw-toggle"><summary>Show the raw numbers</summary><div class="raw-data"><div class="metric-row"><strong>Money waiting</strong><span>₹210 Cr</span><div class="spark"></div></div><div class="metric-row"><strong>Waiting time</strong><span>96 days</span><div class="spark"></div></div><div class="metric-row"><strong>Direction</strong><span>Watch</span><div class="spark"></div></div></div></details></div><div class="future-card"><h3>Money stuck inside the business</h3><p>Materials, unfinished work, and unpaid bills show whether growth is smooth or cash-hungry. Growth that traps too much money inside the business needs watching.</p><details class="raw-toggle"><summary>Show the raw numbers</summary><div class="raw-data"><div class="metric-row"><strong>Materials held</strong><span>₹145 Cr</span><div class="spark"></div></div><div class="metric-row"><strong>Cash from operations</strong><span>₹72 Cr</span><div class="spark"></div></div><div class="metric-row"><strong>Cash vs profit</strong><span>Needs check</span><div class="spark"></div></div></div></details></div></div>
-      <div class="story-card" style="background:var(--coral-tint);border-color:rgba(217,119,87,.28)"><h3>The trust read</h3><p>The clean version is simple: promised work becomes delivered work, the company keeps enough money after costs, customers do not take too long to pay, and cash eventually follows profit. If one of these breaks, the reason needs a closer look.</p></div>
+      <div class="card">
+        <h3>Why revenue arrives in batches</h3>
+        <p>This is not like selling soap every day. It is closer to building parts for a space mission: long conversations, careful testing, big orders, slow delivery. Revenue is lumpy by design.</p>
+      </div>
+    </div>
+  </div>
 
+  <!-- ═══ PANEL 3: THE MONEY ═══ -->
+  <div class="panel" style="background:var(--cream)">
+    <div class="panel-inner">
+      <div class="ch-label">
+        <span class="ch-dot"></span>
+        Chapter 2 <span class="ch-badge">READ ONCE</span>
       </div>
-<div class="chapter-section"><div class="divider"></div>
-      <div class="step-header"><div class="step-badge">4</div><div><div class="mini-label">Chapter 4 · Future Story</div><h2>Why this company could matter over the next decade</h2></div></div>
-      <p class="lead" style="font-size:17px">India wants more of its defence and space capability built at home. If more of the electronic intelligence layer moves to domestic specialists, Data Patterns becomes part of a larger national story.</p>
-      <div class="grid-2"><div class="future-card"><!-- India defence spend chart -->
-          <div class="chart-wrap">
-            <p class="chart-label">India defence budget - Rs. lakh crore</p>
-            <div class="bar-row">
-              <span class="bar-label" style="font-family:var(--mono);font-size:11px">FY21</span>
-              <div class="bar-track"><div class="bar-fill" style="width:52%;background:var(--ink);opacity:0.4"></div></div>
-              <span class="bar-value" style="font-size:11px">4.78</span>
-            </div>
-            <div class="bar-row">
-              <span class="bar-label" style="font-family:var(--mono);font-size:11px">FY23</span>
-              <div class="bar-track"><div class="bar-fill" style="width:62%;background:var(--ink);opacity:0.6"></div></div>
-              <span class="bar-value" style="font-size:11px">5.94</span>
-            </div>
-            <div class="bar-row">
-              <span class="bar-label" style="font-family:var(--mono);font-size:11px">FY25</span>
-              <div class="bar-track"><div class="bar-fill" style="width:72%;background:var(--ink);opacity:0.8"></div></div>
-              <span class="bar-value" style="font-size:11px">6.21</span>
-            </div>
-            <div class="bar-row">
-              <span class="bar-label" style="font-family:var(--mono);font-size:11px">FY26E</span>
-              <div class="bar-track"><div class="bar-fill" style="width:84%;background:var(--coral)"></div></div>
-              <span class="bar-value" style="font-size:11px;color:var(--coral)">7.20</span>
-            </div>
-            <p style="font-size:12px;color:var(--muted);margin-top:8px;font-style:italic">And the indigenization target is 75% by FY27 - meaning domestic suppliers get a growing share of a growing pie.</p>
+      <h2>Where the money comes from</h2>
+      <p class="lead">Every rupee Data Patterns made last year came from one of three places. The mix tells you what kind of business this really is.</p>
+
+      <div class="bar-wrap">
+        <p class="bar-label-text">Revenue mix</p>
+        <div class="bar-row">
+          <span class="bar-name">Production orders</span>
+          <div class="bar-track"><div class="bar-fill" style="width:55%;background:var(--coral)"></div></div>
+          <span class="bar-val" style="color:var(--coral)">~55%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">Design & development</span>
+          <div class="bar-track"><div class="bar-fill" style="width:30%;background:var(--ink)"></div></div>
+          <span class="bar-val">~30%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-name">Space & satellite</span>
+          <div class="bar-track"><div class="bar-fill" style="width:15%;background:var(--sage)"></div></div>
+          <span class="bar-val" style="color:var(--sage)">~15%</span>
+        </div>
+      </div>
+
+      <div class="story-card highlight">
+        <p style="font-size:14px;font-weight:500;margin:0">The rhythm is: long conversations, careful testing, big orders, then delivery over 12-18 months. Revenue grows slowly then suddenly.</p>
+      </div>
+
+      <div class="bar-wrap" style="margin-top:20px">
+        <p class="bar-label-text">India defence budget (Rs. lakh crore)</p>
+        <div class="def-bar-row">
+          <span class="def-bar-yr">FY21</span>
+          <div class="def-bar-track"><div class="def-bar-fill" style="width:52%;background:var(--ink);opacity:.4"></div></div>
+          <span class="def-bar-val">4.78</span>
+        </div>
+        <div class="def-bar-row">
+          <span class="def-bar-yr">FY23</span>
+          <div class="def-bar-track"><div class="def-bar-fill" style="width:62%;background:var(--ink);opacity:.6"></div></div>
+          <span class="def-bar-val">5.94</span>
+        </div>
+        <div class="def-bar-row">
+          <span class="def-bar-yr">FY25</span>
+          <div class="def-bar-track"><div class="def-bar-fill" style="width:72%;background:var(--ink);opacity:.8"></div></div>
+          <span class="def-bar-val">6.21</span>
+        </div>
+        <div class="def-bar-row">
+          <span class="def-bar-yr">FY26E</span>
+          <div class="def-bar-track"><div class="def-bar-fill" style="width:84%;background:var(--coral)"></div></div>
+          <span class="def-bar-val" style="color:var(--coral)">7.20</span>
+        </div>
+        <p style="font-size:11px;color:var(--muted);margin-top:6px;font-style:italic">Indigenization target: 75% domestic by FY27. Growing pie, growing share.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PANEL 4: THE PROOF ═══ -->
+  <div class="panel" style="background:var(--cream)">
+    <div class="panel-inner">
+      <div class="ch-label">
+        <span class="ch-dot"></span>
+        Chapter 3 <span class="ch-badge">READ ONCE</span>
+      </div>
+      <h2>Can the story be trusted?</h2>
+      <p class="lead">A headline tells you what happened outside the house. The accounts show the footprints inside. The story has to leave proof.</p>
+
+      <div class="card">
+        <h3>Promised work becoming delivered work</h3>
+        <div class="spark-bars">
+          <span style="height:40%"></span>
+          <span style="height:52%"></span>
+          <span style="height:58%"></span>
+          <span style="height:67%"></span>
+          <span style="height:78%"></span>
+          <span style="height:100%" class="hi"></span>
+        </div>
+        <div class="metric-row" style="margin-top:6px"><strong>Promised work</strong><span>Up QoQ</span></div>
+        <p style="font-size:12px;color:var(--muted);font-style:italic;margin-top:4px">Trending up - but delivery needs to keep pace with promises.</p>
+      </div>
+
+      <div class="card">
+        <h3>Money left behind after costs</h3>
+        <div class="metric-row"><strong>Money left after direct costs</strong><span>58%</span></div>
+        <div class="metric-row"><strong>Operating money left</strong><span>34%</span></div>
+        <p style="font-size:12px;color:var(--muted);font-style:italic;margin-top:4px">Specialized work leaves decent money. Not commodity margins.</p>
+      </div>
+
+      <div class="card">
+        <h3>Cash following profit</h3>
+        <div class="metric-row"><strong>Money waiting with customers</strong><span>₹210 Cr</span></div>
+        <div class="metric-row"><strong>Cash from operations</strong><span>₹72 Cr</span></div>
+        <p style="font-size:12px;color:var(--amber);font-weight:500;margin-top:4px">Cash is not yet following profit cleanly. Watch next quarter.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PANEL 5: THE REASONS ═══ -->
+  <div class="panel" style="background:var(--cream)">
+    <div class="panel-inner">
+      <div class="ch-label">
+        <span class="ch-dot"></span>
+        Chapter 6 <span class="ch-badge">READ ONCE</span>
+      </div>
+      <h2>Choose what you believe</h2>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:16px">Tap any reason to toggle it off. Only the ones you keep get tracked every morning.</p>
+
+      <div id="reasons-list">
+        <button class="reason-btn on" onclick="toggleReason(this)">
+          <div class="reason-num">1</div>
+          <div style="flex:1">
+            <div class="reason-claim">India's defence electronics localization keeps growing.</div>
+            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="reason-sub">Watches: policy moves, domestic program wins</div>
           </div>
-          <h3>Indigenization</h3><p>If India keeps replacing imported defence electronics with domestic suppliers, specialized companies get a larger opportunity pool.</p></div><div class="future-card"><h3>Electronics intensity</h3><p>Modern defence is less about metal alone and more about sensors, processors, communication, guidance, and electronic warfare.</p></div><div class="future-card"><h3>Space and satellites</h3><p>As satellites become more important for communication, mapping, surveillance, and navigation, space-grade electronics become more valuable.</p></div><div class="future-card"><h3>The risk</h3><p>Government orders can be delayed, programs can move slowly, and high expectations can run ahead of actual delivery.</p></div></div>
-      <div class="future-thesis"><div class="mini-label">Future story to watch</div><p><b>Data Patterns benefits if India builds more of its defence and space electronics at home - but only if the company keeps winning complex programs and executes them on time.</b></p></div>
-
-      </div>
-<div class="chapter-section"><div class="divider"></div>
-      <div class="step-header"><div class="step-badge">5</div><div><div class="mini-label">Chapter 5 · Price Sense</div><h2>Is the story already too expensive?</h2></div></div>
-      <p class="lead" style="font-size:17px;margin-bottom:18px">A great company can still be a hard purchase if the price already assumes everything goes right. The question is not just “is the story good?” It is “how much of the good story is already in the price?”</p>
-      <div class="analogy"><h3>The house analogy</h3><p>A great house in a great neighborhood can still be a bad deal if you pay too much for it. The house may be wonderful. The problem is the price. Stocks work the same way: business quality and buying price are two different questions.</p></div>
-      <div class="price-sense"><div class="mini-label">Price today</div><h3 style="font-size:24px;letter-spacing:-.035em;margin:4px 0 6px">The story looks expensive, not impossible.</h3><p style="font-size:15px;line-height:1.55;color:var(--ink-soft);margin:0">The market is already giving credit for defence localization, complex electronics, and future order growth. That does not make the company bad. It means the future has to arrive cleanly.</p><div class="price-meter"><span></span><span></span><span></span></div><div class="price-marker"></div><div class="price-labels"><div><b>Comfortable</b>More room for mistakes</div><div><b>Fair</b>Story must mostly hold</div><div><b>Demanding</b>Less room for disappointment</div></div><div class="price-cards"><div class="price-card"><b>What price is saying</b><span>Investors already expect strong growth and clean execution.</span></div><div class="price-card"><b>What would justify it</b><span>Large wins, delivery without delay, money left after costs, and cash following profit.</span></div><div class="price-card"><b>What would hurt</b><span>Slow orders, margin pressure, delayed delivery, or money stuck with customers.</span></div></div><details class="raw-toggle"><summary>Show the raw numbers</summary><div class="raw-data"><div class="metric-row"><strong>Price compared to earnings</strong><span>High</span><div class="spark"></div></div><div class="metric-row"><strong>Price compared to sales</strong><span>Demanding</span><div class="spark"></div></div><div class="metric-row"><strong>Growth needed</strong><span>Strong</span><div class="spark"></div></div></div></details></div>
-      <div class="story-card" style="background:var(--coral-tint);border-color:rgba(217,119,87,.28)"><h3>The price read</h3><p>This does not say buy or avoid. It says the bar is high. If the company executes beautifully, the price may make sense. If execution wobbles, the price has less forgiveness.</p></div>
-
-      <div class="divider"></div>
-      <div class="mini-panel"><div class="mini-label">Before you choose</div><h3>A good reason has four parts.</h3><div class="three-parts"><div class="part"><b>The world</b><span>India builds more defence electronics at home.</span></div><div class="part"><b>The company</b><span>Data Patterns wins complex, high-trust work.</span></div><div class="part"><b>The money story</b><span>Promised work becomes delivered work, and cash follows profit.</span></div><div class="part"><b>The price</b><span>The story is not already priced for perfection.</span></div></div></div>
-      </div>
-<div class="chapter-section"><div class="divider"></div>
-      <div class="step-header"><div class="step-badge">6</div><div><div class="mini-label">Chapter 6 · Your Reasons</div><h2>Choose what you believe</h2></div></div>
-      <p class="lead" style="font-size:17px;margin-bottom:18px">By now the company is no longer just a ticker. It has become a few beliefs you can actually name - about the world around it, the company itself, whether the money story stays clean, and whether the price leaves enough room for reality.</p>
-      <div class="reason"><div class="reason-num">1</div><div><b>India’s defence electronics localization keeps growing.</b><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: policy moves, domestic programs, and local supplier wins</div><div class="weakens">Gets weaker if domestic programs slow down, imports remain dominant, or larger players capture most of the work.</div></div></div>
-      <div class="reason"><div class="reason-num">2</div><div><b>Data Patterns keeps winning complex, high-trust programs.</b><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: new wins, quality of work, and where the work is coming from</div><div class="weakens">Gets weaker if wins become smaller, less complex, delayed, or concentrated in fewer programs.</div></div></div>
-      <div class="reason"><div class="reason-num">3</div><div><b>Specialized engineering protects money left behind better than plain manufacturing.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: money left after costs, type of work, and delivery pressure</div><div class="weakens">Gets weaker if more work becomes low-margin production, costs rise, or delivery pressure eats into money left behind.</div></div></div>
-      <div class="reason"><div class="reason-num">4</div><div><b>Promised work becomes delivered work without major delays.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: promised work becoming delivered work, and whether timelines slip</div><div class="weakens">Gets weaker if promised work piles up but delivery does not follow.</div></div></div>
-      <div class="reason"><div class="reason-num">5</div><div><b>The money story stays clean - cash follows profit and customers do not take too long to pay.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: cash coming in, money waiting, materials piled up, and cash stuck inside the business</div><div class="weakens">Gets weaker if profits rise but cash does not, or if too much money stays waiting with customers.</div></div></div>
-      <div class="reason"><div class="reason-num">6</div><div><b>The price does not already assume a perfect future.</b><div class="dots"><span class="dot"></span><span class="dot"></span></div><div class="track">Watches: price compared to earnings, price compared to sales, growth needed, and room for disappointment</div><div class="weakens">Gets weaker if the stock price runs far ahead while proof from orders, money left behind, and cash does not keep up.</div></div></div>
-      <div class="lock"><div class="mini-label">Thesis saved</div><h3>These are the reasons being watched.</h3><p>Policy, defence orders, results, money left after costs, money waiting, cash coming in, and price expectations now matter only if they touch these beliefs.</p><div class="beliefs"><div class="belief"><span>01</span> India localizes more defence electronics.</div><div class="belief"><span>02</span> Data Patterns wins complex programs.</div><div class="belief"><span>03</span> Specialization protects money left behind.</div><div class="belief"><span>04</span> Promised work converts without delays.</div><div class="belief"><span>05</span> Cash follows profit.</div><div class="belief"><span>06</span> Price leaves room for reality.</div></div></div>
-
-      </div>
-<div class="chapter-section"><div class="divider"></div>
-      <div class="step-header"><div class="step-badge">7</div><div><div class="mini-label">5:30am</div><h2>A headline arrives before you wake up</h2></div></div>
-      <div class="news"><div class="mini-label">Monday · 5:30am IST · Caught by scanner</div><h3>Defence ministry clears a new radar procurement program. Domestic electronics suppliers are expected to participate, but Data Patterns’ direct exposure has not been confirmed yet.</h3><span class="chip">Connects to reason #1</span><div class="source-row"><span class="source">· Ministry release</span><span class="source">· Defence procurement update</span><span class="source">· Company watchlist scan</span></div></div>
-
-      </div>
-<div class="chapter-section"><div class="divider"></div>
-      <div class="step-header"><div class="step-badge active">8</div><div><div class="mini-label" style="display:flex;align-items:center;gap:8px">7:00am <span style="background:var(--coral);color:#fff;font-family:var(--mono);font-size:8px;font-weight:700;padding:2px 7px;border-radius:999px;letter-spacing:.06em;white-space:nowrap">THIS IS YOUR CARD</span></div><h2>The morning note</h2></div></div>
-      <div class="digest"><span class="chip">Relevant, not thesis-changing</span><h3>Radar order cleared - good for the theme, not proof for Data Patterns yet.</h3><p style="font-size:16px;line-height:1.6;color:var(--ink-soft)">Think of this like hearing that a city is building a new airport. It is good news for construction suppliers generally, but you still need to know who got the contract. This radar program supports the defence-electronics theme. It does not yet prove Data Patterns will benefit directly.</p>
-        <div class="status-box"><div class="mini-label">How this touches your Data Patterns reason</div><p><b>“India’s defence electronics localization keeps growing.”</b></p><div class="status-line"><span class="status-icon">~</span><span><b>Where the reason stands: Supported, not confirmed</b> · Direct company link unknown</span></div><p style="font-size:14px;color:var(--coral-deep);font-weight:650;margin:0">The reason is directionally supported. It becomes stronger only if Data Patterns is named, wins a related order, or shows promised-work expansion in this area.</p><div class="confidence"><div class="side"><div class="mini-label">Before</div><b>Neutral</b></div><div class="move">→</div><div class="side"><div class="mini-label">Now</div><b style="color:var(--amber)">Slightly supported</b></div></div></div>
-        <div class="status-box"><div class="mini-label">Trust check</div><p><b>The next proof will not be the headline. It will be whether the business shows it.</b></p><div class="before-after"><div class="ba"><div class="mini-label">Promised work</div><b>Watch</b></div><div class="ba"><div class="mini-label">Money waiting</div><b class="accent">Check</b></div><div class="ba"><div class="mini-label">Cash coming in</div><b>Needed</b></div></div><p style="font-size:14px;color:var(--coral-deep);font-weight:650;margin:12px 0 0">If the theme is real, it should eventually show up as stronger promised work, clean delivery, money left after costs, and cash following profit.</p><details class="raw-toggle"><summary>Show the raw numbers</summary><div class="raw-data"><div class="metric-row"><strong>Promised work</strong><span>Up QoQ</span><div class="spark"></div></div><div class="metric-row"><strong>Money waiting</strong><span>High</span><div class="spark"></div></div><div class="metric-row"><strong>Cash coming in</strong><span>Needs next quarter</span><div class="spark"></div></div></div></details></div>
-        <div class="status-box"><div class="mini-label">Price sense</div><p><b>The story is good, but the price is asking for a lot of it to come true.</b></p><div class="before-after"><div class="ba"><div class="mini-label">Business story</div><b>Strong</b></div><div class="ba"><div class="mini-label">Price comfort</div><b class="accent">Low</b></div><div class="ba"><div class="mini-label">Room for error</div><b style="color:var(--amber)">Thin</b></div></div><p style="font-size:14px;color:var(--coral-deep);font-weight:650;margin:12px 0 0">This does not change the company story. It changes the patience needed. A demanding price needs cleaner execution.</p></div>
-        <div class="so-what"><h3>The calm read</h3><p style="font-size:15px;line-height:1.5;color:var(--ink-soft);margin:0">You do not need to react to this headline. It supports the world story, but it has not changed the company story yet.</p></div>
-        <div class="source-box"><div class="mini-label">What we read</div><p style="font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--ink-soft);margin:8px 0 0">· Defence procurement update<br>· Company announcements scan<br>· Results and promised-work watchlist</p></div>
-        <div class="source-box"><div class="mini-label">What we are waiting for next</div><div class="waiting-list"><div>Company announcement naming participation</div><div>Promised-work movement in the next results</div><div>Management commentary on radar or electronics programs</div><div>Cash and delivery quality in the next quarter</div><div>Whether the price cools down or proof catches up</div></div></div>
-        <div class="feedback"><button>Useful</button><button>Already knew</button><button>Noise</button></div><div class="feedback-note">If you mark this as noise, we will only surface it again if Data Patterns is directly named, promised work moves, or the price-reality gap changes.</div>
+          <div class="check-circle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="reason-btn on" onclick="toggleReason(this)">
+          <div class="reason-num">2</div>
+          <div style="flex:1">
+            <div class="reason-claim">Data Patterns keeps winning complex, high-trust programs.</div>
+            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="reason-sub">Watches: new wins, quality of work, program diversity</div>
+          </div>
+          <div class="check-circle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="reason-btn on" onclick="toggleReason(this)">
+          <div class="reason-num">3</div>
+          <div style="flex:1">
+            <div class="reason-claim">Specialization protects money left behind better than plain manufacturing.</div>
+            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot empty"></span></div>
+            <div class="reason-sub">Watches: gross margin, type of work, delivery pressure</div>
+          </div>
+          <div class="check-circle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
+        <button class="reason-btn on" onclick="toggleReason(this)">
+          <div class="reason-num">4</div>
+          <div style="flex:1">
+            <div class="reason-claim">Promised work converts to delivered work without major delays.</div>
+            <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot empty"></span></div>
+            <div class="reason-sub">Watches: promised work becoming delivered work each quarter</div>
+          </div>
+          <div class="check-circle"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7.5L8 2.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </button>
       </div>
 
+      <div class="save-cta" id="save-thesis-cta">
+        <div style="flex:1">
+          <p style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,243,236,.5);margin-bottom:4px" id="save-label">4 of 4 reasons kept</p>
+          <p style="font-size:16px;font-weight:600;letter-spacing:-.015em;color:var(--cream)">Track this. We'll check it every morning.</p>
+        </div>
+        <button class="save-btn" onclick="saveThesis()">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7H11M7.5 3.5L11 7L7.5 10.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
-<div class="chapter-section"><div class="divider"></div>
-      <div class="step-header"><div class="step-badge">9</div><div><div class="mini-label">One plain-English idea from the morning</div><h2>Promised work</h2></div></div>
-      <div class="dark-card" style="background:var(--ink)"><div class="mini-label">Plain English</div><h3>The restaurant booking analogy</h3><p style="font-size:17px;color:rgba(246,243,236,.76);line-height:1.55">Promised work is like a restaurant’s confirmed bookings for the next few months. It is not cash in the bank yet, but it tells you how much work is already lined up. For a company like Data Patterns, it matters because projects can be large, specialized, and delivered over time.</p></div>
+      <div class="saved-box" id="save-thesis-saved">
+        <p>Thesis saved. Tracking 4 reasons.</p>
+        <p style="font-size:13px;color:var(--sage);opacity:.8">Next: the morning something touches one of them.</p>
       </div>
-<div class="cta"><div class="mini-label">Every weekday · 7am IST · NSE India</div><h2>A calmer way to follow what you own.</h2><p>Understand it once. We find you only when something touches your reason. First cohort opens June 24th.</p><a class="primary" href="https://ft-app-beta.vercel.app/#waitlist">Get early access →</a></div>
-    </section>
-  </main>
+    </div>
+  </div>
 
-  <script>
-    // Scroll reveal for chapter sections
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.08 });
+  <!-- ═══ PANEL 6: THE MORNING ═══ -->
+  <div class="panel" style="background:var(--cream)">
+    <div class="panel-inner">
+      <div class="ch-label">
+        <span class="ch-dot" style="background:var(--coral)"></span>
+        7:01am <span class="ch-badge active">THIS IS YOUR CARD</span>
+      </div>
 
-    document.querySelectorAll('.chapter-section').forEach((el, i) => {
-      observer.observe(el);
-    });
+      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.08em;margin-bottom:14px">TUESDAY, JUNE 3, 2026</div>
 
-    // Card expand/collapse for sub-sections within chapters
-    document.querySelectorAll('.chapter-card-header').forEach(header => {
-      header.addEventListener('click', () => {
-        const card = header.closest('.chapter-card');
-        const isOpen = card.classList.contains('open');
-        // Close all siblings
-        card.closest('.chapter-cards')?.querySelectorAll('.chapter-card').forEach(c => c.classList.remove('open'));
-        if (!isOpen) card.classList.add('open');
-      });
-    });
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+          <span class="chip"><span class="cdot"></span>Relevant, not thesis-changing</span>
+          <span style="font-family:var(--mono);font-size:9px;color:var(--muted)">DATA</span>
+        </div>
+        <div class="digest-headline">Radar order cleared - good for the theme, not proof for Data Patterns yet.</div>
+        <p>Think of this like hearing that a city is building a new airport. Good news for construction suppliers - but you still need to know who got the contract. This supports the theme. It does not yet prove Data Patterns will benefit directly.</p>
 
-    // Feedback chips
-    document.querySelectorAll('.chip[data-feedback]').forEach(chip => {
-      chip.addEventListener('click', () => {
-        const wrap = chip.closest('.feedback-chips');
-        wrap.innerHTML = '<span style="font-family:var(--mono);font-size:12px;color:var(--sage)">✓ Saved · teaches your filter</span>';
-      });
-    });
+        <div class="thesis-box">
+          <div class="thesis-label">How this touches your reason</div>
+          <div class="thesis-claim">"India's defence electronics localization keeps growing."</div>
+          <div class="status-row">
+            <div class="status-icon">~</div>
+            <span style="font-family:var(--mono);font-size:11px;color:var(--amber);font-weight:600">Supported</span>
+            <span style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-left:6px">- not confirmed yet</span>
+          </div>
+          <p style="font-size:12px;color:var(--coral-deep);font-weight:500;margin-top:8px">The reason gets stronger only if Data Patterns is named, wins a related order, or shows promised-work expansion.</p>
+        </div>
 
-    // Reason toggles
-    document.querySelectorAll('.reason-item').forEach(item => {
-      item.addEventListener('click', () => {
-        item.classList.toggle('on');
-        updateSaveBtn();
-      });
-    });
+        <div class="pvs-box">
+          <div style="font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:9px">Price vs. story - DATA since last quarter</div>
+          <div class="pvs-grid">
+            <div class="pvs-left">
+              <div class="pvs-sub">THE STORY</div>
+              <div class="pvs-val-amber">Supported</div>
+            </div>
+            <div class="pvs-right">
+              <div class="pvs-sub">THE PRICE</div>
+              <div class="pvs-val-rust">↑ 4.2%</div>
+            </div>
+          </div>
+          <div class="pvs-reading">Price moved on theme. Story hasn't confirmed yet. Worth watching.</div>
+        </div>
 
-    function updateSaveBtn() {
-      const on = document.querySelectorAll('.reason-item.on').length;
-      const btn = document.getElementById('save-thesis-btn');
-      const lbl = document.getElementById('save-thesis-label');
-      if (!btn || !lbl) return;
-      lbl.textContent = on + ' of 6 reasons kept';
-      btn.style.background = on >= 2 ? 'var(--coral)' : 'rgba(246,243,236,0.1)';
-      btn.style.cursor = on >= 2 ? 'pointer' : 'not-allowed';
+        <div class="sources-box">
+          <div style="font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px">What we read</div>
+          <p style="font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-bottom:2px">- Ministry of Defence procurement release</p>
+          <p style="font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-bottom:2px">- Defence procurement update scan</p>
+          <p style="font-family:var(--mono);font-size:11px;color:var(--ink-soft)">- Company announcements watchlist</p>
+        </div>
+
+        <div>
+          <div style="font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">How did this land?</div>
+          <div class="feedback-chips" id="feedback-chips">
+            <button class="fb-chip" onclick="selectFeedback()">Useful</button>
+            <button class="fb-chip" onclick="selectFeedback()">Noise</button>
+            <button class="fb-chip" onclick="selectFeedback()">Knew</button>
+          </div>
+          <div class="feedback-saved" id="feedback-saved">✓ Saved - teaches your filter</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PANEL 7: THE PHRASE ═══ -->
+  <div class="panel" style="background:var(--cream)">
+    <div class="panel-inner">
+      <div class="ch-label">
+        <span class="ch-dot"></span>
+        Chapter 9 - Plain English
+      </div>
+      <h2>One term. One minute.<br>You own it now.</h2>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:20px">Every digest includes one plain-English explainer - a term you will hear today, finally explained in a way that actually lands.</p>
+
+      <div class="phrase-card">
+        <div class="phrase-label">The phrase of the day</div>
+        <div class="phrase-title">Promised work - the restaurant booking analogy.</div>
+        <div class="phrase-body">Promised work is like a restaurant's confirmed bookings for the next few months. It is not cash yet. But it tells you how much work is already lined up. For Data Patterns, it matters because projects are large, specialized, and delivered over time. A full pipeline means the revenue story is already written - it just needs to arrive.</div>
+        <div class="phrase-foot">Knowing what this means is enough. You do not need to do anything with it.</div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h3 style="font-size:15px">Why this matters to your thesis</h3>
+        <p>When promised work grows quarter after quarter, it means new orders are coming in faster than old ones are being delivered. That is how a business in this category builds momentum. When promised work stops growing, it is the first signal worth watching - before the revenue line shows anything.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PANEL 8: THE CTA ═══ -->
+  <div class="panel" style="background:var(--ink)">
+    <div class="panel-inner" style="justify-content:center;text-align:center">
+      <div class="ch-label" style="color:rgba(246,243,236,.4);justify-content:center">
+        <span class="ch-dot" style="background:rgba(246,243,236,.3)"></span>
+        Every weekday - 7am IST - NSE India
+      </div>
+      <h1 style="color:var(--cream);margin-bottom:16px">
+        This is what lands<br>on your phone.<br>
+        <span style="color:var(--coral)">Every time it matters.</span>
+      </h1>
+      <p style="font-size:16px;color:rgba(246,243,236,.65);max-width:440px;margin:0 auto 32px;line-height:1.5">
+        Understand it once. We stay quiet until an event touches a reason you saved. First cohort opens June 24th. Free during beta.
+      </p>
+      <a href="https://ft-app-beta.vercel.app/#waitlist" style="display:inline-flex;align-items:center;gap:8px;padding:15px 30px;border-radius:999px;background:var(--coral);color:#fff;font-family:var(--sans);font-size:16px;font-weight:700;text-decoration:none;letter-spacing:-.01em">
+        Get early access →
+      </a>
+      <p style="font-family:var(--mono);font-size:11px;color:rgba(246,243,236,.35);margin-top:18px;letter-spacing:.04em">No spam. One email when we launch.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── Navigation controls ── -->
+<div class="nav-controls">
+  <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>← Prev</button>
+  <div>
+    <div class="nav-dots" id="nav-dots"></div>
+    <div class="panel-counter" id="panel-counter">1 / 8</div>
+  </div>
+  <button class="nav-btn primary" id="btn-next" onclick="navigate(1)">Next →</button>
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const panels = track.querySelectorAll('.panel');
+  const dotsContainer = document.getElementById('nav-dots');
+  const counter = document.getElementById('panel-counter');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  let current = 0;
+
+  // Build dots
+  panels.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    dotsContainer.appendChild(dot);
+  });
+
+  function updateUI() {
+    const dots = dotsContainer.querySelectorAll('.nav-dot');
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    counter.textContent = (current + 1) + ' / ' + panels.length;
+    btnPrev.disabled = current === 0;
+    // Last panel: change Next to "Get early access"
+    if (current === panels.length - 1) {
+      btnNext.textContent = 'Get early access →';
+      btnNext.onclick = () => window.location.href = 'https://ft-app-beta.vercel.app/#waitlist';
+    } else {
+      btnNext.textContent = 'Next →';
+      btnNext.onclick = () => navigate(1);
     }
+  }
 
-    document.getElementById('save-thesis-btn')?.addEventListener('click', () => {
-      const on = document.querySelectorAll('.reason-item.on').length;
-      if (on < 2) return;
-      const cta = document.getElementById('save-thesis-cta');
-      const saved = document.getElementById('save-thesis-saved');
-      if (cta && saved) { cta.style.display = 'none'; saved.style.display = 'block'; }
+  function goTo(index) {
+    current = Math.max(0, Math.min(panels.length - 1, index));
+    panels[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    updateUI();
+  }
+
+  function navigate(dir) { goTo(current + dir); }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+  });
+
+  // Sync dots with scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && e.intersectionRatio > 0.5) {
+        current = Array.from(panels).indexOf(e.target);
+        updateUI();
+      }
     });
-  </script>
+  }, { threshold: 0.5 });
+  panels.forEach(p => observer.observe(p));
+
+  // Touch/swipe support
+  let touchStartX = 0;
+  track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+  }, { passive: true });
+
+  // Interactive: reason toggles
+  function toggleReason(btn) {
+    btn.classList.toggle('off');
+    const on = document.querySelectorAll('#reasons-list .reason-btn:not(.off)').length;
+    document.getElementById('save-label').textContent = on + ' of 4 reasons kept';
+    const saveBtn = document.querySelector('.save-btn');
+    saveBtn.style.background = on >= 2 ? 'var(--coral)' : 'rgba(246,243,236,.15)';
+  }
+
+  function saveThesis() {
+    const on = document.querySelectorAll('#reasons-list .reason-btn:not(.off)').length;
+    if (on < 2) return;
+    document.getElementById('save-thesis-cta').style.display = 'none';
+    document.getElementById('save-thesis-saved').style.display = 'block';
+  }
+
+  function selectFeedback() {
+    document.getElementById('feedback-chips').style.display = 'none';
+    document.getElementById('feedback-saved').style.display = 'block';
+  }
+
+  updateUI();
+</script>
 </body>
-</html><div class="chart-wrap" style="margin:16px 0 12px">
-            <p class="chart-label">How much the price already assumes</p>
-            <div style="position:relative;height:14px;background:linear-gradient(to right,var(--sage-tint),var(--amber-tint),var(--rust-tint));border-radius:99px;margin-bottom:6px">
-              <div style="position:absolute;top:-5px;left:72%;width:2px;height:24px;background:var(--ink);border-radius:2px"></div>
-              <div style="position:absolute;top:20px;left:60%;font-family:var(--mono);font-size:9px;color:var(--ink);font-weight:700;white-space:nowrap">Data Patterns today</div>
-            </div>
-            <div style="display:flex;justify-content:space-between;margin-top:26px">
-              <span style="font-family:var(--mono);font-size:9px;color:var(--sage)">Room for error</span>
-              <span style="font-family:var(--mono);font-size:9px;color:var(--muted)">Fair</span>
-              <span style="font-family:var(--mono);font-size:9px;color:var(--rust)">Must execute</span>
-            </div>
-          </div>
-          
+</html>
