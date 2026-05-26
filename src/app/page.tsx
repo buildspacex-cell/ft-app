@@ -811,7 +811,7 @@ export default function HomePage() {
                   Walk through it →
                 </span>
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(246,243,236,0.4)', letterSpacing: '0.06em' }}>
-                  9 chapters · Data Patterns · NSE
+                  Data Patterns · NSE
                 </span>
               </div>
             </a>
