@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FT Short 2 — The Intervention</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #171717;
+    --cream: #f6f3ec;
+    --cream-soft: rgba(246,243,236,.65);
+    --coral: #d97757;
+    --coral-dim: rgba(217,119,87,.3);
+    --muted: rgba(246,243,236,.35);
+    --hairline: rgba(246,243,236,.1);
+  }
+
+  html, body {
+    width: 390px;
+    height: 844px;
+    overflow: hidden;
+    background: var(--ink);
+    font-family: 'Manrope', sans-serif;
+  }
+
+  .scene {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .scene.active { opacity: 1; pointer-events: all; }
+
+  /* ── Scene 1: Stop ── */
+  #s1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ink);
+  }
+  .stop-word {
+    font-size: 120px;
+    font-weight: 900;
+    letter-spacing: -.07em;
+    color: var(--cream);
+    line-height: 1;
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .stop-word.in { opacity: 1; transform: scale(1); }
+  .stop-period { color: var(--coral); }
+
+  /* ── Scene 2: Don't look ── */
+  #s2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ink);
+    padding: 48px;
+    text-align: center;
+  }
+  .dont-block { }
+  .dont-line1 {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    color: var(--muted);
+    margin-bottom: 6px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .dont-line1.in { opacity: 1; }
+  .dont-main {
+    font-size: 52px;
+    font-weight: 850;
+    letter-spacing: -.055em;
+    line-height: .92;
+    color: var(--cream);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease 0.15s, transform 0.5s ease 0.15s;
+  }
+  .dont-main.in { opacity: 1; transform: translateY(0); }
+  .dont-sub {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-top: 12px;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.5s;
+  }
+  .dont-sub.in { opacity: 1; }
+
+  /* ── Scene 3: Look at the business ── */
+  #s3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ink);
+    padding: 48px;
+    text-align: center;
+  }
+  .look-line1 {
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -.02em;
+    color: var(--muted);
+    margin-bottom: 10px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .look-line1.in { opacity: 1; }
+  .look-main {
+    font-size: 68px;
+    font-weight: 900;
+    letter-spacing: -.065em;
+    line-height: .88;
+    color: var(--coral);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+  }
+  .look-main.in { opacity: 1; transform: translateY(0); }
+
+  /* ── Scene 4: 5 Questions ── */
+  #s4 {
+    background: var(--ink);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 44px 32px;
+  }
+  .q-intro {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 22px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .q-intro.in { opacity: 1; }
+  .q-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 13px;
+    margin-bottom: 9px;
+    background: rgba(246,243,236,.04);
+    border: 1px solid rgba(246,243,236,.08);
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .q-item.in { opacity: 1; transform: translateX(0); }
+  .q-item.last {
+    background: var(--coral);
+    border-color: var(--coral);
+  }
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--coral);
+    flex-shrink: 0;
+    min-width: 28px;
+  }
+  .q-item.last .q-num { color: #fff; }
+  .q-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(246,243,236,.8);
+    letter-spacing: -.015em;
+    line-height: 1.3;
+  }
+  .q-item.last .q-text { color: #fff; }
+
+  /* ── Scene 5: The hook line ── */
+  #s5 {
+    background: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 36px;
+    text-align: center;
+  }
+  .hook-line1 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -.025em;
+    color: var(--cream-soft);
+    line-height: 1.4;
+    margin-bottom: 8px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .hook-line1.in { opacity: 1; }
+  .hook-line2 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -.025em;
+    color: var(--cream-soft);
+    line-height: 1.4;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.3s;
+  }
+  .hook-line2.in { opacity: 1; }
+  .hook-line2 span { color: var(--coral); }
+  .hook-divider {
+    width: 32px; height: 1px;
+    background: rgba(246,243,236,.2);
+    margin: 28px auto;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.7s;
+  }
+  .hook-divider.in { opacity: 1; }
+  .hook-cta {
+    opacity: 0;
+    transition: opacity 0.6s ease 1s;
+  }
+  .hook-cta.in { opacity: 1; }
+  .ft-row {
+    display: flex; align-items: center; gap: 10px;
+    justify-content: center; margin-bottom: 14px;
+  }
+  .ft-badge {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: var(--coral); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 700;
+  }
+  .ft-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: rgba(246,243,236,.7);
+  }
+  .cta-text {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -.04em;
+    line-height: 1.05;
+    color: var(--cream);
+    margin-bottom: 16px;
+  }
+  .cta-text span { color: var(--coral); }
+  .cta-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--coral);
+    color: #fff;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    text-decoration: none;
+    margin-bottom: 12px;
+  }
+  .cta-url {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: rgba(246,243,236,.3);
+    letter-spacing: .06em;
+  }
+
+  /* Progress */
+  .progress {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    height: 3px; background: rgba(246,243,236,.08);
+    z-index: 100;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.1s linear;
+  }
+
+  /* Replay */
+  .replay-btn {
+    position: fixed; bottom: 18px; right: 18px;
+    background: rgba(246,243,236,.08);
+    border: 1px solid rgba(246,243,236,.15);
+    color: rgba(246,243,236,.7); border-radius: 999px;
+    padding: 7px 14px; font-family: 'Manrope', sans-serif;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    opacity: 0; transition: opacity 0.4s ease;
+    z-index: 200;
+  }
+  .replay-btn.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- Scene 1: STOP -->
+<div class="scene" id="s1">
+  <div class="stop-word" id="sw">Stop<span class="stop-period">.</span></div>
+</div>
+
+<!-- Scene 2: Don't look at the chart -->
+<div class="scene" id="s2">
+  <div class="dont-block">
+    <div class="dont-line1" id="dl1">You opened the chart.</div>
+    <div class="dont-main" id="dl2">Don't look<br>at the chart.</div>
+    <div class="dont-sub" id="dl3">The chart can't answer the question that matters.</div>
+  </div>
+</div>
+
+<!-- Scene 3: Look at the business -->
+<div class="scene" id="s3">
+  <div>
+    <div class="look-line1" id="ll1">Instead —</div>
+    <div class="look-main" id="ll2">Look at the<br>business.</div>
+  </div>
+</div>
+
+<!-- Scene 4: 5 Questions -->
+<div class="scene" id="s4">
+  <div class="q-intro" id="qi">To survive any headline, answer 5 questions</div>
+  <div class="q-item" id="q1"><span class="q-num">Q1</span><span class="q-text">What does this company actually do?</span></div>
+  <div class="q-item" id="q2"><span class="q-num">Q2</span><span class="q-text">How does it make money?</span></div>
+  <div class="q-item" id="q3"><span class="q-num">Q3</span><span class="q-text">Can the story be trusted?</span></div>
+  <div class="q-item" id="q4"><span class="q-num">Q4</span><span class="q-text">Is the price fair?</span></div>
+  <div class="q-item last" id="q5"><span class="q-num">Q5</span><span class="q-text">Why do you own this — and will you know if that changes?</span></div>
+</div>
+
+<!-- Scene 5: Hook + CTA -->
+<div class="scene" id="s5">
+  <div class="hook-line1" id="hl1">Most people can answer Q1.</div>
+  <div class="hook-line2" id="hl2">Almost nobody can answer <span>Q5.</span></div>
+  <div class="hook-divider" id="hdiv"></div>
+  <div class="hook-cta" id="hcta">
+    <div class="ft-row">
+      <div class="ft-badge">FT</div>
+      <span class="ft-name">Fundamentally True</span>
+    </div>
+    <p class="cta-text">We answer<br><span>all 5.</span></p>
+    <a class="cta-btn" href="https://ft-app-beta.vercel.app/sample">See how →</a>
+    <p class="cta-url">ft-app-beta.vercel.app</p>
+  </div>
+</div>
+
+<div class="progress"><div class="progress-fill" id="prog"></div></div>
+<button class="replay-btn" id="replay" onclick="startAnimation()">↺ Replay</button>
+
+<script>
+const scenes = [
+  ['s1', 1600, () => {
+    setTimeout(() => document.getElementById('sw').classList.add('in'), 80);
+  }],
+  ['s2', 2200, () => {
+    setTimeout(() => document.getElementById('dl1').classList.add('in'), 100);
+    setTimeout(() => document.getElementById('dl2').classList.add('in'), 350);
+    setTimeout(() => document.getElementById('dl3').classList.add('in'), 900);
+  }],
+  ['s3', 1800, () => {
+    setTimeout(() => document.getElementById('ll1').classList.add('in'), 100);
+    setTimeout(() => document.getElementById('ll2').classList.add('in'), 300);
+  }],
+  ['s4', 3400, () => {
+    setTimeout(() => document.getElementById('qi').classList.add('in'), 100);
+    setTimeout(() => document.getElementById('q1').classList.add('in'), 400);
+    setTimeout(() => document.getElementById('q2').classList.add('in'), 750);
+    setTimeout(() => document.getElementById('q3').classList.add('in'), 1100);
+    setTimeout(() => document.getElementById('q4').classList.add('in'), 1450);
+    setTimeout(() => document.getElementById('q5').classList.add('in'), 1900);
+  }],
+  ['s5', 4000, () => {
+    setTimeout(() => document.getElementById('hl1').classList.add('in'), 200);
+    setTimeout(() => document.getElementById('hl2').classList.add('in'), 700);
+    setTimeout(() => document.getElementById('hdiv').classList.add('in'), 1200);
+    setTimeout(() => document.getElementById('hcta').classList.add('in'), 1500);
+    setTimeout(() => document.getElementById('replay').classList.add('show'), 2800);
+  }],
+];
+
+let timers = [];
+let elapsed = 0;
+const totalDuration = scenes.reduce((a, s) => a + s[1], 0);
+
+function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+function resetAll() {
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.in').forEach(el => el.classList.remove('in'));
+  document.getElementById('replay').classList.remove('show');
+  document.getElementById('prog').style.width = '0%';
+  elapsed = 0;
+}
+
+function runScene(index) {
+  if (index >= scenes.length) return;
+  const [id, duration, setup] = scenes[index];
+  if (index > 0) document.getElementById(scenes[index-1][0]).classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  setup();
+
+  let sceneElapsed = 0;
+  const prog = document.getElementById('prog');
+  const interval = setInterval(() => {
+    elapsed += 50; sceneElapsed += 50;
+    prog.style.width = (elapsed / totalDuration * 100) + '%';
+  }, 50);
+  timers.push(interval);
+
+  const t = setTimeout(() => {
+    clearInterval(interval);
+    runScene(index + 1);
+  }, duration);
+  timers.push(t);
+}
+
+function startAnimation() {
+  clearTimers();
+  resetAll();
+  setTimeout(() => runScene(0), 80);
+}
+
+startAnimation();
+</script>
+</body>
+</html>
