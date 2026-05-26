@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FT Short 1 — The Chaos</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body {
+    min-height: 100vh; background: #0a0a0a;
+    display: flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    padding: 20px 0;
+  }
+  .phone-wrap {
+    position: relative;
+    width: 393px;
+    flex-shrink: 0;
+  }
+  /* Outer bezel */
+  .phone-shell {
+    background: #1a1a1a;
+    border-radius: 52px;
+    padding: 14px;
+    box-shadow:
+      0 0 0 1px #333,
+      0 40px 80px rgba(0,0,0,.8),
+      inset 0 1px 0 rgba(255,255,255,.08);
+    position: relative;
+  }
+  /* Side buttons */
+  .phone-shell::before {
+    content: '';
+    position: absolute;
+    left: -4px; top: 140px;
+    width: 4px; height: 36px;
+    background: #2a2a2a;
+    border-radius: 2px 0 0 2px;
+    box-shadow: 0 46px 0 #2a2a2a, 0 86px 0 #2a2a2a;
+  }
+  .phone-shell::after {
+    content: '';
+    position: absolute;
+    right: -4px; top: 190px;
+    width: 4px; height: 68px;
+    background: #2a2a2a;
+    border-radius: 0 2px 2px 0;
+  }
+  /* Screen */
+  .phone-screen {
+    background: #171717;
+    border-radius: 42px;
+    overflow: hidden;
+    position: relative;
+    height: 852px;
+  }
+  /* Dynamic island */
+  .dynamic-island {
+    position: absolute;
+    top: 12px; left: 50%;
+    transform: translateX(-50%);
+    width: 120px; height: 34px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 100;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.08);
+  }
+  /* Status bar */
+  .status-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 54px;
+    display: flex; align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 28px 8px;
+    z-index: 99;
+    pointer-events: none;
+  }
+  .status-time {
+    font-family: -apple-system, sans-serif;
+    font-size: 15px; font-weight: 600;
+    color: #fff; letter-spacing: -.01em;
+  }
+  .status-icons {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .status-icons svg { fill: #fff; }
+  /* Content iframe */
+  .phone-content {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: none; width: 100%; height: 100%;
+    border-radius: 42px;
+  }
+  /* Home indicator */
+  .home-bar {
+    position: absolute;
+    bottom: 8px; left: 50%;
+    transform: translateX(-50%);
+    width: 134px; height: 5px;
+    background: rgba(255,255,255,.35);
+    border-radius: 3px;
+    z-index: 100;
+    pointer-events: none;
+  }
+  /* Reflection */
+  .screen-glare {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 200px;
+    background: linear-gradient(160deg, rgba(255,255,255,.04) 0%, transparent 60%);
+    border-radius: 42px 42px 0 0;
+    pointer-events: none;
+    z-index: 101;
+  }
+
+  /* Desktop hint */
+  .hint {
+    position: fixed; bottom: 20px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px; color: rgba(255,255,255,.3);
+    font-family: -apple-system, sans-serif;
+    letter-spacing: .04em; white-space: nowrap;
+  }
+
+  @media (max-width: 440px) {
+    html, body { padding: 0; background: #171717; }
+    .phone-shell { display: none; }
+    .phone-wrap { width: 100vw; }
+    .phone-screen { height: 100dvh; border-radius: 0; }
+    .phone-content { border-radius: 0; }
+    .hint { display: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="phone-wrap">
+    <div class="phone-shell">
+      <div class="phone-screen">
+        <div class="dynamic-island"></div>
+        <div class="status-bar">
+          <span class="status-time">9:41</span>
+          <div class="status-icons">
+            <svg width="17" height="12" viewBox="0 0 17 12"><rect x="0" y="3" width="3" height="9" rx="1" opacity=".4"/><rect x="4.5" y="2" width="3" height="10" rx="1" opacity=".6"/><rect x="9" y="0" width="3" height="12" rx="1" opacity=".8"/><rect x="13.5" y="0" width="3" height="12" rx="1"/></svg>
+            <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 2.4C5.6 2.4 3.4 3.4 1.8 5L0 3.2C2.1 1.2 4.9 0 8 0s5.9 1.2 8 3.2L14.2 5C12.6 3.4 10.4 2.4 8 2.4z" opacity=".4"/><path d="M8 5.6c-1.6 0-3 .6-4 1.6L2.2 5.4C3.6 4 5.7 3.2 8 3.2s4.4.8 5.8 2.2L12 7.2c-1-1-2.4-1.6-4-1.6z" opacity=".7"/><path d="M8 8.8c-.8 0-1.5.3-2 .8L8 12l2-2.4c-.5-.5-1.2-.8-2-.8z"/></svg>
+            <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="white" stroke-opacity=".35" stroke-width="1" fill="none"/><rect x="22" y="4" width="2" height="4" rx="1" fill="white" fill-opacity=".4"/><rect x="1.5" y="2.5" width="16" height="7" rx="2" fill="white"/></svg>
+          </div>
+        </div>
+        <iframe class="phone-content" src="/short-1-chaos.html" scrolling="no" frameborder="0"></iframe>
+        <div class="home-bar"></div>
+        <div class="screen-glare"></div>
+      </div>
+    </div>
+  </div>
+  <p class="hint">Open on mobile for full-screen experience</p>
+</body>
+</html>
