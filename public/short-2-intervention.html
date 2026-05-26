@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>FT Short 2 — The Intervention</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
@@ -19,12 +19,13 @@
     --hairline: rgba(246,243,236,.1);
   }
 
-  html, body {
-    width: 390px;
-    height: 844px;
+  html { height: 100%; }
+  body {
+    width: 100vw; height: 100dvh;
     overflow: hidden;
     background: var(--ink);
     font-family: 'Manrope', sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
 
   .scene {
@@ -44,7 +45,7 @@
     background: var(--ink);
   }
   .stop-word {
-    font-size: 120px;
+    font-size: clamp(80px, 28vw, 128px);
     font-weight: 900;
     letter-spacing: -.07em;
     color: var(--cream);
@@ -62,12 +63,12 @@
     align-items: center;
     justify-content: center;
     background: var(--ink);
-    padding: 48px;
+    padding: max(44px,6vh) 28px;
     text-align: center;
   }
   .dont-block { }
   .dont-line1 {
-    font-size: 16px;
+    font-size: clamp(13px, 4vw, 17px);
     font-weight: 600;
     letter-spacing: -.01em;
     color: var(--muted);
@@ -77,7 +78,7 @@
   }
   .dont-line1.in { opacity: 1; }
   .dont-main {
-    font-size: 52px;
+    font-size: clamp(36px, 13vw, 56px);
     font-weight: 850;
     letter-spacing: -.055em;
     line-height: .92;
@@ -103,7 +104,7 @@
     align-items: center;
     justify-content: center;
     background: var(--ink);
-    padding: 48px;
+    padding: max(44px,6vh) 28px;
     text-align: center;
   }
   .look-line1 {
@@ -117,7 +118,7 @@
   }
   .look-line1.in { opacity: 1; }
   .look-main {
-    font-size: 68px;
+    font-size: clamp(48px, 18vw, 72px);
     font-weight: 900;
     letter-spacing: -.065em;
     line-height: .88;
@@ -176,7 +177,7 @@
   }
   .q-item.last .q-num { color: #fff; }
   .q-text {
-    font-size: 14px;
+    font-size: clamp(13px, 3.8vw, 15px);
     font-weight: 600;
     color: rgba(246,243,236,.8);
     letter-spacing: -.015em;
@@ -195,7 +196,7 @@
     text-align: center;
   }
   .hook-line1 {
-    font-size: 20px;
+    font-size: clamp(16px, 5vw, 22px);
     font-weight: 600;
     letter-spacing: -.025em;
     color: var(--cream-soft);
@@ -206,7 +207,7 @@
   }
   .hook-line1.in { opacity: 1; }
   .hook-line2 {
-    font-size: 20px;
+    font-size: clamp(16px, 5vw, 22px);
     font-weight: 600;
     letter-spacing: -.025em;
     color: var(--cream-soft);
@@ -247,7 +248,7 @@
     color: rgba(246,243,236,.7);
   }
   .cta-text {
-    font-size: 28px;
+    font-size: clamp(22px, 7vw, 30px);
     font-weight: 800;
     letter-spacing: -.04em;
     line-height: 1.05;

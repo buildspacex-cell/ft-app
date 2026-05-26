@@ -2,451 +2,293 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FT Short 1 — The Chaos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>FT — The Chaos</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --ink: #171717;
-    --cream: #f6f3ec;
-    --coral: #d97757;
-    --amber: #b88828;
-    --muted: #777068;
-    --sage: #5b7a55;
-    --rust: #b54835;
+    --ink: #171717; --cream: #f6f3ec; --coral: #d97757;
+    --amber: #b88828; --muted: rgba(246,243,236,.4);
+    --sage: #5b7a55; --rust: #b54835;
+    --p: env(safe-area-inset-bottom, 0px);
   }
 
-  html, body {
-    width: 390px;
-    height: 844px;
+  html { height: 100%; }
+  body {
+    width: 100vw; height: 100dvh;
     overflow: hidden;
     background: var(--ink);
-    font-family: 'Manrope', sans-serif;
+    font-family: "Manrope", sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
 
+  /* ── Scenes ── */
   .scene {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 40px 32px 60px;
-    opacity: 0;
-    pointer-events: none;
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    padding: max(48px, 6vh) 28px max(calc(48px + env(safe-area-inset-bottom)), 7vh);
+    opacity: 0; pointer-events: none;
     transition: opacity 0.4s ease;
   }
   .scene.active { opacity: 1; pointer-events: all; }
+  .scene.center { justify-content: center; align-items: center; text-align: center; }
+  .scene.bottom { justify-content: flex-end; }
 
-  /* ── Scene 1: Time stamp ── */
-  #s1 {
-    justify-content: center;
-    align-items: center;
-    background: var(--ink);
-  }
-  .time-block { text-align: center; }
-  .time-big {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 96px;
-    font-weight: 700;
+  /* ── S1: Timestamp ── */
+  .time-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(72px, 22vw, 108px);
+    font-weight: 700; letter-spacing: -.04em; line-height: 1;
     color: var(--cream);
-    letter-spacing: -.04em;
-    line-height: 1;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity .6s ease, transform .6s ease;
   }
-  .time-big.in { opacity: 1; transform: translateY(0); }
+  .time-num.in { opacity: 1; transform: none; }
   .time-sub {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: rgba(246,243,236,.4);
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    margin-top: 8px;
-    opacity: 0;
-    transition: opacity 0.6s ease 0.4s;
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(11px, 3.2vw, 14px);
+    color: var(--muted); letter-spacing: .12em; text-transform: uppercase;
+    margin-top: 10px;
+    opacity: 0; transition: opacity .5s ease .4s;
   }
   .time-sub.in { opacity: 1; }
 
-  /* ── Scene 2: Portfolio map ── */
-  #s2 { background: var(--ink); padding: 50px 28px; }
-  .port-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: rgba(246,243,236,.4);
-    letter-spacing: .14em;
-    text-transform: uppercase;
+  /* ── S2: Portfolio map ── */
+  .port-eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(9px, 2.5vw, 11px);
+    color: var(--muted); letter-spacing: .14em; text-transform: uppercase;
     margin-bottom: 16px;
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    opacity: 0; transition: opacity .4s ease;
   }
-  .port-label.in { opacity: 1; }
-  .port-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .port-tile {
+  .port-eyebrow.in { opacity: 1; }
+  .port-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .tile {
     background: rgba(246,243,236,.05);
     border: 1px solid rgba(246,243,236,.1);
-    border-radius: 14px;
-    padding: 14px;
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    border-radius: 16px; padding: 14px 14px 16px;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity .4s ease, transform .4s ease;
   }
-  .port-tile.in { opacity: 1; transform: translateY(0); }
-  .port-tile.amber {
-    background: rgba(184,136,40,.15);
-    border-color: var(--amber);
-  }
+  .tile.in { opacity: 1; transform: none; }
+  .tile.hot { background: rgba(184,136,40,.15); border-color: var(--amber); }
   .tile-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: rgba(91,122,85,.6);
-    margin-bottom: 8px;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: rgba(91,122,85,.5); margin-bottom: 10px;
   }
-  .tile-dot.amber { background: var(--amber); }
+  .tile-dot.hot { background: var(--amber); }
   .tile-name {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--cream);
-    letter-spacing: -.02em;
-    margin-bottom: 3px;
+    font-size: clamp(13px, 3.8vw, 16px); font-weight: 700;
+    color: var(--cream); letter-spacing: -.02em; margin-bottom: 3px;
   }
-  .tile-sub {
-    font-size: 11px;
-    color: rgba(246,243,236,.4);
+  .tile-note {
+    font-size: clamp(10px, 2.8vw, 12px); color: rgba(246,243,236,.4);
   }
-  .tile-sub.amber { color: var(--amber); }
+  .tile-note.hot { color: var(--amber); }
 
-  /* ── Scene 3: Headline ── */
-  #s3 {
-    background: var(--ink);
-    justify-content: center;
-    padding: 40px 32px;
-  }
-  .headline-chip {
+  /* ── S3: Headline ── */
+  .news-chip {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(184,136,40,.15);
-    border: 1px solid rgba(184,136,40,.3);
-    border-radius: 8px;
-    padding: 6px 12px;
-    margin-bottom: 20px;
+    background: rgba(184,136,40,.15); border: 1px solid rgba(184,136,40,.3);
+    border-radius: 8px; padding: 6px 12px; margin-bottom: 20px;
     opacity: 0; transform: translateY(8px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition: opacity .4s ease, transform .4s ease;
+    align-self: flex-start;
   }
-  .headline-chip.in { opacity: 1; transform: translateY(0); }
-  .chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); animation: pulse 1.4s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-  .headline-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; font-weight: 700;
+  .news-chip.in { opacity: 1; transform: none; }
+  .chip-pulse {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--amber); animation: blink 1.4s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+  .chip-text {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(9px, 2.5vw, 11px); font-weight: 700;
     color: var(--amber); letter-spacing: .08em; text-transform: uppercase;
   }
-  .headline-text {
-    font-size: 22px; font-weight: 700;
-    letter-spacing: -.03em; line-height: 1.25;
-    color: var(--cream);
-    opacity: 0;
-    transition: opacity 0.6s ease 0.2s;
+  .news-hed {
+    font-size: clamp(19px, 5.5vw, 24px); font-weight: 700;
+    letter-spacing: -.03em; line-height: 1.25; color: var(--cream);
+    opacity: 0; transition: opacity .6s ease .2s;
   }
-  .headline-text.in { opacity: 1; }
-  .headline-sub {
-    font-size: 14px; color: rgba(246,243,236,.5);
-    line-height: 1.5; margin-top: 10px;
-    opacity: 0;
-    transition: opacity 0.5s ease 0.5s;
+  .news-hed.in { opacity: 1; }
+  .news-src {
+    font-size: clamp(11px, 3vw, 13px); color: var(--muted);
+    line-height: 1.5; margin-top: 12px;
+    opacity: 0; transition: opacity .5s ease .6s;
   }
-  .headline-sub.in { opacity: 1; }
+  .news-src.in { opacity: 1; }
 
-  /* ── Scene 4: Panic thoughts ── */
-  #s4 { background: var(--ink); gap: 10px; display: flex; flex-direction: column; justify-content: center; }
-  .panic-title {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px; color: rgba(246,243,236,.3);
-    letter-spacing: .12em; text-transform: uppercase;
-    margin-bottom: 8px;
-    opacity: 0; transition: opacity 0.4s ease;
+  /* ── S4: Panic ── */
+  .panic-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(9px, 2.5vw, 11px); color: var(--muted);
+    letter-spacing: .12em; text-transform: uppercase; margin-bottom: 14px;
+    opacity: 0; transition: opacity .4s ease;
   }
-  .panic-title.in { opacity: 1; }
+  .panic-label.in { opacity: 1; }
   .panic-row {
     display: flex; align-items: flex-start; gap: 12px;
-    padding: 14px 16px;
+    padding: clamp(12px,3.5vw,16px) clamp(14px,4vw,18px);
     background: rgba(246,243,236,.04);
     border: 1px solid rgba(246,243,236,.08);
-    border-radius: 12px;
-    opacity: 0; transform: translateX(-16px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    border-radius: 14px; margin-bottom: 10px;
+    opacity: 0; transform: translateX(-14px);
+    transition: opacity .4s ease, transform .4s ease;
   }
-  .panic-row.in { opacity: 1; transform: translateX(0); }
-  .panic-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
-  .panic-q { font-size: 15px; font-weight: 500; color: rgba(246,243,236,.8); line-height: 1.35; letter-spacing: -.01em; }
+  .panic-row.in { opacity: 1; transform: none; }
+  .pdot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .ptext {
+    font-size: clamp(14px, 4vw, 16px); font-weight: 500;
+    color: rgba(246,243,236,.8); line-height: 1.35; letter-spacing: -.01em;
+  }
 
-  /* ── Scene 5: The last thought + end card ── */
-  #s5 {
-    background: var(--ink);
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  /* ── S5: End card ── */
+  .last-q {
+    font-size: clamp(17px, 5vw, 22px); font-weight: 600;
+    letter-spacing: -.025em; line-height: 1.35;
+    color: rgba(246,243,236,.5); margin-bottom: 36px;
+    opacity: 0; transition: opacity .6s ease;
   }
-  .last-thought {
-    font-size: 20px; font-weight: 600;
-    letter-spacing: -.025em; line-height: 1.3;
-    color: rgba(246,243,236,.5);
-    margin-bottom: 40px;
-    opacity: 0;
-    transition: opacity 0.6s ease;
+  .last-q.in { opacity: 1; }
+  .last-q span { color: var(--cream); }
+  .end-rule {
+    width: 36px; height: 1px; background: rgba(246,243,236,.2);
+    margin: 0 auto 36px;
+    opacity: 0; transition: opacity .4s ease .5s;
   }
-  .last-thought.in { opacity: 1; }
-  .last-thought span { color: var(--cream); }
-  .end-divider {
-    width: 40px; height: 1px;
-    background: rgba(246,243,236,.2);
-    margin: 0 auto 40px;
-    opacity: 0; transition: opacity 0.4s ease 0.4s;
+  .end-rule.in { opacity: 1; }
+  .end-block {
+    opacity: 0; transition: opacity .6s ease .9s;
   }
-  .end-divider.in { opacity: 1; }
-  .end-cta {
-    opacity: 0; transition: opacity 0.6s ease 0.6s;
-  }
-  .end-cta.in { opacity: 1; }
-  .ft-logo {
+  .end-block.in { opacity: 1; }
+  .ft-row {
     display: flex; align-items: center; gap: 10px;
-    justify-content: center; margin-bottom: 16px;
+    justify-content: center; margin-bottom: 14px;
   }
   .ft-badge {
-    width: 36px; height: 36px; border-radius: 10px;
+    width: 34px; height: 34px; border-radius: 9px;
     background: var(--coral); color: #fff;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px; font-weight: 700;
+    font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 700;
   }
   .ft-name {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px; font-weight: 600;
-    letter-spacing: .08em; text-transform: uppercase;
-    color: var(--cream);
+    font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase; color: rgba(246,243,236,.6);
   }
   .end-line {
-    font-size: 17px; font-weight: 600;
-    letter-spacing: -.02em; color: rgba(246,243,236,.7);
-    line-height: 1.4; margin-bottom: 8px;
+    font-size: clamp(17px, 5vw, 21px); font-weight: 600;
+    letter-spacing: -.025em; color: rgba(246,243,236,.75); line-height: 1.4;
+    margin-bottom: 6px;
   }
   .end-line span { color: var(--coral); }
   .end-url {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; color: rgba(246,243,236,.35);
-    letter-spacing: .06em;
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(10px, 2.8vw, 12px); color: rgba(246,243,236,.3); letter-spacing: .06em;
   }
 
-  /* Progress bar */
-  .progress {
+  /* Progress + replay */
+  .prog-wrap {
     position: fixed; bottom: 0; left: 0; right: 0; height: 3px;
-    background: rgba(246,243,236,.1);
+    background: rgba(246,243,236,.08); z-index: 99;
   }
-  .progress-fill {
-    height: 100%; background: var(--coral);
-    width: 0%;
-    transition: width 0.3s ease;
-  }
-
-  /* Replay button */
-  .replay-btn {
-    position: fixed; bottom: 20px; right: 20px;
-    background: rgba(246,243,236,.1);
-    border: 1px solid rgba(246,243,236,.2);
-    color: var(--cream); border-radius: 999px;
-    padding: 8px 16px; font-family: 'Manrope', sans-serif;
+  .prog-fill { height: 100%; background: var(--coral); width: 0%; transition: width .1s linear; }
+  .replay {
+    position: fixed; bottom: calc(14px + env(safe-area-inset-bottom)); right: 18px;
+    background: rgba(246,243,236,.1); border: 1px solid rgba(246,243,236,.18);
+    color: rgba(246,243,236,.7); border-radius: 999px;
+    padding: 8px 16px; font-family: "Manrope", sans-serif;
     font-size: 12px; font-weight: 600; cursor: pointer;
-    opacity: 0; transition: opacity 0.4s ease;
-    letter-spacing: .02em;
+    opacity: 0; transition: opacity .4s ease; z-index: 100;
   }
-  .replay-btn.show { opacity: 1; }
-  .replay-btn:hover { background: rgba(246,243,236,.18); }
+  .replay.show { opacity: 1; }
 </style>
 </head>
 <body>
 
-<!-- Scene 1: 7:00 AM -->
-<div class="scene" id="s1">
-  <div class="time-block">
-    <div class="time-big" id="time-num">7:00</div>
-    <div class="time-sub" id="time-sub">Tuesday morning · Your portfolio</div>
-  </div>
+<!-- S1: 7:00 -->
+<div class="scene center" id="s1">
+  <div class="time-num" id="tn">7:00</div>
+  <div class="time-sub" id="ts">Tuesday morning · Your portfolio</div>
 </div>
 
-<!-- Scene 2: Portfolio map -->
-<div class="scene" id="s2">
-  <div class="port-label" id="port-label">Portfolio · 7:01am</div>
+<!-- S2: Portfolio -->
+<div class="scene" id="s2" style="justify-content:center">
+  <div class="port-eyebrow" id="pe">Portfolio · 7:01am</div>
   <div class="port-grid">
-    <div class="port-tile amber" id="t1">
-      <div class="tile-dot amber"></div>
-      <div class="tile-name">Your stock</div>
-      <div class="tile-sub amber">Glowing amber</div>
-    </div>
-    <div class="port-tile" id="t2">
-      <div class="tile-dot"></div>
-      <div class="tile-name">HDFC Bank</div>
-      <div class="tile-sub">Quiet today</div>
-    </div>
-    <div class="port-tile" id="t3">
-      <div class="tile-dot"></div>
-      <div class="tile-name">TCS</div>
-      <div class="tile-sub">Quiet today</div>
-    </div>
-    <div class="port-tile" id="t4">
-      <div class="tile-dot"></div>
-      <div class="tile-name">Reliance</div>
-      <div class="tile-sub">Quiet today</div>
-    </div>
+    <div class="tile hot" id="t1"><div class="tile-dot hot"></div><div class="tile-name">Your stock</div><div class="tile-note hot">Glowing amber</div></div>
+    <div class="tile" id="t2"><div class="tile-dot"></div><div class="tile-name">HDFC Bank</div><div class="tile-note">Quiet today</div></div>
+    <div class="tile" id="t3"><div class="tile-dot"></div><div class="tile-name">TCS</div><div class="tile-note">Quiet today</div></div>
+    <div class="tile" id="t4"><div class="tile-dot"></div><div class="tile-name">Reliance</div><div class="tile-note">Quiet today</div></div>
   </div>
 </div>
 
-<!-- Scene 3: Headline -->
-<div class="scene" id="s3">
-  <div>
-    <div class="headline-chip" id="hchip">
-      <span class="chip-dot"></span>
-      <span class="headline-label">Breaking · 6:47am</span>
-    </div>
-    <div class="headline-text" id="htext">
-      Major sector news dropped overnight. Your stock is moving before market open.
-    </div>
-    <div class="headline-sub" id="hsub">
-      Moneycontrol · Economic Times · 3 more sources
-    </div>
-  </div>
+<!-- S3: Headline -->
+<div class="scene" id="s3" style="justify-content:center">
+  <div class="news-chip" id="nc"><span class="chip-pulse"></span><span class="chip-text">Breaking · 6:47am</span></div>
+  <div class="news-hed" id="nh">Major sector news dropped overnight. Your stock is moving before market open.</div>
+  <div class="news-src" id="ns">Moneycontrol · Economic Times · 3 more sources</div>
 </div>
 
-<!-- Scene 4: Panic -->
-<div class="scene" id="s4">
-  <div class="panic-title" id="ptitle">Your brain, immediately</div>
-  <div class="panic-row" id="p1">
-    <div class="panic-dot" style="background:var(--rust)"></div>
-    <div class="panic-q">"Should I sell before it drops further?"</div>
-  </div>
-  <div class="panic-row" id="p2">
-    <div class="panic-dot" style="background:var(--amber)"></div>
-    <div class="panic-q">"What are people saying on the forums?"</div>
-  </div>
-  <div class="panic-row" id="p3">
-    <div class="panic-dot" style="background:var(--amber)"></div>
-    <div class="panic-q">"Is the thesis broken? Was it ever solid?"</div>
-  </div>
-  <div class="panic-row" id="p4">
-    <div class="panic-dot" style="background:rgba(246,243,236,.3)"></div>
-    <div class="panic-q">"Why did I buy this in the first place?"</div>
-  </div>
+<!-- S4: Panic -->
+<div class="scene" id="s4" style="justify-content:center">
+  <div class="panic-label" id="pl">Your brain, immediately</div>
+  <div class="panic-row" id="p1"><div class="pdot" style="background:var(--rust)"></div><div class="ptext">"Should I sell before it drops further?"</div></div>
+  <div class="panic-row" id="p2"><div class="pdot" style="background:var(--amber)"></div><div class="ptext">"What are people saying on the forums?"</div></div>
+  <div class="panic-row" id="p3"><div class="pdot" style="background:var(--amber)"></div><div class="ptext">"Is the thesis broken? Was it ever solid?"</div></div>
+  <div class="panic-row" id="p4"><div class="pdot" style="background:rgba(246,243,236,.3)"></div><div class="ptext">"Why did I buy this in the first place?"</div></div>
 </div>
 
-<!-- Scene 5: End card -->
-<div class="scene" id="s5">
-  <div class="last-thought" id="last">
-    <span>"Why did I buy this</span><br>in the first place?"
-  </div>
-  <div class="end-divider" id="ediv"></div>
-  <div class="end-cta" id="ecta">
-    <div class="ft-logo">
-      <div class="ft-badge">FT</div>
-      <span class="ft-name">Fundamentally True</span>
-    </div>
+<!-- S5: End -->
+<div class="scene center" id="s5">
+  <div class="last-q" id="lq"><span>"Why did I buy this</span><br>in the first place?"</div>
+  <div class="end-rule" id="er"></div>
+  <div class="end-block" id="eb">
+    <div class="ft-row"><div class="ft-badge">FT</div><span class="ft-name">Fundamentally True</span></div>
     <p class="end-line">There is a <span>calmer</span> way<br>to wake up to this.</p>
-    <p class="end-url">ft-app-beta.vercel.app</p>
+    <p class="end-url" style="margin-top:8px">ft-app-beta.vercel.app</p>
   </div>
 </div>
 
-<div class="progress"><div class="progress-fill" id="prog"></div></div>
-<button class="replay-btn" id="replay" onclick="startAnimation()">↺ Replay</button>
+<div class="prog-wrap"><div class="prog-fill" id="pf"></div></div>
+<button class="replay" id="rb" onclick="go()">↺ Replay</button>
 
 <script>
-const scenes = [
-  // [sceneId, duration, setup fn]
-  ['s1', 1800, () => {
-    setTimeout(() => document.getElementById('time-num').classList.add('in'), 100);
-    setTimeout(() => document.getElementById('time-sub').classList.add('in'), 500);
-  }],
-  ['s2', 2200, () => {
-    setTimeout(() => document.getElementById('port-label').classList.add('in'), 100);
-    setTimeout(() => document.getElementById('t1').classList.add('in'), 300);
-    setTimeout(() => document.getElementById('t2').classList.add('in'), 500);
-    setTimeout(() => document.getElementById('t3').classList.add('in'), 700);
-    setTimeout(() => document.getElementById('t4').classList.add('in'), 900);
-  }],
-  ['s3', 2400, () => {
-    setTimeout(() => document.getElementById('hchip').classList.add('in'), 100);
-    setTimeout(() => document.getElementById('htext').classList.add('in'), 400);
-    setTimeout(() => document.getElementById('hsub').classList.add('in'), 900);
-  }],
-  ['s4', 3200, () => {
-    setTimeout(() => document.getElementById('ptitle').classList.add('in'), 100);
-    setTimeout(() => document.getElementById('p1').classList.add('in'), 400);
-    setTimeout(() => document.getElementById('p2').classList.add('in'), 900);
-    setTimeout(() => document.getElementById('p3').classList.add('in'), 1400);
-    setTimeout(() => document.getElementById('p4').classList.add('in'), 2000);
-  }],
-  ['s5', 3500, () => {
-    setTimeout(() => document.getElementById('last').classList.add('in'), 200);
-    setTimeout(() => document.getElementById('ediv').classList.add('in'), 1000);
-    setTimeout(() => document.getElementById('ecta').classList.add('in'), 1400);
-    setTimeout(() => document.getElementById('replay').classList.add('show'), 2200);
-  }],
+const S = [
+  ['s1', 1800, ()=>{ a('tn',80); a('ts',500); }],
+  ['s2', 2400, ()=>{ a('pe',80); a('t1',280); a('t2',520); a('t3',760); a('t4',1000); }],
+  ['s3', 2600, ()=>{ a('nc',80); a('nh',380); a('ns',900); }],
+  ['s4', 3400, ()=>{ a('pl',80); a('p1',380); a('p2',880); a('p3',1380); a('p4',2000); }],
+  ['s5', 4000, ()=>{ a('lq',200); a('er',900); a('eb',1300); a('rb',2600,'show'); }],
 ];
-
-let currentScene = -1;
-let totalDuration = scenes.reduce((a, s) => a + s[1], 0);
-let elapsed = 0;
-let timers = [];
-
-function clearTimers() {
-  timers.forEach(t => clearTimeout(t));
-  timers = [];
+const total = S.reduce((s,[,d])=>s+d,0);
+let T=[], el=0;
+function a(id,ms,cls='in'){T.push(setTimeout(()=>document.getElementById(id).classList.add(cls),ms));}
+function go(){
+  T.forEach(clearTimeout); T=[];
+  document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));
+  document.getElementById('rb').classList.remove('show');
+  document.getElementById('pf').style.width='0%';
+  el=0;
+  setTimeout(()=>run(0),60);
 }
-
-function resetAll() {
-  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.in').forEach(el => el.classList.remove('in'));
-  document.getElementById('replay').classList.remove('show');
-  document.getElementById('prog').style.width = '0%';
-  elapsed = 0;
-  currentScene = -1;
-}
-
-function runScene(index) {
-  if (index >= scenes.length) return;
-  const [id, duration, setup] = scenes[index];
-
-  // Hide previous
-  if (index > 0) {
-    document.getElementById(scenes[index-1][0]).classList.remove('active');
-  }
-
+function run(i){
+  if(i>=S.length) return;
+  const [id,dur,fn]=S[i];
+  if(i>0) document.getElementById(S[i-1][0]).classList.remove('active');
   document.getElementById(id).classList.add('active');
-  setup();
-
-  // Update progress
-  const progressStart = elapsed;
-  const progressInterval = setInterval(() => {
-    elapsed += 50;
-    const pct = (elapsed / totalDuration) * 100;
-    document.getElementById('prog').style.width = pct + '%';
-  }, 50);
-  timers.push(progressInterval);
-
-  const t = setTimeout(() => {
-    clearInterval(progressInterval);
-    elapsed = progressStart + duration;
-    runScene(index + 1);
-  }, duration);
-  timers.push(t);
+  fn();
+  const iv=setInterval(()=>{el+=50;document.getElementById('pf').style.width=(el/total*100)+'%';},50);
+  T.push(iv);
+  T.push(setTimeout(()=>{clearInterval(iv);run(i+1);},dur));
 }
-
-function startAnimation() {
-  clearTimers();
-  resetAll();
-  setTimeout(() => runScene(0), 50);
-}
-
-startAnimation();
+go();
 </script>
 </body>
 </html>
