@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>FT — The Finfluencer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{--ink:#171717;--cream:#f6f3ec;--coral:#d97757;--amber:#b88828;--sage:#5b7a55;--rust:#b54835;--muted:rgba(246,243,236,.4);--soft:rgba(246,243,236,.75);}
+  html{height:100%;}
+  body{width:100vw;height:100dvh;overflow:hidden;background:var(--ink);font-family:"Manrope",sans-serif;-webkit-font-smoothing:antialiased;}
+  .scene{position:absolute;inset:0;opacity:0;pointer-events:none;display:flex;flex-direction:column;padding:max(52px,6.5vh) 28px max(calc(44px + env(safe-area-inset-bottom)),6vh);transition:opacity .35s ease;}
+  .scene.active{opacity:1;pointer-events:all;}
+  .scene.mid{justify-content:center;}
+  .scene.center{justify-content:center;align-items:center;text-align:center;}
+  .ey{font-family:"JetBrains Mono",monospace;font-size:clamp(9px,2.5vw,11px);font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;opacity:0;transition:opacity .4s ease;}
+  .ey.in{opacity:1;}
+  .fade{opacity:0;transition:opacity .5s ease;}
+  .fade.in{opacity:1;}
+  .up{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease;}
+  .up.in{opacity:1;transform:none;}
+
+  /* influencer reel card */
+  .reel-card{background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid rgba(246,243,236,.12);border-radius:18px;padding:20px;margin-bottom:12px;position:relative;overflow:hidden;}
+  .reel-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(217,119,87,.08),transparent 60%);pointer-events:none;}
+  .reel-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;opacity:0;transition:opacity .4s ease;}
+  .reel-header.in{opacity:1;}
+  .reel-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--coral),var(--amber));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+  .reel-name{font-size:14px;font-weight:700;color:var(--cream);}
+  .reel-followers{font-size:11px;color:var(--muted);}
+  .reel-content{opacity:0;transition:opacity .5s ease .2s;}
+  .reel-content.in{opacity:1;}
+  .reel-quote{font-size:clamp(17px,5vw,22px);font-weight:800;letter-spacing:-.03em;line-height:1.2;color:var(--cream);margin-bottom:10px;}
+  .reel-quote span{color:var(--coral);}
+  .reel-reason{font-size:clamp(12px,3.5vw,14px);font-weight:600;color:var(--muted);font-style:italic;}
+  .reel-reason span{color:var(--amber);}
+  .reel-stats{display:flex;gap:16px;margin-top:12px;opacity:0;transition:opacity .4s ease .5s;}
+  .reel-stats.in{opacity:1;}
+  .stat-item{text-align:center;}
+  .stat-num{font-family:"JetBrains Mono",monospace;font-size:14px;font-weight:700;color:var(--cream);}
+  .stat-label{font-size:10px;color:var(--muted);}
+
+  /* vs compare */
+  .vs-row{display:flex;gap:10px;margin-bottom:10px;}
+  .vs-col{flex:1;border-radius:14px;padding:14px;}
+  .vs-col.them{background:rgba(181,72,53,.1);border:1px solid rgba(181,72,53,.3);}
+  .vs-col.us{background:rgba(91,122,85,.1);border:1px solid rgba(91,122,85,.3);}
+  .vs-label{font-family:"JetBrains Mono",monospace;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+  .vs-text{font-size:clamp(12px,3.5vw,14px);font-weight:600;line-height:1.35;color:var(--cream);}
+
+  /* big type */
+  .big{font-size:clamp(38px,10.5vw,56px);font-weight:900;letter-spacing:-.06em;line-height:.92;color:var(--cream);margin-bottom:12px;}
+  .big span{color:var(--coral);}
+  .sub{font-size:clamp(14px,4vw,17px);font-weight:500;color:var(--muted);line-height:1.5;}
+
+  .cta-btn{display:inline-block;padding:13px 28px;background:var(--coral);color:#fff;border-radius:999px;font-size:clamp(14px,4vw,16px);font-weight:700;letter-spacing:-.01em;text-decoration:none;}
+  .ft-row{display:flex;align-items:center;gap:9px;justify-content:center;margin-bottom:14px;}
+  .ft-badge{width:32px;height:32px;border-radius:8px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;}
+  .ft-name{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(246,243,236,.5);}
+  .cta-url{font-family:"JetBrains Mono",monospace;font-size:clamp(10px,2.8vw,12px);color:rgba(246,243,236,.3);letter-spacing:.06em;}
+  .prog-wrap{position:fixed;bottom:0;left:0;right:0;height:3px;background:rgba(246,243,236,.08);z-index:99;}
+  .prog-fill{height:100%;background:var(--coral);width:0%;transition:width .1s linear;}
+  .replay{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom));right:18px;background:rgba(246,243,236,.1);border:1px solid rgba(246,243,236,.18);color:rgba(246,243,236,.7);border-radius:999px;padding:8px 16px;font-family:"Manrope",sans-serif;font-size:12px;font-weight:600;cursor:pointer;opacity:0;transition:opacity .4s ease;z-index:100;}
+  .replay.show{opacity:1;}
+</style>
+</head>
+<body>
+
+<!-- S1: The finfluencer reel -->
+<div class="scene mid" id="s1">
+  <div>
+    <div class="ey" id="e1">2.4 million subscribers. Very confident.</div>
+    <div class="reel-card">
+      <div class="reel-header" id="rh">
+        <div class="reel-avatar">📈</div>
+        <div><div class="reel-name">StockGuru_Official</div><div class="reel-followers">2.4M followers · 847K views</div></div>
+      </div>
+      <div class="reel-content" id="rc">
+        <div class="reel-quote">This stock is going <span>5x in 2 years.</span> Buy now before the big move."</div>
+        <div class="reel-reason">His reason: <span>"The chart is looking very bullish."</span></div>
+        <div class="reel-stats" id="rs">
+          <div class="stat-item"><div class="stat-num">47K</div><div class="stat-label">Likes</div></div>
+          <div class="stat-item"><div class="stat-num">8.2K</div><div class="stat-label">Comments</div></div>
+          <div class="stat-item"><div class="stat-num">12K</div><div class="stat-label">Shares</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S2: What he didn't answer -->
+<div class="scene mid" id="s2">
+  <div>
+    <div class="ey" id="e2">What he told you</div>
+    <div class="vs-row up" id="v1">
+      <div class="vs-col them">
+        <div class="vs-label" style="color:var(--rust)">He said</div>
+        <div class="vs-text">"Chart is bullish. Big move coming."</div>
+      </div>
+    </div>
+    <div class="ey" id="e2b" style="margin-top:18px">What he didn't answer</div>
+    <div class="vs-row up" id="v2">
+      <div class="vs-col us">
+        <div class="vs-label" style="color:var(--sage)">The 5 questions</div>
+        <div class="vs-text" style="font-size:clamp(11px,3.2vw,13px);line-height:1.5">What does it actually do? How does it make money? Can the story be trusted? Is the price already too high? <strong>What is YOUR reason for owning it?</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S3: The chart tells you price -->
+<div class="scene center" id="s3">
+  <div>
+    <div class="big up" id="b1">The chart<br>tells you <span>price.</span><br>Not business.</div>
+  </div>
+</div>
+
+<!-- S4: The contrast -->
+<div class="scene mid" id="s4">
+  <div>
+    <div class="ey" id="e4">Two very different things</div>
+    <div class="vs-row up" id="vr1">
+      <div class="vs-col them" style="flex:none;width:100%">
+        <div class="vs-label" style="color:var(--rust)">What the finfluencer gives you</div>
+        <div class="vs-text">A price prediction. A chart. Confidence. No reason you can check tomorrow.</div>
+      </div>
+    </div>
+    <div class="vs-row up" id="vr2">
+      <div class="vs-col us" style="flex:none;width:100%">
+        <div class="vs-label" style="color:var(--sage)">What FT gives you</div>
+        <div class="vs-text">An understanding of the business. A reason you defined. And a morning alert when that reason changes — not when the chart moves.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S5: CTA -->
+<div class="scene center" id="s5">
+  <div style="width:100%">
+    <div class="big up" id="ctb" style="text-align:center">Own the<br>stock.<br>Not the <span>tip.</span></div>
+    <div class="sub fade" id="cts" style="text-align:center;margin-bottom:28px">5 questions. Plain English. Before you buy anything.</div>
+    <div class="fade" id="ctbl" style="display:flex;flex-direction:column;align-items:center;gap:12px">
+      <div class="ft-row"><div class="ft-badge">FT</div><span class="ft-name">Fundamentally True</span></div>
+      <a class="cta-btn" href="https://ft-app-beta.vercel.app/sample">See how it works →</a>
+      <span class="cta-url">ft-app-beta.vercel.app</span>
+    </div>
+  </div>
+</div>
+
+<div class="prog-wrap"><div class="prog-fill" id="pf"></div></div>
+<button class="replay" id="rb" onclick="go()">↺ Replay</button>
+
+<script>
+const S=[['s1',3000,()=>{a('e1',80);a('rh',300);a('rc',500);a('rs',1000);}],['s2',3200,()=>{a('e2',80);a('v1',300);a('e2b',1000);a('v2',1300);}],['s3',1800,()=>{a('b1',100);}],['s4',3000,()=>{a('e4',80);a('vr1',300);a('vr2',1400);}],['s5',4000,()=>{a('ctb',100);a('cts',500);a('ctbl',1000);a('rb',2800,'show');}]];
+const total=S.reduce((s,[,d])=>s+d,0);let T=[],el=0;
+function a(id,ms,cls='in'){T.push(setTimeout(()=>document.getElementById(id)?.classList.add(cls),ms));}
+function go(){T.forEach(clearTimeout);T=[];document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));document.getElementById('rb').classList.remove('show');document.getElementById('pf').style.width='0%';el=0;setTimeout(()=>run(0),60);}
+function run(i){if(i>=S.length)return;const[id,dur,fn]=S[i];if(i>0)document.getElementById(S[i-1][0]).classList.remove('active');document.getElementById(id).classList.add('active');fn();const iv=setInterval(()=>{el+=50;document.getElementById('pf').style.width=(el/total*100)+'%';},50);T.push(iv);T.push(setTimeout(()=>{clearInterval(iv);run(i+1);},dur));}
+go();
+</script>
+</body>
+</html>
