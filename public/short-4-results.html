@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>FT — Results Day</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --ink:#171717; --cream:#f6f3ec; --coral:#d97757;
+    --amber:#b88828; --sage:#5b7a55; --rust:#b54835;
+    --muted:rgba(246,243,236,.4); --soft:rgba(246,243,236,.75);
+  }
+  html { height:100%; }
+  body {
+    width:100vw; height:100dvh; overflow:hidden;
+    background:var(--ink); font-family:"Manrope",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .scene {
+    position:absolute; inset:0; opacity:0; pointer-events:none;
+    display:flex; flex-direction:column;
+    padding:max(52px,6.5vh) 28px max(calc(44px + env(safe-area-inset-bottom)),6vh);
+    transition:opacity .35s ease;
+  }
+  .scene.active { opacity:1; pointer-events:all; }
+  .scene.mid { justify-content:center; }
+  .scene.center { justify-content:center; align-items:center; text-align:center; }
+
+  .eyebrow {
+    font-family:"JetBrains Mono",monospace;
+    font-size:clamp(9px,2.5vw,11px); font-weight:700;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--muted);
+    margin-bottom:14px; opacity:0; transition:opacity .4s ease;
+  }
+  .eyebrow.in { opacity:1; }
+
+  /* ── S1: Results drop ── */
+  .result-card {
+    background:rgba(246,243,236,.05);
+    border:1px solid rgba(246,243,236,.1);
+    border-radius:18px; padding:20px;
+    margin-bottom:12px;
+    opacity:0; transform:translateY(12px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .result-card.in { opacity:1; transform:none; }
+  .result-card.good { border-color:rgba(91,122,85,.4); background:rgba(91,122,85,.08); }
+  .result-card.bad { border-color:rgba(181,72,53,.4); background:rgba(181,72,53,.08); }
+  .rc-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .rc-label {
+    font-family:"JetBrains Mono",monospace;
+    font-size:clamp(9px,2.5vw,11px); font-weight:700;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--muted);
+  }
+  .rc-date { font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--muted); }
+  .rc-headline {
+    font-size:clamp(16px,4.5vw,20px); font-weight:700;
+    letter-spacing:-.025em; color:var(--cream); margin-bottom:12px; line-height:1.25;
+  }
+  .rc-metrics { display:flex; gap:10px; flex-wrap:wrap; }
+  .metric {
+    flex:1; min-width:80px;
+    background:rgba(246,243,236,.06); border-radius:10px; padding:10px 12px;
+  }
+  .metric-label { font-size:10px; color:var(--muted); margin-bottom:4px; }
+  .metric-val { font-family:"JetBrains Mono",monospace; font-size:clamp(14px,4vw,17px); font-weight:700; color:var(--cream); }
+  .metric-val.up { color:var(--sage); }
+  .metric-val.down { color:var(--rust); }
+  .price-reaction {
+    margin-top:14px; padding:10px 14px;
+    border-radius:10px; display:flex; align-items:center; gap:10px;
+    opacity:0; transition:opacity .4s ease;
+  }
+  .price-reaction.in { opacity:1; }
+  .price-reaction.weird-down { background:rgba(181,72,53,.12); border:1px solid rgba(181,72,53,.3); }
+  .price-reaction.weird-up { background:rgba(91,122,85,.12); border:1px solid rgba(91,122,85,.3); }
+  .pr-price { font-family:"JetBrains Mono",monospace; font-size:clamp(18px,5vw,22px); font-weight:700; }
+  .pr-price.down { color:var(--rust); }
+  .pr-price.up { color:var(--sage); }
+  .pr-label { font-size:clamp(12px,3.5vw,14px); font-weight:600; color:var(--soft); line-height:1.35; }
+
+  /* ── S2: Confusion ── */
+  .confusion-big {
+    font-size:clamp(40px,11vw,58px); font-weight:900;
+    letter-spacing:-.06em; line-height:.92;
+    color:var(--cream); margin-bottom:16px;
+    opacity:0; transform:translateY(10px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .confusion-big.in { opacity:1; transform:none; }
+  .confusion-big span { color:var(--coral); }
+  .confusion-sub {
+    font-size:clamp(15px,4.2vw,18px); font-weight:500;
+    color:var(--muted); line-height:1.5;
+    opacity:0; transition:opacity .5s ease .3s;
+  }
+  .confusion-sub.in { opacity:1; }
+
+  /* ── S3: The real question ── */
+  .reveal-row {
+    display:flex; gap:16px; align-items:stretch;
+    margin-bottom:12px;
+    opacity:0; transform:translateX(-12px);
+    transition:opacity .4s ease, transform .4s ease;
+  }
+  .reveal-row.in { opacity:1; transform:none; }
+  .reveal-side {
+    width:3px; border-radius:2px; flex-shrink:0;
+  }
+  .reveal-body { flex:1; }
+  .reveal-label {
+    font-family:"JetBrains Mono",monospace;
+    font-size:clamp(9px,2.5vw,11px); font-weight:700;
+    letter-spacing:.1em; text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .reveal-text {
+    font-size:clamp(14px,4vw,16px); font-weight:600;
+    letter-spacing:-.02em; line-height:1.35; color:var(--cream);
+  }
+  .reveal-note {
+    font-size:clamp(11px,3vw,13px); color:var(--muted);
+    margin-top:4px; line-height:1.4;
+  }
+
+  /* ── S4: The insight ── */
+  .insight-line {
+    font-size:clamp(30px,8.5vw,46px); font-weight:900;
+    letter-spacing:-.055em; line-height:.95;
+    color:var(--cream); margin-bottom:10px;
+    opacity:0; transform:translateY(8px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .insight-line.in { opacity:1; transform:none; }
+  .insight-line span { color:var(--coral); }
+  .insight-sub {
+    font-size:clamp(14px,4vw,17px); font-weight:500;
+    color:var(--muted); line-height:1.5; letter-spacing:-.01em;
+    opacity:0; transition:opacity .5s ease .4s;
+  }
+  .insight-sub.in { opacity:1; }
+
+  /* ── S5: What FT tells you ── */
+  .ft-card {
+    background:rgba(246,243,236,.05);
+    border:1px solid rgba(246,243,236,.1);
+    border-radius:16px; padding:18px;
+    margin-bottom:10px;
+    opacity:0; transform:translateY(10px);
+    transition:opacity .4s ease, transform .4s ease;
+  }
+  .ft-card.in { opacity:1; transform:none; }
+  .ft-card.highlight { border-color:var(--coral); background:rgba(217,119,87,.08); }
+  .ft-card-label {
+    font-family:"JetBrains Mono",monospace;
+    font-size:clamp(8px,2.2vw,10px); font-weight:700;
+    letter-spacing:.12em; text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .ft-card-text {
+    font-size:clamp(14px,4vw,16px); font-weight:600;
+    letter-spacing:-.02em; line-height:1.35; color:var(--cream);
+  }
+  .ft-card-status {
+    display:flex; align-items:center; gap:8px; margin-top:10px;
+  }
+  .status-dot {
+    width:8px; height:8px; border-radius:50%; flex-shrink:0;
+  }
+  .status-text {
+    font-family:"JetBrains Mono",monospace;
+    font-size:clamp(10px,2.8vw,12px); font-weight:700;
+  }
+
+  /* ── S6: CTA ── */
+  .cta-big {
+    font-size:clamp(36px,10vw,52px); font-weight:900;
+    letter-spacing:-.06em; line-height:.92;
+    color:var(--cream); margin-bottom:14px;
+    opacity:0; transform:translateY(10px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .cta-big.in { opacity:1; transform:none; }
+  .cta-big span { color:var(--coral); }
+  .cta-sub {
+    font-size:clamp(14px,4vw,17px); font-weight:500;
+    color:var(--muted); line-height:1.5; margin-bottom:28px;
+    opacity:0; transition:opacity .5s ease .35s;
+  }
+  .cta-sub.in { opacity:1; }
+  .cta-block {
+    display:flex; flex-direction:column; align-items:center; gap:12px;
+    opacity:0; transition:opacity .6s ease .7s;
+  }
+  .cta-block.in { opacity:1; }
+  .ft-logo-row { display:flex; align-items:center; gap:9px; }
+  .ft-badge {
+    width:32px; height:32px; border-radius:8px;
+    background:var(--coral); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-family:"JetBrains Mono",monospace; font-size:10px; font-weight:700;
+  }
+  .ft-name {
+    font-family:"JetBrains Mono",monospace; font-size:11px; font-weight:600;
+    letter-spacing:.08em; text-transform:uppercase; color:rgba(246,243,236,.5);
+  }
+  .cta-btn {
+    padding:13px 28px; background:var(--coral); color:#fff;
+    border-radius:999px; font-size:clamp(14px,4vw,16px); font-weight:700;
+    letter-spacing:-.01em; text-decoration:none; display:inline-block;
+  }
+  .cta-url {
+    font-family:"JetBrains Mono",monospace;
+    font-size:clamp(10px,2.8vw,12px); color:rgba(246,243,236,.3); letter-spacing:.06em;
+  }
+
+  .prog-wrap { position:fixed; bottom:0; left:0; right:0; height:3px; background:rgba(246,243,236,.08); z-index:99; }
+  .prog-fill { height:100%; background:var(--coral); width:0%; transition:width .1s linear; }
+  .replay {
+    position:fixed; bottom:calc(14px + env(safe-area-inset-bottom)); right:18px;
+    background:rgba(246,243,236,.1); border:1px solid rgba(246,243,236,.18);
+    color:rgba(246,243,236,.7); border-radius:999px;
+    padding:8px 16px; font-family:"Manrope",sans-serif;
+    font-size:12px; font-weight:600; cursor:pointer;
+    opacity:0; transition:opacity .4s ease; z-index:100;
+  }
+  .replay.show { opacity:1; }
+</style>
+</head>
+<body>
+
+<!-- S1: Results drop — good news, stock down -->
+<div class="scene mid" id="s1">
+  <div>
+    <div class="eyebrow" id="e1">Q2 Results just dropped</div>
+    <div class="result-card good" id="rc1">
+      <div class="rc-top">
+        <span class="rc-label">Your stock</span>
+        <span class="rc-date">Today, 3:45pm</span>
+      </div>
+      <div class="rc-headline">Revenue up 24%. Profit up 18%. Beat estimates on every line.</div>
+      <div class="rc-metrics">
+        <div class="metric"><div class="metric-label">Revenue</div><div class="metric-val up">+24%</div></div>
+        <div class="metric"><div class="metric-label">Net profit</div><div class="metric-val up">+18%</div></div>
+        <div class="metric"><div class="metric-label">vs estimate</div><div class="metric-val up">Beat</div></div>
+      </div>
+      <div class="price-reaction weird-down" id="pr1">
+        <span class="pr-price down">↓ 4.2%</span>
+        <span class="pr-label">Stock is falling.<br>Despite the great results.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S2: Bad news, stock up -->
+<div class="scene mid" id="s2">
+  <div>
+    <div class="eyebrow" id="e2">Three weeks later. Different stock.</div>
+    <div class="result-card bad" id="rc2">
+      <div class="rc-top">
+        <span class="rc-label">Another stock</span>
+        <span class="rc-date">Today, 4:10pm</span>
+      </div>
+      <div class="rc-headline">Revenue missed. Margins compressed. Management cautious on outlook.</div>
+      <div class="rc-metrics">
+        <div class="metric"><div class="metric-label">Revenue</div><div class="metric-val down">Miss</div></div>
+        <div class="metric"><div class="metric-label">Margins</div><div class="metric-val down">Fell</div></div>
+        <div class="metric"><div class="metric-label">Guidance</div><div class="metric-val down">Cut</div></div>
+      </div>
+      <div class="price-reaction weird-up" id="pr2">
+        <span class="pr-price up">↑ 6.1%</span>
+        <span class="pr-label">Stock is rising.<br>Despite the bad results.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S3: The confusion -->
+<div class="scene center" id="s3">
+  <div>
+    <div class="confusion-big" id="cb">What is<br>even <span>happening?</span></div>
+    <div class="confusion-sub" id="cs">Good results, price falls. Bad results, price rises. The market seems to be on another planet.</div>
+  </div>
+</div>
+
+<!-- S4: The real explanation -->
+<div class="scene mid" id="s4">
+  <div>
+    <div class="eyebrow" id="e4">Here is what is actually happening</div>
+    <div class="reveal-row" id="r1">
+      <div class="reveal-side" style="background:var(--rust)"></div>
+      <div class="reveal-body">
+        <div class="reveal-label" style="color:var(--rust)">Good results, price fell</div>
+        <div class="reveal-text">The market already expected those results. The good news was already in the price. When reality matches expectation, there is nothing new to price in.</div>
+      </div>
+    </div>
+    <div class="reveal-row" id="r2">
+      <div class="reveal-side" style="background:var(--sage)"></div>
+      <div class="reveal-body">
+        <div class="reveal-label" style="color:var(--sage)">Bad results, price rose</div>
+        <div class="reveal-text">The market feared something worse. The bad news was less bad than priced in. Relief buying.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S5: The real insight -->
+<div class="scene mid" id="s5">
+  <div>
+    <div class="insight-line" id="il">The price reacts to<br><span>surprises.</span><br>Not to facts.</div>
+    <div class="insight-sub" id="is">The only question that matters is not "were the results good?" It is: did this quarter change the specific reason you own this stock?</div>
+  </div>
+</div>
+
+<!-- S6: What FT tells you -->
+<div class="scene mid" id="s6">
+  <div>
+    <div class="eyebrow" id="e6">What Fundamentally True tells you</div>
+    <div class="ft-card" id="fc1">
+      <div class="ft-card-label" style="color:var(--muted)">Your reason for holding</div>
+      <div class="ft-card-text">"Best-in-class loan quality. NPA consistently below every peer."</div>
+    </div>
+    <div class="ft-card highlight" id="fc2">
+      <div class="ft-card-label" style="color:var(--coral)">After this quarter</div>
+      <div class="ft-card-text">NPA rose to 0.42% from 0.31%. Still below sector average of 0.9%.</div>
+      <div class="ft-card-status">
+        <div class="status-dot" style="background:var(--amber)"></div>
+        <span class="status-text" style="color:var(--amber)">Wobbling — not broken</span>
+      </div>
+    </div>
+    <div class="ft-card" id="fc3">
+      <div class="ft-card-label" style="color:var(--muted)">The calm read</div>
+      <div class="ft-card-text" style="font-size:clamp(13px,3.5vw,15px);color:rgba(246,243,236,.7)">The price fell 4%. Your reason did not break. Those are two different things.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S7: CTA -->
+<div class="scene mid" id="s7">
+  <div>
+    <div class="cta-big" id="ctb">Results day.<br><span>Decoded.</span></div>
+    <div class="cta-sub" id="cts">Know exactly which number matters to your reason — and whether it moved.</div>
+    <div class="cta-block" id="ctbl">
+      <div class="ft-logo-row">
+        <div class="ft-badge">FT</div>
+        <span class="ft-name">Fundamentally True</span>
+      </div>
+      <a class="cta-btn" href="https://ft-app-beta.vercel.app/sample">See how it works →</a>
+      <span class="cta-url">ft-app-beta.vercel.app</span>
+    </div>
+  </div>
+</div>
+
+<div class="prog-wrap"><div class="prog-fill" id="pf"></div></div>
+<button class="replay" id="rb" onclick="go()">↺ Replay</button>
+
+<script>
+const S = [
+  ['s1', 3000, ()=>{ a('e1',80); a('rc1',300); a('pr1',1400); }],
+  ['s2', 3000, ()=>{ a('e2',80); a('rc2',300); a('pr2',1400); }],
+  ['s3', 2200, ()=>{ a('cb',100); a('cs',600); }],
+  ['s4', 3200, ()=>{ a('e4',80); a('r1',300); a('r2',1200); }],
+  ['s5', 2600, ()=>{ a('il',100); a('is',700); }],
+  ['s6', 3400, ()=>{ a('e6',80); a('fc1',300); a('fc2',900); a('fc3',1800); }],
+  ['s7', 4000, ()=>{ a('ctb',100); a('cts',500); a('ctbl',1000); a('rb',2800,'show'); }],
+];
+const total = S.reduce((s,[,d])=>s+d,0);
+let T=[],el=0;
+function a(id,ms,cls='in'){T.push(setTimeout(()=>document.getElementById(id)?.classList.add(cls),ms));}
+function go(){
+  T.forEach(clearTimeout); T=[];
+  document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));
+  document.getElementById('rb').classList.remove('show');
+  document.getElementById('pf').style.width='0%';
+  el=0; setTimeout(()=>run(0),60);
+}
+function run(i){
+  if(i>=S.length) return;
+  const [id,dur,fn]=S[i];
+  if(i>0) document.getElementById(S[i-1][0]).classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  fn();
+  const iv=setInterval(()=>{el+=50;document.getElementById('pf').style.width=(el/total*100)+'%';},50);
+  T.push(iv);
+  T.push(setTimeout(()=>{clearInterval(iv);run(i+1);},dur));
+}
+go();
+</script>
+</body>
+</html>
