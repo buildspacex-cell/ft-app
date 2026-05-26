@@ -261,16 +261,24 @@
   </div>
 </div>
 
+
+<div id="tap-overlay" onclick="tapStart()" style="position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--ink);cursor:pointer">
+  <div style="width:64px;height:64px;border-radius:50%;background:#d97757;display:flex;align-items:center;justify-content:center;margin-bottom:16px;box-shadow:0 8px 32px rgba(217,119,87,.4)">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 5L19 12L8 19V5Z" fill="white"/></svg>
+  </div>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(246,243,236,.6)">Tap to play</p>
+</div>
+
 <div class="prog-wrap"><div class="prog-fill" id="pf"></div></div>
 <button class="replay" id="rb" onclick="go()">↺ Replay</button>
 
 <script>
 const S = [
-  ['s1', 1800, ()=>{ a('tn',80); a('ts',500); }],
-  ['s2', 2400, ()=>{ a('pe',80); a('t1',280); a('t2',520); a('t3',760); a('t4',1000); }],
-  ['s3', 2600, ()=>{ a('nc',80); a('nh',380); a('ns',900); }],
-  ['s4', 3400, ()=>{ a('pl',80); a('p1',380); a('p2',880); a('p3',1380); a('p4',2000); }],
-  ['s5', 4000, ()=>{ a('lq',200); a('er',900); a('eb',1300); a('rb',2600,'show'); }],
+  ['s1', 3500, ()=>{ a('tn',300), a('ts',1200); }],
+  ['s2', 4000, ()=>{ a('pe',300), a('t1',600), a('t2',1000), a('t3',1400), a('t4',1800); }],
+  ['s3', 3500, ()=>{ a('nc',300), a('nh',700), a('ns',1800); }],
+  ['s4', 5500, ()=>{ a('pl',300), a('p1',700), a('p2',1500), a('p3',2400), a('p4',3500); }],
+  ['s5', 6000, ()=>{ a('lq',300), a('er',1800), a('eb',2400), a('rb',4500); }],
 ];
 const total = S.reduce((s,[,d])=>s+d,0);
 let T=[], el=0;
@@ -294,7 +302,10 @@ function run(i){
   T.push(iv);
   T.push(setTimeout(()=>{clearInterval(iv);run(i+1);},dur));
 }
-go();
+function tapStart(){
+  document.getElementById('tap-overlay').style.display='none';
+  go();
+}
 </script>
 </body>
 </html>

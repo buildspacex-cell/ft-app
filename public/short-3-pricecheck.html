@@ -157,16 +157,44 @@
   </div>
 </div>
 
+
+<div id="tap-overlay" onclick="tapStart()" style="position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--ink);cursor:pointer">
+  <div style="width:64px;height:64px;border-radius:50%;background:#d97757;display:flex;align-items:center;justify-content:center;margin-bottom:16px;box-shadow:0 8px 32px rgba(217,119,87,.4)">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 5L19 12L8 19V5Z" fill="white"/></svg>
+  </div>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(246,243,236,.6)">Tap to play</p>
+</div>
+
 <div class="prog-wrap"><div class="prog-fill" id="pf"></div></div>
 <button class="replay" id="rb" onclick="go()">↺ Replay</button>
 
 <script>
 const S=[['s1',2200,()=>{a('e1',80);a('pc',300);}],['s2',3000,()=>{a('e2',80);a('f1',300);a('f2',700);a('f3',1100);a('f4',1500);}],['s3',1800,()=>{a('b1',100);}],['s4',3200,()=>{a('e4',80);a('rc1',300);a('rc2',900);a('rc3',1600);}],['s5',2400,()=>{a('b2',100);a('s5s',600);}],['s6',4000,()=>{a('ctb',100);a('cts',500);a('ctbl',1000);a('rb',2800,'show');}]];
+
+const audio = new Audio('/Short-3-price-check.wav');
+audio.preload = 'auto';
+
+function go(){
+  audio.pause();
+  audio.currentTime = 0;
+  T.forEach(clearTimeout); T=[];
+  document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));
+  document.getElementById('rb').classList.remove('show');
+  document.getElementById('pf').style.width='0%';
+  el=0;
+  setTimeout(()=>{ audio.play().catch(()=>{}); run(0); },60);
+}
+
+window.addEventListener('message', e=>{ if(e.data==='start') go(); });
 const total=S.reduce((s,[,d])=>s+d,0);let T=[],el=0;
 function a(id,ms,cls='in'){T.push(setTimeout(()=>document.getElementById(id)?.classList.add(cls),ms));}
 function go(){T.forEach(clearTimeout);T=[];document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));document.getElementById('rb').classList.remove('show');document.getElementById('pf').style.width='0%';el=0;setTimeout(()=>run(0),60);}
 function run(i){if(i>=S.length)return;const[id,dur,fn]=S[i];if(i>0)document.getElementById(S[i-1][0]).classList.remove('active');document.getElementById(id).classList.add('active');fn();const iv=setInterval(()=>{el+=50;document.getElementById('pf').style.width=(el/total*100)+'%';},50);T.push(iv);T.push(setTimeout(()=>{clearInterval(iv);run(i+1);},dur));}
-go();
+function tapStart(){
+  document.getElementById('tap-overlay').style.display='none';
+  go();
+}
 </script>
 </body>
 </html>

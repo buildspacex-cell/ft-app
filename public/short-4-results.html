@@ -353,18 +353,26 @@
   </div>
 </div>
 
+
+<div id="tap-overlay" onclick="tapStart()" style="position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--ink);cursor:pointer">
+  <div style="width:64px;height:64px;border-radius:50%;background:#d97757;display:flex;align-items:center;justify-content:center;margin-bottom:16px;box-shadow:0 8px 32px rgba(217,119,87,.4)">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 5L19 12L8 19V5Z" fill="white"/></svg>
+  </div>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(246,243,236,.6)">Tap to play</p>
+</div>
+
 <div class="prog-wrap"><div class="prog-fill" id="pf"></div></div>
 <button class="replay" id="rb" onclick="go()">↺ Replay</button>
 
 <script>
 const S = [
-  ['s1', 3000, ()=>{ a('e1',80); a('rc1',300); a('pr1',1400); }],
-  ['s2', 3000, ()=>{ a('e2',80); a('rc2',300); a('pr2',1400); }],
-  ['s3', 2200, ()=>{ a('cb',100); a('cs',600); }],
-  ['s4', 3200, ()=>{ a('e4',80); a('r1',300); a('r2',1200); }],
-  ['s5', 2600, ()=>{ a('il',100); a('is',700); }],
-  ['s6', 3400, ()=>{ a('e6',80); a('fc1',300); a('fc2',900); a('fc3',1800); }],
-  ['s7', 4000, ()=>{ a('ctb',100); a('cts',500); a('ctbl',1000); a('rb',2800,'show'); }],
+  ['s1', 9000, ()=>{ a('e1',300), a('rc1',800), a('pr1',5000); }],
+  ['s2', 9000, ()=>{ a('e2',300), a('rc2',800), a('pr2',5500); }],
+  ['s3', 5000, ()=>{ a('cb',300), a('cs',1500); }],
+  ['s4', 9000, ()=>{ a('e4',300), a('r1',800), a('r2',4000); }],
+  ['s5', 8000, ()=>{ a('il',300), a('is',2500); }],
+  ['s6', 8000, ()=>{ a('e6',300), a('fc1',800), a('fc2',3000), a('fc3',5500); }],
+  ['s7', 3500, ()=>{ a('ctb',300), a('cts',1200), a('ctbl',2000), a('rb',3000); }],
 ];
 const total = S.reduce((s,[,d])=>s+d,0);
 let T=[],el=0;
@@ -387,7 +395,10 @@ function run(i){
   T.push(iv);
   T.push(setTimeout(()=>{clearInterval(iv);run(i+1);},dur));
 }
-go();
+function tapStart(){
+  document.getElementById('tap-overlay').style.display='none';
+  go();
+}
 </script>
 </body>
 </html>

@@ -146,7 +146,13 @@
             <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0" y="1" width="21" height="10" rx="3" stroke="white" stroke-opacity=".35" stroke-width="1" fill="none"/><rect x="22" y="4" width="2" height="4" rx="1" fill="white" fill-opacity=".4"/><rect x="1.5" y="2.5" width="16" height="7" rx="2" fill="white"/></svg>
           </div>
         </div>
-        <iframe class="phone-content" src="/short-6-quiet.html" scrolling="no" frameborder="0"></iframe>
+        <iframe class="phone-content" id="short-iframe" src="/short-6-quiet.html" scrolling="no" frameborder="0"></iframe>
+        <div id="tap-overlay" onclick="startShort()" style="position:absolute;inset:0;z-index:50;border-radius:42px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:rgba(23,23,23,0.85)">
+          <div style="width:64px;height:64px;border-radius:50%;background:#d97757;display:flex;align-items:center;justify-content:center;margin-bottom:14px;box-shadow:0 8px 32px rgba(217,119,87,.4)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 5L19 12L8 19V5Z" fill="white"/></svg>
+          </div>
+          <p style="font-family:-apple-system,sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,243,236,.6)">Tap to play</p>
+        </div>
         <div class="home-bar"></div>
         <div class="screen-glare"></div>
       </div>
