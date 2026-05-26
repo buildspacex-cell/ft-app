@@ -357,40 +357,30 @@
 
 <script>
 const S = [
-  ['s1', 3000, ()=>{
-    a('e1',80); a('b1',300); a('b2',700); a('b3',1100); a('b4',1500);
-  }],
-  ['s2', 2800, ()=>{
-    a('e2',80); a('tc',200);
-    [1,2,3,4,5,6,7,8,9,10].forEach((n,i)=>a('sp'+n, 400+i*80,'in'));
-    a('pn',800);
-  }],
-  ['s3', 2000, ()=>{
-    a('ib',100); a('is',500);
-  }],
-  ['s4', 2000, ()=>{
-    a('sl2',100); a('sq',600);
-  }],
-  ['s5', 3200, ()=>{
-    a('e5',80);
-    a('q1',300); a('q2',650); a('q3',1000); a('q4',1350); a('q5',1800);
-  }],
-  ['s6', 4000, ()=>{
-    a('fal',100); a('fb',300); a('fs',700); a('fc',1200);
-    a('rb',2800,'show');
-  }],
+  ['s1', 10000, ()=>{ a('e1',200); a('b1',600); a('b2',1800); a('b3',3000); a('b4',5000); }],
+  ['s2',  7000, ()=>{ a('e2',200); a('tc',400); [1,2,3,4,5,6,7,8,9,10].forEach((n,i)=>a('sp'+n,600+i*100,'in')); a('pn',2000); }],
+  ['s3',  7000, ()=>{ a('ib',200); a('is',1200); }],
+  ['s4',  4000, ()=>{ a('sl2',200); a('sq',1400); }],
+  ['s5',  6000, ()=>{ a('e5',200); a('q1',400); a('q2',1000); a('q3',1700); a('q4',2400); a('q5',3200); }],
+  ['s6',  5500, ()=>{ a('fal',200); a('fb',600); a('fs',1400); a('fc',2200); a('rb',4000,'show'); }],
 ];
 const total = S.reduce((s,[,d])=>s+d,0);
 let T=[], el=0;
 function a(id,ms,cls='in'){ T.push(setTimeout(()=>document.getElementById(id)?.classList.add(cls),ms)); }
+// Audio
+const audio = new Audio('/short-2-audio.wav');
+audio.preload = 'auto';
+
 function go(){
+  audio.pause();
+  audio.currentTime = 0;
   T.forEach(clearTimeout); T=[];
   document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));
   document.getElementById('rb').classList.remove('show');
   document.getElementById('pf').style.width='0%';
   el=0;
-  setTimeout(()=>run(0),60);
+  setTimeout(()=>{ audio.play().catch(()=>{}); run(0); },60);
 }
 function run(i){
   if(i>=S.length) return;
@@ -402,7 +392,12 @@ function run(i){
   T.push(iv);
   T.push(setTimeout(()=>{ clearInterval(iv); run(i+1); },dur));
 }
-go();
+function tapStart(){
+  document.getElementById('tap-start').style.display = 'none';
+  go();
+}
+// Don't autoplay — wait for tap
+// go(); ← disabled, tap overlay handles it
 </script>
 </body>
 </html>
