@@ -392,12 +392,18 @@ function run(i){
   T.push(iv);
   T.push(setTimeout(()=>{ clearInterval(iv); run(i+1); },dur));
 }
-function tapStart(){
-  document.getElementById('tap-start').style.display = 'none';
-  go();
+// Listen for start message from parent frame
+window.addEventListener('message', (e) => {
+  if (e.data === 'start') go();
+});
+// Also allow direct open (no iframe)
+if (window.self === window.top) {
+  // Direct — show tap overlay if opened standalone
+  document.addEventListener('click', function startOnce() {
+    go();
+    document.removeEventListener('click', startOnce);
+  }, { once: true });
 }
-// Don't autoplay — wait for tap
-// go(); ← disabled, tap overlay handles it
 </script>
 </body>
 </html>
