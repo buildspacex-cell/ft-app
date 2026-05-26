@@ -3,430 +3,396 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>FT Short 2 — The Intervention</title>
+<title>FT — Before You Buy</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   :root {
-    --ink: #171717;
-    --cream: #f6f3ec;
-    --cream-soft: rgba(246,243,236,.65);
-    --coral: #d97757;
-    --coral-dim: rgba(217,119,87,.3);
-    --muted: rgba(246,243,236,.35);
-    --hairline: rgba(246,243,236,.1);
+    --ink: #171717; --cream: #f6f3ec; --coral: #d97757;
+    --amber: #b88828; --sage: #5b7a55; --rust: #b54835;
+    --muted: rgba(246,243,236,.4); --soft: rgba(246,243,236,.7);
   }
-
   html { height: 100%; }
   body {
-    width: 100vw; height: 100dvh;
-    overflow: hidden;
-    background: var(--ink);
-    font-family: 'Manrope', sans-serif;
+    width: 100vw; height: 100dvh; overflow: hidden;
+    background: var(--ink); font-family: "Manrope", sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 
   .scene {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    pointer-events: none;
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    padding: max(52px,6.5vh) 28px max(calc(48px + env(safe-area-inset-bottom)),7vh);
+    opacity: 0; pointer-events: none;
     transition: opacity 0.35s ease;
   }
   .scene.active { opacity: 1; pointer-events: all; }
+  .scene.center { justify-content: center; align-items: center; text-align: center; }
+  .scene.mid { justify-content: center; }
 
-  /* ── Scene 1: Stop ── */
-  #s1 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--ink);
+  /* ── eyebrow ── */
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(9px,2.5vw,11px); font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: 14px;
+    opacity: 0; transition: opacity .4s ease;
   }
-  .stop-word {
-    font-size: clamp(80px, 28vw, 128px);
-    font-weight: 900;
-    letter-spacing: -.07em;
-    color: var(--cream);
-    line-height: 1;
-    opacity: 0;
-    transform: scale(0.92);
-    transition: opacity 0.35s ease, transform 0.35s ease;
-  }
-  .stop-word.in { opacity: 1; transform: scale(1); }
-  .stop-period { color: var(--coral); }
+  .eyebrow.in { opacity: 1; }
 
-  /* ── Scene 2: Don't look ── */
-  #s2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--ink);
-    padding: max(44px,6vh) 28px;
-    text-align: center;
-  }
-  .dont-block { }
-  .dont-line1 {
-    font-size: clamp(13px, 4vw, 17px);
-    font-weight: 600;
-    letter-spacing: -.01em;
-    color: var(--muted);
-    margin-bottom: 6px;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-  .dont-line1.in { opacity: 1; }
-  .dont-main {
-    font-size: clamp(36px, 13vw, 56px);
-    font-weight: 850;
-    letter-spacing: -.055em;
-    line-height: .92;
-    color: var(--cream);
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.5s ease 0.15s, transform 0.5s ease 0.15s;
-  }
-  .dont-main.in { opacity: 1; transform: translateY(0); }
-  .dont-sub {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--muted);
-    margin-top: 12px;
-    opacity: 0;
-    transition: opacity 0.5s ease 0.5s;
-  }
-  .dont-sub.in { opacity: 1; }
-
-  /* ── Scene 3: Look at the business ── */
-  #s3 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--ink);
-    padding: max(44px,6vh) 28px;
-    text-align: center;
-  }
-  .look-line1 {
-    font-size: 22px;
-    font-weight: 500;
-    letter-spacing: -.02em;
-    color: var(--muted);
-    margin-bottom: 10px;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  .look-line1.in { opacity: 1; }
-  .look-main {
-    font-size: clamp(48px, 18vw, 72px);
-    font-weight: 900;
-    letter-spacing: -.065em;
-    line-height: .88;
-    color: var(--coral);
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
-  }
-  .look-main.in { opacity: 1; transform: translateY(0); }
-
-  /* ── Scene 4: 5 Questions ── */
-  #s4 {
-    background: var(--ink);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 44px 32px;
-  }
-  .q-intro {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 22px;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  .q-intro.in { opacity: 1; }
-  .q-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 14px 16px;
-    border-radius: 13px;
-    margin-bottom: 9px;
-    background: rgba(246,243,236,.04);
-    border: 1px solid rgba(246,243,236,.08);
-    opacity: 0;
-    transform: translateX(-12px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  .q-item.in { opacity: 1; transform: translateX(0); }
-  .q-item.last {
-    background: var(--coral);
-    border-color: var(--coral);
-  }
-  .q-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--coral);
-    flex-shrink: 0;
-    min-width: 28px;
-  }
-  .q-item.last .q-num { color: #fff; }
-  .q-text {
-    font-size: clamp(13px, 3.8vw, 15px);
-    font-weight: 600;
-    color: rgba(246,243,236,.8);
-    letter-spacing: -.015em;
-    line-height: 1.3;
-  }
-  .q-item.last .q-text { color: #fff; }
-
-  /* ── Scene 5: The hook line ── */
-  #s5 {
-    background: var(--ink);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 48px 36px;
-    text-align: center;
-  }
-  .hook-line1 {
-    font-size: clamp(16px, 5vw, 22px);
-    font-weight: 600;
-    letter-spacing: -.025em;
-    color: var(--cream-soft);
-    line-height: 1.4;
-    margin-bottom: 8px;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-  .hook-line1.in { opacity: 1; }
-  .hook-line2 {
-    font-size: clamp(16px, 5vw, 22px);
-    font-weight: 600;
-    letter-spacing: -.025em;
-    color: var(--cream-soft);
-    line-height: 1.4;
-    opacity: 0;
-    transition: opacity 0.5s ease 0.3s;
-  }
-  .hook-line2.in { opacity: 1; }
-  .hook-line2 span { color: var(--coral); }
-  .hook-divider {
-    width: 32px; height: 1px;
-    background: rgba(246,243,236,.2);
-    margin: 28px auto;
-    opacity: 0;
-    transition: opacity 0.4s ease 0.7s;
-  }
-  .hook-divider.in { opacity: 1; }
-  .hook-cta {
-    opacity: 0;
-    transition: opacity 0.6s ease 1s;
-  }
-  .hook-cta.in { opacity: 1; }
-  .ft-row {
+  /* ── S1: The buzz ── */
+  .buzz-source {
     display: flex; align-items: center; gap: 10px;
-    justify-content: center; margin-bottom: 14px;
+    padding: 12px 14px;
+    background: rgba(246,243,236,.05);
+    border: 1px solid rgba(246,243,236,.1);
+    border-radius: 12px; margin-bottom: 10px;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity .4s ease, transform .4s ease;
   }
-  .ft-badge {
-    width: 34px; height: 34px; border-radius: 9px;
-    background: var(--coral); color: #fff;
+  .buzz-source.in { opacity: 1; transform: none; }
+  .buzz-icon {
+    width: 32px; height: 32px; border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; font-weight: 700;
+    font-size: 16px; flex-shrink: 0;
   }
-  .ft-name {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; font-weight: 600;
-    letter-spacing: .08em; text-transform: uppercase;
-    color: rgba(246,243,236,.7);
+  .buzz-text { flex: 1; }
+  .buzz-name {
+    font-size: clamp(12px,3.5vw,14px); font-weight: 700;
+    color: var(--cream); letter-spacing: -.015em;
   }
-  .cta-text {
-    font-size: clamp(22px, 7vw, 30px);
-    font-weight: 800;
-    letter-spacing: -.04em;
-    line-height: 1.05;
-    color: var(--cream);
+  .buzz-msg {
+    font-size: clamp(10px,2.8vw,12px); color: var(--muted); margin-top: 2px;
+  }
+  .buzz-msg span { color: var(--coral); }
+
+  /* ── S2: Price moving ── */
+  .ticker-card {
+    background: rgba(246,243,236,.05);
+    border: 1px solid rgba(246,243,236,.1);
+    border-radius: 18px; padding: 20px;
     margin-bottom: 16px;
+    opacity: 0; transform: translateY(12px);
+    transition: opacity .5s ease, transform .5s ease;
   }
-  .cta-text span { color: var(--coral); }
-  .cta-btn {
-    display: inline-block;
-    padding: 12px 24px;
-    background: var(--coral);
-    color: #fff;
-    border-radius: 999px;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: -.01em;
-    text-decoration: none;
+  .ticker-card.in { opacity: 1; transform: none; }
+  .ticker-row {
+    display: flex; align-items: baseline;
+    justify-content: space-between; margin-bottom: 14px;
+  }
+  .ticker-sym {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(16px,4.5vw,20px); font-weight: 700; color: var(--cream);
+  }
+  .ticker-price {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(22px,6vw,28px); font-weight: 700; color: var(--cream);
+  }
+  .ticker-change {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(14px,4vw,17px); font-weight: 700; color: var(--sage);
+  }
+  /* Sparkline */
+  .sparkline {
+    height: 44px; display: flex; align-items: flex-end; gap: 3px;
     margin-bottom: 12px;
   }
+  .spark-seg {
+    flex: 1; border-radius: 2px 2px 0 0;
+    background: rgba(91,122,85,.3);
+    opacity: 0; transition: opacity .2s ease, height .4s ease;
+  }
+  .spark-seg.in { opacity: 1; }
+  .spark-seg.hi { background: var(--sage); }
+  .ticker-vol {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(9px,2.5vw,11px); color: var(--muted); letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .price-note {
+    font-size: clamp(13px,3.8vw,15px); font-weight: 500;
+    color: var(--soft); line-height: 1.4;
+    opacity: 0; transition: opacity .5s ease .3s;
+  }
+  .price-note.in { opacity: 1; }
+  .price-note span { color: var(--sage); font-weight: 700; }
+
+  /* ── S3: The impulse ── */
+  .impulse-big {
+    font-size: clamp(42px,12vw,62px); font-weight: 900;
+    letter-spacing: -.06em; line-height: .92; color: var(--cream);
+    margin-bottom: 16px;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  .impulse-big.in { opacity: 1; transform: none; }
+  .impulse-big span { color: var(--coral); }
+  .impulse-sub {
+    font-size: clamp(15px,4.2vw,18px); font-weight: 500;
+    color: var(--muted); line-height: 1.45; letter-spacing: -.01em;
+    opacity: 0; transition: opacity .5s ease .35s;
+  }
+  .impulse-sub.in { opacity: 1; }
+
+  /* ── S4: The stop ── */
+  .stop-line {
+    font-size: clamp(60px,18vw,90px); font-weight: 900;
+    letter-spacing: -.07em; line-height: .9; color: var(--cream);
+    opacity: 0; transform: scale(.94);
+    transition: opacity .35s ease, transform .35s ease;
+  }
+  .stop-line.in { opacity: 1; transform: none; }
+  .stop-period { color: var(--coral); }
+  .stop-q {
+    font-size: clamp(18px,5.2vw,24px); font-weight: 700;
+    letter-spacing: -.03em; color: var(--soft); line-height: 1.3;
+    margin-top: 20px;
+    opacity: 0; transition: opacity .5s ease .4s;
+  }
+  .stop-q.in { opacity: 1; }
+  .stop-q span { color: var(--cream); }
+
+  /* ── S5: 5 questions ── */
+  .q-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: clamp(12px,3.5vw,15px) clamp(14px,4vw,17px);
+    background: rgba(246,243,236,.04);
+    border: 1px solid rgba(246,243,236,.08);
+    border-radius: 13px; margin-bottom: 9px;
+    opacity: 0; transform: translateX(-12px);
+    transition: opacity .4s ease, transform .4s ease;
+  }
+  .q-item.in { opacity: 1; transform: none; }
+  .q-item.q5 { background: var(--coral); border-color: var(--coral); }
+  .q-n {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(12px,3.2vw,14px); font-weight: 700;
+    color: var(--coral); min-width: 26px; flex-shrink: 0;
+  }
+  .q-item.q5 .q-n { color: #fff; }
+  .q-t {
+    font-size: clamp(13px,3.7vw,15px); font-weight: 600;
+    color: rgba(246,243,236,.8); letter-spacing: -.015em; line-height: 1.3;
+  }
+  .q-item.q5 .q-t { color: #fff; }
+
+  /* ── S6: FT answer ── */
+  .ft-answer-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(9px,2.5vw,11px); font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: 20px;
+    opacity: 0; transition: opacity .4s ease;
+  }
+  .ft-answer-label.in { opacity: 1; }
+  .ft-big {
+    font-size: clamp(38px,11vw,56px); font-weight: 900;
+    letter-spacing: -.06em; line-height: .92; color: var(--cream);
+    margin-bottom: 12px;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity .5s ease .1s, transform .5s ease .1s;
+  }
+  .ft-big.in { opacity: 1; transform: none; }
+  .ft-big span { color: var(--coral); }
+  .ft-sub {
+    font-size: clamp(14px,4vw,17px); font-weight: 500;
+    color: var(--soft); line-height: 1.5; letter-spacing: -.01em;
+    margin-bottom: 28px;
+    opacity: 0; transition: opacity .5s ease .4s;
+  }
+  .ft-sub.in { opacity: 1; }
+  .ft-cta-row {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    opacity: 0; transition: opacity .6s ease .8s;
+  }
+  .ft-cta-row.in { opacity: 1; }
+  .ft-logo-row {
+    display: flex; align-items: center; gap: 9px;
+  }
+  .ft-badge {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--coral); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "JetBrains Mono", monospace; font-size: 10px; font-weight: 700;
+  }
+  .ft-name-text {
+    font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase; color: rgba(246,243,236,.6);
+  }
+  .cta-btn {
+    display: inline-block; padding: 13px 28px;
+    background: var(--coral); color: #fff; border-radius: 999px;
+    font-size: clamp(14px,4vw,16px); font-weight: 700;
+    letter-spacing: -.01em; text-decoration: none;
+  }
   .cta-url {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: rgba(246,243,236,.3);
-    letter-spacing: .06em;
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(10px,2.8vw,12px); color: rgba(246,243,236,.3); letter-spacing: .06em;
   }
 
-  /* Progress */
-  .progress {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    height: 3px; background: rgba(246,243,236,.08);
-    z-index: 100;
-  }
-  .progress-fill {
-    height: 100%; background: var(--coral);
-    width: 0%; transition: width 0.1s linear;
-  }
-
-  /* Replay */
-  .replay-btn {
-    position: fixed; bottom: 18px; right: 18px;
-    background: rgba(246,243,236,.08);
-    border: 1px solid rgba(246,243,236,.15);
+  /* Progress + replay */
+  .prog-wrap { position: fixed; bottom: 0; left: 0; right: 0; height: 3px; background: rgba(246,243,236,.08); z-index: 99; }
+  .prog-fill { height: 100%; background: var(--coral); width: 0%; transition: width .1s linear; }
+  .replay {
+    position: fixed; bottom: calc(14px + env(safe-area-inset-bottom)); right: 18px;
+    background: rgba(246,243,236,.1); border: 1px solid rgba(246,243,236,.18);
     color: rgba(246,243,236,.7); border-radius: 999px;
-    padding: 7px 14px; font-family: 'Manrope', sans-serif;
+    padding: 8px 16px; font-family: "Manrope", sans-serif;
     font-size: 12px; font-weight: 600; cursor: pointer;
-    opacity: 0; transition: opacity 0.4s ease;
-    z-index: 200;
+    opacity: 0; transition: opacity .4s ease; z-index: 100;
   }
-  .replay-btn.show { opacity: 1; }
+  .replay.show { opacity: 1; }
 </style>
 </head>
 <body>
 
-<!-- Scene 1: STOP -->
-<div class="scene" id="s1">
-  <div class="stop-word" id="sw">Stop<span class="stop-period">.</span></div>
-</div>
-
-<!-- Scene 2: Don't look at the chart -->
-<div class="scene" id="s2">
-  <div class="dont-block">
-    <div class="dont-line1" id="dl1">You opened the chart.</div>
-    <div class="dont-main" id="dl2">Don't look<br>at the chart.</div>
-    <div class="dont-sub" id="dl3">The chart can't answer the question that matters.</div>
-  </div>
-</div>
-
-<!-- Scene 3: Look at the business -->
-<div class="scene" id="s3">
-  <div>
-    <div class="look-line1" id="ll1">Instead —</div>
-    <div class="look-main" id="ll2">Look at the<br>business.</div>
-  </div>
-</div>
-
-<!-- Scene 4: 5 Questions -->
-<div class="scene" id="s4">
-  <div class="q-intro" id="qi">To survive any headline, answer 5 questions</div>
-  <div class="q-item" id="q1"><span class="q-num">Q1</span><span class="q-text">What does this company actually do?</span></div>
-  <div class="q-item" id="q2"><span class="q-num">Q2</span><span class="q-text">How does it make money?</span></div>
-  <div class="q-item" id="q3"><span class="q-num">Q3</span><span class="q-text">Can the story be trusted?</span></div>
-  <div class="q-item" id="q4"><span class="q-num">Q4</span><span class="q-text">Is the price fair?</span></div>
-  <div class="q-item last" id="q5"><span class="q-num">Q5</span><span class="q-text">Why do you own this — and will you know if that changes?</span></div>
-</div>
-
-<!-- Scene 5: Hook + CTA -->
-<div class="scene" id="s5">
-  <div class="hook-line1" id="hl1">Most people can answer Q1.</div>
-  <div class="hook-line2" id="hl2">Almost nobody can answer <span>Q5.</span></div>
-  <div class="hook-divider" id="hdiv"></div>
-  <div class="hook-cta" id="hcta">
-    <div class="ft-row">
-      <div class="ft-badge">FT</div>
-      <span class="ft-name">Fundamentally True</span>
+<!-- S1: The buzz — everyone's talking -->
+<div class="scene mid" id="s1">
+  <div class="eyebrow" id="e1">You hear about a stock</div>
+  <div class="buzz-source" id="b1">
+    <div class="buzz-icon" style="background:rgba(184,136,40,.2)">📱</div>
+    <div class="buzz-text">
+      <div class="buzz-name">WhatsApp group</div>
+      <div class="buzz-msg">"This one is going to <span>3x</span>. Buy before Monday."</div>
     </div>
-    <p class="cta-text">We answer<br><span>all 5.</span></p>
-    <a class="cta-btn" href="https://ft-app-beta.vercel.app/sample">See how →</a>
-    <p class="cta-url">ft-app-beta.vercel.app</p>
+  </div>
+  <div class="buzz-source" id="b2">
+    <div class="buzz-icon" style="background:rgba(217,119,87,.15)">🎥</div>
+    <div class="buzz-text">
+      <div class="buzz-name">Finance Reel</div>
+      <div class="buzz-msg">"Defence sector is the <span>next big theme</span>."</div>
+    </div>
+  </div>
+  <div class="buzz-source" id="b3">
+    <div class="buzz-icon" style="background:rgba(91,122,85,.2)">📰</div>
+    <div class="buzz-text">
+      <div class="buzz-name">Business news</div>
+      <div class="buzz-msg">"Strong order pipeline. <span>Analysts bullish.</span>"</div>
+    </div>
+  </div>
+  <div class="buzz-source" id="b4">
+    <div class="buzz-icon" style="background:rgba(246,243,236,.07)">💬</div>
+    <div class="buzz-text">
+      <div class="buzz-name">Colleague at work</div>
+      <div class="buzz-msg">"I just put in ₹2 lakh. You should too."</div>
+    </div>
   </div>
 </div>
 
-<div class="progress"><div class="progress-fill" id="prog"></div></div>
-<button class="replay-btn" id="replay" onclick="startAnimation()">↺ Replay</button>
+<!-- S2: The price is moving -->
+<div class="scene mid" id="s2">
+  <div class="eyebrow" id="e2">The price is already moving</div>
+  <div class="ticker-card" id="tc">
+    <div class="ticker-row">
+      <span class="ticker-sym">YOUR STOCK</span>
+      <span class="ticker-change">↑ +8.4%</span>
+    </div>
+    <div class="sparkline" id="sl">
+      <div class="spark-seg" style="height:30%" id="sp1"></div>
+      <div class="spark-seg" style="height:38%" id="sp2"></div>
+      <div class="spark-seg" style="height:34%" id="sp3"></div>
+      <div class="spark-seg" style="height:45%" id="sp4"></div>
+      <div class="spark-seg" style="height:42%" id="sp5"></div>
+      <div class="spark-seg" style="height:55%" id="sp6"></div>
+      <div class="spark-seg" style="height:62%" id="sp7"></div>
+      <div class="spark-seg" style="height:58%" id="sp8"></div>
+      <div class="spark-seg hi" style="height:82%" id="sp9"></div>
+      <div class="spark-seg hi" style="height:100%" id="sp10"></div>
+    </div>
+    <div class="ticker-vol">Vol: 4.2x avg · ₹847 Cr traded today</div>
+  </div>
+  <div class="price-note" id="pn">Up <span>₹142</span> in two days. The FOMO is real. Your finger is on the buy button.</div>
+</div>
+
+<!-- S3: About to buy -->
+<div class="scene mid" id="s3">
+  <div class="impulse-big" id="ib">About to<br><span>buy it.</span></div>
+  <div class="impulse-sub" id="is">Based on a WhatsApp tip, a price chart, and the fact that everyone else seems to be doing it.</div>
+</div>
+
+<!-- S4: The stop -->
+<div class="scene center" id="s4">
+  <div class="stop-line" id="sl2">Wait<span class="stop-period">.</span></div>
+  <div class="stop-q" id="sq">Can you answer <span>5 questions</span> about this company?</div>
+</div>
+
+<!-- S5: The 5 questions -->
+<div class="scene mid" id="s5">
+  <div class="eyebrow" id="e5">Before any buy decision</div>
+  <div class="q-item" id="q1"><span class="q-n">Q1</span><span class="q-t">What does this company actually do?</span></div>
+  <div class="q-item" id="q2"><span class="q-n">Q2</span><span class="q-t">How does it make money — and is the cash arriving?</span></div>
+  <div class="q-item" id="q3"><span class="q-n">Q3</span><span class="q-t">Can the story be trusted?</span></div>
+  <div class="q-item" id="q4"><span class="q-n">Q4</span><span class="q-t">Is the price fair — or already priced in?</span></div>
+  <div class="q-item q5" id="q5"><span class="q-n">Q5</span><span class="q-t">What is your one reason for buying — and will you know if it changes?</span></div>
+</div>
+
+<!-- S6: FT answers all 5 -->
+<div class="scene mid" id="s6">
+  <div class="ft-answer-label" id="fal">Fundamentally True</div>
+  <div class="ft-big" id="fb">We answer<br>all <span>5.</span><br>Plain English.</div>
+  <div class="ft-sub" id="fs">For any NSE stock. In minutes. So you own the business — not just the ticker.</div>
+  <div class="ft-cta-row" id="fc">
+    <div class="ft-logo-row">
+      <div class="ft-badge">FT</div>
+      <span class="ft-name-text">Fundamentally True</span>
+    </div>
+    <a class="cta-btn" href="https://ft-app-beta.vercel.app/sample">See how it works →</a>
+    <span class="cta-url">ft-app-beta.vercel.app</span>
+  </div>
+</div>
+
+<div class="prog-wrap"><div class="prog-fill" id="pf"></div></div>
+<button class="replay" id="rb" onclick="go()">↺ Replay</button>
 
 <script>
-const scenes = [
-  ['s1', 1600, () => {
-    setTimeout(() => document.getElementById('sw').classList.add('in'), 80);
+const S = [
+  ['s1', 3000, ()=>{
+    a('e1',80); a('b1',300); a('b2',700); a('b3',1100); a('b4',1500);
   }],
-  ['s2', 2200, () => {
-    setTimeout(() => document.getElementById('dl1').classList.add('in'), 100);
-    setTimeout(() => document.getElementById('dl2').classList.add('in'), 350);
-    setTimeout(() => document.getElementById('dl3').classList.add('in'), 900);
+  ['s2', 2800, ()=>{
+    a('e2',80); a('tc',200);
+    [1,2,3,4,5,6,7,8,9,10].forEach((n,i)=>a('sp'+n, 400+i*80,'in'));
+    a('pn',800);
   }],
-  ['s3', 1800, () => {
-    setTimeout(() => document.getElementById('ll1').classList.add('in'), 100);
-    setTimeout(() => document.getElementById('ll2').classList.add('in'), 300);
+  ['s3', 2000, ()=>{
+    a('ib',100); a('is',500);
   }],
-  ['s4', 3400, () => {
-    setTimeout(() => document.getElementById('qi').classList.add('in'), 100);
-    setTimeout(() => document.getElementById('q1').classList.add('in'), 400);
-    setTimeout(() => document.getElementById('q2').classList.add('in'), 750);
-    setTimeout(() => document.getElementById('q3').classList.add('in'), 1100);
-    setTimeout(() => document.getElementById('q4').classList.add('in'), 1450);
-    setTimeout(() => document.getElementById('q5').classList.add('in'), 1900);
+  ['s4', 2000, ()=>{
+    a('sl2',100); a('sq',600);
   }],
-  ['s5', 4000, () => {
-    setTimeout(() => document.getElementById('hl1').classList.add('in'), 200);
-    setTimeout(() => document.getElementById('hl2').classList.add('in'), 700);
-    setTimeout(() => document.getElementById('hdiv').classList.add('in'), 1200);
-    setTimeout(() => document.getElementById('hcta').classList.add('in'), 1500);
-    setTimeout(() => document.getElementById('replay').classList.add('show'), 2800);
+  ['s5', 3200, ()=>{
+    a('e5',80);
+    a('q1',300); a('q2',650); a('q3',1000); a('q4',1350); a('q5',1800);
+  }],
+  ['s6', 4000, ()=>{
+    a('fal',100); a('fb',300); a('fs',700); a('fc',1200);
+    a('rb',2800,'show');
   }],
 ];
-
-let timers = [];
-let elapsed = 0;
-const totalDuration = scenes.reduce((a, s) => a + s[1], 0);
-
-function clearTimers() { timers.forEach(clearTimeout); timers = []; }
-
-function resetAll() {
-  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.in').forEach(el => el.classList.remove('in'));
-  document.getElementById('replay').classList.remove('show');
-  document.getElementById('prog').style.width = '0%';
-  elapsed = 0;
+const total = S.reduce((s,[,d])=>s+d,0);
+let T=[], el=0;
+function a(id,ms,cls='in'){ T.push(setTimeout(()=>document.getElementById(id)?.classList.add(cls),ms)); }
+function go(){
+  T.forEach(clearTimeout); T=[];
+  document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));
+  document.getElementById('rb').classList.remove('show');
+  document.getElementById('pf').style.width='0%';
+  el=0;
+  setTimeout(()=>run(0),60);
 }
-
-function runScene(index) {
-  if (index >= scenes.length) return;
-  const [id, duration, setup] = scenes[index];
-  if (index > 0) document.getElementById(scenes[index-1][0]).classList.remove('active');
+function run(i){
+  if(i>=S.length) return;
+  const [id,dur,fn]=S[i];
+  if(i>0) document.getElementById(S[i-1][0]).classList.remove('active');
   document.getElementById(id).classList.add('active');
-  setup();
-
-  let sceneElapsed = 0;
-  const prog = document.getElementById('prog');
-  const interval = setInterval(() => {
-    elapsed += 50; sceneElapsed += 50;
-    prog.style.width = (elapsed / totalDuration * 100) + '%';
-  }, 50);
-  timers.push(interval);
-
-  const t = setTimeout(() => {
-    clearInterval(interval);
-    runScene(index + 1);
-  }, duration);
-  timers.push(t);
+  fn();
+  const iv=setInterval(()=>{ el+=50; document.getElementById('pf').style.width=(el/total*100)+'%'; },50);
+  T.push(iv);
+  T.push(setTimeout(()=>{ clearInterval(iv); run(i+1); },dur));
 }
-
-function startAnimation() {
-  clearTimers();
-  resetAll();
-  setTimeout(() => runScene(0), 80);
-}
-
-startAnimation();
+go();
 </script>
 </body>
 </html>
