@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fundamentally True — Project Brain</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+  :root {
+    --ink: #171717; --ink-soft: #393632; --cream: #f6f3ec; --cream-deep: #eee7da;
+    --card: #fffdf8; --coral: #d97757; --coral-deep: #bf5d43; --coral-tint: #f6e3da;
+    --sage: #5b7a55; --sage-tint: #e7efe2; --amber: #b88828; --amber-tint: #f1e3bd;
+    --rust: #b54835; --muted: #777068; --hairline: #ddd4c6;
+    --sans: "Manrope", system-ui, sans-serif;
+    --mono: "JetBrains Mono", monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Layout ── */
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: 260px; background: var(--ink);
+    overflow-y: auto; z-index: 100;
+    padding: 28px 0 40px;
+    border-right: 1px solid rgba(246,243,236,.08);
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(246,243,236,.15); border-radius: 2px; }
+
+  .main { margin-left: 260px; min-height: 100vh; }
+
+  /* ── Sidebar ── */
+  .sb-logo {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 24px 24px; border-bottom: 1px solid rgba(246,243,236,.08);
+    margin-bottom: 16px;
+  }
+  .sb-badge {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--coral); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 11px; font-weight: 700; flex-shrink: 0;
+  }
+  .sb-name {
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; color: rgba(246,243,236,.9);
+  }
+  .sb-tagline { font-size: 10px; color: rgba(246,243,236,.35); margin-top: 2px; }
+
+  .sb-section { padding: 0 16px; margin-bottom: 4px; }
+  .sb-section-label {
+    font-family: var(--mono); font-size: 8px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: rgba(246,243,236,.25); padding: 12px 8px 6px;
+  }
+  .sb-link {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 10px; border-radius: 8px;
+    text-decoration: none; color: rgba(246,243,236,.6);
+    font-size: 13px; font-weight: 500; line-height: 1.3;
+    transition: all .15s; cursor: pointer; border: none; background: none;
+    width: 100%; text-align: left;
+  }
+  .sb-link:hover { background: rgba(246,243,236,.07); color: rgba(246,243,236,.9); }
+  .sb-link.active { background: rgba(217,119,87,.15); color: var(--coral); }
+  .sb-link .dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; background: rgba(246,243,236,.2); }
+  .sb-link.active .dot { background: var(--coral); }
+
+  /* ── Content sections ── */
+  .section {
+    max-width: 860px; margin: 0 auto;
+    padding: 64px 52px 80px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-eyebrow {
+    font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--coral);
+    margin-bottom: 10px;
+  }
+  h1 { font-size: clamp(32px, 4vw, 52px); font-weight: 900; letter-spacing: -.055em; line-height: .95; color: var(--ink); margin-bottom: 18px; }
+  h2 { font-size: clamp(22px, 2.8vw, 32px); font-weight: 800; letter-spacing: -.04em; line-height: 1.05; color: var(--ink); margin-bottom: 14px; margin-top: 40px; }
+  h3 { font-size: 17px; font-weight: 700; letter-spacing: -.025em; color: var(--ink); margin-bottom: 8px; margin-top: 28px; }
+  p { font-size: 15px; line-height: 1.65; color: var(--ink-soft); margin-bottom: 14px; }
+  p.lead { font-size: 18px; line-height: 1.5; color: var(--muted); letter-spacing: -.01em; margin-bottom: 24px; }
+
+  /* ── Cards ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 20px 0; }
+  .card {
+    background: var(--card); border: 1px solid var(--hairline);
+    border-radius: 14px; padding: 16px;
+  }
+  .card-label { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .card-val { font-size: 15px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); }
+  .card-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+  /* ── Status badges ── */
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 9px; border-radius: 20px;
+    font-family: var(--mono); font-size: 9px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+  }
+  .badge.live { background: var(--sage-tint); color: var(--sage); }
+  .badge.pending { background: var(--amber-tint); color: var(--amber); }
+  .badge.todo { background: var(--cream-deep); color: var(--muted); }
+  .badge.critical { background: var(--coral-tint); color: var(--coral-deep); }
+  .badge .bdot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+  /* ── Tables ── */
+  .table-wrap { overflow-x: auto; margin: 20px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th {
+    font-family: var(--mono); font-size: 9px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+    padding: 8px 12px; text-align: left;
+    border-bottom: 1px solid var(--hairline); background: var(--cream-deep);
+  }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--hairline); color: var(--ink-soft); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--cream-deep); }
+
+  /* ── Code blocks ── */
+  pre {
+    background: var(--ink); color: var(--cream); border-radius: 12px;
+    padding: 16px 18px; font-family: var(--mono); font-size: 12px;
+    line-height: 1.6; overflow-x: auto; margin: 16px 0;
+  }
+  code { font-family: var(--mono); font-size: 12px; background: var(--cream-deep); padding: 2px 6px; border-radius: 4px; color: var(--coral-deep); }
+
+  /* ── Callout ── */
+  .callout {
+    border-left: 3px solid var(--coral);
+    background: var(--coral-tint); border-radius: 0 12px 12px 0;
+    padding: 14px 16px; margin: 16px 0;
+  }
+  .callout p { margin: 0; color: var(--coral-deep); font-weight: 500; font-size: 14px; }
+  .callout.sage { border-color: var(--sage); background: var(--sage-tint); }
+  .callout.sage p { color: var(--sage); }
+  .callout.amber { border-color: var(--amber); background: var(--amber-tint); }
+  .callout.amber p { color: var(--amber); }
+
+  /* ── Checklist ── */
+  .checklist { list-style: none; margin: 12px 0; }
+  .checklist li {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 7px 0; border-bottom: 1px solid var(--hairline);
+    font-size: 14px; color: var(--ink-soft);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check { flex-shrink: 0; margin-top: 1px; }
+
+  /* ── Q items ── */
+  .q-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 16px; background: var(--card);
+    border: 1px solid var(--hairline); border-radius: 13px; margin-bottom: 8px;
+  }
+  .q-row.q5 { background: var(--ink); border-color: var(--ink); }
+  .q-num { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--coral); min-width: 28px; flex-shrink: 0; }
+  .q-row.q5 .q-num { color: var(--coral); }
+  .q-text { font-size: 15px; font-weight: 600; letter-spacing: -.015em; color: var(--ink); }
+  .q-row.q5 .q-text { color: var(--cream); }
+  .q-note { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .q-row.q5 .q-note { color: rgba(246,243,236,.4); }
+
+  /* ── Short cards ── */
+  .short-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0; }
+  .short-card {
+    background: var(--ink); border-radius: 14px; padding: 16px;
+    text-decoration: none; transition: transform .15s;
+  }
+  .short-card:hover { transform: translateY(-2px); }
+  .short-card-num { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(246,243,236,.3); margin-bottom: 8px; }
+  .short-card-title { font-size: 15px; font-weight: 700; letter-spacing: -.02em; color: var(--cream); margin-bottom: 6px; }
+  .short-card-hook { font-size: 12px; color: rgba(246,243,236,.5); line-height: 1.4; margin-bottom: 10px; }
+  .short-card-meta { display: flex; align-items: center; justify-content: space-between; }
+  .short-card-dur { font-family: var(--mono); font-size: 10px; color: rgba(246,243,236,.3); }
+  .short-card-link { font-family: var(--mono); font-size: 10px; color: var(--coral); }
+
+  /* ── Divider ── */
+  .divider { height: 1px; background: var(--hairline); margin: 32px 0; }
+
+  /* ── Top bar ── */
+  .topbar {
+    background: var(--cream); border-bottom: 1px solid var(--hairline);
+    padding: 14px 52px; display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 50;
+  }
+  .topbar-title { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .topbar-links { display: flex; gap: 16px; }
+  .topbar-link { font-size: 13px; font-weight: 600; color: var(--coral); text-decoration: none; }
+
+  /* Updated timestamp */
+  .updated { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 6px; }
+
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .section { padding: 40px 24px; }
+    .topbar { padding: 12px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Sidebar ── -->
+<nav class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-badge">FT</div>
+    <div>
+      <div class="sb-name">Fundamentally True</div>
+      <div class="sb-tagline">Project brain · May 2026</div>
+    </div>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Foundation</div>
+    <a class="sb-link" href="#vision"><span class="dot"></span>Vision & problem</a>
+    <a class="sb-link" href="#product"><span class="dot"></span>What the product does</a>
+    <a class="sb-link" href="#audience"><span class="dot"></span>Who it is for</a>
+    <a class="sb-link" href="#positioning"><span class="dot"></span>Positioning</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">The 5 Questions</div>
+    <a class="sb-link" href="#5q"><span class="dot"></span>The framework</a>
+    <a class="sb-link" href="#campaigns"><span class="dot"></span>Two campaigns</a>
+    <a class="sb-link" href="#tagline"><span class="dot"></span>Tagline & hooks</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Product</div>
+    <a class="sb-link" href="#stack"><span class="dot"></span>Tech stack</a>
+    <a class="sb-link" href="#schema"><span class="dot"></span>DB schema</a>
+    <a class="sb-link" href="#llm"><span class="dot"></span>LLM pipeline</a>
+    <a class="sb-link" href="#urls"><span class="dot"></span>URLs & pages</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Sample page</div>
+    <a class="sb-link" href="#sample-arc"><span class="dot"></span>Narrative arc</a>
+    <a class="sb-link" href="#sample-panels"><span class="dot"></span>9 panels</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Marketing</div>
+    <a class="sb-link" href="#shorts"><span class="dot"></span>7 animated shorts</a>
+    <a class="sb-link" href="#formats"><span class="dot"></span>Content formats</a>
+    <a class="sb-link" href="#timeline"><span class="dot"></span>Launch timeline</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Status</div>
+    <a class="sb-link" href="#ready"><span class="dot"></span>What is live</a>
+    <a class="sb-link" href="#pending"><span class="dot"></span>What is pending</a>
+    <a class="sb-link" href="#decisions"><span class="dot"></span>Key decisions log</a>
+  </div>
+</nav>
+
+<!-- ── Main ── -->
+<div class="main">
+
+  <div class="topbar">
+    <span class="topbar-title">Fundamentally True — Project Brain</span>
+    <div class="topbar-links">
+      <a class="topbar-link" href="https://ft-app-beta.vercel.app" target="_blank">Live site →</a>
+      <a class="topbar-link" href="https://github.com/buildspacex-cell/ft-app" target="_blank">GitHub →</a>
+      <a class="topbar-link" href="/sample-demo.html">Sample page →</a>
+    </div>
+  </div>
+
+  <!-- ═══ VISION ═══ -->
+  <section class="section" id="vision">
+    <div class="section-eyebrow">Foundation</div>
+    <h1>The problem we are solving</h1>
+    <p class="lead">Most retail investors in India own stocks they cannot explain. They bought based on a tip, a chart, or a feeling. They check the price every day but they cannot name the one reason they own the stock — and they would not know if that reason changed overnight.</p>
+
+    <div class="callout">
+      <p>"Why did I buy this in the first place?" — the question every retail investor asks at 7am when a headline drops about a stock they own.</p>
+    </div>
+
+    <h3>The two moments we intercept</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Pre-buy</div>
+        <div class="card-val">The FOMO buy</div>
+        <div class="card-sub">WhatsApp tip, finfluencer reel, colleague who "just put in 2 lakh" — buying without answering 5 questions</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Post-buy</div>
+        <div class="card-val">The 7am panic</div>
+        <div class="card-sub">News drops, stock glows amber, brain floods with noise — no framework to know if the reason broke</div>
+      </div>
+    </div>
+
+    <h3>The insight</h3>
+    <p>The problem is not lack of information. It is too much information with no way to filter it against what actually matters to a specific investor's specific holding. A defence sector headline is noise to someone who owns HDFC Bank for its loan quality. It is signal to someone who owns a defence electronics company for India's localization push. FT knows the difference because it knows your reason.</p>
+  </section>
+
+  <!-- ═══ PRODUCT ═══ -->
+  <section class="section" id="product">
+    <div class="section-eyebrow">Product</div>
+    <h1>What Fundamentally True does</h1>
+    <p class="lead">FT answers 5 questions about any NSE stock in plain English. Then it watches those answers every morning and finds you — only when something touches your specific reason for owning it.</p>
+
+    <h3>The core loop</h3>
+    <div class="card-grid">
+      <div class="card" style="border-top: 3px solid var(--coral)">
+        <div class="card-label">Step 1 — Understand once</div>
+        <div class="card-val">5 questions answered</div>
+        <div class="card-sub">Plain English. What it does, how it makes money, can it be trusted, is the price fair, your one reason.</div>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--amber)">
+        <div class="card-label">Step 2 — Save your reason</div>
+        <div class="card-val">Thesis builder</div>
+        <div class="card-sub">Pick the reasons you believe. We track those specifically — not the general news.</div>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--sage)">
+        <div class="card-label">Step 3 — We watch</div>
+        <div class="card-val">7am morning card</div>
+        <div class="card-sub">Only arrives when something touches your reason. Quiet days are a feature, not a bug.</div>
+      </div>
+    </div>
+
+    <h3>What the morning card contains</h3>
+    <ul class="checklist">
+      <li><span class="check">→</span> The headline in plain English — no jargon</li>
+      <li><span class="check">→</span> Which of your saved reasons it touches</li>
+      <li><span class="check">→</span> Whether the reason is holding, wobbling, or broken</li>
+      <li><span class="check">→</span> Price vs story — did the price react ahead of the proof</li>
+      <li><span class="check">→</span> The calm read — what you actually need to do (usually: nothing)</li>
+      <li><span class="check">→</span> One plain-English term explained — something you heard today</li>
+      <li><span class="check">→</span> Feedback chips — was this useful / noise / already knew</li>
+    </ul>
+
+    <h3>The key design decisions</h3>
+    <p><strong>Silence as a feature.</strong> Every other fintech app optimises for engagement — more alerts, more reasons to open. FT optimises for peace of mind. If nothing touched your reason, we do not send a card. That silence is the product working correctly.</p>
+    <p><strong>Reason-based filtering, not topic-based.</strong> We do not track "defence sector news." We track "India's defence electronics localization keeps growing" — a specific, falsifiable claim. The difference means we only surface news that could prove or disprove your specific bet.</p>
+    <p><strong>Plain English as a hard constraint.</strong> Every output must be explainable to someone who does not follow finance. No jargon without a tooltip. No recommendation without a reason. "Buy" and "sell" never appear.</p>
+  </section>
+
+  <!-- ═══ AUDIENCE ═══ -->
+  <section class="section" id="audience">
+    <div class="section-eyebrow">Audience</div>
+    <h1>Who this is for</h1>
+    <p class="lead">The retail investor who is curious enough to invest but honest enough to admit they do not fully understand what they own.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Primary</div>
+        <div class="card-val">NSE India retail</div>
+        <div class="card-sub">Owns 3-10 stocks. Checks price daily. Could not explain their holdings to a friend.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Secondary</div>
+        <div class="card-val">US individual investor</div>
+        <div class="card-sub">Same profile, different market. Separate landing page at /us.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Launch cohort</div>
+        <div class="card-val">June 24th, 2026</div>
+        <div class="card-sub">First cohort. Free during beta. Waitlist captured at /#waitlist.</div>
+      </div>
+    </div>
+
+    <h3>What they say about themselves</h3>
+    <div class="callout sage"><p>"I never know if a news story about a company I own is actually relevant or just noise."</p></div>
+    <div class="callout sage"><p>"I bought HDFC Bank because someone said it was safe. I still cannot explain why."</p></div>
+    <div class="callout sage"><p>"Every time results come out I do not know if the numbers are good or bad."</p></div>
+    <div class="callout sage"><p>"I check the price every day but I have no idea what I am looking for."</p></div>
+  </section>
+
+  <!-- ═══ POSITIONING ═══ -->
+  <section class="section" id="positioning">
+    <div class="section-eyebrow">Positioning</div>
+    <h1>Where FT sits in the market</h1>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Product</th><th>What they give you</th><th>What they miss</th></tr>
+        <tr><td><strong>Tickertape</strong></td><td>Screeners, ratings, data dashboards</td><td>Does not explain what the data means to your specific holding</td></tr>
+        <tr><td><strong>Smallcase</strong></td><td>Curated thematic portfolios</td><td>Someone else's thesis, not yours</td></tr>
+        <tr><td><strong>Moneycontrol</strong></td><td>News volume, alerts, prices</td><td>All signal, no filter — makes the noise problem worse</td></tr>
+        <tr><td><strong>Screener.in</strong></td><td>Deep financial data</td><td>Requires financial literacy to interpret</td></tr>
+        <tr><td><strong>Finfluencers</strong></td><td>Confidence, chart reads, tips</td><td>Chart tells you price, not business. No reason you can check tomorrow.</td></tr>
+        <tr><td><strong>Fundamentally True</strong></td><td>Plain English business understanding + reason-based morning alert</td><td>—</td></tr>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p>The white space: nobody tells you what the news means to your specific reason. That is the only thing that matters — and nobody does it.</p>
+    </div>
+  </section>
+
+  <!-- ═══ 5 QUESTIONS ═══ -->
+  <section class="section" id="5q">
+    <div class="section-eyebrow">The Framework</div>
+    <h1>The 5 questions</h1>
+    <p class="lead">The entire product is built around these 5 questions. They are the campaign. They are the sample page. They are the morning card. Q5 is the product.</p>
+
+    <div class="q-row">
+      <span class="q-num">Q1</span>
+      <div><div class="q-text">What does this company actually do?</div><div class="q-note">Not the sector. The actual business. The shop story.</div></div>
+    </div>
+    <div class="q-row">
+      <span class="q-num">Q2</span>
+      <div><div class="q-text">How does it make money — and is the money actually arriving?</div><div class="q-note">Revenue mix, rhythm, cash following profit.</div></div>
+    </div>
+    <div class="q-row">
+      <span class="q-num">Q3</span>
+      <div><div class="q-text">Why would this company still matter in 5 years?</div><div class="q-note">Structural tailwind, moat, honest risk.</div></div>
+    </div>
+    <div class="q-row">
+      <span class="q-num">Q4</span>
+      <div><div class="q-text">Is the price fair — or is the story already priced in?</div><div class="q-note">Price vs history, price vs peers, what execution the price demands.</div></div>
+    </div>
+    <div class="q-row q5">
+      <span class="q-num">Q5</span>
+      <div><div class="q-text">What is your one reason for owning this — and will you know if it changes?</div><div class="q-note">The bridge question. This is the product. Pre-buy: what will your reason be? Post-buy: is it still true?</div></div>
+    </div>
+
+    <div class="callout" style="margin-top: 20px">
+      <p>Most people can answer Q1. Almost nobody can answer Q5.</p>
+    </div>
+  </section>
+
+  <!-- ═══ CAMPAIGNS ═══ -->
+  <section class="section" id="campaigns">
+    <div class="section-eyebrow">Marketing</div>
+    <h1>Two campaigns running in parallel</h1>
+
+    <div class="card-grid">
+      <div class="card" style="border-top: 3px solid var(--ink)">
+        <div class="card-label">Campaign A — Pre-buy</div>
+        <div class="card-val">"5 questions before you invest"</div>
+        <div class="card-sub">Target: someone about to buy based on a tip. Intercepts before the mistake.</div>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--coral)">
+        <div class="card-label">Campaign B — Post-buy</div>
+        <div class="card-val">"5 questions about a stock you already own"</div>
+        <div class="card-sub">Target: someone who owns stocks they cannot explain. Creates instant recognition.</div>
+      </div>
+    </div>
+
+    <h3>Campaign A hook</h3>
+    <div class="callout">
+      <p>"Before you put money into any stock, you should be able to answer these 5 questions. Most people can answer the first one. Almost nobody can answer the last."</p>
+    </div>
+
+    <h3>Campaign B hook</h3>
+    <div class="callout">
+      <p>"Pick any stock you own. Now answer these 5 questions. Go on."</p>
+    </div>
+
+    <p>Campaign B ends with: "If you cannot answer question 5, you are not owning the stock. You are just holding the ticker." → link to sample page.</p>
+  </section>
+
+  <!-- ═══ TAGLINE ═══ -->
+  <section class="section" id="tagline">
+    <div class="section-eyebrow">Brand</div>
+    <h1>Tagline &amp; key copy</h1>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Tagline</div>
+        <div class="card-val" style="font-size: 20px; letter-spacing: -.03em">"Own the stock,<br>not just the ticker."</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Campaign hook</div>
+        <div class="card-val" style="font-size: 15px">Most people can answer Q1. Almost nobody can answer Q5.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Product promise</div>
+        <div class="card-val" style="font-size: 15px">Quiet days are a feature. Go back to sleep.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Intervention line</div>
+        <div class="card-val" style="font-size: 15px">Stop. Don't look at the chart. Look at the business.</div>
+      </div>
+    </div>
+
+    <h3>Voice and tone</h3>
+    <p>Calm, unhurried, direct. Not a news anchor, not a salesperson. Someone explaining something clearly to a friend who does not follow markets. No jargon. No "buy" or "sell". No recommendations — only understanding.</p>
+    <p>One-word pivots ("Stop." "Wait." "Nothing." "Wrong question.") are core to the voice. They need a full beat before and after.</p>
+  </section>
+
+  <!-- ═══ STACK ═══ -->
+  <section class="section" id="stack">
+    <div class="section-eyebrow">Engineering</div>
+    <h1>Tech stack</h1>
+
+    <div class="card-grid">
+      <div class="card"><div class="card-label">Frontend</div><div class="card-val">Next.js 16 + React 19</div><div class="card-sub">App router, TypeScript, Tailwind</div></div>
+      <div class="card"><div class="card-label">Database</div><div class="card-val">Supabase</div><div class="card-sub">Auth + Postgres + magic links</div></div>
+      <div class="card"><div class="card-label">LLM</div><div class="card-val">Anthropic Claude</div><div class="card-sub">Sonnet for writing, Haiku for filtering</div></div>
+      <div class="card"><div class="card-label">News</div><div class="card-val">NewsAPI + Finnhub</div><div class="card-sub">Source scanning pipeline</div></div>
+      <div class="card"><div class="card-label">Push</div><div class="card-val">OneSignal</div><div class="card-sub">7am morning card delivery</div></div>
+      <div class="card"><div class="card-label">Analytics</div><div class="card-val">PostHog</div><div class="card-sub">User behaviour, funnel tracking</div></div>
+      <div class="card"><div class="card-label">Mobile</div><div class="card-val">Capacitor</div><div class="card-sub">iOS + Android wrapper (post-launch)</div></div>
+      <div class="card"><div class="card-label">Deploy</div><div class="card-val">Vercel</div><div class="card-sub">ft-app-beta.vercel.app</div></div>
+    </div>
+
+    <h3>Repos &amp; keys</h3>
+    <pre>Repo:     github.com/buildspacex-cell/ft-app (private)
+Live:     ft-app-beta.vercel.app
+Supabase: nrcknrgwmummxzpvwyvv.supabase.co
+Launch:   June 24th, 2026 — first cohort</pre>
+  </section>
+
+  <!-- ═══ SCHEMA ═══ -->
+  <section class="section" id="schema">
+    <div class="section-eyebrow">Database</div>
+    <h1>Schema</h1>
+
+    <h3>Waitlist table</h3>
+    <pre>create table if not exists waitlist (
+  id             uuid primary key default gen_random_uuid(),
+  email          text not null unique,
+  source         text default 'landing-in',
+  created_at     timestamptz default now(),
+  converted      boolean default false,
+  stock_interest text,   -- stock they care about most
+  wish_text      text,   -- "what do you wish you understood better"
+  phone          text    -- optional, with country code
+);</pre>
+
+    <div class="callout amber">
+      <p>Pending: run alter table migration in Supabase to add stock_interest, wish_text, phone columns if not already done.</p>
+    </div>
+
+    <h3>Source tracking values</h3>
+    <pre>landing-in-hero    — India landing page, hero email form
+landing-in-cta     — India landing page, bottom CTA
+landing-us-hero    — US landing page, hero
+landing-us-cta     — US landing page, bottom CTA</pre>
+  </section>
+
+  <!-- ═══ LLM ═══ -->
+  <section class="section" id="llm">
+    <div class="section-eyebrow">LLM Pipeline</div>
+    <h1>How the digest is generated</h1>
+
+    <h3>Key prompt rules (src/lib/llm/prompts.ts)</h3>
+    <ul class="checklist">
+      <li><span class="check">→</span> <strong>Split-signal rule</strong> — separate the headline (what happened) from the implication (what it means for your reason)</li>
+      <li><span class="check">→</span> <strong>Earnings-day rule</strong> — always explain whether results beat or missed expectations, not just the raw numbers</li>
+      <li><span class="check">→</span> <strong>Regulator vocabulary</strong> — use RBI, SEBI, TRAI correctly; never generic "regulator"</li>
+      <li><span class="check">→</span> <strong>Dual-currency rule</strong> — show both absolute (Rs X crore) and relative (% of revenue)</li>
+      <li><span class="check">→</span> <strong>Plain English rule</strong> — use [[TERM|explanation]] syntax for any jargon; JargonText component renders inline tooltips</li>
+      <li><span class="check">→</span> <strong>No buy/sell</strong> — never recommend action; only explain state change</li>
+    </ul>
+
+    <h3>The voice system prompt — core rules</h3>
+    <ul class="checklist">
+      <li><span class="check">→</span> <strong>The shop-on-the-street rule</strong> — every business described as if it were a shop you walk past on MG Road or Brigade Road. "HDFC Bank runs 8,000 branches — the kind with a queue outside on salary day."</li>
+      <li><span class="check">→</span> <strong>Numbers always paired</strong> — "Net NPA of 0.3% — of every Rs 100 they lent out, less than 30 paise went bad."</li>
+      <li><span class="check">→</span> <strong>Status vocabulary locked</strong> — "holding" / "wobbling" / "broken". Never "consider trimming" or "reduce exposure".</li>
+      <li><span class="check">→</span> <strong>Weight vocabulary</strong> — alarm (reason broke), heads-up (upcoming event), tailwind (mild positive), quiet (low urgency)</li>
+      <li><span class="check">→</span> <strong>8 few-shot examples</strong> baked into the prompt — HDFC NPA, TCS BFSI, Maruti dealer, RBI repo rate, Zomato acquisition, Jio pricing, Bajaj Finance digital, Sun Pharma US specialty</li>
+      <li><span class="check">→</span> <strong>Off the hook close</strong> — every digest ends with context that lets the reader know they don't need to do anything with this information</li>
+    </ul>
+
+    <h3>JargonText component</h3>
+    <p>Parses <code>[[TERM|explanation]]</code> tokens in digest text. Renders coral-underlined tappable tooltips inline. Lives at <code>src/components/digest/JargonText.tsx</code>.</p>
+  </section>
+
+  <!-- ═══ URLS ═══ -->
+  <section class="section" id="urls">
+    <div class="section-eyebrow">Pages</div>
+    <h1>All URLs</h1>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>URL</th><th>What it is</th><th>Status</th></tr>
+        <tr><td><code>ft-app-beta.vercel.app</code></td><td>India landing page — hero, sample hook, waitlist, WishesBar, FAQ</td><td><span class="badge live"><span class="bdot"></span>Live</span></td></tr>
+        <tr><td><code>/us</code></td><td>US landing page — same structure, USD framing, US phone default</td><td><span class="badge live"><span class="bdot"></span>Live</span></td></tr>
+        <tr><td><code>/sample</code></td><td>Redirects to sample-demo.html</td><td><span class="badge live"><span class="bdot"></span>Live</span></td></tr>
+        <tr><td><code>/sample-demo.html</code></td><td>Data Patterns interactive sample — 9 panels, horizontal scroll</td><td><span class="badge live"><span class="bdot"></span>Live</span></td></tr>
+        <tr><td><code>/short-1.html</code> to <code>/short-7.html</code></td><td>Phone frame wrappers for all 7 animated shorts</td><td><span class="badge live"><span class="bdot"></span>Live</span></td></tr>
+        <tr><td><code>/brain.html</code></td><td>This document — project brain</td><td><span class="badge live"><span class="bdot"></span>Live</span></td></tr>
+        <tr><td><code>/5-questions</code></td><td>Campaign anchor page — interactive Q&A before buy/after buy tabs</td><td><span class="badge todo"><span class="bdot"></span>Not built</span></td></tr>
+        <tr><td><code>/digest</code></td><td>Daily digest app screen</td><td><span class="badge pending"><span class="bdot"></span>In codebase</span></td></tr>
+        <tr><td><code>/onboarding</code></td><td>Stock setup + thesis builder onboarding flow</td><td><span class="badge pending"><span class="bdot"></span>In codebase</span></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══ SAMPLE ARC ═══ -->
+  <section class="section" id="sample-arc">
+    <div class="section-eyebrow">Sample Page</div>
+    <h1>The narrative arc</h1>
+    <p class="lead">The sample page at /sample-demo.html is the most important marketing asset. It is not a product tour. It is a story. Someone arrives anxious and leaves calm — having answered 5 questions about a real stock.</p>
+
+    <div class="callout">
+      <p>The arc: Chaos → Intervention → 5 questions (each with multiple evidence cards) → Save your reason → Same headline, different morning (the payoff) → CTA</p>
+    </div>
+
+    <h3>Design principles for the sample</h3>
+    <ul class="checklist">
+      <li><span class="check">→</span> Horizontal scroll — one question per swipe, feels like a story not a scroll</li>
+      <li><span class="check">→</span> Forward hooks at the end of each panel — "Revenue looks right. But is the cash arriving?" pulls you to the next</li>
+      <li><span class="check">→</span> Counter-weight card in Q3 — shows structural friction honestly, builds trust</li>
+      <li><span class="check">→</span> Interactive thesis builder in Q5 — visitor earns the payoff by choosing their reasons</li>
+      <li><span class="check">→</span> Circular structure — Panel 1 chaos, Panel 8 same headline defanged. First and last beat share the same stimulus.</li>
+      <li><span class="check">→</span> "Same headline. Different morning." — the bridge between Panel 7 and Panel 8</li>
+    </ul>
+  </section>
+
+  <!-- ═══ SAMPLE PANELS ═══ -->
+  <section class="section" id="sample-panels">
+    <div class="section-eyebrow">Sample Page</div>
+    <h1>9 panels — Data Patterns</h1>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Panel</th><th>Title</th><th>Content</th><th>Forward hook</th></tr>
+        <tr><td>1</td><td>The Chaos</td><td>Dark ink. 7am. Portfolio map. 4 panic thoughts.</td><td>"There is a calmer way to wake up to this."</td></tr>
+        <tr><td>2</td><td>The Intervention</td><td>"Stop. Don't look at the chart. Look at the business." 5 questions listed.</td><td>—</td></tr>
+        <tr><td>3</td><td>Q1 — The Business</td><td>Machine diagram, body analogy, trust card.</td><td>"Now you know what it does. But does it make money?"</td></tr>
+        <tr><td>4</td><td>Q2 — The Money</td><td>Revenue mix bars (55/30/15), defence budget chart FY21→FY26E.</td><td>"Revenue looks right. But is the cash actually arriving?"</td></tr>
+        <tr><td>5</td><td>Q2 cont — The Proof</td><td>Spark chart, margins with context, cash vs profit, structural friction card.</td><td>"Story checks out. But are you paying too much for it?"</td></tr>
+        <tr><td>6</td><td>Q4 — The Price</td><td>Gradient price meter with 3 anchors (5yr avg / sector peers / today).</td><td>"Now the hardest question. Why do you hold it?"</td></tr>
+        <tr><td>7</td><td>Q5 — Your Reason</td><td>6 interactive toggleable reason cards. Save triggers auto-advance.</td><td>"That is the reason we track."</td></tr>
+        <tr><td>8</td><td>The Payoff</td><td>Noise filter visual → same headline, defanged. Full digest card.</td><td>—</td></tr>
+        <tr><td>9</td><td>CTA</td><td>"Quiet days are a feature. Go back to sleep." → Get early access.</td><td>—</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══ SHORTS ═══ -->
+  <section class="section" id="shorts">
+    <div class="section-eyebrow">Animated Shorts</div>
+    <h1>7 animated shorts</h1>
+    <p class="lead">Mobile-first HTML animations with voice audio. Screen-record for Instagram Reels / LinkedIn Shorts. Each has a phone frame wrapper, tap-to-play, audio synced visuals, progress bar, and replay button.</p>
+
+    <div class="short-grid">
+      <a class="short-card" href="/short-1.html" target="_blank">
+        <div class="short-card-num">Short 01</div>
+        <div class="short-card-title">The Chaos</div>
+        <div class="short-card-hook">Post-buy panic at 7am. Portfolio map glowing. Panic thoughts flooding in.</div>
+        <div class="short-card-meta"><span class="short-card-dur">22.6s</span><span class="short-card-link">Open →</span></div>
+      </a>
+      <a class="short-card" href="/short-2.html" target="_blank">
+        <div class="short-card-num">Short 02</div>
+        <div class="short-card-title">Before You Buy</div>
+        <div class="short-card-hook">WhatsApp tip, FOMO, price moving — about to buy. Wait. 5 questions first.</div>
+        <div class="short-card-meta"><span class="short-card-dur">39.5s</span><span class="short-card-link">Open →</span></div>
+      </a>
+      <a class="short-card" href="/short-3.html" target="_blank">
+        <div class="short-card-num">Short 03</div>
+        <div class="short-card-title">The Price Check</div>
+        <div class="short-card-hook">Up 52%. Forums saying sell. But did the reason move?</div>
+        <div class="short-card-meta"><span class="short-card-dur">38.8s</span><span class="short-card-link">Open →</span></div>
+      </a>
+      <a class="short-card" href="/short-4.html" target="_blank">
+        <div class="short-card-num">Short 04</div>
+        <div class="short-card-title">Results Day</div>
+        <div class="short-card-hook">Good results, price falls. Bad results, price rises. The price reacts to surprises — not facts.</div>
+        <div class="short-card-meta"><span class="short-card-dur">51.5s</span><span class="short-card-link">Open →</span></div>
+      </a>
+      <a class="short-card" href="/short-5.html" target="_blank">
+        <div class="short-card-num">Short 05</div>
+        <div class="short-card-title">The Finfluencer</div>
+        <div class="short-card-hook">2.4M followers. Chart looks bullish. 5 things he didn't answer.</div>
+        <div class="short-card-meta"><span class="short-card-dur">38.6s</span><span class="short-card-link">Open →</span></div>
+      </a>
+      <a class="short-card" href="/short-6.html" target="_blank">
+        <div class="short-card-num">Short 06</div>
+        <div class="short-card-title">The Quiet Morning</div>
+        <div class="short-card-hook">Nothing touched your reasons today. Silence is the signal. Quiet days are a feature.</div>
+        <div class="short-card-meta"><span class="short-card-dur">34.4s</span><span class="short-card-link">Open →</span></div>
+      </a>
+      <a class="short-card" href="/short-7.html" target="_blank">
+        <div class="short-card-num">Short 07</div>
+        <div class="short-card-title">The Exit Decision</div>
+        <div class="short-card-hook">Down 30%. Wrong question. Did the reason change?</div>
+        <div class="short-card-meta"><span class="short-card-dur">44.3s</span><span class="short-card-link">Open →</span></div>
+      </a>
+    </div>
+
+    <h3>How to screen-record for posting</h3>
+    <p>Open any <code>/short-N.html</code> on desktop. The phone frame renders centered on a dark background. Start a screen recording (QuickTime on Mac, Win+G on Windows), tap the coral play button, record through to the end. Crop to the phone frame. Post as Reel or Short.</p>
+  </section>
+
+  <!-- ═══ FORMATS ═══ -->
+  <section class="section" id="formats">
+    <div class="section-eyebrow">Content Plan</div>
+    <h1>Content formats</h1>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Format 1</div>
+        <div class="card-val">WhatsApp forward</div>
+        <div class="card-sub">Text-only. No branding. Just the 5 questions + one line. Designed to be forwarded. Link comes with it.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Format 2</div>
+        <div class="card-val">Instagram / LinkedIn carousel</div>
+        <div class="card-sub">7 slides. Hook → Q1-Q5 → CTA. Link in bio → /sample.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Format 3</div>
+        <div class="card-val">Animated shorts (7 built)</div>
+        <div class="card-sub">Screen-record phone frame. Post as Reel/Short. Audio synced to visuals.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Format 4 (not built)</div>
+        <div class="card-val">/5-questions page</div>
+        <div class="card-sub">Type any stock. Answer all 5. The moment you can't answer Q5 is the conversion.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TIMELINE ═══ -->
+  <section class="section" id="timeline">
+    <div class="section-eyebrow">Launch Plan</div>
+    <h1>4-week campaign timeline</h1>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Week</th><th>Campaign A — Pre-buy</th><th>Campaign B — Post-buy</th></tr>
+        <tr>
+          <td><strong>Week 1</strong><br><span style="color:var(--muted);font-size:12px">Now</span></td>
+          <td>Share /sample in 3-5 WhatsApp groups. "I built this — what do you think?" No CTA yet.</td>
+          <td>Share the 5 questions as a text post. No FT branding. Just the questions. See what resonates.</td>
+        </tr>
+        <tr>
+          <td><strong>Week 2</strong></td>
+          <td>Short 2 (Before You Buy) on Instagram + LinkedIn. Build pre-buy audience.</td>
+          <td>Short 1 (The Chaos) + hook: "Pick a stock you own. Try Q5." Engage every comment.</td>
+        </tr>
+        <tr>
+          <td><strong>Week 3</strong></td>
+          <td>Short 5 (Finfluencer). "The chart tells you price. Not business."</td>
+          <td>Short 7 (Exit Decision). "Down 30%. Wrong question."</td>
+        </tr>
+        <tr>
+          <td><strong>Week 4<br>June 24th</strong></td>
+          <td>Short 6 (Quiet Morning) + "Launches today. We answer all 5."</td>
+          <td>Short 4 (Results Day) + "Launches today. Know which number matters to your reason."</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══ WHAT IS LIVE ═══ -->
+  <section class="section" id="ready">
+    <div class="section-eyebrow">Status</div>
+    <h1>What is live right now</h1>
+
+    <ul class="checklist">
+      <li><span class="check" style="color:var(--sage)">✓</span> Landing page India — hero, WishesBar, sample hook, 4-step waitlist confirmation</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Landing page US — /us, USD framing, US phone default</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Sample page — 9-panel horizontal story, Data Patterns, all interactive</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Waitlist API — captures email, source, stock interest, wish text, phone</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Wishes API — returns seeds + count, 5-min revalidation</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> 7 animated shorts — all with audio, phone frames, tap-to-play</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Supabase schema — waitlist table defined</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> /sample route redirect</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Design system — cream/ink/coral palette, Manrope + JetBrains Mono</li>
+    </ul>
+  </section>
+
+  <!-- ═══ PENDING ═══ -->
+  <section class="section" id="pending">
+    <div class="section-eyebrow">Status</div>
+    <h1>What needs to happen before launch</h1>
+
+    <ul class="checklist">
+      <li><span class="check" style="color:var(--coral)">!</span> <strong>Set Vercel env vars</strong> — NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, NEXT_PUBLIC_APP_URL, CRON_SECRET</li>
+      <li><span class="check" style="color:var(--coral)">!</span> <strong>Re-enable API call</strong> in page.tsx and us/page.tsx (TODO comment)</li>
+      <li><span class="check" style="color:var(--coral)">!</span> <strong>Run Supabase migration</strong> — alter table to add stock_interest, wish_text, phone columns</li>
+      <li><span class="check" style="color:var(--amber)">~</span> Adjust short-2 visual timing — visuals still appearing slightly early relative to voice cues</li>
+      <li><span class="check" style="color:var(--amber)">~</span> Verify timing on shorts 1, 3, 4, 5, 6, 7 once played back with actual audio</li>
+      <li><span class="check" style="color:var(--muted)">○</span> Build /5-questions page — campaign anchor, pre-buy / post-buy tabs, type any stock</li>
+      <li><span class="check" style="color:var(--muted)">○</span> Native iOS/Android apps via Capacitor</li>
+      <li><span class="check" style="color:var(--muted)">○</span> ANTHROPIC_API_KEY + NEWS_API_KEY in Vercel env</li>
+    </ul>
+
+    <h3>Vercel env vars needed</h3>
+    <pre>NEXT_PUBLIC_SUPABASE_URL      = https://nrcknrgwmummxzpvwyvv.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY = (from Supabase → Settings → API)
+SUPABASE_SERVICE_ROLE_KEY     = [get from Supabase dashboard → Settings → API → service_role]
+NEXT_PUBLIC_APP_URL           = https://ft-app-beta.vercel.app
+CRON_SECRET                   = ft-cron-june2026</pre>
+
+    <h3>Supabase migration</h3>
+    <pre>alter table waitlist add column if not exists stock_interest text;
+alter table waitlist add column if not exists wish_text text;
+alter table waitlist add column if not exists phone text;</pre>
+  </section>
+
+  <!-- ═══ DECISIONS ═══ -->
+  <section class="section" id="decisions">
+    <div class="section-eyebrow">Decision log</div>
+    <h1>Key decisions made</h1>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Decision</th><th>What we chose</th><th>Why</th></tr>
+        <tr><td>Number of campaign questions</td><td>5 (not 3, not 7)</td><td>3 feels thin, 7 feels like homework. 5 is memorable, completable, covers the full journey.</td></tr>
+        <tr><td>Sample page stock</td><td>Data Patterns (NSE defence electronics)</td><td>Specific enough to be real, sector has strong narrative (indigenization), not too well-known to feel generic</td></tr>
+        <tr><td>Sample page structure</td><td>Horizontal scroll, 9 panels</td><td>Feels like a story not a scroll. One idea per swipe. Can't skip ahead without choosing to.</td></tr>
+        <tr><td>Sample narrative arc</td><td>Chaos → Intervention → 5Q → Payoff (same headline defanged)</td><td>Circular structure makes the product demo feel like a transformation, not a tour</td></tr>
+        <tr><td>Animated shorts approach</td><td>HTML/CSS animations + voice audio, screen-recorded</td><td>Zero cost, fully on-brand, instantly iterable, same design language as product</td></tr>
+        <tr><td>Shorts — generic vs specific stock</td><td>Generic ("your stock")</td><td>Viewer projects their own holding onto it. More powerful than a specific company.</td></tr>
+        <tr><td>WishesBar framing</td><td>"5 questions. Most people can't answer the last one."</td><td>Echoes the campaign directly. Every rotating quote sounds like evidence for the hook.</td></tr>
+        <tr><td>Quiet days positioning</td><td>"Quiet days are a feature"</td><td>Counter-programs against every engagement-optimised fintech. Silence is the differentiator.</td></tr>
+        <tr><td>Q5 design</td><td>Dark ink card, larger Q number, "YOUR TURN" badge</td><td>Visual weight signals this is the hardest and most important. Everything else leads here.</td></tr>
+        <tr><td>Price meter anchors</td><td>3 markers: 5yr avg + sector peers + today</td><td>Context without 3 anchors means a marker at 72% means nothing. With anchors it tells a story.</td></tr>
+      </table>
+    </div>
+
+    <p class="updated">Last updated: May 29, 2026 · ft-app-beta.vercel.app/brain.html</p>
+  </section>
+
+</div>
+
+<script>
+  // Active sidebar link on scroll
+  const sections = document.querySelectorAll('.section');
+  const links = document.querySelectorAll('.sb-link');
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        links.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
