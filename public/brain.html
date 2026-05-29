@@ -257,6 +257,7 @@
   <div class="sb-section">
     <div class="sb-section-label">Marketing</div>
     <a class="sb-link" href="#price-analysis"><span class="dot"></span>Q4 price analysis spec</a>
+    <a class="sb-link" href="#tech-exit"><span class="dot"></span>Technical exit framework</a>
     <a class="sb-link" href="#shorts"><span class="dot"></span>7 animated shorts</a>
     <a class="sb-link" href="#formats"><span class="dot"></span>Content formats</a>
     <a class="sb-link" href="#timeline"><span class="dot"></span>Launch timeline</a>
@@ -720,6 +721,136 @@ landing-us-cta     — US landing page, bottom CTA</pre>
     </ul>
 
     <p class="updated">This spec was captured after reviewing Short 3 (The Price Check) where the resolution "Price stretched vs 5yr history and sector peers" was correctly identified as incomplete without growth-adjusted context, execution demand, and time horizon calibration.</p>
+  </section>
+
+
+  <!-- ═══ TECHNICAL EXIT ═══ -->
+  <section class="section" id="tech-exit">
+    <div class="section-eyebrow">Product Idea — High Priority</div>
+    <h1>The technical exit framework</h1>
+    <p class="lead">When the reason is intact but the price has run ahead of the proof, FT watches the technical structure for the user. When the market starts correcting the overvaluation — first break, confirmed by volume — FT tells them. Until then: silence.</p>
+
+    <div class="callout">
+      <p>"Reason intact. Price stretched. We don't tell you to sell. We watch the structure. When it breaks on volume — we find you. Until then, go back to sleep."</p>
+    </div>
+
+    <h3>The problem this solves</h3>
+    <p>The most common and painful investor experience: own something good, it has run 50-60%, fundamentals still intact, but uneasy about the valuation. Current options are all bad:</p>
+    <ul class="checklist">
+      <li><span class="check" style="color:var(--rust)">✗</span> Sell now on price anxiety — often premature, they sell and watch it go up another 30%</li>
+      <li><span class="check" style="color:var(--rust)">✗</span> Hold and do nothing — no framework, pure hope, creates daily anxiety</li>
+      <li><span class="check" style="color:var(--rust)">✗</span> Average down if it corrects — no system, just gut reaction</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> <strong>Stay in until the technical structure breaks, then exit with confirmation</strong> — this is what FT enables</li>
+    </ul>
+
+    <h3>The three-signal framework</h3>
+    <p>FT checks three things simultaneously once a user is in a "reason intact, price stretched" situation:</p>
+
+    <div class="card-grid">
+      <div class="card" style="border-top:3px solid var(--sage)">
+        <div class="card-label">Signal 1 — Fundamental</div>
+        <div class="card-val">Did the reason change?</div>
+        <div class="card-sub">Already built. Tracked every morning. Reason breaks → fundamental exit signal regardless of price or technical structure.</div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--amber)">
+        <div class="card-label">Signal 2 — Valuation</div>
+        <div class="card-val">Has price run ahead of proof?</div>
+        <div class="card-sub">Price vs story divergence. Partially built in morning card. Needs to connect explicitly to Q4 chapter and user's time horizon.</div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--coral)">
+        <div class="card-label">Signal 3 — Technical</div>
+        <div class="card-val">Has the structure broken?</div>
+        <div class="card-sub">Not yet built. Key support level + volume confirmation. Only triggers after Signal 2 is active (price already stretched).</div>
+      </div>
+    </div>
+
+    <div class="callout sage">
+      <p>Critical design rule: Signal 3 only activates when Signal 2 is already true. A technical break during a market-wide correction that has nothing to do with the fundamental reason should not trigger the alert. Standard charting tools cannot make this distinction. FT can — and this is the moat.</p>
+    </div>
+
+    <h3>The proprietary algo — what to build</h3>
+    <p>Do not use standard RSI/MACD/moving averages. Those are available everywhere and add nothing. Build a system that combines:</p>
+    <ul class="checklist">
+      <li><span class="check">→</span> <strong>Support level identification</strong> — recent swing lows, volume-weighted price floors, previous breakout levels. Set relative to the stock's own structure, not arbitrary percentages.</li>
+      <li><span class="check">→</span> <strong>Volume confirmation</strong> — a price break on below-average volume is noise. A price break on 2x+ average volume is the market making a statement. Only the latter triggers the alert.</li>
+      <li><span class="check">→</span> <strong>Volatility calibration</strong> — a 3% move means nothing for a volatile mid-cap but is significant for a stable large-cap. Thresholds set relative to the stock's own historical volatility (ATR).</li>
+      <li><span class="check">→</span> <strong>Trend structure check</strong> — is the stock in an uptrend (higher highs, higher lows)? A break below the most recent higher low is the technical definition of "uptrend broken." Simple. Unambiguous.</li>
+      <li><span class="check">→</span> <strong>Fundamental filter</strong> — only flag if the technical break is NOT during a broad market correction. If Nifty is down 3% and the stock is down 4%, that is market noise. If Nifty is flat and the stock is down 4% on volume — that is a signal.</li>
+    </ul>
+
+    <h3>The morning card UX — watching levels</h3>
+    <p>When a user is in "reason intact, price stretched" mode, the morning card gets a new persistent element: the watching levels bar. It appears every morning regardless of whether there is news — which is itself a signal (silence = structure still holding).</p>
+
+    <div class="card" style="background:var(--ink);color:var(--cream);border-color:rgba(246,243,236,.1);margin:20px 0">
+      <div style="font-family:var(--mono);font-size:9px;color:rgba(246,243,236,.35);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">WATCHING — PRICE STRUCTURE</div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--cream);margin-bottom:2px">KEY SUPPORT — ₹1,680</div>
+          <div style="font-size:11px;color:rgba(246,243,236,.4)">Recent swing low · 14-day avg volume baseline</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--sage)"></div>
+          <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--sage)">HOLDING</span>
+        </div>
+      </div>
+
+      <div style="background:rgba(246,243,236,.05);border-radius:10px;padding:10px 12px;margin-bottom:10px">
+        <div style="font-size:12px;color:rgba(246,243,236,.6);line-height:1.5">Today: ₹1,847 · Support at ₹1,680 · Distance: +9.9%<br>Volume: 0.8x average — below threshold for a break signal</div>
+      </div>
+
+      <div style="font-size:12px;color:rgba(246,243,236,.4);line-height:1.5;font-style:italic">Structure intact. If this closes below ₹1,680 on 2x+ average volume, we will find you immediately. Until then — reason holding, structure holding.</div>
+    </div>
+
+    <p>The morning card has three possible states for this block:</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>State</th><th>What it shows</th><th>What it means</th></tr>
+        <tr>
+          <td><span class="badge live"><span class="bdot"></span>Structure holding</span></td>
+          <td>"₹1,680 support. Distance: +9.9%. Volume: 0.8x. Holding."</td>
+          <td>Nothing to do. Go back to sleep. Card appears but requires no action.</td>
+        </tr>
+        <tr>
+          <td><span class="badge pending"><span class="bdot"></span>Structure testing</span></td>
+          <td>"Approaching support at ₹1,680. Volume picking up. Worth watching today."</td>
+          <td>Not a break yet. Heads-up only. No action required but worth being aware.</td>
+        </tr>
+        <tr>
+          <td><span class="badge critical"><span class="bdot"></span>Structure broken</span></td>
+          <td>"Closed below ₹1,680 on 2.3x average volume. First technical break confirmed."</td>
+          <td>The market is correcting the overvaluation. Reason still intact — but the technical case for staying in has weakened. Your time horizon decides the rest.</td>
+        </tr>
+      </table>
+    </div>
+
+    <h3>What FT never says</h3>
+    <div class="callout">
+      <p>FT never says "sell." FT says "the technical structure has broken." The distinction is the entire brand. The break is a fact. What the user does with it is their decision. This keeps FT on the right side of SEBI, on the right side of the brand promise, and — most importantly — on the right side of the investor's autonomy.</p>
+    </div>
+
+    <h3>Why this is a moat, not just a feature</h3>
+    <ul class="checklist">
+      <li><span class="check">→</span> <strong>No screener can do this</strong> — Tickertape and Screener show technical indicators but cannot connect them to a specific user's saved reason and valuation context</li>
+      <li><span class="check">→</span> <strong>No finfluencer can do this</strong> — they tell you what to do, they don't watch your specific setup and alert you when something changes</li>
+      <li><span class="check">→</span> <strong>Creates daily engagement without anxiety</strong> — "structure holding" is a calming daily confirmation, not a fear-driven alert. Different emotional register entirely.</li>
+      <li><span class="check">→</span> <strong>Retention driver</strong> — once a user has a "watching levels" setup active, they have a reason to open FT every morning that is not anxiety-driven. That is a very different kind of DAU.</li>
+      <li><span class="check">→</span> <strong>Proprietary data flywheel</strong> — as users interact with break alerts (did they act? did the stock recover?), FT learns which break signals are reliable for which stock types. The algo improves with usage.</li>
+    </ul>
+
+    <h3>Build sequence</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Phase</th><th>What to build</th><th>Status</th></tr>
+        <tr><td><strong>Now</strong></td><td>Update short-3 with three-signal narrative. Plant the concept in marketing before the product exists.</td><td><span class="badge live"><span class="bdot"></span>Done</span></td></tr>
+        <tr><td><strong>Beta</strong></td><td>Add "watching levels" block to morning card. Hardcode support levels initially — manual calculation by the FT team for launch stocks.</td><td><span class="badge todo"><span class="bdot"></span>Not built</span></td></tr>
+        <tr><td><strong>V2</strong></td><td>Automate support level identification using swing lows + ATR. Add volume confirmation logic. Build the fundamental filter (exclude market-wide corrections).</td><td><span class="badge todo"><span class="bdot"></span>Not built</span></td></tr>
+        <tr><td><strong>V3</strong></td><td>Proprietary algo: reason status + price vs story + technical structure combined into exit readiness signal. Learning from user behaviour on break alerts.</td><td><span class="badge todo"><span class="bdot"></span>Not built</span></td></tr>
+      </table>
+    </div>
+
+    <p class="updated">Captured May 29, 2026 after reviewing short-3 (The Price Check) and the tension between "price is stretched" and "reason is intact." The technical exit framework resolves this tension in a way that is honest, useful, differentiated, and consistent with the FT brand promise.</p>
   </section>
 
   <!-- ═══ SHORTS ═══ -->
