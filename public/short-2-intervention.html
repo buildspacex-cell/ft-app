@@ -153,6 +153,8 @@
   .stop-q.in { opacity: 1; }
   .stop-q span { color: var(--cream); }
 
+  /* ── Q cards individual ── */
+  .q-item.in { opacity: 1 !important; transform: scale(1) !important; }
   /* ── S5: 5 questions ── */
   .q-item {
     display: flex; align-items: flex-start; gap: 14px;
@@ -323,20 +325,59 @@
   <div class="stop-q" id="sq">Can you answer <span>5 questions</span> about this company?</div>
 </div>
 
-<!-- S5: The 5 questions -->
-<div class="scene mid" id="s5">
-  <div>
-  <div class="eyebrow" id="e5">Before any buy decision</div>
-  <div class="q-item" id="q1"><span class="q-n">Q1</span><span class="q-t">What does this company actually do?</span></div>
-  <div class="q-item" id="q2"><span class="q-n">Q2</span><span class="q-t">How does it make money — and is the cash arriving?</span></div>
-  <div class="q-item" id="q3"><span class="q-n">Q3</span><span class="q-t">Can the story be trusted?</span></div>
-  <div class="q-item" id="q4"><span class="q-n">Q4</span><span class="q-t">Is the price fair — or already priced in?</span></div>
-  <div class="q-item q5" id="q5"><span class="q-n">Q5</span><span class="q-t">What is your one reason for buying — and will you know if it changes?</span></div>
+<!-- S5: Q1 -->
+<div class="scene center" id="s5">
+  <div style="width:100%;max-width:340px">
+    <div class="q-item" id="q1card" style="opacity:0;transform:scale(.94);transition:opacity .35s ease,transform .35s ease;background:rgba(246,243,236,.06);border-color:rgba(246,243,236,.15);padding:20px 22px">
+      <span class="q-n" style="font-size:18px;color:var(--coral)">Q1</span>
+      <span class="q-t" style="font-size:clamp(16px,4.8vw,22px);color:var(--cream)">What does this company actually do?</span>
+    </div>
   </div>
 </div>
 
-<!-- S6: FT answers all 5 -->
-<div class="scene mid" id="s6">
+<!-- S6: Q2 -->
+<div class="scene center" id="s6">
+  <div style="width:100%;max-width:340px">
+    <div class="q-item" id="q2card" style="opacity:0;transform:scale(.94);transition:opacity .35s ease,transform .35s ease;background:rgba(246,243,236,.06);border-color:rgba(246,243,236,.15);padding:20px 22px">
+      <span class="q-n" style="font-size:18px;color:var(--coral)">Q2</span>
+      <span class="q-t" style="font-size:clamp(16px,4.8vw,22px);color:var(--cream)">How does it make money — and is the cash arriving?</span>
+    </div>
+  </div>
+</div>
+
+<!-- S7: Q3 -->
+<div class="scene center" id="s7">
+  <div style="width:100%;max-width:340px">
+    <div class="q-item" id="q3card" style="opacity:0;transform:scale(.94);transition:opacity .35s ease,transform .35s ease;background:rgba(246,243,236,.06);border-color:rgba(246,243,236,.15);padding:20px 22px">
+      <span class="q-n" style="font-size:18px;color:var(--coral)">Q3</span>
+      <span class="q-t" style="font-size:clamp(16px,4.8vw,22px);color:var(--cream)">Can the story be trusted?</span>
+    </div>
+  </div>
+</div>
+
+<!-- S8: Q4 -->
+<div class="scene center" id="s8">
+  <div style="width:100%;max-width:340px">
+    <div class="q-item" id="q4card" style="opacity:0;transform:scale(.94);transition:opacity .35s ease,transform .35s ease;background:rgba(246,243,236,.06);border-color:rgba(246,243,236,.15);padding:20px 22px">
+      <span class="q-n" style="font-size:18px;color:var(--coral)">Q4</span>
+      <span class="q-t" style="font-size:clamp(16px,4.8vw,22px);color:var(--cream)">Is the price already too high?</span>
+    </div>
+  </div>
+</div>
+
+<!-- S9: Q5 -->
+<div class="scene center" id="s9">
+  <div style="width:100%;max-width:340px">
+    <div class="q-item" id="q5card" style="opacity:0;transform:scale(.94);transition:opacity .35s ease,transform .35s ease;background:var(--coral);border-color:var(--coral);padding:20px 22px">
+      <span class="q-n" style="font-size:18px;color:#fff">Q5</span>
+      <span class="q-t" style="font-size:clamp(15px,4.5vw,20px);color:#fff">Why do you own this — and will you know if that changes?</span>
+    </div>
+    <p style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(246,243,236,.4);text-align:center;margin-top:16px">Most people can answer Q1.<br>Almost nobody can answer Q5.</p>
+  </div>
+</div>
+
+<!-- S10: FT answers all 5 -->
+<div class="scene mid" id="s10">
   <div>
   <div class="ft-answer-label" id="fal">Fundamentally True</div>
   <div class="ft-big" id="fb">We answer<br>all <span>5.</span><br>Plain English.</div>
@@ -359,10 +400,14 @@
 const S = [
   ['s1', 10000, ()=>{ a('e1',200); a('b1',600); a('b2',1800); a('b3',3000); a('b4',5000); }],
   ['s2',  7000, ()=>{ a('e2',200); a('tc',400); [1,2,3,4,5,6,7,8,9,10].forEach((n,i)=>a('sp'+n,600+i*100,'in')); a('pn',2000); }],
-  ['s3',  7000, ()=>{ a('ib',200); a('is',1200); }],
-  ['s4',  4000, ()=>{ a('sl2',200); a('sq',1400); }],
-  ['s5',  6000, ()=>{ a('e5',200); a('q1',400); a('q2',1000); a('q3',1700); a('q4',2400); a('q5',3200); }],
-  ['s6',  5500, ()=>{ a('fal',200); a('fb',600); a('fs',1400); a('fc',2200); a('rb',4000,'show'); }],
+  ['s3',  4000, ()=>{ a('ib',200); a('is',1000); }],
+  ['s4',  3000, ()=>{ a('sl2',200); }],
+  ['s5',  3000, ()=>{ a('q1card',100); }],
+  ['s6',  3000, ()=>{ a('q2card',100); }],
+  ['s7',  3000, ()=>{ a('q3card',100); }],
+  ['s8',  2000, ()=>{ a('q4card',100); }],
+  ['s9',  3000, ()=>{ a('q5card',100); }],
+  ['s10', 1500, ()=>{ a('fal',100); a('fb',300); a('fs',700); a('fc',1000); a('rb',1200,'show'); }],
 ];
 const total = S.reduce((s,[,d])=>s+d,0);
 let T=[], el=0;
