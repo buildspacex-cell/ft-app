@@ -256,6 +256,7 @@
 
   <div class="sb-section">
     <div class="sb-section-label">Marketing</div>
+    <a class="sb-link" href="#price-analysis"><span class="dot"></span>Q4 price analysis spec</a>
     <a class="sb-link" href="#shorts"><span class="dot"></span>7 animated shorts</a>
     <a class="sb-link" href="#formats"><span class="dot"></span>Content formats</a>
     <a class="sb-link" href="#timeline"><span class="dot"></span>Launch timeline</a>
@@ -637,6 +638,88 @@ landing-us-cta     — US landing page, bottom CTA</pre>
         <tr><td>9</td><td>CTA</td><td>"Quiet days are a feature. Go back to sleep." → Get early access.</td><td>—</td></tr>
       </table>
     </div>
+  </section>
+
+
+  <!-- ═══ PRICE ANALYSIS ═══ -->
+  <section class="section" id="price-analysis">
+    <div class="section-eyebrow">Product Spec</div>
+    <h1>Q4 — Price analysis framework</h1>
+    <p class="lead">The question "Is the price fair?" needs six distinct lenses. The current sample page shows lenses 1 and 2 only. This is the full spec for what Q4 should cover when the product is fully built.</p>
+
+    <div class="callout amber">
+      <p>Current state: gradient meter with 3 anchors (5yr avg, sector peers, today). Missing: growth-adjusted valuation, story vs price divergence, execution demand in plain English, time horizon calibration.</p>
+    </div>
+
+    <h3>Lens 1 — Historical valuation range</h3>
+    <p>Where does today's P/E, P/S, and EV/EBITDA sit versus the stock's own 3-5 year range? Is it at the expensive end of its own history or the cheap end? This anchors the price against the company's own past — independent of what the sector is doing.</p>
+    <div class="card-grid">
+      <div class="card"><div class="card-label">Metrics</div><div class="card-val">P/E, P/S, EV/EBITDA</div><div class="card-sub">Shown on a range bar: 3yr low → median → 3yr high → today</div></div>
+      <div class="card"><div class="card-label">Plain English</div><div class="card-val">"Expensive end of own history"</div><div class="card-sub">"The last time it was this expensive was during the 2021 bull run. It corrected 35% after."</div></div>
+    </div>
+
+    <h3>Lens 2 — Sector peer comparison</h3>
+    <p>Same metrics versus direct competitors — not the broad market. A defence electronics company is compared to other defence electronics companies. A private sector bank is compared to other private sector banks. Sector re-ratings matter: if the whole sector has re-rated upward, being expensive vs your own history may simply mean the sector premium has expanded.</p>
+    <div class="callout sage">
+      <p>Key insight from short-3: if the entire defence sector has re-rated, Data Patterns being expensive vs its own history may just be a sector-wide shift — not a company-specific bubble. The peer comparison separates these two explanations.</p>
+    </div>
+
+    <h3>Lens 3 — Growth-adjusted valuation (PEG)</h3>
+    <p>A stock at 40x earnings looks expensive until you see it growing at 45%. PEG ratio (P/E divided by earnings growth rate) gives context. Below 1 is generally considered fair for a growing company. Above 2 is demanding. This lens prevents the mistake of calling a fast grower expensive just because its P/E is high.</p>
+    <div class="card-grid">
+      <div class="card"><div class="card-label">Calculation</div><div class="card-val">PEG = P/E / EPS growth %</div><div class="card-sub">Use forward estimates, not trailing</div></div>
+      <div class="card"><div class="card-label">Plain English read</div><div class="card-val">"Fair for the growth rate"</div><div class="card-sub">"At 38x earnings with 40% earnings growth, you are paying roughly in line with what you are getting."</div></div>
+    </div>
+
+    <h3>Lens 4 — Story vs price divergence</h3>
+    <p>Has the price moved ahead of the actual evidence? This is tracked as the gap between price movement and proof. A defence sector headline may support the theme for Data Patterns — but if Data Patterns is not directly named in the order, the price moving 4% on that headline is the market pricing in something that has not been confirmed yet. That gap is a specific signal worth calling out.</p>
+    <div class="card-grid">
+      <div class="card"><div class="card-label">Signal</div><div class="card-val">Price moved on theme</div><div class="card-sub">Story has not confirmed yet. Worth watching — not worth panicking.</div></div>
+      <div class="card"><div class="card-label">Signal</div><div class="card-val">Story confirmed, price flat</div><div class="card-sub">Market has not priced it in yet. The reason got stronger without the price reflecting it.</div></div>
+    </div>
+    <p>This is already implemented in the morning card as "Price vs Story" — it shows the price change since last quarter alongside the reason status. The Q4 chapter should connect explicitly to this.</p>
+
+    <h3>Lens 5 — What execution the price demands</h3>
+    <p>This is the most useful lens for a retail investor. Convert the valuation into a plain English expectation. At the current price, what does the market need to happen for the price to be justified? This is reverse DCF thinking without the jargon.</p>
+    <div class="callout">
+      <p>Example: "At this price, the market is assuming revenue grows at 28% a year for the next 4 years with margins holding above 30%. The last 3 years averaged 31% revenue growth and 34% margins — so this is achievable but leaves no room for a slow quarter."</p>
+    </div>
+    <p>The plain English version: "The price is not wrong — but it leaves very little forgiveness. One missed quarter and the price has to find a new level."</p>
+
+    <h3>Lens 6 — Time horizon calibration</h3>
+    <p>A stretched valuation over 12-18 months is a real risk. The same valuation over 5 years may be irrelevant if the business keeps compounding. Price analysis without time horizon is incomplete. FT should ask: what is your horizon? And then qualify every price read against it.</p>
+    <div class="card-grid">
+      <div class="card" style="border-top: 3px solid var(--sage)"><div class="card-label">5+ year horizon</div><div class="card-val">Valuation premium may compress naturally</div><div class="card-sub">If the business keeps compounding, today's expensive price becomes tomorrow's cheap entry.</div></div>
+      <div class="card" style="border-top: 3px solid var(--amber)"><div class="card-label">12-18 month horizon</div><div class="card-val">Stretched valuation is a real risk</div><div class="card-sub">The market can stay wrong about price for years — but 12-18 months is not long enough to wait it out.</div></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3>Current implementation vs full spec</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Lens</th><th>Current sample page</th><th>Full product</th></tr>
+        <tr><td>1. Historical range</td><td><span class="badge live"><span class="bdot"></span>Partial — gradient meter with 5yr avg marker</span></td><td>Range bar showing 3yr low / median / 3yr high / today for P/E, P/S, EV/EBITDA</td></tr>
+        <tr><td>2. Sector peers</td><td><span class="badge live"><span class="bdot"></span>Partial — single peer marker on gradient</span></td><td>Named peer comparison table with sector re-rating context</td></tr>
+        <tr><td>3. Growth-adjusted (PEG)</td><td><span class="badge todo"><span class="bdot"></span>Not built</span></td><td>PEG ratio with plain English read</td></tr>
+        <tr><td>4. Story vs price divergence</td><td><span class="badge live"><span class="bdot"></span>In morning card</span></td><td>Connect Q4 chapter explicitly to morning card price vs story</td></tr>
+        <tr><td>5. Execution demand</td><td><span class="badge todo"><span class="bdot"></span>Not built</span></td><td>Plain English reverse DCF — "market needs X to happen"</td></tr>
+        <tr><td>6. Time horizon calibration</td><td><span class="badge live"><span class="bdot"></span>In short-3 resolution</span></td><td>Ask user their horizon during onboarding, qualify all price reads against it</td></tr>
+      </table>
+    </div>
+
+    <h3>What the Q4 panel in the sample page should ultimately show</h3>
+    <ul class="checklist">
+      <li><span class="check">→</span> Gradient meter with all 3 anchors (already built)</li>
+      <li><span class="check">→</span> P/E, P/S, EV/EBITDA range bars — 3yr low to today</li>
+      <li><span class="check">→</span> Named peer comparison — "vs Zen Technologies, vs Bharat Electronics"</li>
+      <li><span class="check">→</span> PEG ratio with one-line plain English read</li>
+      <li><span class="check">→</span> "What the price demands" card — plain English execution expectation</li>
+      <li><span class="check">→</span> Time horizon qualifier — "At a 5-year horizon this reads differently than at 18 months"</li>
+      <li><span class="check">→</span> Story vs price divergence link — "The morning card tracks whether price is moving ahead of proof"</li>
+    </ul>
+
+    <p class="updated">This spec was captured after reviewing Short 3 (The Price Check) where the resolution "Price stretched vs 5yr history and sector peers" was correctly identified as incomplete without growth-adjusted context, execution demand, and time horizon calibration.</p>
   </section>
 
   <!-- ═══ SHORTS ═══ -->
