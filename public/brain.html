@@ -261,6 +261,7 @@
     <a class="sb-link" href="#shorts"><span class="dot"></span>7 animated shorts</a>
     <a class="sb-link" href="#formats"><span class="dot"></span>Content formats</a>
     <a class="sb-link" href="#timeline"><span class="dot"></span>Launch timeline</a>
+    <a class="sb-link" href="#growth-plan"><span class="dot"></span>Road to 2,000 signups</a>
   </div>
 
   <div class="sb-section">
@@ -968,6 +969,184 @@ landing-us-cta     — US landing page, bottom CTA</pre>
       </table>
     </div>
   </section>
+
+  <section class="section" id="growth-plan">
+    <div class="section-eyebrow">Growth Plan</div>
+    <h1>The road to 2,000 early-access signups</h1>
+    <p class="lead">A single, focused goal: 2,000 verified email signups for the June 24th first cohort. This plan works backwards from that number — what each asset must do, what each channel can realistically deliver, and what we build or fix before spending a rupee or an hour on distribution.</p>
+
+    <div class="callout">
+      <p>Target: 2,000 signups by June 24th. Working window: ~4 weeks. Required run-rate: roughly 70-80 signups per day on average, front-loaded lighter and back-loaded heavier as content compounds.</p>
+    </div>
+
+    <h2>The conversion math</h2>
+    <p>Every plan that hits a number is really a plan about a funnel. Here is the funnel we are solving for, with conservative assumptions. If the real rates beat these, we hit the goal earlier; if they lag, we know exactly which stage to fix.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Funnel stage</th><th>Assumed rate</th><th>Volume needed for 2,000</th></tr>
+        <tr><td>Content views (Reels, posts, forwards)</td><td>—</td><td>~200,000 views</td></tr>
+        <tr><td>View → landing page visit</td><td>2.5%</td><td>~20,000 visits</td></tr>
+        <tr><td>Landing visit → sample page / engaged</td><td>35%</td><td>~7,000 engaged</td></tr>
+        <tr><td>Engaged → signup</td><td>28%</td><td>~2,000 signups</td></tr>
+      </table>
+    </div>
+
+    <div class="callout amber">
+      <p>The two numbers we do not control are total views and the view-to-visit rate. The two we fully control are landing engagement and signup conversion. That is why asset readiness comes first — a 28% engaged-to-signup rate is only achievable if the landing page and sample page are doing their job.</p>
+    </div>
+
+    <h2>Asset readiness audit — fix before we distribute</h2>
+    <p>No distribution begins until these are true. Driving traffic to a leaky funnel wastes the one thing we cannot buy back: the first impression with a warm audience.</p>
+
+    <h3>Landing page — readiness</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Item</th><th>Status</th><th>Action</th></tr>
+        <tr><td>Hero, six moments, promises, FAQ, waitlist flow</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
+        <tr><td>Waitlist actually writes to Supabase</td><td><span class="badge critical"><span class="bdot"></span>Blocked</span></td><td>Set Vercel env vars + re-enable API call + run migration. This is the single most important pre-launch task — right now signups are silently discarded.</td></tr>
+        <tr><td>Geo + cookie routing (India / US)</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
+        <tr><td>Free-text stock capture</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
+        <tr><td>Thank-you / confirmation email on signup</td><td><span class="badge todo"><span class="bdot"></span>Not built</span></td><td>Wire a magic-link confirmation email so a signup feels real and the email is verified. Without it, signups are unconfirmed and feel like a void.</td></tr>
+        <tr><td>Social share / OG image</td><td><span class="badge pending"><span class="bdot"></span>Check</span></td><td>Verify the link preview card looks right when pasted in WhatsApp, LinkedIn, X. A broken preview kills forward rates.</td></tr>
+        <tr><td>Analytics events (visit, sample open, signup)</td><td><span class="badge pending"><span class="bdot"></span>Check</span></td><td>Confirm PostHog fires on each funnel step so we can see where people drop.</td></tr>
+      </table>
+    </div>
+
+    <h3>Sample page — readiness</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Item</th><th>Status</th><th>Action</th></tr>
+        <tr><td>9-panel horizontal story, fully interactive</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
+        <tr><td>Q4 "what FT does from here" momentum card</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
+        <tr><td>Signup CTA at the end of the sample (panel 9)</td><td><span class="badge pending"><span class="bdot"></span>Check</span></td><td>The sample is our highest-intent surface — anyone who finishes it is sold. Confirm panel 9 links straight to the waitlist with the email field, not just back to the landing top.</td></tr>
+        <tr><td>Mobile swipe performance</td><td><span class="badge pending"><span class="bdot"></span>Check</span></td><td>Most traffic will be mobile from Reels. Test the horizontal swipe on a real phone end to end.</td></tr>
+        <tr><td>Mid-sample soft capture</td><td><span class="badge todo"><span class="bdot"></span>Consider</span></td><td>Optional: a gentle email capture after panel 6 ("want the rest sent to you?") for people who do not finish. Only if drop-off data shows it is needed.</td></tr>
+      </table>
+    </div>
+
+    <h3>Shorts — readiness</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Item</th><th>Status</th><th>Action</th></tr>
+        <tr><td>All 7 shorts built, audio synced, phone frames</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
+        <tr><td>Screen-recorded vertical exports (MP4)</td><td><span class="badge todo"><span class="bdot"></span>Not done</span></td><td>Record each short as a clean vertical MP4. This is the actual postable asset — the HTML is the master, the MP4 is what ships.</td></tr>
+        <tr><td>Captions / subtitles burned in</td><td><span class="badge todo"><span class="bdot"></span>Not done</span></td><td>80%+ of Reels are watched muted. Burn in captions or the voice is wasted. Highest-leverage single fix for view-to-visit rate.</td></tr>
+        <tr><td>End-card CTA frame consistency</td><td><span class="badge pending"><span class="bdot"></span>Check</span></td><td>Every short must end on the same clear "ft-app-beta.vercel.app — early access" frame so the destination is unmissable.</td></tr>
+        <tr><td>Hook test — first 2 seconds</td><td><span class="badge pending"><span class="bdot"></span>Check</span></td><td>The first 2 seconds decide everything. Confirm each short opens on its strongest line, not a slow build.</td></tr>
+      </table>
+    </div>
+
+    <div class="callout sage">
+      <p>Readiness verdict: the creative is done. The gaps are operational — make the waitlist actually save and confirm, export and caption the shorts, and verify the CTA paths. None of this is large work; all of it is blocking. Estimate: 2-3 focused days before any distribution.</p>
+    </div>
+
+    <h2>Channel strategy — where 2,000 comes from</h2>
+    <p>We do not spread thin. We concentrate on channels where the FT story compounds — where one good piece keeps working after we post it. Allocation of the 2,000 target across channels:</p>
+
+    <div class="card-grid">
+      <div class="card" style="border-top:3px solid var(--coral)">
+        <div class="card-label">Channel 1 — Target ~800</div>
+        <div class="card-val">WhatsApp + direct network</div>
+        <div class="card-sub">Highest conversion, lowest reach. The 5 questions and the sample link are built to be forwarded. Seed into investing groups, alumni groups, founder circles. Warm intros convert at 10-15%.</div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--amber)">
+        <div class="card-label">Channel 2 — Target ~700</div>
+        <div class="card-val">Instagram + YouTube Shorts</div>
+        <div class="card-sub">The 7 shorts are the engine here. Highest reach, broad top of funnel. Post 3-4x per week, double down on whichever short outperforms.</div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--sage)">
+        <div class="card-label">Channel 3 — Target ~350</div>
+        <div class="card-val">LinkedIn</div>
+        <div class="card-sub">The thoughtful-investor crowd. Long-form posts built around the 5 questions and "own the stock not the ticker." Lower volume, higher quality, strong for the pre-buy campaign.</div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--ink)">
+        <div class="card-label">Channel 4 — Target ~150</div>
+        <div class="card-val">Reddit + niche communities</div>
+        <div class="card-sub">r/IndianStreetBets, r/IndiaInvestments and similar. Pure value posts, no selling. The sample page does the convincing. High skepticism, high payoff if done with genuine usefulness.</div>
+      </div>
+    </div>
+
+    <h2>The two campaign tracks, applied</h2>
+    <p>The two campaigns from the campaigns section map cleanly onto the funnel. Pre-buy attracts new investors; post-buy converts existing ones. We run both in parallel and let the data tell us which audience converts cheaper.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Track A — Pre-buy</div>
+        <div class="card-val">"5 questions before you invest"</div>
+        <div class="card-sub">Shorts 2 (Before You Buy) and 5 (Finfluencer). Hook: most people can answer Q1, almost nobody can answer Q5. Lands well on LinkedIn and Instagram.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Track B — Post-buy</div>
+        <div class="card-val">"5 questions about a stock you own"</div>
+        <div class="card-sub">Shorts 1 (Chaos), 3 (Price Check), 4 (Results Day), 6 (Quiet Morning), 7 (Exit Decision). The recognition is instant. Lands well in WhatsApp and Reddit.</div>
+      </div>
+    </div>
+
+    <h2>4-week execution calendar</h2>
+    <p>Front-loaded readiness, then escalating distribution as content compounds and we learn which shorts and posts convert. Each week has a signup target that ladders to 2,000.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Week</th><th>Focus</th><th>Actions</th><th>Cumulative target</th></tr>
+        <tr>
+          <td><strong>Week 0</strong><br><span style="color:var(--muted);font-size:12px">Readiness</span></td>
+          <td>Fix the funnel</td>
+          <td>Wire waitlist to Supabase + confirmation email. Export and caption all 7 shorts. Verify sample CTA, OG image, PostHog events. Soft-launch to 20-30 closest contacts as a live test.</td>
+          <td>~50 (test signups)</td>
+        </tr>
+        <tr>
+          <td><strong>Week 1</strong><br><span style="color:var(--muted);font-size:12px">Seed</span></td>
+          <td>WhatsApp + warm network</td>
+          <td>Share the sample link and the 5 questions into personal network and 5-8 investing groups. Post Short 1 (Chaos) and Short 2 (Before You Buy). One LinkedIn long-form on "own the stock not the ticker." Reply to every comment.</td>
+          <td>~350</td>
+        </tr>
+        <tr>
+          <td><strong>Week 2</strong><br><span style="color:var(--muted);font-size:12px">Amplify</span></td>
+          <td>Shorts engine on</td>
+          <td>Post Shorts 3 (Price Check), 4 (Results Day), 5 (Finfluencer) across Instagram + YouTube. Reddit value post with sample link. Second LinkedIn post. Re-share top performer from Week 1. Identify the winning short.</td>
+          <td>~900</td>
+        </tr>
+        <tr>
+          <td><strong>Week 3</strong><br><span style="color:var(--muted);font-size:12px">Double down</span></td>
+          <td>Pour into what works</td>
+          <td>Post Shorts 6 (Quiet Morning) and 7 (Exit Decision). Re-cut and re-post the best-performing short with new hooks. Second wave of WhatsApp forwards with social proof ("1,000 already signed up"). Consider a small paid boost behind the top short.</td>
+          <td>~1,500</td>
+        </tr>
+        <tr>
+          <td><strong>Week 4</strong><br><span style="color:var(--muted);font-size:12px">Launch push</span></td>
+          <td>Urgency + close</td>
+          <td>"Cohort opens June 24th — last chance for the first batch" across all channels. Countdown posts. Re-share the full shorts library. Final WhatsApp push with the strongest social proof number. Personal asks to anyone who engaged but did not sign up.</td>
+          <td>2,000+</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>What we measure</h2>
+    <p>One dashboard, checked daily. If a number lags, the calendar bends toward fixing it.</p>
+    <ul class="checklist">
+      <li><span class="check">→</span> <strong>Daily signups</strong> — the only number that matters. Tracked against the run-rate to 2,000.</li>
+      <li><span class="check">→</span> <strong>Source attribution</strong> — which channel and which short drives each signup (already captured in the source column).</li>
+      <li><span class="check">→</span> <strong>View-to-visit rate per short</strong> — tells us which creative to double down on.</li>
+      <li><span class="check">→</span> <strong>Sample completion rate</strong> — if people open the sample but do not finish, panel content needs work.</li>
+      <li><span class="check">→</span> <strong>Engaged-to-signup rate</strong> — if this lags 28%, the landing page or the offer needs sharpening, not more traffic.</li>
+      <li><span class="check">→</span> <strong>Stock interest answers</strong> — free-text stock captures double as a content goldmine: the most-named stocks become the next shorts and sample pages.</li>
+    </ul>
+
+    <h2>The honest risks</h2>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Risk</th><th>Mitigation</th></tr>
+        <tr><td>Organic reach is unpredictable — shorts may not take off</td><td>The WhatsApp + warm network channel is reach-independent and conversion-heavy. It carries the floor. Shorts are upside, not the foundation.</td></tr>
+        <tr><td>Waitlist not saving silently kills the whole effort</td><td>Week 0 readiness gate. Nothing ships until a test signup appears in Supabase and triggers a confirmation email.</td></tr>
+        <tr><td>Signups that never convert to active users</td><td>The confirmation email and the stock-interest question keep them warm. The June 24th cohort email is the activation moment.</td></tr>
+        <tr><td>Spreading across too many channels thinly</td><td>Concentrate. WhatsApp and Instagram carry 75% of the target. LinkedIn and Reddit are secondary, not equal.</td></tr>
+      </table>
+    </div>
+
+    <p class="updated">This plan assumes the creative assets (landing, sample, 7 shorts) are complete — which they are — and that the operational gaps (waitlist persistence, short exports, captions) are closed in Week 0. Last updated: May 30, 2026.</p>
+  </section>
+
 
   <!-- ═══ WHAT IS LIVE ═══ -->
   <section class="section" id="ready">
