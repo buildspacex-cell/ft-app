@@ -179,6 +179,7 @@ function WishesBar() {
     "I own Reliance but I could not tell you how they make money.",
     "I check the price every day but I have no idea what I am looking for.",
     "I bought it but I cannot explain what it does to someone who does not invest.",
+    "The stock is up 60 percent and I still don't know if I should hold or take profits.",
   ]
 
   useEffect(() => {
@@ -968,7 +969,7 @@ export default function HomePage() {
               {[
                 { tag: 'Promise 01', h: 'We never tell you what to buy.', p: 'No price targets. No "strong buy" calls. No predictions. We describe whether the reasons you bought a company still hold - the decision is always yours.' },
                 { tag: 'Promise 02', h: 'We never hide the source.', p: "Every story shows you exactly what we read to write it - the filing, the earnings call, the article. If we can't cite a source, we don't write the story." },
-                { tag: 'Promise 03', h: 'We never manufacture urgency.', p: 'Most financial media is built to make you panic. Urgency is reserved for moments a reason in your thesis actually breaks - and that\'s rare.' },
+                { tag: 'Promise 03', h: 'We never manufacture urgency.', p: 'Most financial media is built to make you panic. Urgency is reserved for moments a reason in your thesis actually breaks - and that\'s rare. We also watch the price alongside the story. When a stock has run, we keep watching both - and we tell you when either one turns. Until then: silence.' },
               ].map(n => (
                 <div key={n.tag} className="ft-never-item">
                   <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--rust-tint)', color: 'var(--rust)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)', fontSize: 26, fontWeight: 700, marginBottom: 24, flexShrink: 0 }}>×</div>
