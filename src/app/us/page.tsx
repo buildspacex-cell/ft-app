@@ -1,5 +1,6 @@
 'use client'
-import { useState } from 'react'
+import { MarketSwitch } from '@/components/MarketSwitch'
+import { useState, useEffect } from 'react'
 
 // ─── US Phone mockup - NYSE/NASDAQ stocks ─────────────────────────────────────
 
@@ -427,31 +428,20 @@ function EmailForm({ dark = false, source = 'landing-us' }: { dark?: boolean; so
             Which stock do you most want us to cover first?
           </p>
           <div style={{ display: 'flex', gap: 8 }}>
-            <select
-              value={stock} onChange={e => setStock(e.target.value)}
+            <input
+              type="text"
+              value={stock}
+              onChange={e => setStock(e.target.value)}
+              placeholder="e.g. Apple, Tesla, the one you're unsure about"
               style={{
                 flex: 1, padding: '10px 12px', borderRadius: 10,
                 border: dark ? '1px solid rgba(246,243,236,0.16)' : '1px solid var(--hairline)',
                 background: dark ? 'rgba(246,243,236,0.08)' : 'var(--paper)',
                 fontFamily: 'var(--font-sans)', fontSize: 14,
                 color: dark ? 'var(--cream)' : 'var(--ink)',
-                outline: 'none', cursor: 'pointer',
+                outline: 'none',
               }}
-            >
-              
-              <option value="">Pick a stock...</option>
-              <optgroup label="NYSE / NASDAQ">
-                <option value="AAPL">Apple</option>
-                <option value="MSFT">Microsoft</option>
-                <option value="GOOGL">Alphabet (Google)</option>
-                <option value="AMZN">Amazon</option>
-                <option value="NVDA">Nvidia</option>
-                <option value="JPM">JPMorgan Chase</option>
-                <option value="TSLA">Tesla</option>
-                <option value="META">Meta</option>
-              </optgroup>
-              <option value="OTHER">Something else</option>
-            </select>
+            />
             <button
               onClick={saveStock} disabled={!stock}
               style={{
@@ -469,7 +459,7 @@ function EmailForm({ dark = false, source = 'landing-us' }: { dark?: boolean; so
       ) : (
         <div>
           <p style={{ fontSize: 13, color: dark ? 'rgba(246,243,236,0.6)' : 'var(--muted)', marginBottom: 16, lineHeight: 1.4 }}>
-            Got it. We&apos;ll make sure <strong style={{ color: dark ? 'var(--cream)' : 'var(--ink)', fontWeight: 600 }}>{stock === 'OTHER' ? 'your pick' : stock}</strong> is ready on day one.
+            Got it. We&apos;ll make sure <strong style={{ color: dark ? 'var(--cream)' : 'var(--ink)', fontWeight: 600 }}>{stock || 'your pick'}</strong> is ready on day one.
           </p>
           <WishQuestion dark={dark} />
         </div>
@@ -524,6 +514,11 @@ function Eyebrow({ label, dark = false }: { label: string; dark?: boolean }) {
 // ─── US Landing page ──────────────────────────────────────────────────────────
 
 export default function USPage() {
+  useEffect(() => {
+    // Set market cookie so return visits go to US page
+    document.cookie = 'ft-market=us;max-age=' + (60*60*24*30) + ';path=/'
+  }, [])
+
   return (
     <>
       <style>{`
@@ -897,6 +892,9 @@ export default function USPage() {
               <span>© 2026 Fundamentally True · Built for clarity.</span>
               <span>Privacy · Terms</span>
             </div>
+          <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid var(--hairline)' }}>
+            <MarketSwitch currentMarket="us" />
+          </div>
           </div>
         </footer>
 

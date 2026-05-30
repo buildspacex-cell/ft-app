@@ -1,4 +1,5 @@
 'use client'
+import { MarketSwitch } from '@/components/MarketSwitch'
 import { useState, useEffect } from 'react'
 
 // ─── Phone mockup - fixed status bar, proper iOS layout ──────────────────────
@@ -553,33 +554,20 @@ function EmailForm({ dark = false, source = 'landing-in' }: { dark?: boolean; so
             Which stock do you most want us to cover first?
           </p>
           <div style={{ display: 'flex', gap: 8 }}>
-            <select
-              value={stock} onChange={e => setStock(e.target.value)}
+            <input
+              type="text"
+              value={stock}
+              onChange={e => setStock(e.target.value)}
+              placeholder="e.g. HDFC Bank, the one you're unsure about"
               style={{
                 flex: 1, padding: '10px 12px', borderRadius: 10,
                 border: dark ? '1px solid rgba(246,243,236,0.16)' : '1px solid var(--hairline)',
                 background: dark ? 'rgba(246,243,236,0.08)' : 'var(--paper)',
                 fontFamily: 'var(--font-sans)', fontSize: 14,
                 color: dark ? 'var(--cream)' : 'var(--ink)',
-                outline: 'none', cursor: 'pointer',
+                outline: 'none',
               }}
-            >
-              
-              <option value="">Pick a stock...</option>
-              <optgroup label="NSE India">
-                <option value="RELIANCE">Reliance Industries</option>
-                <option value="HDFCBANK">HDFC Bank</option>
-                <option value="TCS">Tata Consultancy Services</option>
-                <option value="INFY">Infosys</option>
-                <option value="HINDUNILVR">Hindustan Unilever</option>
-                <option value="MARUTI">Maruti Suzuki</option>
-                <option value="SUNPHARMA">Sun Pharmaceutical</option>
-                <option value="BAJFINANCE">Bajaj Finance</option>
-                <option value="WIPRO">Wipro</option>
-                <option value="ONGC">ONGC</option>
-              </optgroup>
-              <option value="OTHER">Something else</option>
-            </select>
+            />
             <button
               onClick={saveStock} disabled={!stock}
               style={{
@@ -597,7 +585,7 @@ function EmailForm({ dark = false, source = 'landing-in' }: { dark?: boolean; so
       ) : (
         <div>
           <p style={{ fontSize: 13, color: dark ? 'rgba(246,243,236,0.6)' : 'var(--muted)', marginBottom: 16, lineHeight: 1.4 }}>
-            Got it. We&apos;ll make sure <strong style={{ color: dark ? 'var(--cream)' : 'var(--ink)', fontWeight: 600 }}>{stock === 'OTHER' ? 'your pick' : stock}</strong> is ready on day one.
+            Got it. We&apos;ll make sure <strong style={{ color: dark ? 'var(--cream)' : 'var(--ink)', fontWeight: 600 }}>{stock || 'your pick'}</strong> is ready on day one.
           </p>
           <WishQuestion dark={dark} />
         </div>
@@ -1107,6 +1095,9 @@ export default function HomePage() {
               <span>© 2026 Fundamentally True · Built for clarity.</span>
               <span>Privacy · Terms</span>
             </div>
+          <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid var(--hairline)' }}>
+            <MarketSwitch currentMarket="in" />
+          </div>
           </div>
         </footer>
 
