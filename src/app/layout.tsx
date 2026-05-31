@@ -4,12 +4,12 @@ import { Analytics } from '@/components/Analytics'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Fundamentally True — Own the business. Track the price.',
+  title: 'Fundamentally True — Own the business, Track the ticker.',
   description: "5 questions about any stock. Plain English. One morning alert when something in the business or the price actually changes.",
   manifest: '/manifest.json',
   appleWebApp: { capable: true, statusBarStyle: 'default', title: 'Fundamentally True' },
   openGraph: {
-    title: 'Fundamentally True — Own the business. Track the price.',
+    title: 'Fundamentally True — Own the business, Track the ticker.',
     description: '5 questions. Plain English. One morning alert when something in the business or the price changes.',
     url: 'https://ft-app-beta.vercel.app',
     siteName: 'Fundamentally True',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fundamentally True — Own the business. Track the price.',
+    title: 'Fundamentally True — Own the business, Track the ticker.',
     description: '5 questions. Plain English. One morning alert when something in the business or the price changes.',
   },
 }
