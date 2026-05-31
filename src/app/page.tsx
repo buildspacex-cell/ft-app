@@ -754,7 +754,7 @@ export default function HomePage() {
         }}>
           <div className="ft-wrap" style={{ display: 'flex', alignItems: 'center', gap: 32, padding: '14px 28px' }}>
             <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700, fontSize: 16, letterSpacing: '-0.025em', textDecoration: 'none', color: 'var(--ink)', flexShrink: 0 }}>
-              <span style={{ width: 26, height: 26, borderRadius: 7, background: 'var(--ink)', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, flexShrink: 0 }}>FT</span>
+              <svg width="26" height="26" viewBox="0 0 26 26" style={{borderRadius:7,background:'var(--ink)',flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="13" r="11" fill="none" stroke="rgba(246,243,236,.1)" strokeWidth=".7"/><path d="M 13,5.5 A 7.5,7.5 0 1,1 9.3,6.8" fill="none" stroke="#d97757" strokeWidth="1.8" strokeLinecap="round"/><circle cx="13" cy="13" r="4.2" fill="rgba(246,243,236,.05)" stroke="#d97757" strokeWidth="1"/><circle cx="13" cy="13" r="2.8" fill="#d97757"/><path d="M 11,13 L 12.3,14.4 L 15.5,11" fill="none" stroke="var(--ink)" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round"/></svg>
               Fundamentally True
             </a>
             <div className="ft-nav-links" style={{ gap: 24, alignItems: 'center' }}>
@@ -1101,7 +1101,7 @@ export default function HomePage() {
             <div className="ft-footer-grid">
               <div>
                 <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700, fontSize: 16, letterSpacing: '-0.025em', textDecoration: 'none', color: 'var(--ink)', marginBottom: 16 }}>
-                  <span style={{ width: 26, height: 26, borderRadius: 7, background: 'var(--ink)', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, flexShrink: 0 }}>FT</span>
+                  <svg width="26" height="26" viewBox="0 0 26 26" style={{borderRadius:7,background:'var(--ink)',flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="13" r="11" fill="none" stroke="rgba(246,243,236,.1)" strokeWidth=".7"/><path d="M 13,5.5 A 7.5,7.5 0 1,1 9.3,6.8" fill="none" stroke="#d97757" strokeWidth="1.8" strokeLinecap="round"/><circle cx="13" cy="13" r="4.2" fill="rgba(246,243,236,.05)" stroke="#d97757" strokeWidth="1"/><circle cx="13" cy="13" r="2.8" fill="#d97757"/><path d="M 11,13 L 12.3,14.4 L 15.5,11" fill="none" stroke="var(--ink)" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   Fundamentally True
                 </a>
                 <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, lineHeight: 1.6, color: 'var(--muted)', maxWidth: 380 }}>
