@@ -4,13 +4,13 @@ import { Analytics } from '@/components/Analytics'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Fundamentally True — Own the stock, not just the ticker',
-  description: "5 questions about any stock. Plain English. One morning alert when something actually changes.",
+  title: 'Fundamentally True — Own the business. Track the price.',
+  description: "5 questions about any stock. Plain English. One morning alert when something in the business or the price actually changes.",
   manifest: '/manifest.json',
   appleWebApp: { capable: true, statusBarStyle: 'default', title: 'Fundamentally True' },
   openGraph: {
-    title: 'Fundamentally True — Own the stock, not just the ticker',
-    description: '5 questions. Plain English. One morning alert when something actually changes.',
+    title: 'Fundamentally True — Own the business. Track the price.',
+    description: '5 questions. Plain English. One morning alert when something in the business or the price changes.',
     url: 'https://ft-app-beta.vercel.app',
     siteName: 'Fundamentally True',
     type: 'website',
@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fundamentally True — Own the stock, not just the ticker',
-    description: '5 questions. Plain English. One morning alert when something actually changes.',
+    title: 'Fundamentally True — Own the business. Track the price.',
+    description: '5 questions. Plain English. One morning alert when something in the business or the price changes.',
   },
 }
 
@@ -32,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
