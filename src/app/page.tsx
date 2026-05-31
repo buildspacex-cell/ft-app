@@ -1,5 +1,6 @@
 'use client'
 import { MarketSwitch } from '@/components/MarketSwitch'
+import { trackEvent } from '@/components/Analytics'
 import { useState, useEffect } from 'react'
 
 // ─── Phone mockup - fixed status bar, proper iOS layout ──────────────────────
@@ -532,6 +533,7 @@ function EmailForm({ dark = false, source = 'landing-in' }: { dark?: boolean; so
       })
       if (!res.ok) { setStatus('error'); return }
       _submittedEmail = email
+      trackEvent('waitlist_signup', { source, market: 'in' })
       setStatus('done')
     } catch {
       setStatus('error')
@@ -551,6 +553,7 @@ function EmailForm({ dark = false, source = 'landing-in' }: { dark?: boolean; so
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: em, source, stock_interest: stock, sendLink: false }),
     }).catch(() => {})
+    trackEvent('waitlist_stock_saved', { stock })
   }
 
   if (status === 'done') return (

@@ -1,11 +1,26 @@
 import type { Metadata, Viewport } from 'next'
+import { Suspense } from 'react'
+import { Analytics } from '@/components/Analytics'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Fundamentally True',
-  description: "We don't say buy. We don't say sell. We tell you whether the reasons you trusted are still true.",
+  title: 'Fundamentally True — Own the stock, not just the ticker',
+  description: "5 questions about any stock. Plain English. One morning alert when something actually changes.",
   manifest: '/manifest.json',
   appleWebApp: { capable: true, statusBarStyle: 'default', title: 'Fundamentally True' },
+  openGraph: {
+    title: 'Fundamentally True — Own the stock, not just the ticker',
+    description: '5 questions. Plain English. One morning alert when something actually changes.',
+    url: 'https://ft-app-beta.vercel.app',
+    siteName: 'Fundamentally True',
+    type: 'website',
+    locale: 'en_IN',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Fundamentally True — Own the stock, not just the ticker',
+    description: '5 questions. Plain English. One morning alert when something actually changes.',
+  },
 }
 
 export const viewport: Viewport = {
@@ -20,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body>{children}</body>
+      <body><Suspense fallback={null}><Analytics /></Suspense>{children}</body>
     </html>
   )
 }

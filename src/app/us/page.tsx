@@ -1,5 +1,6 @@
 'use client'
 import { MarketSwitch } from '@/components/MarketSwitch'
+import { trackEvent } from '@/components/Analytics'
 import { useState, useEffect } from 'react'
 
 // ─── US Phone mockup - NYSE/NASDAQ stocks ─────────────────────────────────────
@@ -406,6 +407,7 @@ function EmailForm({ dark = false, source = 'landing-us' }: { dark?: boolean; so
       })
       if (!res.ok) { setStatus('error'); return }
       _submittedEmail = email
+      trackEvent('waitlist_signup', { source, market: 'us' })
       setStatus('done')
     } catch {
       setStatus('error')
