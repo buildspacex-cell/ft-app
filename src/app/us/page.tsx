@@ -24,7 +24,7 @@ function PhoneMockup({ screen = 'digest' }: { screen?: 'digest' | 'detail' }) {
         </div>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 20px 0' }}>
-        <div style={{ width: 20, height: 20, borderRadius: 5, background: 'var(--ink)', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: 8, fontWeight: 800, flexShrink: 0 }}>FT</div>
+        <svg width="20" height="20" viewBox="0 0 20 20" style={{flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><rect width="20" height="20" rx="5" fill="#171717"/><path d="M10.0 3.2 A6.8 6.8 0 0 0 10.0 16.8 Z" transform="translate(-0.80 0)" fill="#f6f3ec"/><path d="M10.0 3.2 A6.8 6.8 0 0 1 10.0 16.8 Z" transform="translate(0.80 0)" fill="#d97757"/></svg>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>· MORNING CHECK · 7AM</span>
       </div>
       {screen === 'digest' ? <USDigestScreen /> : <USDetailScreen />}
