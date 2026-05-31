@@ -11,12 +11,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
   }
 
-  const { email, source = 'landing-in', stock_interest, wish_text, phone } = body as {
+  const { email, source = 'landing-in', stock_interest, wish_text, phone, sendLink = true } = body as {
     email?: string
     source?: string
     stock_interest?: string
     wish_text?: string
     phone?: string
+    sendLink?: boolean
   }
 
   console.log('[waitlist] Submission received:', { email, source, stock_interest })
@@ -55,6 +56,8 @@ export async function POST(req: NextRequest) {
             email,
             source,
             ...(stock_interest ? { stock_interest } : {}),
+            ...(wish_text ? { wish_text } : {}),
+            ...(phone ? { phone } : {}),
           },
           { onConflict: 'email', ignoreDuplicates: false }
         )
@@ -77,7 +80,11 @@ export async function POST(req: NextRequest) {
     console.warn('[waitlist] No service key — skipping DB write, still sending magic link')
   }
 
-  // ─── Step 2: Send magic link ───────────────────────────────────────────────
+  // ─── Step 2: Send magic link (only on first submit) ────────────────────────
+  if (!sendLink) {
+    return NextResponse.json({ ok: true, updated: true })
+  }
+
   try {
     const supabase = createClient(supabaseUrl, anonKey)
     const redirectTo = `${appUrl || 'https://ft-app-beta.vercel.app'}/onboarding`

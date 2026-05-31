@@ -153,6 +153,10 @@ function CountrySwitcher({ active }: { active: 'in' | 'us' }) {
 
 // ─── Wish question — shown after stock pick ───────────────────────────────────
 
+// ─── Module-level email store ───────────────────────────────────────────────
+let _submittedEmail = ''
+function getSubmittedEmail() { return _submittedEmail }
+
 function WishQuestion({ dark = false, defaultCountry = 'IN' }: { dark?: boolean; defaultCountry?: string }) {
   const [wish, setWish] = useState('')
   const [saved, setSaved] = useState(false)
@@ -160,7 +164,13 @@ function WishQuestion({ dark = false, defaultCountry = 'IN' }: { dark?: boolean;
   function saveWish() {
     if (!wish.trim() || saved) return
     setSaved(true)
-    // will POST once env vars set
+    const em = getSubmittedEmail()
+    if (!em) return
+    fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: em, wish_text: wish.trim(), sendLink: false }),
+    }).catch(() => {})
   }
 
   const label = dark ? 'rgba(246,243,236,0.7)' : 'var(--muted)'
@@ -273,11 +283,14 @@ function PhoneStep({ dark = false, defaultCountry = 'IN' }: { dark?: boolean; de
     if (!phone.trim() || saved) return
     setSaved(true)
     const full = `${country.dial} ${phone.trim()}`
-    fetch('/api/waitlist', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone: full }),
-    }).catch(() => {})
+    const em = getSubmittedEmail()
+    if (em) {
+      fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: em, phone: full, sendLink: false }),
+      }).catch(() => {})
+    }
   }
 
   const subtle = dark ? 'rgba(246,243,236,0.6)' : 'var(--muted)'
@@ -385,9 +398,18 @@ function EmailForm({ dark = false, source = 'landing-us' }: { dark?: boolean; so
     e.preventDefault()
     if (!email) return
     setStatus('loading')
-    // TODO: re-enable once env vars are set in Vercel
-    // fetch('/api/waitlist', { method: 'POST', ... })
-    setStatus('done')
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source, sendLink: true }),
+      })
+      if (!res.ok) { setStatus('error'); return }
+      _submittedEmail = email
+      setStatus('done')
+    } catch {
+      setStatus('error')
+    }
   }
 
   const [stock, setStock] = useState('')
@@ -396,7 +418,13 @@ function EmailForm({ dark = false, source = 'landing-us' }: { dark?: boolean; so
   async function saveStock() {
     if (!stock || stockSaved) return
     setStockSaved(true)
-    // will POST to API once env vars set
+    const em = getSubmittedEmail()
+    if (!em) return
+    fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: em, source, stock_interest: stock, sendLink: false }),
+    }).catch(() => {})
   }
 
   if (status === 'done') return (
