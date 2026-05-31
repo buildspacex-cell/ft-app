@@ -1,6 +1,6 @@
 'use client'
 import { MarketSwitch } from '@/components/MarketSwitch'
-import { trackEvent } from '@/components/Analytics'
+import { trackEvent, identifyUser } from '@/components/PostHogProvider'
 import { useState, useEffect } from 'react'
 
 // ─── Phone mockup - fixed status bar, proper iOS layout ──────────────────────
@@ -251,8 +251,46 @@ function WishesBar() {
 
 // ─── Country switcher ─────────────────────────────────────────────────────────
 
+
+// ── Scroll depth tracker ──────────────────────────────────────────────────────
+function useScrollDepth(market: string) {
+  useEffect(() => {
+    const milestones = [25, 50, 75, 90]
+    const reached = new Set<number>()
+    function onScroll() {
+      const pct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100)
+      milestones.forEach(m => {
+        if (pct >= m && !reached.has(m)) {
+          reached.add(m)
+          trackEvent('scroll_depth', { depth: m, market })
+        }
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [market])
+}
+
+// ── Section visibility tracker ───────────────────────────────────────────────
+function useSectionTracking(market: string) {
+  useEffect(() => {
+    const seen = new Set<string>()
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && e.target.id && !seen.has(e.target.id)) {
+          seen.add(e.target.id)
+          trackEvent('section_viewed', { section: e.target.id, market })
+        }
+      })
+    }, { threshold: 0.3 })
+    document.querySelectorAll('section[id], div[id]').forEach(el => obs.observe(el))
+    return () => obs.disconnect()
+  }, [market])
+}
+
 function CountrySwitcher({ active }: { active: 'in' | 'us' }) {
   function go(market: 'in' | 'us') {
+    trackEvent('market_switched', { to: market, from: 'in' })
     document.cookie = `ft-market=${market};max-age=${60 * 60 * 24 * 30};path=/`
     window.location.href = market === 'us' ? '/us' : '/'
   }
@@ -541,6 +579,7 @@ function EmailForm({ dark = false, source = 'landing-in' }: { dark?: boolean; so
       if (!res.ok) { setStatus('error'); return }
       _submittedEmail = email
       trackEvent('waitlist_signup', { source, market: 'in' })
+      identifyUser(email, { market: 'in', source })
       setStatus('done')
     } catch {
       setStatus('error')
@@ -771,7 +810,7 @@ export default function HomePage() {
             </div>
             <div style={{ flex: 1 }} />
             <CountrySwitcher active="in" />
-            <a href="#waitlist" style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 14, letterSpacing: '-0.005em', background: 'var(--ink)', color: 'var(--cream)', padding: '10px 18px', borderRadius: 999, cursor: 'pointer', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, flexShrink: 0, whiteSpace: 'nowrap' }}>
+            <a href="#waitlist" onClick={() => trackEvent('cta_clicked', { location: 'hero', market: 'in' })} style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 14, letterSpacing: '-0.005em', background: 'var(--ink)', color: 'var(--cream)', padding: '10px 18px', borderRadius: 999, cursor: 'pointer', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, flexShrink: 0, whiteSpace: 'nowrap' }}>
               Get early access <span>→</span>
             </a>
           </div>
@@ -814,7 +853,7 @@ export default function HomePage() {
         {/* ── SEE HOW IT WORKS ── */}
         <section style={{ background: 'var(--ink)', padding: '0' }}>
           <div className="ft-wrap" style={{ padding: '0 28px' }}>
-            <a href="/sample" style={{
+            <a href="/sample" onClick={() => trackEvent('sample_opened', { market: 'in' })} style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               padding: '22px 0', textDecoration: 'none', borderBottom: '1px solid rgba(246,243,236,0.1)',
             }}>

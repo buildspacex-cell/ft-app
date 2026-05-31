@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Suspense } from 'react'
-import { Analytics } from '@/components/Analytics'
+import { PostHogProvider } from '@/components/PostHogProvider'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body><Suspense fallback={null}><Analytics /></Suspense>{children}</body>
+      <body><PostHogProvider><Suspense fallback={null}>{children}</Suspense></PostHogProvider></body>
     </html>
   )
 }
