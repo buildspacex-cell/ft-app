@@ -1004,12 +1004,12 @@ landing-us-cta     — US landing page, bottom CTA</pre>
       <table>
         <tr><th>Item</th><th>Status</th><th>Action</th></tr>
         <tr><td>Hero, six moments, promises, FAQ, waitlist flow</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
-        <tr><td>Waitlist actually writes to Supabase</td><td><span class="badge critical"><span class="bdot"></span>Blocked</span></td><td>Set Vercel env vars + re-enable API call + run migration. This is the single most important pre-launch task — right now signups are silently discarded.</td></tr>
+        <tr><td>Waitlist actually writes to Supabase</td><td><span class="badge live"><span class="bdot"></span>Live — tested</span></td><td>Env vars set, migration run, API re-enabled, end-to-end test passed. Rows writing with all fields.</td></tr>
         <tr><td>Geo + cookie routing (India / US)</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
         <tr><td>Free-text stock capture</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
-        <tr><td>Thank-you / confirmation email on signup</td><td><span class="badge todo"><span class="bdot"></span>Not built</span></td><td>Wire a magic-link confirmation email so a signup feels real and the email is verified. Without it, signups are unconfirmed and feel like a void.</td></tr>
-        <tr><td>Social share / OG image</td><td><span class="badge pending"><span class="bdot"></span>Check</span></td><td>Verify the link preview card looks right when pasted in WhatsApp, LinkedIn, X. A broken preview kills forward rates.</td></tr>
-        <tr><td>Analytics events (visit, sample open, signup)</td><td><span class="badge pending"><span class="bdot"></span>Check</span></td><td>Confirm PostHog fires on each funnel step so we can see where people drop.</td></tr>
+        <tr><td>Confirmation on signup</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>Magic link removed — creates drop-off friction on a waitlist. In-page confirmation screen is the signal. June 24th cohort email is the follow-up.</td></tr>
+        <tr><td>Social share / OG image</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>opengraph-image.tsx on both / and /us. Full openGraph + Twitter card meta tags. Dark background, headline, FT badge, URL.</td></tr>
+        <tr><td>Analytics events (visit, signup, stock save)</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>Analytics component fires page_view on every route, waitlist_signup on email submit, waitlist_stock_saved on stock save. Logs to console without PostHog key, sends to PostHog when NEXT_PUBLIC_POSTHOG_KEY is set.</td></tr>
       </table>
     </div>
 
@@ -1091,8 +1091,8 @@ landing-us-cta     — US landing page, bottom CTA</pre>
         <tr><th>Week</th><th>Focus</th><th>Actions</th><th>Cumulative target</th></tr>
         <tr>
           <td><strong>Week 0</strong><br><span style="color:var(--muted);font-size:12px">Readiness</span></td>
-          <td>Fix the funnel</td>
-          <td>Wire waitlist to Supabase + confirmation email. Export and caption all 7 shorts. Verify sample CTA, OG image, PostHog events. Soft-launch to 20-30 closest contacts as a live test.</td>
+          <td>Fix the funnel ✓</td>
+          <td>Waitlist wired and tested. OG image live. Analytics wired. Magic link removed. Geo routing live. One remaining: export and caption the 7 shorts as MP4 for posting.</td>
           <td>~50 (test signups)</td>
         </tr>
         <tr>
@@ -1163,6 +1163,11 @@ landing-us-cta     — US landing page, bottom CTA</pre>
       <li><span class="check" style="color:var(--sage)">✓</span> Supabase schema — waitlist table defined</li>
       <li><span class="check" style="color:var(--sage)">✓</span> /sample route redirect</li>
       <li><span class="check" style="color:var(--sage)">✓</span> Design system — cream/ink/coral palette, Manrope + JetBrains Mono</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Geo + cookie routing — middleware.ts, 30-day cookie, MarketSwitch footer</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Free text stock capture — both India and US pages</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> OG share image + full meta tags — Twitter card, openGraph</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Analytics — page_view, waitlist_signup, waitlist_stock_saved events</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Waitlist end-to-end tested and confirmed — rows writing to Supabase with all fields</li>
     </ul>
   </section>
 
@@ -1172,15 +1177,19 @@ landing-us-cta     — US landing page, bottom CTA</pre>
     <h1>What needs to happen before launch</h1>
 
     <ul class="checklist">
-      <li><span class="check" style="color:var(--coral)">!</span> <strong>Set Vercel env vars</strong> — NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, NEXT_PUBLIC_APP_URL, CRON_SECRET</li>
-      <li><span class="check" style="color:var(--coral)">!</span> <strong>Re-enable API call</strong> in page.tsx and us/page.tsx (TODO comment)</li>
-      <li><span class="check" style="color:var(--coral)">!</span> <strong>Run Supabase migration</strong> — alter table to add stock_interest, wish_text, phone columns</li>
-      <li><span class="check" style="color:var(--amber)">~</span> Adjust short-2 visual timing — visuals still appearing slightly early relative to voice cues</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> <strong>Vercel env vars set</strong> — NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, NEXT_PUBLIC_APP_URL, CRON_SECRET</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> <strong>API calls re-enabled</strong> — email threading through all 4 steps, sendLink flag, error states wired</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> <strong>Supabase migration run</strong> — stock_interest, wish_text, phone columns live</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Short-2 timing fixed — scenes rebuilt to 39.5s audio, tap-to-play via postMessage</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Magic link removed from waitlist — early access needs intent not verified session, DB write only</li>
       <li><span class="check" style="color:var(--amber)">~</span> Verify timing on shorts 1, 3, 4, 5, 6, 7 once played back with actual audio</li>
       <li><span class="check" style="color:var(--sage)">✓</span> Sample page Q4 — "What FT does from here" extension card added</li>
       <li><span class="check" style="color:var(--sage)">✓</span> Landing Five Moments — sixth moment "When it has run / Let the winner run" added</li>
       <li><span class="check" style="color:var(--sage)">✓</span> Landing Promise 03 — updated to include price + story watching</li>
       <li><span class="check" style="color:var(--sage)">✓</span> WishesBar seeds — profit-taking seed added</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> OG / share image — opengraph-image.tsx on both / and /us, full meta + Twitter card</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Analytics — trackEvent fires on page_view, waitlist_signup, waitlist_stock_saved</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> End-to-end test passed — signup row appearing in Supabase with all fields populated</li>
       <li><span class="check" style="color:var(--muted)">○</span> Build /5-questions page — campaign anchor, pre-buy / post-buy tabs, type any stock</li>
       <li><span class="check" style="color:var(--muted)">○</span> Native iOS/Android apps via Capacitor</li>
       <li><span class="check" style="color:var(--muted)">○</span> ANTHROPIC_API_KEY + NEWS_API_KEY in Vercel env</li>
@@ -1220,7 +1229,7 @@ alter table waitlist add column if not exists phone text;</pre>
       </table>
     </div>
 
-    <p class="updated">Last updated: May 29, 2026 · ft-app-beta.vercel.app/brain.html</p>
+    <p class="updated">Last updated: May 30, 2026 · ft-app-beta.vercel.app/brain.html</p>
   </section>
 
 </div>
