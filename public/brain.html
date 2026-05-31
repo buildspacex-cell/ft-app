@@ -1096,9 +1096,17 @@ landing-us-cta     — US landing page, bottom CTA</pre>
           <td>~50 (test signups)</td>
         </tr>
         <tr>
-          <td><strong>Week 1</strong><br><span style="color:var(--muted);font-size:12px">Seed</span></td>
-          <td>WhatsApp + warm network</td>
-          <td>Share the sample link and the 5 questions into personal network and 5-8 investing groups. Post Short 1 (Chaos) and Short 2 (Before You Buy). One LinkedIn long-form on "own the stock not the ticker." Reply to every comment.</td>
+          <td><strong>Week 1</strong><br><span style="color:var(--muted);font-size:12px">Seed + Track</span></td>
+          <td>WhatsApp + warm network + analytics</td>
+          <td>
+            <strong>Distribution:</strong> Share the sample link and the 5 questions into personal network and 5-8 investing groups. Post Short 1 (Chaos) and Short 2 (Before You Buy). One LinkedIn long-form on "own the business, track the ticker." Reply to every comment.
+            <br/><br/>
+            <strong>Analytics setup (Layer 1 — PostHog):</strong> Create PostHog project, set <code>NEXT_PUBLIC_POSTHOG_KEY</code> in Vercel. Expand event taxonomy to cover full funnel — scroll depth, section views, sample panel progress, FAQ opens, CTA source, waitlist step abandonment, market switcher usage. Session replay on so you can watch real sessions.
+            <br/><br/>
+            <strong>Analytics setup (Layer 2 — internal dashboard):</strong> Build <code>/admin</code> page (password-protected) reading Supabase waitlist table — total signups, signups by day, signups by source, most-named stocks, wish-text feed. The qualitative picture: who they are and what they want in their own words.
+            <br/><br/>
+            <strong>After first 50 signups:</strong> Read every wish-text answer. The patterns there feed the next shorts, the next sample, and the product backlog.
+          </td>
           <td>~350</td>
         </tr>
         <tr>
