@@ -257,22 +257,34 @@ function WishesBar() {
 // ─── Country switcher ─────────────────────────────────────────────────────────
 
 function CountrySwitcher({ active }: { active: 'in' | 'us' }) {
+  function go(market: 'in' | 'us') {
+    document.cookie = `ft-market=${market};max-age=${60 * 60 * 24 * 30};path=/`
+    window.location.href = market === 'us' ? '/us' : '/'
+  }
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 2, background: 'var(--hairline-soft)', borderRadius: 999, padding: 3 }}>
-      <a href="/" style={{
-        display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 999,
+      <button onClick={() => go('in')} style={{
+        display: 'flex', alignItems: 'center', gap: 6,
+        padding: '6px 14px', borderRadius: 999, border: 'none', cursor: 'pointer',
         background: active === 'in' ? 'var(--card)' : 'transparent',
         boxShadow: active === 'in' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
         fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: active === 'in' ? 600 : 500,
-        color: active === 'in' ? 'var(--ink)' : 'var(--muted)', textDecoration: 'none',
-      }}>🇮🇳 India</a>
-      <a href="/us" style={{
-        display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 999,
+        color: active === 'in' ? 'var(--ink)' : 'var(--muted)',
+        transition: 'all 0.15s',
+      }}>
+        🇮🇳 India
+      </button>
+      <button onClick={() => go('us')} style={{
+        display: 'flex', alignItems: 'center', gap: 6,
+        padding: '6px 14px', borderRadius: 999, border: 'none', cursor: 'pointer',
         background: active === 'us' ? 'var(--card)' : 'transparent',
         boxShadow: active === 'us' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
         fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: active === 'us' ? 600 : 500,
-        color: active === 'us' ? 'var(--ink)' : 'var(--muted)', textDecoration: 'none',
-      }}>🇺🇸 US</a>
+        color: active === 'us' ? 'var(--ink)' : 'var(--muted)',
+        transition: 'all 0.15s',
+      }}>
+        🇺🇸 US
+      </button>
     </div>
   )
 }
@@ -754,7 +766,7 @@ export default function HomePage() {
         }}>
           <div className="ft-wrap" style={{ display: 'flex', alignItems: 'center', gap: 32, padding: '14px 28px' }}>
             <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700, fontSize: 16, letterSpacing: '-0.025em', textDecoration: 'none', color: 'var(--ink)', flexShrink: 0 }}>
-              <svg width="28" height="28" viewBox="0 0 28 28" style={{flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><path d="M14.0 3.9 A10.1 10.1 0 0 0 14.0 24.1 Z" transform="translate(-0.98 0)" fill="#1a1a1a"/><path d="M14.0 3.9 A10.1 10.1 0 0 1 14.0 24.1 Z" transform="translate(0.98 0)" fill="#d97757"/></svg>
+              <svg width="36" height="36" viewBox="0 0 36 36" style={{flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><path d="M18.0 5.0 A13.0 13.0 0 0 0 18.0 31.0 Z" transform="translate(-1.26 0)" fill="#1a1a1a"/><path d="M18.0 5.0 A13.0 13.0 0 0 1 18.0 31.0 Z" transform="translate(1.26 0)" fill="#d97757"/></svg>
               Fundamentally True
             </a>
             <div className="ft-nav-links" style={{ gap: 24, alignItems: 'center' }}>
