@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fundamentally True — Project Brain</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+  :root {
+    --ink: #171717; --ink-soft: #393632; --cream: #f6f3ec; --cream-deep: #eee7da;
+    --card: #fffdf8; --coral: #d97757; --coral-deep: #bf5d43; --coral-tint: #f6e3da;
+    --sage: #5b7a55; --sage-tint: #e7efe2; --amber: #b88828; --amber-tint: #f1e3bd;
+    --rust: #b54835; --muted: #777068; --hairline: #ddd4c6;
+    --sans: "Manrope", system-ui, sans-serif;
+    --mono: "JetBrains Mono", monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Layout ── */
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: 260px; background: var(--ink);
+    overflow-y: auto; z-index: 100;
+    padding: 28px 0 40px;
+    border-right: 1px solid rgba(246,243,236,.08);
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(246,243,236,.15); border-radius: 2px; }
+
+  .main { margin-left: 260px; min-height: 100vh; }
+
+  /* ── Sidebar ── */
+  .sb-logo {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 24px 24px; border-bottom: 1px solid rgba(246,243,236,.08);
+    margin-bottom: 16px;
+  }
+  .sb-badge {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--coral); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 11px; font-weight: 700; flex-shrink: 0;
+  }
+  .sb-name {
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; color: rgba(246,243,236,.9);
+  }
+  .sb-tagline { font-size: 10px; color: rgba(246,243,236,.35); margin-top: 2px; }
+
+  .sb-section { padding: 0 16px; margin-bottom: 4px; }
+  .sb-section-label {
+    font-family: var(--mono); font-size: 8px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: rgba(246,243,236,.25); padding: 12px 8px 6px;
+  }
+  .sb-link {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 10px; border-radius: 8px;
+    text-decoration: none; color: rgba(246,243,236,.6);
+    font-size: 13px; font-weight: 500; line-height: 1.3;
+    transition: all .15s; cursor: pointer; border: none; background: none;
+    width: 100%; text-align: left;
+  }
+  .sb-link:hover { background: rgba(246,243,236,.07); color: rgba(246,243,236,.9); }
+  .sb-link.active { background: rgba(217,119,87,.15); color: var(--coral); }
+  .sb-link .dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; background: rgba(246,243,236,.2); }
+  .sb-link.active .dot { background: var(--coral); }
+
+  /* ── Content sections ── */
+  .section {
+    max-width: 860px; margin: 0 auto;
+    padding: 64px 52px 80px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-eyebrow {
+    font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--coral);
+    margin-bottom: 10px;
+  }
+  h1 { font-size: clamp(32px, 4vw, 52px); font-weight: 900; letter-spacing: -.055em; line-height: .95; color: var(--ink); margin-bottom: 18px; }
+  h2 { font-size: clamp(22px, 2.8vw, 32px); font-weight: 800; letter-spacing: -.04em; line-height: 1.05; color: var(--ink); margin-bottom: 14px; margin-top: 40px; }
+  h3 { font-size: 17px; font-weight: 700; letter-spacing: -.025em; color: var(--ink); margin-bottom: 8px; margin-top: 28px; }
+  p { font-size: 15px; line-height: 1.65; color: var(--ink-soft); margin-bottom: 14px; }
+  p.lead { font-size: 18px; line-height: 1.5; color: var(--muted); letter-spacing: -.01em; margin-bottom: 24px; }
+
+  /* ── Cards ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 20px 0; }
+  .card {
+    background: var(--card); border: 1px solid var(--hairline);
+    border-radius: 14px; padding: 16px;
+  }
+  .card-label { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .card-val { font-size: 15px; font-weight: 700; letter-spacing: -.02em; color: var(--ink); }
+  .card-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+  /* ── Status badges ── */
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 9px; border-radius: 20px;
+    font-family: var(--mono); font-size: 9px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+  }
+  .badge.live { background: var(--sage-tint); color: var(--sage); }
+  .badge.pending { background: var(--amber-tint); color: var(--amber); }
+  .badge.todo { background: var(--cream-deep); color: var(--muted); }
+  .badge.critical { background: var(--coral-tint); color: var(--coral-deep); }
+  .badge .bdot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+  /* ── Tables ── */
+  .table-wrap { overflow-x: auto; margin: 20px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th {
+    font-family: var(--mono); font-size: 9px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+    padding: 8px 12px; text-align: left;
+    border-bottom: 1px solid var(--hairline); background: var(--cream-deep);
+  }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--hairline); color: var(--ink-soft); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--cream-deep); }
+
+  /* ── Code blocks ── */
+  pre {
+    background: var(--ink); color: var(--cream); border-radius: 12px;
+    padding: 16px 18px; font-family: var(--mono); font-size: 12px;
+    line-height: 1.6; overflow-x: auto; margin: 16px 0;
+  }
+  code { font-family: var(--mono); font-size: 12px; background: var(--cream-deep); padding: 2px 6px; border-radius: 4px; color: var(--coral-deep); }
+
+  /* ── Callout ── */
+  .callout {
+    border-left: 3px solid var(--coral);
+    background: var(--coral-tint); border-radius: 0 12px 12px 0;
+    padding: 14px 16px; margin: 16px 0;
+  }
+  .callout p { margin: 0; color: var(--coral-deep); font-weight: 500; font-size: 14px; }
+  .callout.sage { border-color: var(--sage); background: var(--sage-tint); }
+  .callout.sage p { color: var(--sage); }
+  .callout.amber { border-color: var(--amber); background: var(--amber-tint); }
+  .callout.amber p { color: var(--amber); }
+
+  /* ── Checklist ── */
+  .checklist { list-style: none; margin: 12px 0; }
+  .checklist li {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 7px 0; border-bottom: 1px solid var(--hairline);
+    font-size: 14px; color: var(--ink-soft);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check { flex-shrink: 0; margin-top: 1px; }
+
+  /* ── Q items ── */
+  .q-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 16px; background: var(--card);
+    border: 1px solid var(--hairline); border-radius: 13px; margin-bottom: 8px;
+  }
+  .q-row.q5 { background: var(--ink); border-color: var(--ink); }
+  .q-num { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--coral); min-width: 28px; flex-shrink: 0; }
+  .q-row.q5 .q-num { color: var(--coral); }
+  .q-text { font-size: 15px; font-weight: 600; letter-spacing: -.015em; color: var(--ink); }
+  .q-row.q5 .q-text { color: var(--cream); }
+  .q-note { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .q-row.q5 .q-note { color: rgba(246,243,236,.4); }
+
+  /* ── Short cards ── */
+  .short-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0; }
+  .short-card {
+    background: var(--ink); border-radius: 14px; padding: 16px;
+    text-decoration: none; transition: transform .15s;
+  }
+  .short-card:hover { transform: translateY(-2px); }
+  .short-card-num { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(246,243,236,.3); margin-bottom: 8px; }
+  .short-card-title { font-size: 15px; font-weight: 700; letter-spacing: -.02em; color: var(--cream); margin-bottom: 6px; }
+  .short-card-hook { font-size: 12px; color: rgba(246,243,236,.5); line-height: 1.4; margin-bottom: 10px; }
+  .short-card-meta { display: flex; align-items: center; justify-content: space-between; }
+  .short-card-dur { font-family: var(--mono); font-size: 10px; color: rgba(246,243,236,.3); }
+  .short-card-link { font-family: var(--mono); font-size: 10px; color: var(--coral); }
+
+  /* ── Divider ── */
+  .divider { height: 1px; background: var(--hairline); margin: 32px 0; }
+
+  /* ── Top bar ── */
+  .topbar {
+    background: var(--cream); border-bottom: 1px solid var(--hairline);
+    padding: 14px 52px; display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 50;
+  }
+  .topbar-title { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .topbar-links { display: flex; gap: 16px; }
+  .topbar-link { font-size: 13px; font-weight: 600; color: var(--coral); text-decoration: none; }
+
+  /* Updated timestamp */
+  .updated { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 6px; }
+
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .section { padding: 40px 24px; }
+    .topbar { padding: 12px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Sidebar ── -->
+<nav class="sidebar">
+  <div class="sb-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" style="display:block;flex-shrink:0" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="8" fill="#1a1a1a"/><path d="M16.0 4.5 A11.5 11.5 0 0 0 16.0 27.5 Z" transform="translate(-1.12 0)" fill="#f6f3ec"/><path d="M16.0 4.5 A11.5 11.5 0 0 1 16.0 27.5 Z" transform="translate(1.12 0)" fill="#d97757"/></svg>
+    <div>
+      <div class="sb-name">Fundamentally True</div>
+      <div class="sb-tagline">Own the business, Track the ticker.</div>
+    </div>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Foundation</div>
+    <a class="sb-link" href="#vision"><span class="dot"></span>Vision & problem</a>
+    <a class="sb-link" href="#product"><span class="dot"></span>What the product does</a>
+    <a class="sb-link" href="#audience"><span class="dot"></span>Who it is for</a>
+    <a class="sb-link" href="#positioning"><span class="dot"></span>Positioning</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">The 5 Questions</div>
+    <a class="sb-link" href="#5q"><span class="dot"></span>The framework</a>
+    <a class="sb-link" href="#campaigns"><span class="dot"></span>Two campaigns</a>
+    <a class="sb-link" href="#tagline"><span class="dot"></span>Tagline & hooks</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Product</div>
+    <a class="sb-link" href="#stack"><span class="dot"></span>Tech stack</a>
+    <a class="sb-link" href="#schema"><span class="dot"></span>DB schema</a>
+    <a class="sb-link" href="#llm"><span class="dot"></span>LLM pipeline</a>
+    <a class="sb-link" href="#urls"><span class="dot"></span>URLs & pages</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Sample page</div>
+    <a class="sb-link" href="#sample-arc"><span class="dot"></span>Narrative arc</a>
+    <a class="sb-link" href="#sample-panels"><span class="dot"></span>9 panels</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Marketing</div>
+    <a class="sb-link" href="#price-analysis"><span class="dot"></span>Q4 price analysis spec</a>
+    <a class="sb-link" href="#tech-exit"><span class="dot"></span>Technical exit framework</a>
+    <a class="sb-link" href="#shorts"><span class="dot"></span>7 animated shorts</a>
+    <a class="sb-link" href="#formats"><span class="dot"></span>Content formats</a>
+    <a class="sb-link" href="#timeline"><span class="dot"></span>Launch timeline</a>
+    <a class="sb-link" href="#growth-plan"><span class="dot"></span>Road to 2,000 signups</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">Status</div>
+    <a class="sb-link" href="#ready"><span class="dot"></span>What is live</a>
+    <a class="sb-link" href="#pending"><span class="dot"></span>What is pending</a>
+    <a class="sb-link" href="#decisions"><span class="dot"></span>Key decisions log</a>
+  </div>
+</nav>
+
+<!-- ── Main ── -->
+<div class="main">
+
+  <div class="topbar">
+    <span class="topbar-title">Fundamentally True — Project Brain</span>
+    <div class="topbar-links">
+      <a class="topbar-link" href="https://ft-app-beta.vercel.app" target="_blank">Live site →</a>
+      <a class="topbar-link" href="https://github.com/buildspacex-cell/ft-app" target="_blank">GitHub →</a>
+      <a class="topbar-link" href="/sample-demo.html">Sample page →</a>
+    </div>
+  </div>
+
+  <!-- ═══ VISION ═══ -->
+  <section class="section" id="vision">
+    <div class="section-eyebrow">Foundation</div>
+    <h1>The problem we are solving</h1>
+    <p class="lead">Most retail investors in India own stocks they cannot explain. They bought based on a tip, a chart, or a feeling. They check the price every day but they cannot name the one reason they own the stock — and they would not know if that reason changed overnight.</p>
+
+    <div class="callout">
+      <p>"Why did I buy this in the first place?" — the question every retail investor asks at 7am when a headline drops about a stock they own.</p>
+    </div>
+
+    <h3>The two moments we intercept</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Pre-buy</div>
+        <div class="card-val">The FOMO buy</div>
+        <div class="card-sub">WhatsApp tip, finfluencer reel, colleague who "just put in 2 lakh" — buying without answering 5 questions</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Post-buy</div>
+        <div class="card-val">The 7am panic</div>
+        <div class="card-sub">News drops, stock glows amber, brain floods with noise — no framework to know if the reason broke</div>
+      </div>
+    </div>
+
+    <h3>The insight</h3>
+    <p>The problem is not lack of information. It is too much information with no way to filter it against what actually matters to a specific investor's specific holding. A defence sector headline is noise to someone who owns HDFC Bank for its loan quality. It is signal to someone who owns a defence electronics company for India's localization push. FT knows the difference because it knows your reason.</p>
+  </section>
+
+  <!-- ═══ PRODUCT ═══ -->
+  <section class="section" id="product">
+    <div class="section-eyebrow">Product</div>
+    <h1>What Fundamentally True does</h1>
+    <p class="lead">FT answers 5 questions about any NSE stock in plain English. Then it watches those answers every morning and finds you — only when something touches your specific reason for owning it.</p>
+
+    <h3>The core loop</h3>
+    <div class="card-grid">
+      <div class="card" style="border-top: 3px solid var(--coral)">
+        <div class="card-label">Step 1 — Understand once</div>
+        <div class="card-val">5 questions answered</div>
+        <div class="card-sub">Plain English. What it does, how it makes money, can it be trusted, is the price fair, your one reason.</div>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--amber)">
+        <div class="card-label">Step 2 — Save your reason</div>
+        <div class="card-val">Thesis builder</div>
+        <div class="card-sub">Pick the reasons you believe. We track those specifically — not the general news.</div>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--sage)">
+        <div class="card-label">Step 3 — We watch</div>
+        <div class="card-val">7am morning card</div>
+        <div class="card-sub">Only arrives when something touches your reason. Quiet days are a feature, not a bug.</div>
+      </div>
+    </div>
+
+    <h3>What the morning card contains</h3>
+    <ul class="checklist">
+      <li><span class="check">→</span> The headline in plain English — no jargon</li>
+      <li><span class="check">→</span> Which of your saved reasons it touches</li>
+      <li><span class="check">→</span> Whether the reason is holding, wobbling, or broken</li>
+      <li><span class="check">→</span> Price vs story — did the price react ahead of the proof</li>
+      <li><span class="check">→</span> The calm read — what you actually need to do (usually: nothing)</li>
+      <li><span class="check">→</span> One plain-English term explained — something you heard today</li>
+      <li><span class="check">→</span> Feedback chips — was this useful / noise / already knew</li>
+    </ul>
+
+    <h3>The key design decisions</h3>
+    <p><strong>Silence as a feature.</strong> Every other fintech app optimises for engagement — more alerts, more reasons to open. FT optimises for peace of mind. If nothing touched your reason, we do not send a card. That silence is the product working correctly.</p>
+    <p><strong>Reason-based filtering, not topic-based.</strong> We do not track "defence sector news." We track "India's defence electronics localization keeps growing" — a specific, falsifiable claim. The difference means we only surface news that could prove or disprove your specific bet.</p>
+    <p><strong>Plain English as a hard constraint.</strong> Every output must be explainable to someone who does not follow finance. No jargon without a tooltip. No recommendation without a reason. "Buy" and "sell" never appear.</p>
+  </section>
+
+  <!-- ═══ AUDIENCE ═══ -->
+  <section class="section" id="audience">
+    <div class="section-eyebrow">Audience</div>
+    <h1>Who this is for</h1>
+    <p class="lead">The retail investor who is curious enough to invest but honest enough to admit they do not fully understand what they own.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Primary</div>
+        <div class="card-val">NSE India retail</div>
+        <div class="card-sub">Owns 3-10 stocks. Checks price daily. Could not explain their holdings to a friend.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Secondary</div>
+        <div class="card-val">US individual investor</div>
+        <div class="card-sub">Same profile, different market. Separate landing page at /us.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Launch cohort</div>
+        <div class="card-val">June 24th, 2026</div>
+        <div class="card-sub">First cohort. Free during beta. Waitlist captured at /#waitlist.</div>
+      </div>
+    </div>
+
+    <h3>What they say about themselves</h3>
+    <div class="callout sage"><p>"I never know if a news story about a company I own is actually relevant or just noise."</p></div>
+    <div class="callout sage"><p>"I bought HDFC Bank because someone said it was safe. I still cannot explain why."</p></div>
+    <div class="callout sage"><p>"Every time results come out I do not know if the numbers are good or bad."</p></div>
+    <div class="callout sage"><p>"I check the price every day but I have no idea what I am looking for."</p></div>
+  </section>
+
+  <!-- ═══ POSITIONING ═══ -->
+  <section class="section" id="positioning">
+    <div class="section-eyebrow">Positioning</div>
+    <h1>Where FT sits in the market</h1>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Product</th><th>What they give you</th><th>What they miss</th></tr>
+        <tr><td><strong>Tickertape</strong></td><td>Screeners, ratings, data dashboards</td><td>Does not explain what the data means to your specific holding</td></tr>
+        <tr><td><strong>Smallcase</strong></td><td>Curated thematic portfolios</td><td>Someone else's thesis, not yours</td></tr>
+        <tr><td><strong>Moneycontrol</strong></td><td>News volume, alerts, prices</td><td>All signal, no filter — makes the noise problem worse</td></tr>
+        <tr><td><strong>Screener.in</strong></td><td>Deep financial data</td><td>Requires financial literacy to interpret</td></tr>
+        <tr><td><strong>Finfluencers</strong></td><td>Confidence, chart reads, tips</td><td>Chart tells you price, not business. No reason you can check tomorrow.</td></tr>
+        <tr><td><strong>Fundamentally True</strong></td><td>Plain English business understanding + reason-based morning alert</td><td>—</td></tr>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p>The white space: nobody tells you what the news means to your specific reason. That is the only thing that matters — and nobody does it.</p>
+    </div>
+  </section>
+
+  <!-- ═══ 5 QUESTIONS ═══ -->
+  <section class="section" id="5q">
+    <div class="section-eyebrow">The Framework</div>
+    <h1>The 5 questions</h1>
+    <p class="lead">The entire product is built around these 5 questions. They are the campaign. They are the sample page. They are the morning card. Q5 is the product.</p>
+
+    <div class="q-row">
+      <span class="q-num">Q1</span>
+      <div><div class="q-text">What does this company actually do?</div><div class="q-note">Not the sector. The actual business. The shop story.</div></div>
+    </div>
+    <div class="q-row">
+      <span class="q-num">Q2</span>
+      <div><div class="q-text">How does it make money — and is the money actually arriving?</div><div class="q-note">Revenue mix, rhythm, cash following profit.</div></div>
+    </div>
+    <div class="q-row">
+      <span class="q-num">Q3</span>
+      <div><div class="q-text">Why would this company still matter in 5 years?</div><div class="q-note">Structural tailwind, moat, honest risk.</div></div>
+    </div>
+    <div class="q-row">
+      <span class="q-num">Q4</span>
+      <div><div class="q-text">Is the price fair — or is the story already priced in?</div><div class="q-note">Price vs history, price vs peers, what execution the price demands.</div></div>
+    </div>
+    <div class="q-row q5">
+      <span class="q-num">Q5</span>
+      <div><div class="q-text">What is your one reason for owning this — and will you know if it changes?</div><div class="q-note">The bridge question. This is the product. Pre-buy: what will your reason be? Post-buy: is it still true?</div></div>
+    </div>
+
+    <div class="callout" style="margin-top: 20px">
+      <p>Most people can answer Q1. Almost nobody can answer Q5.</p>
+    </div>
+  </section>
+
+  <!-- ═══ CAMPAIGNS ═══ -->
+  <section class="section" id="campaigns">
+    <div class="section-eyebrow">Marketing</div>
+    <h1>Two campaigns running in parallel</h1>
+
+    <div class="card-grid">
+      <div class="card" style="border-top: 3px solid var(--ink)">
+        <div class="card-label">Campaign A — Pre-buy</div>
+        <div class="card-val">"5 questions before you invest"</div>
+        <div class="card-sub">Target: someone about to buy based on a tip. Intercepts before the mistake.</div>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--coral)">
+        <div class="card-label">Campaign B — Post-buy</div>
+        <div class="card-val">"5 questions about a stock you already own"</div>
+        <div class="card-sub">Target: someone who owns stocks they cannot explain. Creates instant recognition.</div>
+      </div>
+    </div>
+
+    <h3>Campaign A hook</h3>
+    <div class="callout">
+      <p>"Before you put money into any stock, you should be able to answer these 5 questions. Most people can answer the first one. Almost nobody can answer the last."</p>
+    </div>
+
+    <h3>Campaign B hook</h3>
+    <div class="callout">
+      <p>"Pick any stock you own. Now answer these 5 questions. Go on."</p>
+    </div>
+
+    <p>Campaign B ends with: "If you cannot answer question 5, you are not owning the stock. You are just holding the ticker." → link to sample page.</p>
+  </section>
+
+  <!-- ═══ TAGLINE ═══ -->
+  <section class="section" id="tagline">
+    <div class="section-eyebrow">Brand</div>
+    <h1>Tagline &amp; key copy</h1>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Tagline</div>
+        <div class="card-val" style="font-size: 18px; letter-spacing: -.03em">Own the business,<br>Track the ticker.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Campaign hook</div>
+        <div class="card-val" style="font-size: 15px">Most people can answer Q1. Almost nobody can answer Q5.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Product promise</div>
+        <div class="card-val" style="font-size: 15px">Quiet days are a feature. Go back to sleep.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Intervention line</div>
+        <div class="card-val" style="font-size: 15px">Stop. Don't look at the chart. Look at the business.</div>
+      </div>
+    </div>
+
+    <h3>Voice and tone</h3>
+    <p>Calm, unhurried, direct. Not a news anchor, not a salesperson. Someone explaining something clearly to a friend who does not follow markets. No jargon. No "buy" or "sell". No recommendations — only understanding.</p>
+    <p>One-word pivots ("Stop." "Wait." "Nothing." "Wrong question.") are core to the voice. They need a full beat before and after.</p>
+  </section>
+
+  <!-- ═══ STACK ═══ -->
+  <section class="section" id="stack">
+    <div class="section-eyebrow">Engineering</div>
+    <h1>Tech stack</h1>
+
+    <div class="card-grid">
+      <div class="card"><div class="card-label">Frontend</div><div class="card-val">Next.js 16 + React 19</div><div class="card-sub">App router, TypeScript, Tailwind</div></div>
+      <div class="card"><div class="card-label">Database</div><div class="card-val">Supabase</div><div class="card-sub">Auth + Postgres + magic links</div></div>
+      <div class="card"><div class="card-label">LLM</div><div class="card-val">Anthropic Claude</div><div class="card-sub">Sonnet for writing, Haiku for filtering</div></div>
+      <div class="card"><div class="card-label">News</div><div class="card-val">NewsAPI + Finnhub</div><div class="card-sub">Source scanning pipeline</div></div>
+      <div class="card"><div class="card-label">Push</div><div class="card-val">OneSignal</div><div class="card-sub">7am morning card delivery</div></div>
+      <div class="card"><div class="card-label">Analytics</div><div class="card-val">PostHog</div><div class="card-sub">User behaviour, funnel tracking</div></div>
+      <div class="card"><div class="card-label">Mobile</div><div class="card-val">Capacitor</div><div class="card-sub">iOS + Android wrapper (post-launch)</div></div>
+      <div class="card"><div class="card-label">Deploy</div><div class="card-val">Vercel</div><div class="card-sub">ft-app-beta.vercel.app</div></div>
+    </div>
+
+    <h3>Repos &amp; keys</h3>
+    <pre>Repo:     github.com/buildspacex-cell/ft-app (private)
+Live:     ft-app-beta.vercel.app
+Supabase: nrcknrgwmummxzpvwyvv.supabase.co
+Launch:   June 24th, 2026 — first cohort</pre>
+  </section>
+
+  <!-- ═══ SCHEMA ═══ -->
+  <section class="section" id="schema">
+    <div class="section-eyebrow">Database</div>
+    <h1>Schema</h1>
+
+    <h3>Waitlist table</h3>
+    <pre>create table if not exists waitlist (
+  id             uuid primary key default gen_random_uuid(),
+  email          text not null unique,
+  source         text default 'landing-in',
+  created_at     timestamptz default now(),
+  converted      boolean default false,
+  stock_interest text,   -- stock they care about most
+  wish_text      text,   -- "what do you wish you understood better"
+  phone          text    -- optional, with country code
+);</pre>
+
+    <div class="callout amber">
+      <p>Pending: run alter table migration in Supabase to add stock_interest, wish_text, phone columns if not already done.</p>
+    </div>
+
+    <h3>Source tracking values</h3>
+    <pre>landing-in-hero    — India landing page, hero email form
+landing-in-cta     — India landing page, bottom CTA
+landing-us-hero    — US landing page, hero
+landing-us-cta     — US landing page, bottom CTA</pre>
+  </section>
+
+  <!-- ═══ LLM ═══ -->
+  <section class="section" id="llm">
+    <div class="section-eyebrow">LLM Pipeline</div>
+    <h1>How the digest is generated</h1>
+
+    <h3>Key prompt rules (src/lib/llm/prompts.ts)</h3>
+    <ul class="checklist">
+      <li><span class="check">→</span> <strong>Split-signal rule</strong> — separate the headline (what happened) from the implication (what it means for your reason)</li>
+      <li><span class="check">→</span> <strong>Earnings-day rule</strong> — always explain whether results beat or missed expectations, not just the raw numbers</li>
+      <li><span class="check">→</span> <strong>Regulator vocabulary</strong> — use RBI, SEBI, TRAI correctly; never generic "regulator"</li>
+      <li><span class="check">→</span> <strong>Dual-currency rule</strong> — show both absolute (Rs X crore) and relative (% of revenue)</li>
+      <li><span class="check">→</span> <strong>Plain English rule</strong> — use [[TERM|explanation]] syntax for any jargon; JargonText component renders inline tooltips</li>
+      <li><span class="check">→</span> <strong>No buy/sell</strong> — never recommend action; only explain state change</li>
+    </ul>
+
+    <h3>The voice system prompt — core rules</h3>
+    <ul class="checklist">
+      <li><span class="check">→</span> <strong>The shop-on-the-street rule</strong> — every business described as if it were a shop you walk past on MG Road or Brigade Road. "HDFC Bank runs 8,000 branches — the kind with a queue outside on salary day."</li>
+      <li><span class="check">→</span> <strong>Numbers always paired</strong> — "Net NPA of 0.3% — of every Rs 100 they lent out, less than 30 paise went bad."</li>
+      <li><span class="check">→</span> <strong>Status vocabulary locked</strong> — "holding" / "wobbling" / "broken". Never "consider trimming" or "reduce exposure".</li>
+      <li><span class="check">→</span> <strong>Weight vocabulary</strong> — alarm (reason broke), heads-up (upcoming event), tailwind (mild positive), quiet (low urgency)</li>
+      <li><span class="check">→</span> <strong>8 few-shot examples</strong> baked into the prompt — HDFC NPA, TCS BFSI, Maruti dealer, RBI repo rate, Zomato acquisition, Jio pricing, Bajaj Finance digital, Sun Pharma US specialty</li>
+      <li><span class="check">→</span> <strong>Off the hook close</strong> — every digest ends with context that lets the reader know they don't need to do anything with this information</li>
+    </ul>
+
+    <h3>JargonText component</h3>
+    <p>Parses <code>[[TERM|explanation]]</code> tokens in digest text. Renders coral-underlined tappable tooltips inline. Lives at <code>src/components/digest/JargonText.tsx</code>.</p>
+  </section>
+
+  <!-- ═══ URLS ═══ -->
+  <section class="section" id="urls">
+    <div class="section-eyebrow">Pages</div>
+    <h1>All URLs</h1>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>URL</th><th>What it is</th><th>Status</th></tr>
+        <tr><td><code>ft-app-beta.vercel.app</code></td><td>India landing page — hero, sample hook, waitlist, WishesBar, FAQ</td><td><span class="badge live"><span class="bdot"></span>Live</span></td></tr>
+        <tr><td><code>/us</code></td><td>US landing page — same structure, USD framing, US phone default</td><td><span class="badge live"><span class="bdot"></span>Live</span></td></tr>
+        <tr><td><code>/sample</code></td><td>Redirects to sample-demo.html</td><td><span class="badge live"><span class="bdot"></span>Live</span></td></tr>
+        <tr><td><code>/sample-demo.html</code></td><td>Data Patterns interactive sample — 9 panels, horizontal scroll</td><td><span class="badge live"><span class="bdot"></span>Live</span></td></tr>
+        <tr><td><code>/short-1.html</code> to <code>/short-7.html</code></td><td>Phone frame wrappers for all 7 animated shorts</td><td><span class="badge live"><span class="bdot"></span>Live</span></td></tr>
+        <tr><td><code>/brain.html</code></td><td>This document — project brain</td><td><span class="badge live"><span class="bdot"></span>Live</span></td></tr>
+        <tr><td><code>/5-questions</code></td><td>Campaign anchor page — interactive Q&A before buy/after buy tabs</td><td><span class="badge todo"><span class="bdot"></span>Not built</span></td></tr>
+        <tr><td><code>/digest</code></td><td>Daily digest app screen</td><td><span class="badge pending"><span class="bdot"></span>In codebase</span></td></tr>
+        <tr><td><code>/onboarding</code></td><td>Stock setup + thesis builder onboarding flow</td><td><span class="badge pending"><span class="bdot"></span>In codebase</span></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══ SAMPLE ARC ═══ -->
+  <section class="section" id="sample-arc">
+    <div class="section-eyebrow">Sample Page</div>
+    <h1>The narrative arc</h1>
+    <p class="lead">The sample page at /sample-demo.html is the most important marketing asset. It is not a product tour. It is a story. Someone arrives anxious and leaves calm — having answered 5 questions about a real stock.</p>
+
+    <div class="callout">
+      <p>The arc: Chaos → Intervention → 5 questions (each with multiple evidence cards) → Save your reason → Same headline, different morning (the payoff) → CTA</p>
+    </div>
+
+    <h3>Design principles for the sample</h3>
+    <ul class="checklist">
+      <li><span class="check">→</span> Horizontal scroll — one question per swipe, feels like a story not a scroll</li>
+      <li><span class="check">→</span> Forward hooks at the end of each panel — "Revenue looks right. But is the cash arriving?" pulls you to the next</li>
+      <li><span class="check">→</span> Counter-weight card in Q3 — shows structural friction honestly, builds trust</li>
+      <li><span class="check">→</span> Interactive thesis builder in Q5 — visitor earns the payoff by choosing their reasons</li>
+      <li><span class="check">→</span> Circular structure — Panel 1 chaos, Panel 8 same headline defanged. First and last beat share the same stimulus.</li>
+      <li><span class="check">→</span> "Same headline. Different morning." — the bridge between Panel 7 and Panel 8</li>
+    </ul>
+  </section>
+
+  <!-- ═══ SAMPLE PANELS ═══ -->
+  <section class="section" id="sample-panels">
+    <div class="section-eyebrow">Sample Page</div>
+    <h1>9 panels — Data Patterns</h1>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Panel</th><th>Title</th><th>Content</th><th>Forward hook</th></tr>
+        <tr><td>1</td><td>The Chaos</td><td>Dark ink. 7am. Portfolio map. 4 panic thoughts.</td><td>"There is a calmer way to wake up to this."</td></tr>
+        <tr><td>2</td><td>The Intervention</td><td>"Stop. Don't look at the chart. Look at the business." 5 questions listed.</td><td>—</td></tr>
+        <tr><td>3</td><td>Q1 — The Business</td><td>Machine diagram, body analogy, trust card.</td><td>"Now you know what it does. But does it make money?"</td></tr>
+        <tr><td>4</td><td>Q2 — The Money</td><td>Revenue mix bars (55/30/15), defence budget chart FY21→FY26E.</td><td>"Revenue looks right. But is the cash actually arriving?"</td></tr>
+        <tr><td>5</td><td>Q2 cont — The Proof</td><td>Spark chart, margins with context, cash vs profit, structural friction card.</td><td>"Story checks out. But are you paying too much for it?"</td></tr>
+        <tr><td>6</td><td>Q4 — The Price</td><td>Gradient price meter with 3 anchors (5yr avg / sector peers / today).</td><td>"Now the hardest question. Why do you hold it?"</td></tr>
+        <tr><td>7</td><td>Q5 — Your Reason</td><td>6 interactive toggleable reason cards. Save triggers auto-advance.</td><td>"That is the reason we track."</td></tr>
+        <tr><td>8</td><td>The Payoff</td><td>Noise filter visual → same headline, defanged. Full digest card.</td><td>—</td></tr>
+        <tr><td>9</td><td>CTA</td><td>"Quiet days are a feature. Go back to sleep." → Get early access.</td><td>—</td></tr>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ═══ PRICE ANALYSIS ═══ -->
+  <section class="section" id="price-analysis">
+    <div class="section-eyebrow">Product Spec</div>
+    <h1>Q4 — Price analysis framework</h1>
+    <p class="lead">The question "Is the price fair?" needs six distinct lenses. The current sample page shows lenses 1 and 2 only. This is the full spec for what Q4 should cover when the product is fully built.</p>
+
+    <div class="callout amber">
+      <p>Current state: gradient meter with 3 anchors (5yr avg, sector peers, today). Missing: growth-adjusted valuation, story vs price divergence, execution demand in plain English, time horizon calibration.</p>
+    </div>
+
+    <h3>Lens 1 — Historical valuation range</h3>
+    <p>Where does today's P/E, P/S, and EV/EBITDA sit versus the stock's own 3-5 year range? Is it at the expensive end of its own history or the cheap end? This anchors the price against the company's own past — independent of what the sector is doing.</p>
+    <div class="card-grid">
+      <div class="card"><div class="card-label">Metrics</div><div class="card-val">P/E, P/S, EV/EBITDA</div><div class="card-sub">Shown on a range bar: 3yr low → median → 3yr high → today</div></div>
+      <div class="card"><div class="card-label">Plain English</div><div class="card-val">"Expensive end of own history"</div><div class="card-sub">"The last time it was this expensive was during the 2021 bull run. It corrected 35% after."</div></div>
+    </div>
+
+    <h3>Lens 2 — Sector peer comparison</h3>
+    <p>Same metrics versus direct competitors — not the broad market. A defence electronics company is compared to other defence electronics companies. A private sector bank is compared to other private sector banks. Sector re-ratings matter: if the whole sector has re-rated upward, being expensive vs your own history may simply mean the sector premium has expanded.</p>
+    <div class="callout sage">
+      <p>Key insight from short-3: if the entire defence sector has re-rated, Data Patterns being expensive vs its own history may just be a sector-wide shift — not a company-specific bubble. The peer comparison separates these two explanations.</p>
+    </div>
+
+    <h3>Lens 3 — Growth-adjusted valuation (PEG)</h3>
+    <p>A stock at 40x earnings looks expensive until you see it growing at 45%. PEG ratio (P/E divided by earnings growth rate) gives context. Below 1 is generally considered fair for a growing company. Above 2 is demanding. This lens prevents the mistake of calling a fast grower expensive just because its P/E is high.</p>
+    <div class="card-grid">
+      <div class="card"><div class="card-label">Calculation</div><div class="card-val">PEG = P/E / EPS growth %</div><div class="card-sub">Use forward estimates, not trailing</div></div>
+      <div class="card"><div class="card-label">Plain English read</div><div class="card-val">"Fair for the growth rate"</div><div class="card-sub">"At 38x earnings with 40% earnings growth, you are paying roughly in line with what you are getting."</div></div>
+    </div>
+
+    <h3>Lens 4 — Story vs price divergence</h3>
+    <p>Has the price moved ahead of the actual evidence? This is tracked as the gap between price movement and proof. A defence sector headline may support the theme for Data Patterns — but if Data Patterns is not directly named in the order, the price moving 4% on that headline is the market pricing in something that has not been confirmed yet. That gap is a specific signal worth calling out.</p>
+    <div class="card-grid">
+      <div class="card"><div class="card-label">Signal</div><div class="card-val">Price moved on theme</div><div class="card-sub">Story has not confirmed yet. Worth watching — not worth panicking.</div></div>
+      <div class="card"><div class="card-label">Signal</div><div class="card-val">Story confirmed, price flat</div><div class="card-sub">Market has not priced it in yet. The reason got stronger without the price reflecting it.</div></div>
+    </div>
+    <p>This is already implemented in the morning card as "Price vs Story" — it shows the price change since last quarter alongside the reason status. The Q4 chapter should connect explicitly to this.</p>
+
+    <h3>Lens 5 — What execution the price demands</h3>
+    <p>This is the most useful lens for a retail investor. Convert the valuation into a plain English expectation. At the current price, what does the market need to happen for the price to be justified? This is reverse DCF thinking without the jargon.</p>
+    <div class="callout">
+      <p>Example: "At this price, the market is assuming revenue grows at 28% a year for the next 4 years with margins holding above 30%. The last 3 years averaged 31% revenue growth and 34% margins — so this is achievable but leaves no room for a slow quarter."</p>
+    </div>
+    <p>The plain English version: "The price is not wrong — but it leaves very little forgiveness. One missed quarter and the price has to find a new level."</p>
+
+    <h3>Lens 6 — Time horizon calibration</h3>
+    <p>A stretched valuation over 12-18 months is a real risk. The same valuation over 5 years may be irrelevant if the business keeps compounding. Price analysis without time horizon is incomplete. FT should ask: what is your horizon? And then qualify every price read against it.</p>
+    <div class="card-grid">
+      <div class="card" style="border-top: 3px solid var(--sage)"><div class="card-label">5+ year horizon</div><div class="card-val">Valuation premium may compress naturally</div><div class="card-sub">If the business keeps compounding, today's expensive price becomes tomorrow's cheap entry.</div></div>
+      <div class="card" style="border-top: 3px solid var(--amber)"><div class="card-label">12-18 month horizon</div><div class="card-val">Stretched valuation is a real risk</div><div class="card-sub">The market can stay wrong about price for years — but 12-18 months is not long enough to wait it out.</div></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3>Current implementation vs full spec</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Lens</th><th>Current sample page</th><th>Full product</th></tr>
+        <tr><td>1. Historical range</td><td><span class="badge live"><span class="bdot"></span>Partial — gradient meter with 5yr avg marker</span></td><td>Range bar showing 3yr low / median / 3yr high / today for P/E, P/S, EV/EBITDA</td></tr>
+        <tr><td>2. Sector peers</td><td><span class="badge live"><span class="bdot"></span>Partial — single peer marker on gradient</span></td><td>Named peer comparison table with sector re-rating context</td></tr>
+        <tr><td>3. Growth-adjusted (PEG)</td><td><span class="badge todo"><span class="bdot"></span>Not built</span></td><td>PEG ratio with plain English read</td></tr>
+        <tr><td>4. Story vs price divergence</td><td><span class="badge live"><span class="bdot"></span>In morning card</span></td><td>Connect Q4 chapter explicitly to morning card price vs story</td></tr>
+        <tr><td>5. Execution demand</td><td><span class="badge todo"><span class="bdot"></span>Not built</span></td><td>Plain English reverse DCF — "market needs X to happen"</td></tr>
+        <tr><td>6. Time horizon calibration</td><td><span class="badge live"><span class="bdot"></span>In short-3 resolution</span></td><td>Ask user their horizon during onboarding, qualify all price reads against it</td></tr>
+      </table>
+    </div>
+
+    <h3>What the Q4 panel in the sample page should ultimately show</h3>
+    <ul class="checklist">
+      <li><span class="check">→</span> Gradient meter with all 3 anchors (already built)</li>
+      <li><span class="check">→</span> P/E, P/S, EV/EBITDA range bars — 3yr low to today</li>
+      <li><span class="check">→</span> Named peer comparison — "vs Zen Technologies, vs Bharat Electronics"</li>
+      <li><span class="check">→</span> PEG ratio with one-line plain English read</li>
+      <li><span class="check">→</span> "What the price demands" card — plain English execution expectation</li>
+      <li><span class="check">→</span> Time horizon qualifier — "At a 5-year horizon this reads differently than at 18 months"</li>
+      <li><span class="check">→</span> Story vs price divergence link — "The morning card tracks whether price is moving ahead of proof"</li>
+    </ul>
+
+    <p class="updated">This spec was captured after reviewing Short 3 (The Price Check) where the resolution "Price stretched vs 5yr history and sector peers" was correctly identified as incomplete without growth-adjusted context, execution demand, and time horizon calibration.</p>
+  </section>
+
+
+  <!-- ═══ TECHNICAL EXIT ═══ -->
+  <section class="section" id="tech-exit">
+    <div class="section-eyebrow">Product Idea — High Priority</div>
+    <h1>The technical exit framework</h1>
+    <p class="lead">When the reason is intact but the price has run ahead of the proof, FT watches the technical structure for the user. When the market starts correcting the overvaluation — first break, confirmed by volume — FT tells them. Until then: silence.</p>
+
+    <div class="callout">
+      <p>"Let it run. We keep watching — the story and the price — so you don't have to. One message when something is actually worth your attention."</p>
+    </div>
+
+    <h3>The problem this solves</h3>
+    <p>The most common and painful investor experience: own something good, it has run 50-60%, fundamentals still intact, but uneasy about the valuation. Current options are all bad:</p>
+    <ul class="checklist">
+      <li><span class="check" style="color:var(--rust)">✗</span> Sell now on price anxiety — often premature, they sell and watch it go up another 30%</li>
+      <li><span class="check" style="color:var(--rust)">✗</span> Hold and do nothing — no framework, pure hope, creates daily anxiety</li>
+      <li><span class="check" style="color:var(--rust)">✗</span> Average down if it corrects — no system, just gut reaction</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> <strong>Stay in until the technical structure breaks, then exit with confirmation</strong> — this is what FT enables</li>
+    </ul>
+
+    <h3>The three-signal framework</h3>
+    <p>FT checks three things simultaneously once a user is in a "reason intact, price stretched" situation:</p>
+
+    <div class="card-grid">
+      <div class="card" style="border-top:3px solid var(--sage)">
+        <div class="card-label">Signal 1 — Fundamental</div>
+        <div class="card-val">Did the reason change?</div>
+        <div class="card-sub">Already built. Tracked every morning. Reason breaks → fundamental exit signal regardless of price or technical structure.</div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--amber)">
+        <div class="card-label">Signal 2 — Valuation</div>
+        <div class="card-val">Has price run ahead of proof?</div>
+        <div class="card-sub">Price vs story divergence. Partially built in morning card. Needs to connect explicitly to Q4 chapter and user's time horizon.</div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--coral)">
+        <div class="card-label">Signal 3 — Technical</div>
+        <div class="card-val">Has the structure broken?</div>
+        <div class="card-sub">Not yet built. Key support level + volume confirmation. Only triggers after Signal 2 is active (price already stretched).</div>
+      </div>
+    </div>
+
+    <div class="callout sage">
+      <p>Critical design rule: Signal 3 only activates when Signal 2 is already true. A technical break during a market-wide correction that has nothing to do with the fundamental reason should not trigger the alert. Standard charting tools cannot make this distinction. FT can — and this is the moat.</p>
+    </div>
+
+    <h3>The proprietary algo — what to build</h3>
+    <p>Do not use standard RSI/MACD/moving averages. Those are available everywhere and add nothing. Build a system that combines:</p>
+    <ul class="checklist">
+      <li><span class="check">→</span> <strong>Support level identification</strong> — recent swing lows, volume-weighted price floors, previous breakout levels. Set relative to the stock's own structure, not arbitrary percentages.</li>
+      <li><span class="check">→</span> <strong>Volume confirmation</strong> — a price break on below-average volume is noise. A price break on 2x+ average volume is the market making a statement. Only the latter triggers the alert.</li>
+      <li><span class="check">→</span> <strong>Volatility calibration</strong> — a 3% move means nothing for a volatile mid-cap but is significant for a stable large-cap. Thresholds set relative to the stock's own historical volatility (ATR).</li>
+      <li><span class="check">→</span> <strong>Trend structure check</strong> — is the stock in an uptrend (higher highs, higher lows)? A break below the most recent higher low is the technical definition of "uptrend broken." Simple. Unambiguous.</li>
+      <li><span class="check">→</span> <strong>Fundamental filter</strong> — only flag if the technical break is NOT during a broad market correction. If Nifty is down 3% and the stock is down 4%, that is market noise. If Nifty is flat and the stock is down 4% on volume — that is a signal.</li>
+    </ul>
+
+    <h3>The morning card UX — watching levels</h3>
+    <p>When a user is in "reason intact, price stretched" mode, the morning card gets a new persistent element: the watching levels bar. It appears every morning regardless of whether there is news — which is itself a signal (silence = structure still holding).</p>
+
+    <div class="card" style="background:var(--ink);color:var(--cream);border-color:rgba(246,243,236,.1);margin:20px 0">
+      <div style="font-family:var(--mono);font-size:9px;color:rgba(246,243,236,.35);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px">WATCHING — PRICE STRUCTURE</div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--cream);margin-bottom:2px">KEY SUPPORT — ₹1,680</div>
+          <div style="font-size:11px;color:rgba(246,243,236,.4)">Recent swing low · 14-day avg volume baseline</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--sage)"></div>
+          <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--sage)">HOLDING</span>
+        </div>
+      </div>
+
+      <div style="background:rgba(246,243,236,.05);border-radius:10px;padding:10px 12px;margin-bottom:10px">
+        <div style="font-size:12px;color:rgba(246,243,236,.6);line-height:1.5">Today: ₹1,847 · Support at ₹1,680 · Distance: +9.9%<br>Volume: 0.8x average — below threshold for a break signal</div>
+      </div>
+
+      <div style="font-size:12px;color:rgba(246,243,236,.4);line-height:1.5;font-style:italic">Structure intact. If this closes below ₹1,680 on 2x+ average volume, we will find you immediately. Until then — reason holding, structure holding.</div>
+    </div>
+
+    <p>The morning card has three possible states for this block:</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>State</th><th>What it shows</th><th>What it means</th></tr>
+        <tr>
+          <td><span class="badge live"><span class="bdot"></span>Structure holding</span></td>
+          <td>"₹1,680 support. Distance: +9.9%. Volume: 0.8x. Holding."</td>
+          <td>Nothing to do. Go back to sleep. Card appears but requires no action.</td>
+        </tr>
+        <tr>
+          <td><span class="badge pending"><span class="bdot"></span>Structure testing</span></td>
+          <td>"Momentum softening. Watching closely today."</td>
+          <td>Not a turn yet. Early signal only. No action implied.</td>
+        </tr>
+        <tr>
+          <td><span class="badge critical"><span class="bdot"></span>Structure broken</span></td>
+          <td>"Price momentum has turned. Three signals checked — momentum now negative."</td>
+          <td>Not a recommendation to sell. A notification that the run has changed character. The user decides what to do with that information.</td>
+        </tr>
+      </table>
+    </div>
+
+    <h3>What FT never says</h3>
+    <div class="callout">
+      <p>FT never says "sell." FT says "price momentum has turned." The distinction is the entire brand. A momentum shift is a fact — observable, neutral, uncharged. What the user does with it is entirely their decision. This keeps FT on the right side of SEBI, on the right side of the brand promise, and — most importantly — on the right side of the investor's autonomy. The product's job is to make sure the user is never surprised. Not to tell them what to do.</p>
+    </div>
+
+    <h3>Why this is a moat, not just a feature</h3>
+    <ul class="checklist">
+      <li><span class="check">→</span> <strong>No screener can do this</strong> — Tickertape and Screener show technical indicators but cannot connect them to a specific user's saved reason and valuation context</li>
+      <li><span class="check">→</span> <strong>No finfluencer can do this</strong> — they tell you what to do, they don't watch your specific setup and alert you when something changes</li>
+      <li><span class="check">→</span> <strong>Creates daily engagement without anxiety</strong> — "structure holding" is a calming daily confirmation, not a fear-driven alert. Different emotional register entirely.</li>
+      <li><span class="check">→</span> <strong>Retention driver</strong> — "Let it run. We keep watching — the story and the price — so you don't have to." is the product promise in plain English. No conditions. No jargon. The user delegates the watching entirely. Confidence-driven engagement, not anxiety-driven.</li>
+      <li><span class="check">→</span> <strong>Proprietary data flywheel</strong> — as users interact with break alerts (did they act? did the stock recover?), FT learns which break signals are reliable for which stock types. The algo improves with usage.</li>
+    </ul>
+
+    <h3>Build sequence</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Phase</th><th>What to build</th><th>Status</th></tr>
+        <tr><td><strong>Now</strong></td><td>Update short-3 with three-signal narrative. Plant the concept in marketing before the product exists.</td><td><span class="badge live"><span class="bdot"></span>Done</span></td></tr>
+        <tr><td><strong>Beta</strong></td><td>Add "watching levels" block to morning card. Hardcode support levels initially — manual calculation by the FT team for launch stocks.</td><td><span class="badge todo"><span class="bdot"></span>Not built</span></td></tr>
+        <tr><td><strong>V2</strong></td><td>Automate support level identification using swing lows + ATR. Add volume confirmation logic. Build the fundamental filter (exclude market-wide corrections).</td><td><span class="badge todo"><span class="bdot"></span>Not built</span></td></tr>
+        <tr><td><strong>V3</strong></td><td>Proprietary algo: reason status + price vs story + technical structure combined into exit readiness signal. Learning from user behaviour on break alerts.</td><td><span class="badge todo"><span class="bdot"></span>Not built</span></td></tr>
+      </table>
+    </div>
+
+    <p class="updated">Captured May 29, 2026 after reviewing short-3 (The Price Check) and the tension between "price is stretched" and "reason is intact." The technical exit framework resolves this tension in a way that is honest, useful, differentiated, and consistent with the FT brand promise.</p>
+  </section>
+
+  <!-- ═══ SHORTS ═══ -->
+  <section class="section" id="shorts">
+    <div class="section-eyebrow">Animated Shorts</div>
+    <h1>7 animated shorts</h1>
+    <p class="lead">Mobile-first HTML animations with voice audio. Screen-record for Instagram Reels / LinkedIn Shorts. Each has a phone frame wrapper, tap-to-play, audio synced visuals, progress bar, and replay button.</p>
+
+    <div class="short-grid">
+      <a class="short-card" href="/short-1.html" target="_blank">
+        <div class="short-card-num">Short 01</div>
+        <div class="short-card-title">The Chaos</div>
+        <div class="short-card-hook">Post-buy panic at 7am. Portfolio map glowing. Panic thoughts flooding in.</div>
+        <div class="short-card-meta"><span class="short-card-dur">22.6s</span><span class="short-card-link">Open →</span></div>
+      </a>
+      <a class="short-card" href="/short-2.html" target="_blank">
+        <div class="short-card-num">Short 02</div>
+        <div class="short-card-title">Before You Buy</div>
+        <div class="short-card-hook">WhatsApp tip, FOMO, price moving — about to buy. Wait. 5 questions first.</div>
+        <div class="short-card-meta"><span class="short-card-dur">39.5s</span><span class="short-card-link">Open →</span></div>
+      </a>
+      <a class="short-card" href="/short-3.html" target="_blank">
+        <div class="short-card-num">Short 03</div>
+        <div class="short-card-title">The Price Check</div>
+        <div class="short-card-hook">Up 52%. Forums saying sell. But did the reason move?</div>
+        <div class="short-card-meta"><span class="short-card-dur">38.8s</span><span class="short-card-link">Open →</span></div>
+      </a>
+      <a class="short-card" href="/short-4.html" target="_blank">
+        <div class="short-card-num">Short 04</div>
+        <div class="short-card-title">Results Day</div>
+        <div class="short-card-hook">Good results, price falls. Bad results, price rises. The price reacts to surprises — not facts.</div>
+        <div class="short-card-meta"><span class="short-card-dur">51.5s</span><span class="short-card-link">Open →</span></div>
+      </a>
+      <a class="short-card" href="/short-5.html" target="_blank">
+        <div class="short-card-num">Short 05</div>
+        <div class="short-card-title">The Finfluencer</div>
+        <div class="short-card-hook">2.4M followers. Chart looks bullish. 5 things he didn't answer.</div>
+        <div class="short-card-meta"><span class="short-card-dur">38.6s</span><span class="short-card-link">Open →</span></div>
+      </a>
+      <a class="short-card" href="/short-6.html" target="_blank">
+        <div class="short-card-num">Short 06</div>
+        <div class="short-card-title">The Quiet Morning</div>
+        <div class="short-card-hook">Nothing touched your reasons today. Silence is the signal. Quiet days are a feature.</div>
+        <div class="short-card-meta"><span class="short-card-dur">34.4s</span><span class="short-card-link">Open →</span></div>
+      </a>
+      <a class="short-card" href="/short-7.html" target="_blank">
+        <div class="short-card-num">Short 07</div>
+        <div class="short-card-title">The Exit Decision</div>
+        <div class="short-card-hook">Down 30%. Wrong question. Did the reason change?</div>
+        <div class="short-card-meta"><span class="short-card-dur">44.3s</span><span class="short-card-link">Open →</span></div>
+      </a>
+    </div>
+
+    <h3>How to screen-record for posting</h3>
+    <p>Open any <code>/short-N.html</code> on desktop. The phone frame renders centered on a dark background. Start a screen recording (QuickTime on Mac, Win+G on Windows), tap the coral play button, record through to the end. Crop to the phone frame. Post as Reel or Short.</p>
+  </section>
+
+  <!-- ═══ FORMATS ═══ -->
+  <section class="section" id="formats">
+    <div class="section-eyebrow">Content Plan</div>
+    <h1>Content formats</h1>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Format 1</div>
+        <div class="card-val">WhatsApp forward</div>
+        <div class="card-sub">Text-only. No branding. Just the 5 questions + one line. Designed to be forwarded. Link comes with it.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Format 2</div>
+        <div class="card-val">Instagram / LinkedIn carousel</div>
+        <div class="card-sub">7 slides. Hook → Q1-Q5 → CTA. Link in bio → /sample.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Format 3</div>
+        <div class="card-val">Animated shorts (7 built)</div>
+        <div class="card-sub">Screen-record phone frame. Post as Reel/Short. Audio synced to visuals.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Format 4 (not built)</div>
+        <div class="card-val">/5-questions page</div>
+        <div class="card-sub">Type any stock. Answer all 5. The moment you can't answer Q5 is the conversion.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TIMELINE ═══ -->
+  <section class="section" id="timeline">
+    <div class="section-eyebrow">Launch Plan</div>
+    <h1>4-week campaign timeline</h1>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Week</th><th>Campaign A — Pre-buy</th><th>Campaign B — Post-buy</th></tr>
+        <tr>
+          <td><strong>Week 1</strong><br><span style="color:var(--muted);font-size:12px">Now</span></td>
+          <td>Share /sample in 3-5 WhatsApp groups. "I built this — what do you think?" No CTA yet.</td>
+          <td>Share the 5 questions as a text post. No FT branding. Just the questions. See what resonates.</td>
+        </tr>
+        <tr>
+          <td><strong>Week 2</strong></td>
+          <td>Short 2 (Before You Buy) on Instagram + LinkedIn. Build pre-buy audience.</td>
+          <td>Short 1 (The Chaos) + hook: "Pick a stock you own. Try Q5." Engage every comment.</td>
+        </tr>
+        <tr>
+          <td><strong>Week 3</strong></td>
+          <td>Short 5 (Finfluencer). "The chart tells you price. Not business."</td>
+          <td>Short 7 (Exit Decision). "Down 30%. Wrong question."</td>
+        </tr>
+        <tr>
+          <td><strong>Week 4<br>June 24th</strong></td>
+          <td>Short 6 (Quiet Morning) + "Launches today. We answer all 5."</td>
+          <td>Short 4 (Results Day) + "Launches today. Know which number matters to your reason."</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="growth-plan">
+    <div class="section-eyebrow">Growth Plan</div>
+    <h1>The road to 2,000 early-access signups</h1>
+    <p class="lead">A single, focused goal: 2,000 verified email signups for the June 24th first cohort. This plan works backwards from that number — what each asset must do, what each channel can realistically deliver, and what we build or fix before spending a rupee or an hour on distribution.</p>
+
+    <div class="callout">
+      <p>Target: 2,000 signups by June 24th. Working window: ~4 weeks. Required run-rate: roughly 70-80 signups per day on average, front-loaded lighter and back-loaded heavier as content compounds.</p>
+    </div>
+
+    <h2>The conversion math</h2>
+    <p>Every plan that hits a number is really a plan about a funnel. Here is the funnel we are solving for, with conservative assumptions. If the real rates beat these, we hit the goal earlier; if they lag, we know exactly which stage to fix.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Funnel stage</th><th>Assumed rate</th><th>Volume needed for 2,000</th></tr>
+        <tr><td>Content views (Reels, posts, forwards)</td><td>—</td><td>~200,000 views</td></tr>
+        <tr><td>View → landing page visit</td><td>2.5%</td><td>~20,000 visits</td></tr>
+        <tr><td>Landing visit → sample page / engaged</td><td>35%</td><td>~7,000 engaged</td></tr>
+        <tr><td>Engaged → signup</td><td>28%</td><td>~2,000 signups</td></tr>
+      </table>
+    </div>
+
+    <div class="callout amber">
+      <p>The two numbers we do not control are total views and the view-to-visit rate. The two we fully control are landing engagement and signup conversion. That is why asset readiness comes first — a 28% engaged-to-signup rate is only achievable if the landing page and sample page are doing their job.</p>
+    </div>
+
+    <h2>Asset readiness audit — fix before we distribute</h2>
+    <p>No distribution begins until these are true. Driving traffic to a leaky funnel wastes the one thing we cannot buy back: the first impression with a warm audience.</p>
+
+    <h3>Landing page — readiness</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Item</th><th>Status</th><th>Action</th></tr>
+        <tr><td>Hero, six moments, promises, FAQ, waitlist flow</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
+        <tr><td>Waitlist actually writes to Supabase</td><td><span class="badge live"><span class="bdot"></span>Live — tested</span></td><td>Env vars set, migration run, API re-enabled, end-to-end test passed. Rows writing with all fields.</td></tr>
+        <tr><td>Geo + cookie routing (India / US)</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
+        <tr><td>Free-text stock capture</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
+        <tr><td>Confirmation on signup</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>Magic link removed — creates drop-off friction on a waitlist. In-page confirmation screen is the signal. June 24th cohort email is the follow-up.</td></tr>
+        <tr><td>Social share / OG image</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>opengraph-image.tsx on both / and /us. Full openGraph + Twitter card meta tags. Dark background, headline, FT badge, URL.</td></tr>
+        <tr><td>Analytics events (visit, signup, stock save)</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>Analytics component fires page_view on every route, waitlist_signup on email submit, waitlist_stock_saved on stock save. Logs to console without PostHog key, sends to PostHog when NEXT_PUBLIC_POSTHOG_KEY is set.</td></tr>
+      </table>
+    </div>
+
+    <h3>Sample page — readiness</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Item</th><th>Status</th><th>Action</th></tr>
+        <tr><td>9-panel horizontal story, fully interactive</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
+        <tr><td>Q4 "what FT does from here" momentum card</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
+        <tr><td>Signup CTA at the end of the sample (panel 9)</td><td><span class="badge pending"><span class="bdot"></span>Check</span></td><td>The sample is our highest-intent surface — anyone who finishes it is sold. Confirm panel 9 links straight to the waitlist with the email field, not just back to the landing top.</td></tr>
+        <tr><td>Mobile swipe performance</td><td><span class="badge pending"><span class="bdot"></span>Check</span></td><td>Most traffic will be mobile from Reels. Test the horizontal swipe on a real phone end to end.</td></tr>
+        <tr><td>Mid-sample soft capture</td><td><span class="badge todo"><span class="bdot"></span>Consider</span></td><td>Optional: a gentle email capture after panel 6 ("want the rest sent to you?") for people who do not finish. Only if drop-off data shows it is needed.</td></tr>
+      </table>
+    </div>
+
+    <h3>Shorts — readiness</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Item</th><th>Status</th><th>Action</th></tr>
+        <tr><td>All 7 shorts built, audio synced, phone frames</td><td><span class="badge live"><span class="bdot"></span>Live</span></td><td>None</td></tr>
+        <tr><td>Screen-recorded vertical exports (MP4)</td><td><span class="badge todo"><span class="bdot"></span>Not done</span></td><td>Record each short as a clean vertical MP4. This is the actual postable asset — the HTML is the master, the MP4 is what ships.</td></tr>
+        <tr><td>Captions / subtitles burned in</td><td><span class="badge todo"><span class="bdot"></span>Not done</span></td><td>80%+ of Reels are watched muted. Burn in captions or the voice is wasted. Highest-leverage single fix for view-to-visit rate.</td></tr>
+        <tr><td>End-card CTA frame consistency</td><td><span class="badge pending"><span class="bdot"></span>Check</span></td><td>Every short must end on the same clear "ft-app-beta.vercel.app — early access" frame so the destination is unmissable.</td></tr>
+        <tr><td>Hook test — first 2 seconds</td><td><span class="badge pending"><span class="bdot"></span>Check</span></td><td>The first 2 seconds decide everything. Confirm each short opens on its strongest line, not a slow build.</td></tr>
+      </table>
+    </div>
+
+    <div class="callout sage">
+      <p>Readiness verdict: the creative is done. The gaps are operational — make the waitlist actually save and confirm, export and caption the shorts, and verify the CTA paths. None of this is large work; all of it is blocking. Estimate: 2-3 focused days before any distribution.</p>
+    </div>
+
+    <h2>Channel strategy — where 2,000 comes from</h2>
+    <p>We do not spread thin. We concentrate on channels where the FT story compounds — where one good piece keeps working after we post it. Allocation of the 2,000 target across channels:</p>
+
+    <div class="card-grid">
+      <div class="card" style="border-top:3px solid var(--coral)">
+        <div class="card-label">Channel 1 — Target ~800</div>
+        <div class="card-val">WhatsApp + direct network</div>
+        <div class="card-sub">Highest conversion, lowest reach. The 5 questions and the sample link are built to be forwarded. Seed into investing groups, alumni groups, founder circles. Warm intros convert at 10-15%.</div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--amber)">
+        <div class="card-label">Channel 2 — Target ~700</div>
+        <div class="card-val">Instagram + YouTube Shorts</div>
+        <div class="card-sub">The 7 shorts are the engine here. Highest reach, broad top of funnel. Post 3-4x per week, double down on whichever short outperforms.</div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--sage)">
+        <div class="card-label">Channel 3 — Target ~350</div>
+        <div class="card-val">LinkedIn</div>
+        <div class="card-sub">The thoughtful-investor crowd. Long-form posts built around the 5 questions and "own the stock not the ticker." Lower volume, higher quality, strong for the pre-buy campaign.</div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--ink)">
+        <div class="card-label">Channel 4 — Target ~150</div>
+        <div class="card-val">Reddit + niche communities</div>
+        <div class="card-sub">r/IndianStreetBets, r/IndiaInvestments and similar. Pure value posts, no selling. The sample page does the convincing. High skepticism, high payoff if done with genuine usefulness.</div>
+      </div>
+    </div>
+
+    <h2>The two campaign tracks, applied</h2>
+    <p>The two campaigns from the campaigns section map cleanly onto the funnel. Pre-buy attracts new investors; post-buy converts existing ones. We run both in parallel and let the data tell us which audience converts cheaper.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Track A — Pre-buy</div>
+        <div class="card-val">"5 questions before you invest"</div>
+        <div class="card-sub">Shorts 2 (Before You Buy) and 5 (Finfluencer). Hook: most people can answer Q1, almost nobody can answer Q5. Lands well on LinkedIn and Instagram.</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Track B — Post-buy</div>
+        <div class="card-val">"5 questions about a stock you own"</div>
+        <div class="card-sub">Shorts 1 (Chaos), 3 (Price Check), 4 (Results Day), 6 (Quiet Morning), 7 (Exit Decision). The recognition is instant. Lands well in WhatsApp and Reddit.</div>
+      </div>
+    </div>
+
+    <h2>4-week execution calendar</h2>
+    <p>Front-loaded readiness, then escalating distribution as content compounds and we learn which shorts and posts convert. Each week has a signup target that ladders to 2,000.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Week</th><th>Focus</th><th>Actions</th><th>Cumulative target</th></tr>
+        <tr>
+          <td><strong>Week 0</strong><br><span style="color:var(--muted);font-size:12px">Readiness</span></td>
+          <td>Fix the funnel ✓</td>
+          <td>Waitlist wired and tested. OG image live. Analytics wired. Magic link removed. Geo routing live. One remaining: export and caption the 7 shorts as MP4 for posting.</td>
+          <td>~50 (test signups)</td>
+        </tr>
+        <tr>
+          <td><strong>Week 1</strong><br><span style="color:var(--muted);font-size:12px">Seed + Track</span></td>
+          <td>WhatsApp + warm network + analytics</td>
+          <td>
+            <strong>Distribution:</strong> Share the sample link and the 5 questions into personal network and 5-8 investing groups. Post Short 1 (Chaos) and Short 2 (Before You Buy). One LinkedIn long-form on "own the business, track the ticker." Reply to every comment.
+            <br/><br/>
+            <strong>Analytics setup (Layer 1 — PostHog):</strong> Create PostHog project, set <code>NEXT_PUBLIC_POSTHOG_KEY</code> in Vercel. Expand event taxonomy to cover full funnel — scroll depth, section views, sample panel progress, FAQ opens, CTA source, waitlist step abandonment, market switcher usage. Session replay on so you can watch real sessions.
+            <br/><br/>
+            <strong>Analytics setup (Layer 2 — internal dashboard):</strong> Build <code>/admin</code> page (password-protected) reading Supabase waitlist table — total signups, signups by day, signups by source, most-named stocks, wish-text feed. The qualitative picture: who they are and what they want in their own words.
+            <br/><br/>
+            <strong>After first 50 signups:</strong> Read every wish-text answer. The patterns there feed the next shorts, the next sample, and the product backlog.
+          </td>
+          <td>~350</td>
+        </tr>
+        <tr>
+          <td><strong>Week 2</strong><br><span style="color:var(--muted);font-size:12px">Amplify</span></td>
+          <td>Shorts engine on</td>
+          <td>Post Shorts 3 (Price Check), 4 (Results Day), 5 (Finfluencer) across Instagram + YouTube. Reddit value post with sample link. Second LinkedIn post. Re-share top performer from Week 1. Identify the winning short.</td>
+          <td>~900</td>
+        </tr>
+        <tr>
+          <td><strong>Week 3</strong><br><span style="color:var(--muted);font-size:12px">Double down</span></td>
+          <td>Pour into what works</td>
+          <td>Post Shorts 6 (Quiet Morning) and 7 (Exit Decision). Re-cut and re-post the best-performing short with new hooks. Second wave of WhatsApp forwards with social proof ("1,000 already signed up"). Consider a small paid boost behind the top short.</td>
+          <td>~1,500</td>
+        </tr>
+        <tr>
+          <td><strong>Week 4</strong><br><span style="color:var(--muted);font-size:12px">Launch push</span></td>
+          <td>Urgency + close</td>
+          <td>"Cohort opens June 24th — last chance for the first batch" across all channels. Countdown posts. Re-share the full shorts library. Final WhatsApp push with the strongest social proof number. Personal asks to anyone who engaged but did not sign up.</td>
+          <td>2,000+</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>What we measure</h2>
+    <p>One dashboard, checked daily. If a number lags, the calendar bends toward fixing it.</p>
+    <ul class="checklist">
+      <li><span class="check">→</span> <strong>Daily signups</strong> — the only number that matters. Tracked against the run-rate to 2,000.</li>
+      <li><span class="check">→</span> <strong>Source attribution</strong> — which channel and which short drives each signup (already captured in the source column).</li>
+      <li><span class="check">→</span> <strong>View-to-visit rate per short</strong> — tells us which creative to double down on.</li>
+      <li><span class="check">→</span> <strong>Sample completion rate</strong> — if people open the sample but do not finish, panel content needs work.</li>
+      <li><span class="check">→</span> <strong>Engaged-to-signup rate</strong> — if this lags 28%, the landing page or the offer needs sharpening, not more traffic.</li>
+      <li><span class="check">→</span> <strong>Stock interest answers</strong> — free-text stock captures double as a content goldmine: the most-named stocks become the next shorts and sample pages.</li>
+    </ul>
+
+    <h2>The honest risks</h2>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Risk</th><th>Mitigation</th></tr>
+        <tr><td>Organic reach is unpredictable — shorts may not take off</td><td>The WhatsApp + warm network channel is reach-independent and conversion-heavy. It carries the floor. Shorts are upside, not the foundation.</td></tr>
+        <tr><td>Waitlist not saving silently kills the whole effort</td><td>Week 0 readiness gate. Nothing ships until a test signup appears in Supabase and triggers a confirmation email.</td></tr>
+        <tr><td>Signups that never convert to active users</td><td>The confirmation email and the stock-interest question keep them warm. The June 24th cohort email is the activation moment.</td></tr>
+        <tr><td>Spreading across too many channels thinly</td><td>Concentrate. WhatsApp and Instagram carry 75% of the target. LinkedIn and Reddit are secondary, not equal.</td></tr>
+      </table>
+    </div>
+
+    <p class="updated">This plan assumes the creative assets (landing, sample, 7 shorts) are complete — which they are — and that the operational gaps (waitlist persistence, short exports, captions) are closed in Week 0. Last updated: May 30, 2026.</p>
+  </section>
+
+
+  <!-- ═══ WHAT IS LIVE ═══ -->
+  <section class="section" id="ready">
+    <div class="section-eyebrow">Status</div>
+    <h1>What is live right now</h1>
+
+    <ul class="checklist">
+      <li><span class="check" style="color:var(--sage)">✓</span> Landing page India — hero, WishesBar, sample hook, 4-step waitlist confirmation</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Landing page US — /us, USD framing, US phone default</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Sample page — 9-panel horizontal story, Data Patterns, all interactive</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Waitlist API — captures email, source, stock interest, wish text, phone</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Wishes API — returns seeds + count, 5-min revalidation</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> 7 animated shorts — all with audio, phone frames, tap-to-play</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Supabase schema — waitlist table defined</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> /sample route redirect</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Design system — cream/ink/coral palette, Manrope + JetBrains Mono</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Geo + cookie routing — middleware.ts, 30-day cookie, MarketSwitch footer</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Free text stock capture — both India and US pages</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> OG share image + full meta tags — Twitter card, openGraph</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Analytics — page_view, waitlist_signup, waitlist_stock_saved events</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Waitlist end-to-end tested and confirmed — rows writing to Supabase with all fields</li>
+    </ul>
+  </section>
+
+  <!-- ═══ PENDING ═══ -->
+  <section class="section" id="pending">
+    <div class="section-eyebrow">Status</div>
+    <h1>What needs to happen before launch</h1>
+
+    <ul class="checklist">
+      <li><span class="check" style="color:var(--sage)">✓</span> <strong>Vercel env vars set</strong> — NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, NEXT_PUBLIC_APP_URL, CRON_SECRET</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> <strong>API calls re-enabled</strong> — email threading through all 4 steps, sendLink flag, error states wired</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> <strong>Supabase migration run</strong> — stock_interest, wish_text, phone columns live</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Short-2 timing fixed — scenes rebuilt to 39.5s audio, tap-to-play via postMessage</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Magic link removed from waitlist — early access needs intent not verified session, DB write only</li>
+      <li><span class="check" style="color:var(--amber)">~</span> Verify timing on shorts 1, 3, 4, 5, 6, 7 once played back with actual audio</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Sample page Q4 — "What FT does from here" extension card added</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Landing Five Moments — sixth moment "When it has run / Let the winner run" added</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Landing Promise 03 — updated to include price + story watching</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> WishesBar seeds — profit-taking seed added</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> OG / share image — opengraph-image.tsx on both / and /us, full meta + Twitter card</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> Analytics — trackEvent fires on page_view, waitlist_signup, waitlist_stock_saved</li>
+      <li><span class="check" style="color:var(--sage)">✓</span> End-to-end test passed — signup row appearing in Supabase with all fields populated</li>
+      <li><span class="check" style="color:var(--muted)">○</span> Build /5-questions page — campaign anchor, pre-buy / post-buy tabs, type any stock</li>
+      <li><span class="check" style="color:var(--muted)">○</span> Native iOS/Android apps via Capacitor</li>
+      <li><span class="check" style="color:var(--muted)">○</span> ANTHROPIC_API_KEY + NEWS_API_KEY in Vercel env</li>
+    </ul>
+
+    <h3>Vercel env vars needed</h3>
+    <pre>NEXT_PUBLIC_SUPABASE_URL      = https://nrcknrgwmummxzpvwyvv.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY = (from Supabase → Settings → API)
+SUPABASE_SERVICE_ROLE_KEY     = [get from Supabase dashboard → Settings → API → service_role]
+NEXT_PUBLIC_APP_URL           = https://ft-app-beta.vercel.app
+CRON_SECRET                   = ft-cron-june2026</pre>
+
+    <h3>Supabase migration</h3>
+    <pre>alter table waitlist add column if not exists stock_interest text;
+alter table waitlist add column if not exists wish_text text;
+alter table waitlist add column if not exists phone text;</pre>
+  </section>
+
+  <!-- ═══ DECISIONS ═══ -->
+  <section class="section" id="decisions">
+    <div class="section-eyebrow">Decision log</div>
+    <h1>Key decisions made</h1>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Decision</th><th>What we chose</th><th>Why</th></tr>
+        <tr><td>Number of campaign questions</td><td>5 (not 3, not 7)</td><td>3 feels thin, 7 feels like homework. 5 is memorable, completable, covers the full journey.</td></tr>
+        <tr><td>Sample page stock</td><td>Data Patterns (NSE defence electronics)</td><td>Specific enough to be real, sector has strong narrative (indigenization), not too well-known to feel generic</td></tr>
+        <tr><td>Sample page structure</td><td>Horizontal scroll, 9 panels</td><td>Feels like a story not a scroll. One idea per swipe. Can't skip ahead without choosing to.</td></tr>
+        <tr><td>Sample narrative arc</td><td>Chaos → Intervention → 5Q → Payoff (same headline defanged)</td><td>Circular structure makes the product demo feel like a transformation, not a tour</td></tr>
+        <tr><td>Animated shorts approach</td><td>HTML/CSS animations + voice audio, screen-recorded</td><td>Zero cost, fully on-brand, instantly iterable, same design language as product</td></tr>
+        <tr><td>Shorts — generic vs specific stock</td><td>Generic ("your stock")</td><td>Viewer projects their own holding onto it. More powerful than a specific company.</td></tr>
+        <tr><td>WishesBar framing</td><td>"5 questions. Most people can't answer the last one."</td><td>Echoes the campaign directly. Every rotating quote sounds like evidence for the hook.</td></tr>
+        <tr><td>Quiet days positioning</td><td>"Quiet days are a feature"</td><td>Counter-programs against every engagement-optimised fintech. Silence is the differentiator.</td></tr>
+        <tr><td>Q5 design</td><td>Dark ink card, larger Q number, "YOUR TURN" badge</td><td>Visual weight signals this is the hardest and most important. Everything else leads here.</td></tr>
+        <tr><td>Price meter anchors</td><td>3 markers: 5yr avg + sector peers + today</td><td>Context without 3 anchors means a marker at 72% means nothing. With anchors it tells a story.</td></tr>
+      </table>
+    </div>
+
+    <p class="updated">Last updated: May 30, 2026 · ft-app-beta.vercel.app/brain.html</p>
+  </section>
+
+</div>
+
+<script>
+  // Active sidebar link on scroll
+  const sections = document.querySelectorAll('.section');
+  const links = document.querySelectorAll('.sb-link');
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        links.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

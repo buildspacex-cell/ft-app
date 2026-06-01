@@ -11,12 +11,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
   }
 
-  const { email, source = 'landing-in', stock_interest, wish_text, phone } = body as {
+  const { email, source = 'landing-in', stock_interest, wish_text, phone, sendLink = true } = body as {
     email?: string
     source?: string
     stock_interest?: string
     wish_text?: string
     phone?: string
+    sendLink?: boolean
   }
 
   console.log('[waitlist] Submission received:', { email, source, stock_interest })
@@ -39,7 +40,7 @@ export async function POST(req: NextRequest) {
     hasAppUrl: !!appUrl,
   })
 
-  if (!supabaseUrl || !anonKey) {
+  if (!supabaseUrl) {
     console.error('[waitlist] Missing Supabase env vars')
     return NextResponse.json({ error: 'Server configuration error' }, { status: 500 })
   }
@@ -55,6 +56,8 @@ export async function POST(req: NextRequest) {
             email,
             source,
             ...(stock_interest ? { stock_interest } : {}),
+            ...(wish_text ? { wish_text } : {}),
+            ...(phone ? { phone } : {}),
           },
           { onConflict: 'email', ignoreDuplicates: false }
         )
@@ -77,36 +80,13 @@ export async function POST(req: NextRequest) {
     console.warn('[waitlist] No service key — skipping DB write, still sending magic link')
   }
 
-  // ─── Step 2: Send magic link ───────────────────────────────────────────────
-  try {
-    const supabase = createClient(supabaseUrl, anonKey)
-    const redirectTo = `${appUrl || 'https://ft-app-beta.vercel.app'}/onboarding`
-
-    console.log('[waitlist] Sending OTP to:', email, 'redirect:', redirectTo)
-
-    const { error: otpError } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: redirectTo },
-    })
-
-    if (otpError) {
-      console.error('[waitlist] OTP error:', {
-        status: otpError.status,
-        message: otpError.message,
-        name: otpError.name,
-      })
-      return NextResponse.json(
-        { error: 'Failed to send magic link', detail: otpError.message },
-        { status: 500 }
-      )
-    }
-
-    console.log('[waitlist] Magic link sent successfully to:', email)
-    return NextResponse.json({ ok: true })
-  } catch (otpError) {
-    console.error('[waitlist] Unexpected OTP error:', otpError)
-    return NextResponse.json({ error: 'Unexpected error sending email' }, { status: 500 })
-  }
+  // ─── Step 2: Return success ──────────────────────────────────────────────────
+  // No magic link for early access — the in-page confirmation is enough.
+  // Magic link auth is for when users log into the product post-launch.
+  // Adding email verification here creates a drop-off point on a waitlist
+  // where all we need is intent, not a verified session.
+  console.log('[waitlist] Signup complete:', email)
+  return NextResponse.json({ ok: true })
 }
 
 // GET — waitlist count for social proof

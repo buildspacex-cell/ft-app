@@ -1,4 +1,6 @@
 'use client'
+import { MarketSwitch } from '@/components/MarketSwitch'
+import { trackEvent, identifyUser } from '@/components/PostHogProvider'
 import { useState, useEffect } from 'react'
 
 // ─── Phone mockup - fixed status bar, proper iOS layout ──────────────────────
@@ -56,12 +58,7 @@ function PhoneMockup({ screen = 'digest' }: { screen?: 'digest' | 'detail' }) {
         display: 'flex', alignItems: 'center', gap: 6,
         padding: '8px 20px 0',
       }}>
-        <div style={{
-          width: 20, height: 20, borderRadius: 5,
-          background: 'var(--ink)', color: 'var(--cream)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: 'var(--font-mono)', fontSize: 8, fontWeight: 800, flexShrink: 0,
-        }}>FT</div>
+        <svg width="20" height="20" viewBox="0 0 20 20" style={{flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><rect width="20" height="20" rx="5" fill="#171717"/><path d="M10.0 3.2 A6.8 6.8 0 0 0 10.0 16.8 Z" transform="translate(-0.80 0)" fill="#f6f3ec"/><path d="M10.0 3.2 A6.8 6.8 0 0 1 10.0 16.8 Z" transform="translate(0.80 0)" fill="#d97757"/></svg>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
           · MORNING CHECK · 7AM
         </span>
@@ -179,6 +176,7 @@ function WishesBar() {
     "I own Reliance but I could not tell you how they make money.",
     "I check the price every day but I have no idea what I am looking for.",
     "I bought it but I cannot explain what it does to someone who does not invest.",
+    "The stock is up 60 percent and I still don't know if I should hold or take profits.",
   ]
 
   useEffect(() => {
@@ -253,29 +251,83 @@ function WishesBar() {
 
 // ─── Country switcher ─────────────────────────────────────────────────────────
 
+
+// ── Scroll depth tracker ──────────────────────────────────────────────────────
+function useScrollDepth(market: string) {
+  useEffect(() => {
+    const milestones = [25, 50, 75, 90]
+    const reached = new Set<number>()
+    function onScroll() {
+      const pct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100)
+      milestones.forEach(m => {
+        if (pct >= m && !reached.has(m)) {
+          reached.add(m)
+          trackEvent('scroll_depth', { depth: m, market })
+        }
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [market])
+}
+
+// ── Section visibility tracker ───────────────────────────────────────────────
+function useSectionTracking(market: string) {
+  useEffect(() => {
+    const seen = new Set<string>()
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && e.target.id && !seen.has(e.target.id)) {
+          seen.add(e.target.id)
+          trackEvent('section_viewed', { section: e.target.id, market })
+        }
+      })
+    }, { threshold: 0.3 })
+    document.querySelectorAll('section[id], div[id]').forEach(el => obs.observe(el))
+    return () => obs.disconnect()
+  }, [market])
+}
+
 function CountrySwitcher({ active }: { active: 'in' | 'us' }) {
+  function go(market: 'in' | 'us') {
+    trackEvent('market_switched', { to: market, from: 'in' })
+    document.cookie = `ft-market=${market};max-age=${60 * 60 * 24 * 30};path=/`
+    window.location.href = market === 'us' ? '/us' : '/'
+  }
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 2, background: 'var(--hairline-soft)', borderRadius: 999, padding: 3 }}>
-      <a href="/" style={{
-        display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 999,
+      <button onClick={() => go('in')} style={{
+        display: 'flex', alignItems: 'center', gap: 6,
+        padding: '6px 14px', borderRadius: 999, border: 'none', cursor: 'pointer',
         background: active === 'in' ? 'var(--card)' : 'transparent',
         boxShadow: active === 'in' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
         fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: active === 'in' ? 600 : 500,
-        color: active === 'in' ? 'var(--ink)' : 'var(--muted)', textDecoration: 'none',
-      }}>🇮🇳 India</a>
-      <a href="/us" style={{
-        display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 999,
+        color: active === 'in' ? 'var(--ink)' : 'var(--muted)',
+        transition: 'all 0.15s',
+      }}>
+        🇮🇳 India
+      </button>
+      <button onClick={() => go('us')} style={{
+        display: 'flex', alignItems: 'center', gap: 6,
+        padding: '6px 14px', borderRadius: 999, border: 'none', cursor: 'pointer',
         background: active === 'us' ? 'var(--card)' : 'transparent',
         boxShadow: active === 'us' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
         fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: active === 'us' ? 600 : 500,
-        color: active === 'us' ? 'var(--ink)' : 'var(--muted)', textDecoration: 'none',
-      }}>🇺🇸 US</a>
+        color: active === 'us' ? 'var(--ink)' : 'var(--muted)',
+        transition: 'all 0.15s',
+      }}>
+        🇺🇸 US
+      </button>
     </div>
   )
 }
 
 
-// ─── Wish question - shown after stock pick ───────────────────────────────────
+// ─── Module-level email store — set on first submit, read by child steps ─────
+let _submittedEmail = ''
+function getSubmittedEmail() { return _submittedEmail }
+
+// ─── Wish question - shown after stock pick ──────────────────────────────────
 
 function WishQuestion({ dark = false }: { dark?: boolean }) {
   const [wish, setWish] = useState('')
@@ -284,7 +336,13 @@ function WishQuestion({ dark = false }: { dark?: boolean }) {
   function saveWish() {
     if (!wish.trim() || saved) return
     setSaved(true)
-    // will POST once env vars set
+    const em = getSubmittedEmail()
+    if (!em) return
+    fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: em, wish_text: wish.trim(), sendLink: false }),
+    }).catch(() => {})
   }
 
   const label = dark ? 'rgba(246,243,236,0.7)' : 'var(--muted)'
@@ -397,11 +455,14 @@ function PhoneStep({ dark = false, defaultCountry = 'IN' }: { dark?: boolean; de
     if (!phone.trim() || saved) return
     setSaved(true)
     const full = `${country.dial} ${phone.trim()}`
-    fetch('/api/waitlist', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone: full }),
-    }).catch(() => {})
+    const em = getSubmittedEmail()
+    if (em) {
+      fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: em, phone: full, sendLink: false }),
+      }).catch(() => {})
+    }
   }
 
   const subtle = dark ? 'rgba(246,243,236,0.6)' : 'var(--muted)'
@@ -509,9 +570,20 @@ function EmailForm({ dark = false, source = 'landing-in' }: { dark?: boolean; so
     e.preventDefault()
     if (!email) return
     setStatus('loading')
-    // TODO: re-enable once env vars are set in Vercel
-    // fetch('/api/waitlist', { method: 'POST', ... })
-    setStatus('done')
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source, sendLink: true }),
+      })
+      if (!res.ok) { setStatus('error'); return }
+      _submittedEmail = email
+      trackEvent('waitlist_signup', { source, market: 'in' })
+      identifyUser(email, { market: 'in', source })
+      setStatus('done')
+    } catch {
+      setStatus('error')
+    }
   }
 
   const [stock, setStock] = useState('')
@@ -520,7 +592,14 @@ function EmailForm({ dark = false, source = 'landing-in' }: { dark?: boolean; so
   async function saveStock() {
     if (!stock || stockSaved) return
     setStockSaved(true)
-    // will POST to API once env vars set
+    const em = getSubmittedEmail()
+    if (!em) return
+    fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: em, source, stock_interest: stock, sendLink: false }),
+    }).catch(() => {})
+    trackEvent('waitlist_stock_saved', { stock })
   }
 
   if (status === 'done') return (
@@ -552,33 +631,20 @@ function EmailForm({ dark = false, source = 'landing-in' }: { dark?: boolean; so
             Which stock do you most want us to cover first?
           </p>
           <div style={{ display: 'flex', gap: 8 }}>
-            <select
-              value={stock} onChange={e => setStock(e.target.value)}
+            <input
+              type="text"
+              value={stock}
+              onChange={e => setStock(e.target.value)}
+              placeholder="e.g. HDFC Bank, the one you're unsure about"
               style={{
                 flex: 1, padding: '10px 12px', borderRadius: 10,
                 border: dark ? '1px solid rgba(246,243,236,0.16)' : '1px solid var(--hairline)',
                 background: dark ? 'rgba(246,243,236,0.08)' : 'var(--paper)',
                 fontFamily: 'var(--font-sans)', fontSize: 14,
                 color: dark ? 'var(--cream)' : 'var(--ink)',
-                outline: 'none', cursor: 'pointer',
+                outline: 'none',
               }}
-            >
-              
-              <option value="">Pick a stock...</option>
-              <optgroup label="NSE India">
-                <option value="RELIANCE">Reliance Industries</option>
-                <option value="HDFCBANK">HDFC Bank</option>
-                <option value="TCS">Tata Consultancy Services</option>
-                <option value="INFY">Infosys</option>
-                <option value="HINDUNILVR">Hindustan Unilever</option>
-                <option value="MARUTI">Maruti Suzuki</option>
-                <option value="SUNPHARMA">Sun Pharmaceutical</option>
-                <option value="BAJFINANCE">Bajaj Finance</option>
-                <option value="WIPRO">Wipro</option>
-                <option value="ONGC">ONGC</option>
-              </optgroup>
-              <option value="OTHER">Something else</option>
-            </select>
+            />
             <button
               onClick={saveStock} disabled={!stock}
               style={{
@@ -596,7 +662,7 @@ function EmailForm({ dark = false, source = 'landing-in' }: { dark?: boolean; so
       ) : (
         <div>
           <p style={{ fontSize: 13, color: dark ? 'rgba(246,243,236,0.6)' : 'var(--muted)', marginBottom: 16, lineHeight: 1.4 }}>
-            Got it. We&apos;ll make sure <strong style={{ color: dark ? 'var(--cream)' : 'var(--ink)', fontWeight: 600 }}>{stock === 'OTHER' ? 'your pick' : stock}</strong> is ready on day one.
+            Got it. We&apos;ll make sure <strong style={{ color: dark ? 'var(--cream)' : 'var(--ink)', fontWeight: 600 }}>{stock || 'your pick'}</strong> is ready on day one.
           </p>
           <WishQuestion dark={dark} />
         </div>
@@ -734,7 +800,7 @@ export default function HomePage() {
         }}>
           <div className="ft-wrap" style={{ display: 'flex', alignItems: 'center', gap: 32, padding: '14px 28px' }}>
             <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700, fontSize: 16, letterSpacing: '-0.025em', textDecoration: 'none', color: 'var(--ink)', flexShrink: 0 }}>
-              <span style={{ width: 26, height: 26, borderRadius: 7, background: 'var(--ink)', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, flexShrink: 0 }}>FT</span>
+              <svg width="36" height="36" viewBox="0 0 36 36" style={{flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><path d="M18.0 5.0 A13.0 13.0 0 0 0 18.0 31.0 Z" transform="translate(-1.26 0)" fill="#1a1a1a"/><path d="M18.0 5.0 A13.0 13.0 0 0 1 18.0 31.0 Z" transform="translate(1.26 0)" fill="#d97757"/></svg>
               Fundamentally True
             </a>
             <div className="ft-nav-links" style={{ gap: 24, alignItems: 'center' }}>
@@ -744,7 +810,7 @@ export default function HomePage() {
             </div>
             <div style={{ flex: 1 }} />
             <CountrySwitcher active="in" />
-            <a href="#waitlist" style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 14, letterSpacing: '-0.005em', background: 'var(--ink)', color: 'var(--cream)', padding: '10px 18px', borderRadius: 999, cursor: 'pointer', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, flexShrink: 0, whiteSpace: 'nowrap' }}>
+            <a href="#waitlist" onClick={() => trackEvent('cta_clicked', { location: 'hero', market: 'in' })} style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 14, letterSpacing: '-0.005em', background: 'var(--ink)', color: 'var(--cream)', padding: '10px 18px', borderRadius: 999, cursor: 'pointer', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, flexShrink: 0, whiteSpace: 'nowrap' }}>
               Get early access <span>→</span>
             </a>
           </div>
@@ -787,7 +853,7 @@ export default function HomePage() {
         {/* ── SEE HOW IT WORKS ── */}
         <section style={{ background: 'var(--ink)', padding: '0' }}>
           <div className="ft-wrap" style={{ padding: '0 28px' }}>
-            <a href="/sample" style={{
+            <a href="/sample" onClick={() => trackEvent('sample_opened', { market: 'in' })} style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               padding: '22px 0', textDecoration: 'none', borderBottom: '1px solid rgba(246,243,236,0.1)',
             }}>
@@ -968,7 +1034,7 @@ export default function HomePage() {
               {[
                 { tag: 'Promise 01', h: 'We never tell you what to buy.', p: 'No price targets. No "strong buy" calls. No predictions. We describe whether the reasons you bought a company still hold - the decision is always yours.' },
                 { tag: 'Promise 02', h: 'We never hide the source.', p: "Every story shows you exactly what we read to write it - the filing, the earnings call, the article. If we can't cite a source, we don't write the story." },
-                { tag: 'Promise 03', h: 'We never manufacture urgency.', p: 'Most financial media is built to make you panic. Urgency is reserved for moments a reason in your thesis actually breaks - and that\'s rare.' },
+                { tag: 'Promise 03', h: 'We never manufacture urgency.', p: 'Most financial media is built to make you panic. Urgency is reserved for moments a reason in your thesis actually breaks - and that\'s rare. We also watch the price alongside the story. When a stock has run, we keep watching both - and we tell you when either one turns. Until then: silence.' },
               ].map(n => (
                 <div key={n.tag} className="ft-never-item">
                   <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--rust-tint)', color: 'var(--rust)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)', fontSize: 26, fontWeight: 700, marginBottom: 24, flexShrink: 0 }}>×</div>
@@ -1081,7 +1147,7 @@ export default function HomePage() {
             <div className="ft-footer-grid">
               <div>
                 <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700, fontSize: 16, letterSpacing: '-0.025em', textDecoration: 'none', color: 'var(--ink)', marginBottom: 16 }}>
-                  <span style={{ width: 26, height: 26, borderRadius: 7, background: 'var(--ink)', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, flexShrink: 0 }}>FT</span>
+                  <svg width="28" height="28" viewBox="0 0 28 28" style={{flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><path d="M14.0 3.9 A10.1 10.1 0 0 0 14.0 24.1 Z" transform="translate(-0.98 0)" fill="#1a1a1a"/><path d="M14.0 3.9 A10.1 10.1 0 0 1 14.0 24.1 Z" transform="translate(0.98 0)" fill="#d97757"/></svg>
                   Fundamentally True
                 </a>
                 <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, lineHeight: 1.6, color: 'var(--muted)', maxWidth: 380 }}>
@@ -1106,6 +1172,9 @@ export default function HomePage() {
               <span>© 2026 Fundamentally True · Built for clarity.</span>
               <span>Privacy · Terms</span>
             </div>
+          <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid var(--hairline)' }}>
+            <MarketSwitch currentMarket="in" />
+          </div>
           </div>
         </footer>
 

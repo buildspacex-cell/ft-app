@@ -280,6 +280,7 @@
 
   
 
+    @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.3} }
     @keyframes fadeHint { 0%{opacity:.6} 60%{opacity:.6} 100%{opacity:0;pointer-events:none} }
     /* ── Extra for new narrative panels ── */
     .panic-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: rgba(246,243,236,.06); border: 1px solid rgba(246,243,236,.12); border-radius: 10px; margin-bottom: 7px; }
@@ -685,6 +686,15 @@
         <div class="metric-row"><strong>Price vs sales</strong><span style="color:var(--amber)">Demanding</span></div>
         <div class="metric-row"><strong>Growth needed to justify</strong><span style="color:var(--rust)">Strong</span></div>
         <p style="font-size:12px;color:var(--coral-deep);font-weight:500;margin-top:10px;font-style:italic">This does not say avoid. It says the bar is high. If execution wobbles, the price has less forgiveness.</p>
+      </div>
+
+      <div class="card" style="border-left:3px solid var(--coral);border-radius:0 14px 14px 0;background:rgba(217,119,87,.05);margin-top:4px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--coral);flex-shrink:0"></div>
+          <span style="font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--coral)">What FT does from here</span>
+        </div>
+        <p style="font-size:15px;font-weight:600;letter-spacing:-.02em;color:var(--ink);line-height:1.35;margin-bottom:8px">The price has run ahead of the proof. This is not automatically a reason to exit.</p>
+        <p style="font-size:14px;color:var(--ink-soft);line-height:1.55;margin-bottom:0">FT watches two things from here — whether the reason starts to change, and whether the price itself starts to turn. Until either does, the run continues. You will hear from us when something is actually worth your attention.</p>
       </div>
 
       <button class="forward-hook" onclick="navigate(1)" aria-label="Go to next panel">
