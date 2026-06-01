@@ -192,21 +192,12 @@
     font-size: clamp(10px, 2.8vw, 12px); color: rgba(246,243,236,.3); letter-spacing: .06em;
   }
 
-  /* Progress + replay */
+  /* Progress */
   .prog-wrap {
     position: fixed; bottom: 0; left: 0; right: 0; height: 3px;
     background: rgba(246,243,236,.08); z-index: 99;
   }
   .prog-fill { height: 100%; background: var(--coral); width: 0%; transition: width .1s linear; }
-  .replay {
-    position: fixed; bottom: calc(14px + env(safe-area-inset-bottom)); right: 18px;
-    background: rgba(246,243,236,.1); border: 1px solid rgba(246,243,236,.18);
-    color: rgba(246,243,236,.7); border-radius: 999px;
-    padding: 8px 16px; font-family: "Manrope", sans-serif;
-    font-size: 12px; font-weight: 600; cursor: pointer;
-    opacity: 0; transition: opacity .4s ease; z-index: 100;
-  }
-  .replay.show { opacity: 1; }
 </style>
 </head>
 <body>
@@ -257,7 +248,7 @@
   <div class="end-block" id="eb">
     <div class="ft-row"><svg width="32" height="32" viewBox="0 0 32 32" style="display:block;flex-shrink:0" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="8" fill="#1a1a1a"/><path d="M16.0 4.5 A11.5 11.5 0 0 0 16.0 27.5 Z" transform="translate(-1.12 0)" fill="#f6f3ec"/><path d="M16.0 4.5 A11.5 11.5 0 0 1 16.0 27.5 Z" transform="translate(1.12 0)" fill="#d97757"/></svg><span class="ft-name" style="letter-spacing:.06em">Fundamentally True</span></div>
     <p class="end-line">There is a <span>calmer</span> way<br>to wake up to this.</p>
-    <p class="end-url" style="margin-top:8px">ft-app-beta.vercel.app</p>
+    <p class="end-url" style="margin-top:8px">fundamentallytrue.com</p>
   </div>
 </div>
 
@@ -270,27 +261,35 @@
 </div>
 
 <div class="prog-wrap"><div class="prog-fill" id="pf"></div></div>
-<button class="replay" id="rb" onclick="go()">↺ Replay</button>
 
 <script>
 const S = [
-  ['s1', 3500, ()=>{ a('tn',300), a('ts',1200); }],
-  ['s2', 4000, ()=>{ a('pe',300), a('t1',600), a('t2',1000), a('t3',1400), a('t4',1800); }],
-  ['s3', 3500, ()=>{ a('nc',300), a('nh',700), a('ns',1800); }],
-  ['s4', 5500, ()=>{ a('pl',300), a('p1',700), a('p2',1500), a('p3',2400), a('p4',3500); }],
-  ['s5', 6000, ()=>{ a('lq',300), a('er',1800), a('eb',2400), a('rb',4500); }],
+  ['s1', 3250, ()=>{ a('tn',300), a('ts',1840); }],
+  ['s2', 2800, ()=>{ a('pe',150), a('t1',250), a('t2',650), a('t3',1050), a('t4',1450); }],
+  ['s3', 4850, ()=>{ a('nc',120), a('nh',1850), a('ns',3500); }],
+  ['s4', 8550, ()=>{ a('pl',250), a('p1',550), a('p2',2800), a('p3',4550), a('p4',6250); }],
+  ['s5', 3110, ()=>{ a('lq',250), a('er',1250), a('eb',1750); }],
 ];
-const total = S.reduce((s,[,d])=>s+d,0);
-let T=[], el=0;
-function a(id,ms,cls='in'){T.push(setTimeout(()=>document.getElementById(id).classList.add(cls),ms));}
+const total = 22560;
+let T=[], progressTimer;
+function a(id,ms,cls='in'){T.push(setTimeout(()=>document.getElementById(id)?.classList.add(cls),ms));}
+
+const audio = new Audio('short-1-chaos.wav');
+audio.preload = 'auto';
+
 function go(){
+  audio.pause();
+  audio.currentTime = 0;
   T.forEach(clearTimeout); T=[];
+  clearInterval(progressTimer);
   document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));
-  document.getElementById('rb').classList.remove('show');
   document.getElementById('pf').style.width='0%';
-  el=0;
-  setTimeout(()=>run(0),60);
+  setTimeout(()=>{
+    audio.play().catch(()=>{});
+    run(0);
+    progressTimer = setInterval(updateProgress,50);
+  },60);
 }
 function run(i){
   if(i>=S.length) return;
@@ -298,14 +297,28 @@ function run(i){
   if(i>0) document.getElementById(S[i-1][0]).classList.remove('active');
   document.getElementById(id).classList.add('active');
   fn();
-  const iv=setInterval(()=>{el+=50;document.getElementById('pf').style.width=(el/total*100)+'%';},50);
-  T.push(iv);
-  T.push(setTimeout(()=>{clearInterval(iv);run(i+1);},dur));
+  T.push(setTimeout(()=>run(i+1),dur));
+}
+function updateProgress(){
+  const t = Number.isFinite(audio.duration) && audio.duration > 0
+    ? audio.currentTime / audio.duration
+    : 0;
+  document.getElementById('pf').style.width=(Math.min(t,1)*100)+'%';
 }
 function tapStart(){
   document.getElementById('tap-overlay').style.display='none';
   go();
 }
+audio.addEventListener('ended',()=>{
+  clearInterval(progressTimer);
+  document.getElementById('pf').style.width='100%';
+});
+window.addEventListener('message',(e)=>{
+  if(e.data === 'start'){
+    document.getElementById('tap-overlay').style.display='none';
+    go();
+  }
+});
 </script>
 </body>
 </html>

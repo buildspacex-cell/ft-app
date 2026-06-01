@@ -48,6 +48,11 @@
   .vs-col.us{background:rgba(91,122,85,.1);border:1px solid rgba(91,122,85,.3);}
   .vs-label{font-family:"JetBrains Mono",monospace;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
   .vs-text{font-size:clamp(12px,3.5vw,14px);font-weight:600;line-height:1.35;color:var(--cream);}
+  .q-list{display:flex;flex-direction:column;gap:7px;}
+  .q-row{display:flex;gap:9px;align-items:flex-start;padding:9px 10px;border-radius:10px;background:rgba(91,122,85,.08);border:1px solid rgba(91,122,85,.18);opacity:0;transform:translateY(8px);transition:opacity .35s ease,transform .35s ease;}
+  .q-row.in{opacity:1;transform:none;}
+  .q-num{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;color:var(--sage);flex-shrink:0;margin-top:1px;}
+  .q-copy{font-size:clamp(11px,3.2vw,13px);font-weight:600;line-height:1.35;color:var(--cream);}
 
   /* big type */
   .big{font-size:clamp(38px,10.5vw,56px);font-weight:900;letter-spacing:-.06em;line-height:.92;color:var(--cream);margin-bottom:12px;}
@@ -61,8 +66,12 @@
   .cta-url{font-family:"JetBrains Mono",monospace;font-size:clamp(10px,2.8vw,12px);color:rgba(246,243,236,.3);letter-spacing:.06em;}
   .prog-wrap{position:fixed;bottom:0;left:0;right:0;height:3px;background:rgba(246,243,236,.08);z-index:99;}
   .prog-fill{height:100%;background:var(--coral);width:0%;transition:width .1s linear;}
-  .replay{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom));right:18px;background:rgba(246,243,236,.1);border:1px solid rgba(246,243,236,.18);color:rgba(246,243,236,.7);border-radius:999px;padding:8px 16px;font-family:"Manrope",sans-serif;font-size:12px;font-weight:600;cursor:pointer;opacity:0;transition:opacity .4s ease;z-index:100;}
-  .replay.show{opacity:1;}
+  .scrub-wrap{position:fixed;left:18px;right:18px;bottom:calc(52px + env(safe-area-inset-bottom));z-index:102;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+  .scrub-wrap.show{opacity:1;pointer-events:auto;}
+  .scrub{width:100%;margin:0;cursor:pointer;accent-color:var(--coral);}
+  .scrub-time{display:flex;justify-content:space-between;margin-top:5px;font-family:"JetBrains Mono",monospace;font-size:10px;color:rgba(246,243,236,.45);}
+  .pause-btn{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom));left:18px;background:rgba(246,243,236,.1);border:1px solid rgba(246,243,236,.18);color:rgba(246,243,236,.75);border-radius:999px;padding:8px 16px;font-family:"Manrope",sans-serif;font-size:12px;font-weight:600;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:100;}
+  .pause-btn.show{opacity:1;pointer-events:auto;}
 </style>
 </head>
 <body>
@@ -100,11 +109,12 @@
       </div>
     </div>
     <div class="ey" id="e2b" style="margin-top:18px">What he didn't answer</div>
-    <div class="vs-row up" id="v2">
-      <div class="vs-col us">
-        <div class="vs-label" style="color:var(--sage)">The 5 questions</div>
-        <div class="vs-text" style="font-size:clamp(11px,3.2vw,13px);line-height:1.5">What does it actually do? How does it make money? Can the story be trusted? Is the price already too high? <strong>What is YOUR reason for owning it?</strong></div>
-      </div>
+    <div class="q-list" id="v2">
+      <div class="q-row" id="q1"><span class="q-num">Q1</span><span class="q-copy">What does this company actually do?</span></div>
+      <div class="q-row" id="q2"><span class="q-num">Q2</span><span class="q-copy">How does it make money?</span></div>
+      <div class="q-row" id="q3"><span class="q-num">Q3</span><span class="q-copy">Can the story be trusted?</span></div>
+      <div class="q-row" id="q4"><span class="q-num">Q4</span><span class="q-copy">Is the price already too high?</span></div>
+      <div class="q-row" id="q5"><span class="q-num">Q5</span><span class="q-copy">What is your reason for owning it?</span></div>
     </div>
   </div>
 </div>
@@ -116,34 +126,15 @@
   </div>
 </div>
 
-<!-- S4: The contrast -->
-<div class="scene mid" id="s4">
-  <div>
-    <div class="ey" id="e4">Two very different things</div>
-    <div class="vs-row up" id="vr1">
-      <div class="vs-col them" style="flex:none;width:100%">
-        <div class="vs-label" style="color:var(--rust)">What the finfluencer gives you</div>
-        <div class="vs-text">A price prediction. A chart. Confidence. No reason you can check tomorrow.</div>
-      </div>
-    </div>
-    <div class="vs-row up" id="vr2">
-      <div class="vs-col us" style="flex:none;width:100%">
-        <div class="vs-label" style="color:var(--sage)">What FT gives you</div>
-        <div class="vs-text">An understanding of the business. A reason you defined. And a morning alert when that reason changes — not when the chart moves.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- S5: CTA -->
-<div class="scene center" id="s5">
+<div class="scene mid" id="s5">
   <div style="width:100%">
-    <div class="big up" id="ctb" style="text-align:center">Own the<br>stock.<br>Not the <span>tip.</span></div>
+    <div class="big up" id="ctb" style="text-align:center">Own the<br><span>Business.</span><br>Not the tip.</div>
     <div class="sub fade" id="cts" style="text-align:center;margin-bottom:28px">5 questions. Plain English. Before you buy anything.</div>
     <div class="fade" id="ctbl" style="display:flex;flex-direction:column;align-items:center;gap:12px">
-      <div class="ft-row"><svg width="32" height="32" viewBox="0 0 32 32" style="display:block;flex-shrink:0" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="8" fill="#1a1a1a"/><path d="M16.0 4.5 A11.5 11.5 0 0 0 16.0 27.5 Z" transform="translate(-1.12 0)" fill="#f6f3ec"/><path d="M16.0 4.5 A11.5 11.5 0 0 1 16.0 27.5 Z" transform="translate(1.12 0)" fill="#d97757"/></svg><span class="ft-name" style="letter-spacing:.06em">Fundamentally True</span></div>
-      <a class="cta-btn" href="https://ft-app-beta.vercel.app/sample">See how it works →</a>
-      <span class="cta-url">ft-app-beta.vercel.app</span>
+      <div class="ft-row"><div class="ft-badge">FT</div><span class="ft-name">Fundamentally True</span></div>
+      <a class="cta-btn" href="https://fundamentallytrue.com">See how it works →</a>
+      <span class="cta-url">fundamentallytrue.com</span>
     </div>
   </div>
 </div>
@@ -157,35 +148,133 @@
 </div>
 
 <div class="prog-wrap"><div class="prog-fill" id="pf"></div></div>
-<button class="replay" id="rb" onclick="go()">↺ Replay</button>
+<div class="scrub-wrap" id="sw">
+  <input class="scrub" id="scrub" type="range" min="0" max="42680" value="0" step="10" oninput="scrubTo(this.value)" onpointerdown="beginScrub()" onpointerup="endScrub()">
+  <div class="scrub-time"><span id="tc">0:00.0</span><span>0:42.7</span></div>
+</div>
+<button class="pause-btn" id="pb" onclick="togglePause()">Pause</button>
 
 <script>
-const S=[['s1',3000,()=>{a('e1',80);a('rh',300);a('rc',500);a('rs',1000);}],['s2',3200,()=>{a('e2',80);a('v1',300);a('e2b',1000);a('v2',1300);}],['s3',1800,()=>{a('b1',100);}],['s4',3000,()=>{a('e4',80);a('vr1',300);a('vr2',1400);}],['s5',4000,()=>{a('ctb',100);a('cts',500);a('ctbl',1000);a('rb',2800,'show');}]];
+const S=[
+  ['s1',0,()=>{a('e1',250);a('rh',650);a('rc',1600);a('rs',4300);}],
+  ['s2',10405,()=>{a('e2',250);a('v1',700);a('e2b',6000);a('q1',6600);a('q2',8400);a('q3',10200);a('q4',12000);a('q5',13800);}],
+  ['s3',34500,()=>{a('b1',160);}],
+  ['s5',40000,()=>{a('ctb',80);a('cts',500);a('ctbl',1100);}]
+];
+const total=42680;
+let T=[],progressTimer,activeScene=-1,isPaused=false,isScrubbing=false,wasPlayingBeforeScrub=false;
+function a(id,ms,cls='in'){T.push(setTimeout(()=>document.getElementById(id)?.classList.add(cls),ms));}
 
-const audio = new Audio('/short-5-finflu.wav');
+const audio = new Audio('short-5-finflu.wav');
 audio.preload = 'auto';
 
 function go(){
   audio.pause();
   audio.currentTime = 0;
   T.forEach(clearTimeout); T=[];
+  clearInterval(progressTimer);
+  activeScene=-1;
+  isPaused=false;
   document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));
-  document.getElementById('rb').classList.remove('show');
+  document.getElementById('pb').classList.add('show');
+  document.getElementById('sw').classList.add('show');
+  document.getElementById('pb').textContent='Pause';
   document.getElementById('pf').style.width='0%';
-  el=0;
-  setTimeout(()=>{ audio.play().catch(()=>{}); run(0); },60);
+  document.getElementById('scrub').value=0;
+  document.getElementById('tc').textContent='0:00.0';
+  audio.play().catch(()=>{});
+  syncToAudio();
+  progressTimer = setInterval(syncToAudio,50);
 }
-
-window.addEventListener('message', e=>{ if(e.data==='start') go(); });
-const total=S.reduce((s,[,d])=>s+d,0);let T=[],el=0;
-function a(id,ms,cls='in'){T.push(setTimeout(()=>document.getElementById(id)?.classList.add(cls),ms));}
-function go(){T.forEach(clearTimeout);T=[];document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));document.getElementById('rb').classList.remove('show');document.getElementById('pf').style.width='0%';el=0;setTimeout(()=>run(0),60);}
-function run(i){if(i>=S.length)return;const[id,dur,fn]=S[i];if(i>0)document.getElementById(S[i-1][0]).classList.remove('active');document.getElementById(id).classList.add('active');fn();const iv=setInterval(()=>{el+=50;document.getElementById('pf').style.width=(el/total*100)+'%';},50);T.push(iv);T.push(setTimeout(()=>{clearInterval(iv);run(i+1);},dur));}
+function syncToAudio(){
+  updateProgress();
+  const sceneIndex=getSceneIndex(audio.currentTime*1000);
+  if(sceneIndex!==activeScene) showScene(sceneIndex);
+}
+function showScene(i){
+  T.forEach(clearTimeout); T=[];
+  document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));
+  const [id,,fn]=S[i];
+  document.getElementById(id).classList.add('active');
+  activeScene=i;
+  fn();
+}
+function updateProgress(){
+  const t = Number.isFinite(audio.duration) && audio.duration > 0
+    ? audio.currentTime / audio.duration
+    : 0;
+  const clamped=Math.min(t,1);
+  document.getElementById('pf').style.width=(clamped*100)+'%';
+  if(!isScrubbing) document.getElementById('scrub').value=Math.round(audio.currentTime*1000);
+  document.getElementById('tc').textContent=formatTime(audio.currentTime);
+}
+function formatTime(seconds){
+  const m=Math.floor(seconds/60);
+  const s=(seconds-m*60).toFixed(1).padStart(4,'0');
+  return `${m}:${s}`;
+}
+function getSceneIndex(ms){
+  let next=0;
+  for(let i=0;i<S.length;i++){
+    if(ms>=S[i][1]) next=i;
+  }
+  return next;
+}
+function togglePause(){
+  if(audio.paused){
+    isPaused=false;
+    document.getElementById('pb').textContent='Pause';
+    audio.play().catch(()=>{});
+    progressTimer=setInterval(syncToAudio,50);
+  } else {
+    isPaused=true;
+    audio.pause();
+    T.forEach(clearTimeout); T=[];
+    clearInterval(progressTimer);
+    document.getElementById('pb').textContent='Resume';
+  }
+}
+function beginScrub(){
+  isScrubbing=true;
+  wasPlayingBeforeScrub=!audio.paused;
+  audio.pause();
+  T.forEach(clearTimeout); T=[];
+  clearInterval(progressTimer);
+}
+function scrubTo(value){
+  const ms=Number(value);
+  audio.currentTime=ms/1000;
+  updateProgress();
+  const sceneIndex=getSceneIndex(ms);
+  if(sceneIndex!==activeScene) showScene(sceneIndex);
+}
+function endScrub(){
+  isScrubbing=false;
+  if(wasPlayingBeforeScrub){
+    audio.play().catch(()=>{});
+    progressTimer=setInterval(syncToAudio,50);
+  } else {
+    document.getElementById('pb').textContent='Resume';
+  }
+}
 function tapStart(){
   document.getElementById('tap-overlay').style.display='none';
   go();
 }
+audio.addEventListener('ended',()=>{
+  clearInterval(progressTimer);
+  document.getElementById('pb').classList.remove('show');
+  document.getElementById('sw').classList.remove('show');
+  document.getElementById('pf').style.width='100%';
+});
+window.addEventListener('message', e=>{
+  if(e.data==='start'){
+    document.getElementById('tap-overlay').style.display='none';
+    go();
+  }
+});
 </script>
 </body>
 </html>
