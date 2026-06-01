@@ -145,32 +145,64 @@
 <button class="replay" id="rb" onclick="go()">↺ Replay</button>
 
 <script>
-const S=[['s1',3200,()=>{a('e1',80);[1,2,3,4,5].forEach((n,i)=>a('n'+n,300+i*380));}],['s2',2800,()=>{a('e2',80);a('portc',300);a('s2s',1400);}],['s3',2400,()=>{a('b1',100);a('s3s',600);}],['s4',2800,()=>{a('e4',80);a('c1',300);a('c2',1200);}],['s5',4000,()=>{a('ctb',100);a('cts',500);a('ctbl',1000);a('rb',2800,'show');}]];
+const S=[
+  ['s1',9305,()=>{a('e1',250);[1,2,3,4,5].forEach((n,i)=>a('n'+n,750+i*1400));}],
+  ['s2',5435,()=>{a('e2',250);a('portc',700);a('s2s',3000);}],
+  ['s3',4585,()=>{a('b1',250);a('s3s',1600);}],
+  ['s4',7695,()=>{a('e4',250);a('c1',700);a('c2',3600);}],
+  ['s5',7340,()=>{a('ctb',250);a('cts',1800);a('ctbl',3600);a('rb',6200,'show');}]
+];
+const total=34360;
+let T=[],progressTimer;
+function a(id,ms,cls='in'){T.push(setTimeout(()=>document.getElementById(id)?.classList.add(cls),ms));}
 
-const audio = new Audio('/short-6-quiet-morning.wav');
+const audio = new Audio('short-6-quiet-morning.wav');
 audio.preload = 'auto';
 
 function go(){
   audio.pause();
   audio.currentTime = 0;
   T.forEach(clearTimeout); T=[];
+  clearInterval(progressTimer);
   document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));
   document.getElementById('rb').classList.remove('show');
   document.getElementById('pf').style.width='0%';
-  el=0;
-  setTimeout(()=>{ audio.play().catch(()=>{}); run(0); },60);
+  setTimeout(()=>{
+    audio.play().catch(()=>{});
+    run(0);
+    progressTimer = setInterval(updateProgress,50);
+  },60);
 }
-
-window.addEventListener('message', e=>{ if(e.data==='start') go(); });
-const total=S.reduce((s,[,d])=>s+d,0);let T=[],el=0;
-function a(id,ms,cls='in'){T.push(setTimeout(()=>document.getElementById(id)?.classList.add(cls),ms));}
-function go(){T.forEach(clearTimeout);T=[];document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));document.getElementById('rb').classList.remove('show');document.getElementById('pf').style.width='0%';el=0;setTimeout(()=>run(0),60);}
-function run(i){if(i>=S.length)return;const[id,dur,fn]=S[i];if(i>0)document.getElementById(S[i-1][0]).classList.remove('active');document.getElementById(id).classList.add('active');fn();const iv=setInterval(()=>{el+=50;document.getElementById('pf').style.width=(el/total*100)+'%';},50);T.push(iv);T.push(setTimeout(()=>{clearInterval(iv);run(i+1);},dur));}
+function run(i){
+  if(i>=S.length) return;
+  const [id,dur,fn]=S[i];
+  if(i>0) document.getElementById(S[i-1][0]).classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  fn();
+  T.push(setTimeout(()=>run(i+1),dur));
+}
+function updateProgress(){
+  const t = Number.isFinite(audio.duration) && audio.duration > 0
+    ? audio.currentTime / audio.duration
+    : 0;
+  document.getElementById('pf').style.width=(Math.min(t,1)*100)+'%';
+}
 function tapStart(){
   document.getElementById('tap-overlay').style.display='none';
   go();
 }
+audio.addEventListener('ended',()=>{
+  clearInterval(progressTimer);
+  document.getElementById('pf').style.width='100%';
+  document.getElementById('rb').classList.add('show');
+});
+window.addEventListener('message', e=>{
+  if(e.data==='start'){
+    document.getElementById('tap-overlay').style.display='none';
+    go();
+  }
+});
 </script>
 </body>
 </html>

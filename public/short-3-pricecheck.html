@@ -68,8 +68,12 @@
 
   .prog-wrap{position:fixed;bottom:0;left:0;right:0;height:3px;background:rgba(246,243,236,.08);z-index:99;}
   .prog-fill{height:100%;background:var(--coral);width:0%;transition:width .1s linear;}
-  .replay{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom));right:18px;background:rgba(246,243,236,.1);border:1px solid rgba(246,243,236,.18);color:rgba(246,243,236,.7);border-radius:999px;padding:8px 16px;font-family:"Manrope",sans-serif;font-size:12px;font-weight:600;cursor:pointer;opacity:0;transition:opacity .4s ease;z-index:100;}
-  .replay.show{opacity:1;}
+  .tq-card{border-radius:14px;padding:14px 16px;opacity:0;transform:translateY(10px);transition:opacity .4s ease,transform .4s ease;}
+  .tq-card.in{opacity:1!important;transform:translateY(0)!important;}
+  .tq-green{background:rgba(91,122,85,.1);border:1px solid rgba(91,122,85,.3);}
+  .tq-amber{background:rgba(184,136,40,.1);border:1px solid rgba(184,136,40,.3);}
+  .tq-dark{background:rgba(246,243,236,.05);border:1px solid rgba(246,243,236,.1);}
+  .tq-coral{background:rgba(217,119,87,.08);border:1px solid rgba(217,119,87,.25);}
 </style>
 </head>
 <body>
@@ -99,9 +103,9 @@
 <!-- S2: Forums saying sell -->
 <div class="scene mid" id="s2">
   <div>
-    <div class="ey" id="e2">Everyone has an opinion</div>
-    <div class="forum-row slide" id="f1"><span class="forum-icon">💬</span><span class="forum-text">"Book profits now. <span>52% is insane.</span> Don't be greedy."</span></div>
-    <div class="forum-row slide" id="f2"><span class="forum-icon">📊</span><span class="forum-text">"Chart is looking stretched. <span>Resistance at 1,900.</span>"</span></div>
+    <div class="ey" id="e2">And now everyone has an opinion</div>
+    <div class="forum-row slide" id="f1"><span class="forum-icon">💬</span><span class="forum-text">Book profits. <span>The chart looks stretched.</span></span></div>
+    <div class="forum-row slide" id="f2"><span class="forum-icon">📊</span><span class="forum-text">Target met. <span>Exit now.</span></span></div>
     <div class="forum-row slide" id="f3"><span class="forum-icon">📱</span><span class="forum-text">"Target met bhai. <span>Sell karo aur nikal lo.</span>"</span></div>
     <div class="forum-row slide" id="f4"><span class="forum-icon">🎯</span><span class="forum-text">"I sold at 1,750. <span>Now waiting to rebuy dip.</span>"</span></div>
   </div>
@@ -110,14 +114,14 @@
 <!-- S3: But what is the real question? -->
 <div class="scene center" id="s3">
   <div>
-    <div class="big up" id="b1">The price<br>moved.<br><span>Did the<br>reason?</span></div>
+    <div class="big up" id="b1">The price<br>ran up.<br><span>Did the reason<br>for owning<br>change?</span></div>
   </div>
 </div>
 
 <!-- S4: The reason check -->
 <div class="scene mid" id="s4">
   <div>
-    <div class="ey" id="e4">Your reason for owning it</div>
+    <div class="ey" id="e4">FT starts there</div>
     <div class="r-card ok slide" id="rc1">
       <div class="r-label" style="color:var(--sage)">Reason 1 - still holding</div>
       <div class="r-text">"Best-in-class loan quality. NPA below every peer."</div>
@@ -136,23 +140,55 @@
   </div>
 </div>
 
-<!-- S5: The insight -->
+<!-- S5: Three signals -->
 <div class="scene mid" id="s5">
   <div>
-    <div class="big up" id="b2">You don't<br>sell on <span>price.</span></div>
-    <div class="sub fade" id="s5s">You sell when the reason breaks. Two of your three reasons are intact. The price moving 52% is not a reason to exit.</div>
+    <div class="ey" id="e5">FT checks three things</div>
+    <div style="display:flex;flex-direction:column;gap:9px;margin-top:4px">
+      <div class="tq-card tq-green" id="tq1">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);margin-bottom:5px">FT starts here</div>
+        <div style="font-size:clamp(14px,4vw,17px);font-weight:700;color:var(--cream);letter-spacing:-.02em;line-height:1.2">Is the reason for owning still intact?</div>
+        <div style="font-size:11px;color:rgba(246,243,236,.5);margin-top:4px">Two of three reasons still holding. One worth watching next quarter.</div>
+      </div>
+      <div class="tq-card tq-amber" id="tq2">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:5px">Then FT checks</div>
+        <div style="font-size:clamp(14px,4vw,17px);font-weight:700;color:var(--cream);letter-spacing:-.02em;line-height:1.2">Has the price run too far ahead of what the business has actually proven?</div>
+        <div style="font-size:11px;color:rgba(246,243,236,.5);margin-top:4px">Conviction becoming risk.</div>
+      </div>
+      <div class="tq-card" style="background:rgba(217,119,87,.12);border:1px solid rgba(217,119,87,.35)" id="tq3">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:5px">Then FT checks</div>
+        <div style="font-size:clamp(14px,4vw,17px);font-weight:700;color:var(--cream);letter-spacing:-.02em;line-height:1.2">Is the price itself starting to turn?</div>
+        <div style="font-size:11px;color:rgba(246,243,236,.5);margin-top:4px">We watch so you don't have to.</div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- S6: CTA -->
-<div class="scene center" id="s6">
+<!-- S6: Watching levels -->
+<div class="scene mid" id="s6">
+  <div>
+    <div class="ey" id="e6">What happens now</div>
+    <div class="tq-card tq-dark" id="hr1" style="margin-bottom:10px">
+      <div style="font-size:clamp(22px,6.5vw,36px);font-weight:900;letter-spacing:-.05em;line-height:1.0;color:var(--cream)">Let the <span style="color:var(--coral)">winner</span> run.</div>
+    </div>
+    <!-- Watching levels card -->
+    <div style="background:var(--ink);border:1px solid rgba(246,243,236,.12);border-radius:14px;padding:14px 16px;opacity:0;transform:translateY(8px);transition:opacity .5s ease .2s,transform .5s ease .2s" id="wl1">
+      <div style="font-size:clamp(13px,3.8vw,15px);font-weight:600;color:rgba(246,243,236,.75);line-height:1.6;margin-bottom:10px">One message when something is actually worth your attention.</div>
+      <div style="height:1px;background:rgba(246,243,236,.1);margin-bottom:10px"></div>
+      <div style="font-size:clamp(13px,3.8vw,15px);font-weight:700;color:var(--coral);line-height:1.5">Silence when only the crowd changes its mind.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S6b: CTA -->
+<div class="scene center" id="s6b">
   <div style="width:100%">
-    <div class="big up" id="ctb" style="text-align:center">Know when<br>to <span>hold.</span><br>Know when<br>to <span>leave.</span></div>
-    <div class="sub fade" id="cts" style="text-align:center;margin-bottom:28px">FT tracks your reasons — not your price.</div>
+    <div class="big up" id="ctb" style="text-align:center">One <span>message.</span><br>Or<br><span>silence.</span></div>
+    <div class="sub fade" id="cts" style="text-align:center;margin-bottom:28px">We alert you when something is really worth your attention — silence when only the crowd changes its mind.</div>
     <div class="fade" id="ctbl" style="display:flex;flex-direction:column;align-items:center;gap:12px">
       <div class="ft-row"><div class="ft-badge">FT</div><span class="ft-name">Fundamentally True</span></div>
-      <a class="cta-btn" href="https://ft-app-beta.vercel.app/sample">See how it works →</a>
-      <span class="cta-url">ft-app-beta.vercel.app</span>
+      <a class="cta-btn" href="https://fundamentallytrue.com">See how it works →</a>
+      <span class="cta-url">fundamentallytrue.com</span>
     </div>
   </div>
 </div>
@@ -166,35 +202,70 @@
 </div>
 
 <div class="prog-wrap"><div class="prog-fill" id="pf"></div></div>
-<button class="replay" id="rb" onclick="go()">↺ Replay</button>
 
 <script>
-const S=[['s1',2200,()=>{a('e1',80);a('pc',300);}],['s2',3000,()=>{a('e2',80);a('f1',300);a('f2',700);a('f3',1100);a('f4',1500);}],['s3',1800,()=>{a('b1',100);}],['s4',3200,()=>{a('e4',80);a('rc1',300);a('rc2',900);a('rc3',1600);}],['s5',2400,()=>{a('b2',100);a('s5s',600);}],['s6',4000,()=>{a('ctb',100);a('cts',500);a('ctbl',1000);a('rb',2800,'show');}]];
+const S=[
+  ['s1',     0, ()=>{ a('e1',250); a('pc',700); }],
+  ['s2',  7146, ()=>{ a('e2',200); a('f1',550); a('f2',1900); a('f3',3400); a('f4',5000); }],
+  ['s3', 13000, ()=>{ a('b1',250); }],
+  ['s4', 22110, ()=>{ a('e4',180); a('rc1',420); a('rc2',1350); a('rc3',2300); }],
+  ['s5', 30000, ()=>{ a('e5',120); a('tq1',300); a('tq2',1150); a('tq3',2050); }],
+  ['s6', 42415, ()=>{ a('e6',200); a('hr1',500); a('wl1',2600); }],
+  ['s6b',49289, ()=>{ a('ctb',200); a('cts',900); a('ctbl',1800); }],
+];
+const total = 56920;
+let T=[], progressTimer, activeScene = -1;
+function a(id,ms,cls='in'){T.push(setTimeout(()=>document.getElementById(id)?.classList.add(cls),ms));}
 
-const audio = new Audio('/Short-3-price-check.wav');
+const audio = new Audio('Short-3-price-check.wav');
 audio.preload = 'auto';
 
 function go(){
+  document.getElementById('tap-overlay')?.style.setProperty('display','none');
   audio.pause();
   audio.currentTime = 0;
   T.forEach(clearTimeout); T=[];
+  clearInterval(progressTimer);
+  activeScene = -1;
   document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));
-  document.getElementById('rb').classList.remove('show');
   document.getElementById('pf').style.width='0%';
-  el=0;
-  setTimeout(()=>{ audio.play().catch(()=>{}); run(0); },60);
+  audio.play().catch(()=>{});
+  syncToAudio();
+  progressTimer = setInterval(syncToAudio,50);
 }
-
-window.addEventListener('message', e=>{ if(e.data==='start') go(); });
-const total=S.reduce((s,[,d])=>s+d,0);let T=[],el=0;
-function a(id,ms,cls='in'){T.push(setTimeout(()=>document.getElementById(id)?.classList.add(cls),ms));}
-function go(){T.forEach(clearTimeout);T=[];document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));document.getElementById('rb').classList.remove('show');document.getElementById('pf').style.width='0%';el=0;setTimeout(()=>run(0),60);}
-function run(i){if(i>=S.length)return;const[id,dur,fn]=S[i];if(i>0)document.getElementById(S[i-1][0]).classList.remove('active');document.getElementById(id).classList.add('active');fn();const iv=setInterval(()=>{el+=50;document.getElementById('pf').style.width=(el/total*100)+'%';},50);T.push(iv);T.push(setTimeout(()=>{clearInterval(iv);run(i+1);},dur));}
+function syncToAudio(){
+  updateProgress();
+  const now = audio.currentTime * 1000;
+  let next = 0;
+  for(let i=0;i<S.length;i++){
+    if(now >= S[i][1]) next = i;
+  }
+  if(next !== activeScene) showScene(next);
+}
+function showScene(i){
+  T.forEach(clearTimeout); T=[];
+  document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));
+  const [id,,fn]=S[i];
+  document.getElementById(id).classList.add('active');
+  activeScene = i;
+  fn();
+}
+function updateProgress(){
+  const t = Number.isFinite(audio.duration) && audio.duration > 0
+    ? audio.currentTime / audio.duration
+    : audio.currentTime / (total / 1000);
+  document.getElementById('pf').style.width=(Math.min(t,1)*100)+'%';
+}
 function tapStart(){
-  document.getElementById('tap-overlay').style.display='none';
   go();
 }
+audio.addEventListener('ended',()=>{
+  clearInterval(progressTimer);
+  document.getElementById('pf').style.width='100%';
+});
+window.addEventListener('message', e=>{ if(e.data==='start') go(); });
 </script>
 </body>
 </html>
