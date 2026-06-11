@@ -675,8 +675,8 @@ export default function USPage() {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: 24 }}>
                     {[
                       { n: '01', label: 'Before you buy', text: 'We help you understand what you are actually getting into. Five questions, plain English, no jargon.' },
-                      { n: '02', label: 'While you hold', text: 'Every morning we check if anything changed. Results, Fed decisions, headlines, sector news. We filter all of it against your specific reason for owning each stock. If it touches your reason, we tell you in plain English. If it does not, we stay quiet. Most mornings, we stay quiet.' },
-                      { n: '03', label: 'When to leave', text: 'We tell you clearly when it is time to go. Not based on price. Based on whether your reason still holds.' },
+                      { n: '02', label: 'While you hold', text: 'Every morning we check if anything changed. Results, Fed decisions, headlines, sector news. We filter all of it against your specific reason to own each stock. If it touches your reason to own, we tell you in plain English. If it does not, we stay quiet. Most mornings, we stay quiet.' },
+                      { n: '03', label: 'When to leave', text: 'We tell you clearly when it is time to go. Not based on price. Based on whether your reason to own still holds.' },
                     ].map((item, i) => (
                       <div key={item.n} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: '14px 0', borderBottom: i < 2 ? '1px solid var(--hairline)' : 'none' }}>
                         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, color: 'var(--coral-deep)', letterSpacing: '0.08em', marginTop: 3, flexShrink: 0 }}>{item.n}</span>
