@@ -674,9 +674,9 @@ export default function USPage() {
                 <div style={{ margin: '0 0 28px', maxWidth: 500 }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: 24 }}>
                     {[
-                      { n: '01', label: 'Before you buy', text: 'We help you understand what you are actually getting into.' },
-                      { n: '02', label: 'While you hold', text: 'Every morning we check if anything changed. Most days, nothing will.' },
-                      { n: '03', label: 'When to leave', text: 'We tell you clearly when it is time to go.' },
+                      { n: '01', label: 'Before you buy', text: 'We help you understand what you are actually getting into. Five questions, plain English, no jargon.' },
+                      { n: '02', label: 'While you hold', text: 'Every morning we check if anything changed. When results drop and you do not know if the numbers are good or bad, we tell you in plain English against your specific reason. When nothing touches your reason, we stay quiet. Most mornings, we stay quiet.' },
+                      { n: '03', label: 'When to leave', text: 'We tell you clearly when it is time to go. Not based on price. Based on whether your reason still holds.' },
                     ].map((item, i) => (
                       <div key={item.n} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: '14px 0', borderBottom: i < 2 ? '1px solid var(--hairline)' : 'none' }}>
                         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, color: 'var(--coral-deep)', letterSpacing: '0.08em', marginTop: 3, flexShrink: 0 }}>{item.n}</span>
