@@ -671,24 +671,12 @@ export default function USPage() {
                   We&apos;re with you<br />
                   <span style={{ color: 'var(--coral-deep)' }}>for the whole ride.</span>
                 </h1>
-                <div style={{ margin: '0 0 28px', maxWidth: 500 }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: 24 }}>
-                    {[
-                      { n: '01', label: 'Before you buy', text: 'We help you understand what you are actually getting into. Five questions, plain English, no jargon.' },
-                      { n: '02', label: 'While you hold', text: 'Every morning we check if anything changed. Results, Fed decisions, headlines, sector news. We filter all of it against your specific reason to own each stock. If it touches your reason to own, we tell you in plain English. If it does not, we stay quiet. Most mornings, we stay quiet.' },
-                      { n: '03', label: 'When to leave', text: 'We tell you clearly when it is time to go. Not based on price. Based on whether your reason to own still holds.' },
-                    ].map((item, i) => (
-                      <div key={item.n} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: '14px 0', borderBottom: i < 2 ? '1px solid var(--hairline)' : 'none' }}>
-                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, color: 'var(--coral-deep)', letterSpacing: '0.08em', marginTop: 3, flexShrink: 0 }}>{item.n}</span>
-                        <div>
-                          <p style={{ fontSize: 15, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--ink)', margin: '0 0 3px' }}>{item.label}</p>
-                          <p style={{ fontSize: 14, fontWeight: 400, lineHeight: 1.5, color: 'var(--ink-soft)', margin: 0 }}>{item.text}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <p style={{ fontSize: 14, fontWeight: 500, lineHeight: 1.5, letterSpacing: '-0.005em', color: 'var(--muted)', margin: 0 }}>
-                    No tips. No noise. Just your stock, your reasons, and the truth.
+                <div style={{ margin: '0 0 28px', maxWidth: 480 }}>
+                  <p style={{ fontSize: 18, fontWeight: 400, lineHeight: 1.6, letterSpacing: '-0.01em', color: 'var(--ink-soft)', margin: '0 0 14px' }}>
+                    From your first question about a stock to the day you decide to leave it, we are there at every step.
+                  </p>
+                  <p style={{ fontSize: 16, fontWeight: 500, lineHeight: 1.5, letterSpacing: '-0.005em', color: 'var(--ink)', margin: 0 }}>
+                    Plain English. No tips. Just your reason to own, watched every morning.
                   </p>
                 </div>
                 <div id="waitlist"><EmailForm source="landing-us-hero" /></div>
@@ -729,21 +717,21 @@ export default function USPage() {
                   phase: 'Before you buy',
                   icon: '01',
                   headline: 'Should I even own this?',
-                  body: 'We answer 5 questions about any stock in plain English — what it does, how it makes money, whether the price makes sense, and why you might want to own it. No jargon. No charts to decode.',
+                  body: 'We answer 5 questions about any stock in plain English. What it does. How it makes money. Whether the story holds up. Whether the price makes sense. And what your reason to own actually is. No jargon. No charts to decode.',
                   current: false,
                 },
                 {
                   phase: 'While you hold',
                   icon: '02',
                   headline: 'Is my reason still true?',
-                  body: 'Every morning we scan everything — news, results, Fed moves, price — and check if any of it touches the specific reason you own each stock. If nothing changed, we stay quiet. Most mornings, we stay quiet.',
+                  body: 'Every morning we scan results, Fed decisions, headlines and sector news. We check if any of it touches your specific reason to own each stock. When results drop and you do not know if the numbers are good or bad, we tell you in plain English. If nothing touched your reason to own, we send nothing. Most mornings, we send nothing.',
                   current: true,
                 },
                 {
                   phase: 'When to leave',
                   icon: '03',
                   headline: 'Is it time to go?',
-                  body: "We watch two things: whether your reason broke, and whether the price is starting to turn. When either changes, we tell you clearly — not with a tip, just the facts. The decision is always yours.",
+                  body: 'We watch whether your reason to own is still intact and whether the price is starting to turn. When either changes, we tell you clearly. Not a tip. Just the facts. The decision is always yours.',
                   current: false,
                 },
               ].map(m => (
