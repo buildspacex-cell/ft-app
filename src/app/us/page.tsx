@@ -671,13 +671,23 @@ export default function USPage() {
                   We&apos;re with you<br />
                   <span style={{ color: 'var(--coral-deep)' }}>for the whole ride.</span>
                 </h1>
-                <div style={{ margin: '0 0 28px', maxWidth: 520 }}>
-                  <p style={{ fontSize: 18, fontWeight: 500, lineHeight: 1.55, letterSpacing: '-0.01em', color: 'var(--ink)', marginBottom: 16 }}>
-                    Before you buy, we help you understand what you&apos;re actually getting into.<br />
-                    While you hold, we tell you every morning if anything changed — and most days, nothing will.<br />
-                    When it&apos;s time to leave, we&apos;ll say so clearly.
-                  </p>
-                  <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.5, letterSpacing: '-0.005em', color: 'var(--ink-soft)', margin: 0 }}>
+                <div style={{ margin: '0 0 28px', maxWidth: 500 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: 24 }}>
+                    {[
+                      { n: '01', label: 'Before you buy', text: 'We help you understand what you are actually getting into.' },
+                      { n: '02', label: 'While you hold', text: 'Every morning we check if anything changed. Most days, nothing will.' },
+                      { n: '03', label: 'When to leave', text: 'We tell you clearly when it is time to go.' },
+                    ].map((item, i) => (
+                      <div key={item.n} style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: '14px 0', borderBottom: i < 2 ? '1px solid var(--hairline)' : 'none' }}>
+                        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, color: 'var(--coral-deep)', letterSpacing: '0.08em', marginTop: 3, flexShrink: 0 }}>{item.n}</span>
+                        <div>
+                          <p style={{ fontSize: 15, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--ink)', margin: '0 0 3px' }}>{item.label}</p>
+                          <p style={{ fontSize: 14, fontWeight: 400, lineHeight: 1.5, color: 'var(--ink-soft)', margin: 0 }}>{item.text}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p style={{ fontSize: 14, fontWeight: 500, lineHeight: 1.5, letterSpacing: '-0.005em', color: 'var(--muted)', margin: 0 }}>
                     No tips. No noise. Just your stock, your reasons, and the truth.
                   </p>
                 </div>
