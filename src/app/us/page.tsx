@@ -649,7 +649,7 @@ export default function USPage() {
               Fundamentally True
             </a>
             <div className="ft-nav-links" style={{ gap: 24, alignItems: 'center' }}>
-              {[['#moments','The journey'],['#how','How it works'],['#voice','The voice'],['#morning','The Morning Check'],['#never','Our promises']].map(([href,label]) => (
+              {[['#moments','The lifecycle'],['#how','How it works'],['#voice','The voice'],['#morning','The Morning Check'],['#never','Our promises']].map(([href,label]) => (
                 <a key={href} href={href} className="ft-nav-link">{label}</a>
               ))}
             </div>
@@ -668,15 +668,19 @@ export default function USPage() {
               <div>
                 <Eyebrow label="For people who don't speak finance" />
                 <h1 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(40px, 5.5vw, 72px)', lineHeight: 0.93, letterSpacing: '-0.052em', margin: '14px 0 22px', color: 'var(--ink)' }}>
-                  We don&apos;t say buy.<br />
-                  We don&apos;t say sell.<br />
-                  <span style={{ color: 'var(--coral-deep)', fontSize: 'clamp(26px, 3.4vw, 46px)', fontWeight: 800, lineHeight: 1.08, letterSpacing: '-0.042em', display: 'block', marginTop: '0.2em' }}>
-                    We tell you whether the reasons you trusted are still true - and help you find reasons worth trusting in the first place.
-                  </span>
+                  We&apos;re with you<br />
+                  <span style={{ color: 'var(--coral-deep)' }}>for the whole ride.</span>
                 </h1>
-                <p style={{ fontSize: 18, fontWeight: 400, lineHeight: 1.4, letterSpacing: '-0.01em', color: 'var(--ink-soft)', margin: '0 0 28px', maxWidth: 520 }}>
-                  Anything that happens in the world - Fed rate decisions, earnings misses, supply chain shocks - we connect it to the stocks in your portfolio and explain what it means for the specific reason you own them.
-                </p>
+                <div style={{ margin: '0 0 28px', maxWidth: 520 }}>
+                  <p style={{ fontSize: 18, fontWeight: 500, lineHeight: 1.55, letterSpacing: '-0.01em', color: 'var(--ink)', marginBottom: 16 }}>
+                    Before you buy, we help you understand what you&apos;re actually getting into.<br />
+                    While you hold, we tell you every morning if anything changed — and most days, nothing will.<br />
+                    When it&apos;s time to leave, we&apos;ll say so clearly.
+                  </p>
+                  <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.5, letterSpacing: '-0.005em', color: 'var(--ink-soft)', margin: 0 }}>
+                    No tips. No noise. Just your stock, your reasons, and the truth.
+                  </p>
+                </div>
                 <div id="waitlist"><EmailForm source="landing-us-hero" /></div>
               </div>
               <div className="ft-hero-phone" style={{ paddingTop: 8 }}>
@@ -703,25 +707,41 @@ export default function USPage() {
         {/* ── FIVE MOMENTS ── */}
         <section id="moments" className="ft-section" style={{ borderTop: '1px solid var(--hairline)' }}>
           <div className="ft-wrap">
-            <Eyebrow label="Built for the whole journey" />
+            <Eyebrow label="The full lifecycle" />
             <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 60px)', letterSpacing: '-0.045em', lineHeight: 0.96, margin: '0 0 18px', maxWidth: 820 }}>
-              Five moments of owning a stock.<br />
-              <span style={{ color: 'var(--coral-deep)' }}>We&apos;re built for every one of them.</span>
+              Three phases.<br />
+              <span style={{ color: 'var(--coral-deep)' }}>We own all of them.</span>
             </h2>
             <p style={{ fontSize: 19, color: 'var(--ink-soft)', maxWidth: 640, margin: '0 0 56px', lineHeight: 1.45 }}>Whether you&apos;re researching, just bought, or have held for years.</p>
             <div className="ft-moments">
               {[
-                { n: '01', when: 'Before you own', q: '"What does this company actually do?"', a: 'The shop story. Plain English, no jargon.', current: false },
-                { n: '02', when: 'After you buy', q: '"Why exactly did I own this?"', a: '3–5 reasons we write. You keep what fits.', current: false },
-                { n: '03', when: 'While you hold', q: '"Is my reason still true?"', a: 'The Morning Check, every weekday at 7am ET.', current: true },
-                { n: '04', when: 'When news breaks', q: '"Does this affect me?"', a: "News filtered against your thesis, not the market's.", current: false },
-                { n: '05', when: 'During earnings', q: '"What just changed?"', a: 'A 60-second check on each reason, one by one.', current: false },
+                {
+                  phase: 'Before you buy',
+                  icon: '01',
+                  headline: 'Should I even own this?',
+                  body: 'We answer 5 questions about any stock in plain English — what it does, how it makes money, whether the price makes sense, and why you might want to own it. No jargon. No charts to decode.',
+                  current: false,
+                },
+                {
+                  phase: 'While you hold',
+                  icon: '02',
+                  headline: 'Is my reason still true?',
+                  body: 'Every morning we scan everything — news, results, Fed moves, price — and check if any of it touches the specific reason you own each stock. If nothing changed, we stay quiet. Most mornings, we stay quiet.',
+                  current: true,
+                },
+                {
+                  phase: 'When to leave',
+                  icon: '03',
+                  headline: 'Is it time to go?',
+                  body: "We watch two things: whether your reason broke, and whether the price is starting to turn. When either changes, we tell you clearly — not with a tip, just the facts. The decision is always yours.",
+                  current: false,
+                },
               ].map(m => (
-                <div key={m.n} className={`ft-moment${m.current ? ' current' : ''}`}>
-                  <div style={{ width: 40, height: 40, borderRadius: '50%', background: m.current ? 'var(--coral)' : 'var(--ink)', boxShadow: m.current ? '0 0 0 4px var(--coral-tint)' : 'none', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700, margin: '0 auto 14px', flexShrink: 0 }}>{m.n}</div>
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--muted)', fontWeight: 600, textAlign: 'center', marginBottom: 12 }}>{m.when}</p>
-                  <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 16, letterSpacing: '-0.025em', lineHeight: 1.22, margin: '0 0 16px', color: 'var(--ink)', textAlign: 'center' }}>{m.q}</p>
-                  <p style={{ marginTop: 'auto', paddingTop: 14, borderTop: '1px solid var(--hairline-soft)', fontSize: 13, lineHeight: 1.45, color: 'var(--coral-deep)', fontWeight: 500, textAlign: 'center' }}>{m.a}</p>
+                <div key={m.phase} className={`ft-moment${m.current ? ' current' : ''}`} style={{ minHeight: 0 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: '50%', background: m.current ? 'var(--coral)' : 'var(--ink)', boxShadow: m.current ? '0 0 0 4px var(--coral-tint)' : 'none', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700, margin: '0 auto 14px', flexShrink: 0 }}>{m.icon}</div>
+                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: m.current ? 'var(--coral-deep)' : 'var(--muted)', fontWeight: 700, textAlign: 'center', marginBottom: 12 }}>{m.phase}</p>
+                  <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 18, letterSpacing: '-0.028em', lineHeight: 1.2, margin: '0 0 14px', color: 'var(--ink)', textAlign: 'center' }}>{m.headline}</p>
+                  <p style={{ marginTop: 'auto', paddingTop: 14, borderTop: '1px solid var(--hairline-soft)', fontFamily: 'var(--font-sans)', fontSize: 14, lineHeight: 1.55, color: 'var(--ink-soft)', fontWeight: 400, textAlign: 'center' }}>{m.body}</p>
                 </div>
               ))}
             </div>
