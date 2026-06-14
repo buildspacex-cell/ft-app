@@ -574,7 +574,7 @@ function EmailForm({ dark = false, source = 'landing-us', compact = false }: { d
             <span key={i} style={{ width: 22, height: 22, borderRadius: '50%', background: c, border: `2px solid ${dark ? 'var(--ink)' : 'var(--cream)'}`, marginLeft: i === 0 ? 0 : -8, display: 'inline-block', flexShrink: 0 }} />
           ))}
         </div>
-        <span>Private beta opening soon · join the first cohort</span>
+        <span>Private beta opening soon · Search or connect your portfolio securely.</span>
       </div>
     </div>
   )
