@@ -655,7 +655,7 @@ export default function USPage() {
               Fundamentally True
             </a>
             <div className="ft-nav-links" style={{ gap: 24, alignItems: 'center' }}>
-              {[['#moments','The lifecycle'],['#how','How it works'],['#voice','The voice'],['#morning','The Morning Check'],['#never','Our promises']].map(([href,label]) => (
+              {[['#moments','The lifecycle'],['#how','How it works'],['#morning','The Morning Check'],['#never','Our promises']].map(([href,label]) => (
                 <a key={href} href={href} className="ft-nav-link">{label}</a>
               ))}
             </div>
@@ -720,19 +720,6 @@ export default function USPage() {
           </div>
         </section>
 
-        {/* ── PULL QUOTE ── */}
-        <section className="ft-section" style={{ background: 'var(--paper)', borderTop: '1px solid var(--hairline)', borderBottom: '1px solid var(--hairline)' }}>
-          <div className="ft-wrap" style={{ textAlign: 'center' }}>
-            <Eyebrow label="Why we exist" />
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 64px)', letterSpacing: '-0.04em', lineHeight: 1.02, margin: '14px auto 22px', maxWidth: 900, color: 'var(--ink)' }}>
-              Every other app gives you a tip.<br />
-              <span style={{ color: 'var(--coral-deep)' }}>We give you an understanding.</span>
-            </h2>
-            <p style={{ maxWidth: 540, margin: '0 auto', fontSize: 18, lineHeight: 1.5, color: 'var(--ink-soft)' }}>
-              Most investors can name the ticker but can&apos;t explain what they own. You deserve to understand exactly what your money is backing.
-            </p>
-          </div>
-        </section>
         {/* Lifecycle phases moved to hero above */}
 
         {/* ── HOW IT WORKS ── */}
@@ -758,36 +745,6 @@ export default function USPage() {
           </div>
         </section>
 
-        {/* ── VOICE GALLERY ── */}
-        <section id="voice" className="ft-section" style={{ background: 'var(--ink)', color: 'var(--cream)' }}>
-          <div className="ft-wrap">
-            <Eyebrow label="The voice" dark />
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 56px)', letterSpacing: '-0.04em', lineHeight: 0.98, color: 'var(--cream)', margin: '0 0 18px', maxWidth: 760 }}>
-              Every number gets a sentence<br /><span style={{ color: 'var(--coral)' }}>that means something.</span>
-            </h2>
-            <p style={{ fontSize: 19, color: 'rgba(246,243,236,0.72)', maxWidth: 580, margin: '0 0 56px', lineHeight: 1.5 }}>Pure metrics are just trivia. The product is the translation.</p>
-            <div className="ft-translations">
-              {[
-                { from: 'Net interest margin · JPMorgan', metric: '2.7%', to: '27¢ of every $10 JPMorgan lends stays with them after paying depositors. That gap is how a bank makes money.' },
-                { from: 'Net margin · Apple', metric: '26%', to: '26¢ from every dollar Apple takes in is theirs to keep. That\'s what a software-like margin looks like on a hardware company.' },
-                { from: 'Same-store sales · Starbucks', metric: '+4%', to: 'People paid more for the same latte without grumbling. The brand still has enough pull to raise prices.' },
-                { from: 'Services revenue · Apple', metric: '+14%', to: 'App Store, iCloud, Apple Pay - growing 14% while iPhone sales were flat. That\'s the reason people own Apple in 2026.' },
-                { from: 'Operating leverage · Microsoft', metric: '43%', to: 'Revenue grew 17%. Profit grew 23%. The gap between those two numbers is why software businesses compound.' },
-                { from: 'Free cash flow yield · Alphabet', metric: '5.2%', to: 'For every $100 of market value, Alphabet generates $5.20 in free cash each year. That\'s the real return on owning it.' },
-                { from: 'Debt-to-equity · Tesla', metric: '0.08×', to: 'Tesla owes just 8 cents for every dollar of shareholder equity. A company this lightly leveraged can survive a rough year.' },
-              ].map((t, i) => (
-                <div key={i} className="ft-translation">
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.06em', color: 'rgba(246,243,236,0.55)', fontWeight: 600, marginBottom: 4 }}>{t.from}</p>
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--cream)', marginBottom: 18 }}>{t.metric}</p>
-                  <div style={{ width: 36, height: 1, background: 'var(--coral)', marginBottom: 18, position: 'relative' }}>
-                    <span style={{ position: 'absolute', right: -4, top: -3, width: 7, height: 7, borderRight: '1px solid var(--coral)', borderTop: '1px solid var(--coral)', transform: 'rotate(45deg)', display: 'block' }} />
-                  </div>
-                  <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 18, letterSpacing: '-0.015em', lineHeight: 1.3, color: 'var(--coral)', margin: 0 }}>{t.to}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ── FEATURE SPOTLIGHT ── */}
         <section id="morning" className="ft-section" style={{ padding: '120px 0' }}>
@@ -824,102 +781,9 @@ export default function USPage() {
           </div>
         </section>
 
-        {/* ── THREE PROMISES ── */}
-        <section id="never" className="ft-section" style={{ background: 'var(--paper)', borderTop: '1px solid var(--hairline)' }}>
-          <div className="ft-wrap">
-            <Eyebrow label="Three things we'll never do" />
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 60px)', letterSpacing: '-0.045em', lineHeight: 0.96, margin: '0 0 20px', maxWidth: 820 }}>
-              Three promises that <span style={{ color: 'var(--coral-deep)' }}>define this product.</span>
-            </h2>
-            <p style={{ fontSize: 19, color: 'var(--ink-soft)', maxWidth: 620, margin: '0 0 56px', lineHeight: 1.45 }}>These rules are enforced in code, not just in spirit.</p>
-            <div className="ft-never-grid">
-              {[
-                { tag: 'Promise 01', h: 'We never tell you what to buy.', p: 'No price targets. No "strong buy" calls. No predictions. We describe whether the reasons you own a company still hold - the decision is always yours.' },
-                { tag: 'Promise 02', h: 'We never hide the source.', p: "Every story shows exactly what we read to write it - the SEC filing, the earnings call, the article. If we can't cite a source, we don't write the story." },
-                { tag: 'Promise 03', h: 'We never manufacture urgency.', p: 'Most financial media is built to make you panic. Urgency here is reserved for moments a reason in your thesis actually breaks - and that\'s rare.' },
-              ].map(n => (
-                <div key={n.tag} className="ft-never-item">
-                  <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--rust-tint)', color: 'var(--rust)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)', fontSize: 26, fontWeight: 700, marginBottom: 24, flexShrink: 0 }}>×</div>
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--coral-deep)', fontWeight: 700, marginBottom: 8 }}>{n.tag}</p>
-                  <h3 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 22, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px' }}>{n.h}</h3>
-                  <p style={{ fontSize: 15, color: 'var(--ink-soft)', lineHeight: 1.5, margin: 0 }}>{n.p}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        {/* ── STAT BAND ── */}
-        <section className="ft-section" style={{ background: 'var(--coral-tint)', textAlign: 'center' }}>
-          <div className="ft-wrap">
-            <Eyebrow label="Built right" />
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(32px, 4.5vw, 52px)', letterSpacing: '-0.04em', lineHeight: 1, margin: '14px 0 56px', color: 'var(--ink)' }}>Designed for owners, not traders.</h2>
-            <div className="ft-stat-row">
-              {[
-                { n: '100%', l: 'Of sources cited', s: 'Every story shows where it came from.' },
-                { n: '0', l: 'Times we say "buy" or "sell"', s: 'The decision stays yours.' },
-                { n: '60s', l: 'To read your daily check', s: 'Faster than your coffee.' },
-              ].map(s => (
-                <div key={s.n}>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(56px, 7vw, 96px)', lineHeight: 0.9, letterSpacing: '-0.05em', color: 'var(--coral-deep)' }}>{s.n}</div>
-                  <div style={{ fontWeight: 600, fontSize: 17, letterSpacing: '-0.015em', color: 'var(--ink)', marginTop: 12 }}>{s.l}</div>
-                  <div style={{ fontSize: 14, color: 'var(--ink-soft)', marginTop: 6, lineHeight: 1.4 }}>{s.s}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        {/* ── FOR / NOT FOR ── */}
-        <section className="ft-section">
-          <div className="ft-wrap">
-            <Eyebrow label="Is this for you?" />
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(32px, 4.5vw, 52px)', letterSpacing: '-0.04em', lineHeight: 0.98, margin: '0 0 56px', maxWidth: 760 }}>Honest about who we&apos;re built for.</h2>
-            <div className="ft-fit-grid">
-              {[
-                { yes: true, h: 'Built for you if', items: ["You own a few stocks and can't fully explain what they do.", "You bought based on a headline and want a better reason.", "You hold for years, not days.", "You want to be informed, not entertained.", "You'd rather understand one company well than guess at ten."] },
-                { yes: false, h: 'Not for you if', items: ["You day-trade and want chart patterns.", "You want someone to tell you what to buy.", "You're hunting for the next 10×.", "You like financial jargon and want more of it.", "You think understanding a business is unnecessary."] },
-              ].map(col => (
-                <div key={col.h} className="ft-fit-col">
-                  <h3 style={{ fontWeight: 700, fontSize: 22, letterSpacing: '-0.025em', margin: '0 0 24px', display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <span style={{ width: 28, height: 28, borderRadius: '50%', background: col.yes ? 'var(--sage)' : 'var(--rust)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--cream)', fontSize: 15, fontWeight: 700, flexShrink: 0 }}>{col.yes ? '✓' : '✕'}</span>
-                    {col.h}
-                  </h3>
-                  <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-                    {col.items.map((item, i) => (
-                      <li key={i} style={{ padding: '14px 0', borderTop: '1px solid var(--hairline-soft)', fontSize: 16, lineHeight: 1.45, color: 'var(--ink-soft)', display: 'flex', gap: 10, alignItems: 'baseline' }}>
-                        <span style={{ color: col.yes ? 'var(--coral)' : 'var(--muted-2)', fontWeight: 700, fontSize: 22, lineHeight: 1, flexShrink: 0 }}>·</span>{item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        {/* ── FAQ ── */}
-        <section id="faq" className="ft-section" style={{ background: 'var(--paper)' }}>
-          <div className="ft-wrap">
-            <Eyebrow label="Common questions" />
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 56px)', letterSpacing: '-0.04em', margin: '0 0 50px' }}>Things worth asking.</h2>
-            <div style={{ maxWidth: 820 }}>
-              {[
-                { q: 'Is this investment advice?', a: 'No. We never say buy or sell. We explain businesses, help you write down why you\'d own them, and tell you whether those reasons still hold. Every action is yours.' },
-                { q: 'Who writes the stories and theses?', a: 'A two-stage AI pipeline grounded in real SEC filings, earnings calls, and news sources - refined with a hand-written voice. Every story shows its sources.' },
-                { q: 'What stocks do you cover at launch?', a: 'A hand-picked set of NYSE and NASDAQ stocks across consumer, tech, financials, healthcare, and industrials. We expand based on what the waitlist tells us they own.' },
-                { q: 'Will you sell my data?', a: 'No. Your feedback trains your filter, never anyone else\'s. We charge users for a paid tier eventually - that\'s it.' },
-                { q: 'Is there a mobile app?', a: 'At launch, we ship as a web app that installs to your home screen - push notifications and all. Native iOS and Android come next.' },
-                { q: 'Free or paid?', a: 'Free at launch. The daily check stays free forever. A future paid tier adds unlimited theses and a Sunday deep dive.' },
-              ].map((faq, i, arr) => (
-                <div key={i} className="ft-faq-item" style={i === arr.length - 1 ? { borderBottom: '1px solid var(--hairline)' } : {}}>
-                  <h3 style={{ fontWeight: 700, fontSize: 21, letterSpacing: '-0.025em', margin: '0 0 10px' }}>{faq.q}</h3>
-                  <p style={{ fontSize: 16.5, color: 'var(--ink-soft)', lineHeight: 1.5, margin: 0, maxWidth: 720 }}>{faq.a}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ── FINAL CTA ── */}
         <section className="ft-section" style={{ background: 'var(--ink)', color: 'var(--cream)', textAlign: 'center' }}>
@@ -955,7 +819,7 @@ export default function USPage() {
                 <div style={{ marginTop: 16 }}><CountrySwitcher active="us" /></div>
               </div>
               {[
-                { h: 'Product', links: [['#how','How it works'],['#morning','The Morning Check'],['#voice','The voice'],['#faq','FAQ']] },
+                { h: 'Product', links: [['#how','How it works'],['#morning','The Morning Check'],] },
                 { h: 'Company', links: [['#','About'],['#','Manifesto'],['#','Careers'],['#','Contact']] },
                 { h: 'Follow', links: [['#','Twitter / X'],['#','Instagram'],['#','LinkedIn'],['#','Substack']] },
               ].map(col => (

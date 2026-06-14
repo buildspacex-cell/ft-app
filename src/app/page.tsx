@@ -156,93 +156,6 @@ function DetailScreen() {
 
 // ─── Wishes bar - rotating real quotes from waitlist ─────────────────────────
 
-function WishesBar() {
-  const [wishes, setWishes] = useState<string[]>([])
-  const [count, setCount] = useState(0)
-  const [idx, setIdx] = useState(0)
-  const [visible, setVisible] = useState(true)
-
-  // Seed quotes shown before any real signups exist
-  const SEEDS = [
-    "I never know if a news story about a company I own is actually relevant or just noise.",
-    "I bought HDFC Bank because someone said it was safe. I still cannot explain why.",
-    "Every time results come out I do not know if the numbers are good or bad.",
-    "I own Reliance but I could not tell you how they make money.",
-    "I check the price every day but I have no idea what I am looking for.",
-    "I bought it but I cannot explain what it does to someone who does not invest.",
-    "The stock is up 60 percent and I still don't know if I should hold or take profits.",
-  ]
-
-  useEffect(() => {
-    fetch('/api/waitlist/wishes')
-      .then(r => r.json())
-      .then(data => {
-        if (data.wishes?.length > 0) {
-          setWishes(data.wishes)
-        }
-        if (data.count > 0) setCount(data.count)
-      })
-      .catch(() => {})
-  }, [])
-
-  const quotes = wishes.length > 0 ? wishes : SEEDS
-
-  // Rotate every 4 seconds with fade
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setVisible(false)
-      setTimeout(() => {
-        setIdx(i => (i + 1) % quotes.length)
-        setVisible(true)
-      }, 400)
-    }, 4000)
-    return () => clearInterval(timer)
-  }, [quotes.length])
-
-  return (
-    <section style={{ background: 'var(--ink)', borderTop: '1px solid rgba(246,243,236,0.08)' }}>
-      <div className="ft-wrap" style={{ padding: '20px 28px' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16, flexWrap: 'wrap' }}>
-          <div style={{ flexShrink: 0 }}>
-            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(246,243,236,0.4)', marginBottom: 4 }}>
-              {count > 0 ? `${count} people on the list` : '5 questions. Most people can\'t answer the last one.'}
-            </p>
-            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'rgba(246,243,236,0.3)', letterSpacing: '0.06em' }}>
-              in their own words
-            </p>
-          </div>
-          <div style={{ width: '1px', background: 'rgba(246,243,236,0.1)', alignSelf: 'stretch', flexShrink: 0 }} />
-          <p style={{
-            fontSize: 15, fontWeight: 500, letterSpacing: '-0.01em', lineHeight: 1.45,
-            color: 'rgba(246,243,236,0.85)',
-            transition: 'opacity 0.4s ease',
-            opacity: visible ? 1 : 0,
-            flex: 1, minWidth: 200,
-            fontStyle: 'italic',
-          }}>
-            &ldquo;{quotes[idx]}&rdquo;
-          </p>
-          {/* Dot indicators */}
-          <div style={{ display: 'flex', gap: 5, alignItems: 'center', flexShrink: 0, alignSelf: 'center' }}>
-            {quotes.slice(0, Math.min(quotes.length, 6)).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => { setVisible(false); setTimeout(() => { setIdx(i); setVisible(true) }, 400) }}
-                style={{
-                  width: i === idx ? 16 : 5, height: 5, borderRadius: 999,
-                  background: i === idx ? 'var(--coral)' : 'rgba(246,243,236,0.2)',
-                  border: 'none', cursor: 'pointer', padding: 0,
-                  transition: 'all 0.3s ease',
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
 // ─── Country switcher ─────────────────────────────────────────────────────────
 
 
@@ -799,7 +712,7 @@ export default function HomePage() {
               Fundamentally True
             </a>
             <div className="ft-nav-links" style={{ gap: 24, alignItems: 'center' }}>
-              {[['#moments','The lifecycle'],['#how','How it works'],['#voice','The voice'],['#morning','The Morning Check'],['#never','Our promises']].map(([href,label]) => (
+              {[['#moments','The lifecycle'],['#how','How it works'],['#morning','The Morning Check'],['#never','Our promises']].map(([href,label]) => (
                 <a key={href} href={href} className="ft-nav-link">{label}</a>
               ))}
             </div>
@@ -899,21 +812,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <WishesBar />
 
-        {/* ── PULL QUOTE ── */}
-        <section className="ft-section" style={{ background: 'var(--paper)', borderTop: '1px solid var(--hairline)', borderBottom: '1px solid var(--hairline)' }}>
-          <div className="ft-wrap" style={{ textAlign: 'center' }}>
-            <Eyebrow label="Why we exist" />
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 64px)', letterSpacing: '-0.04em', lineHeight: 1.02, margin: '14px auto 22px', maxWidth: 900, color: 'var(--ink)' }}>
-              Every other app gives you a tip.<br />
-              <span style={{ color: 'var(--coral-deep)' }}>We give you an understanding.</span>
-            </h2>
-            <p style={{ maxWidth: 540, margin: '0 auto', fontSize: 18, lineHeight: 1.5, color: 'var(--ink-soft)' }}>
-              Most retail investors can name the ticker but can&apos;t explain what they own. You deserve to understand exactly what your money is backing.
-            </p>
-          </div>
-        </section>
         {/* Lifecycle phases moved to hero above */}
 
         {/* ── HOW IT WORKS ── */}
@@ -939,38 +838,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── VOICE GALLERY ── */}
-        <section id="voice" className="ft-section" style={{ background: 'var(--ink)', color: 'var(--cream)' }}>
-          <div className="ft-wrap">
-            <Eyebrow label="The voice" dark />
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 56px)', letterSpacing: '-0.04em', lineHeight: 0.98, color: 'var(--cream)', margin: '0 0 18px', maxWidth: 760 }}>
-              Every number gets a sentence<br /><span style={{ color: 'var(--coral)' }}>that means something.</span>
-            </h2>
-            <p style={{ fontSize: 19, color: 'rgba(246,243,236,0.72)', maxWidth: 580, margin: '0 0 56px', lineHeight: 1.5 }}>
-              Pure metrics are just trivia. The product is the translation.
-            </p>
-            <div className="ft-translations">
-              {[
-                { from: 'Operating cash flow · Reliance', metric: '₹1.2L cr', to: 'Reliance generated ₹1.2 lakh crore in cash from operations last year. That\'s the fuel that funds Jio, Retail, and the green energy bet simultaneously.' },
-                { from: 'Net debt / EBITDA', metric: '1.8×', to: 'They owe less than two years of earnings - comfortable cushion.' },
-                { from: 'Same-store sales', metric: '+4%', to: 'People paid more without grumbling. The brand still has pull.' },
-                { from: 'Net interest margin', metric: '3.8%', to: '₹3.80 of every ₹100 they lend stays with them - that\'s how a bank breathes.' },
-                { from: 'CASA ratio · HDFC Bank', metric: '42%', to: '42 out of every 100 rupees with HDFC came from current or savings accounts - people who parked money, not seekers of high interest. Cheap deposits mean fatter margins.' },
-                { from: 'Volume growth', metric: '+7%', to: '7% more packets of biscuits walked out the door this year than last.' },
-                { from: 'Dividend yield', metric: '1.8%', to: 'For every $100 of stock, $1.80 lands in your account each year.' },
-              ].map((t, i) => (
-                <div key={i} className="ft-translation">
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.06em', color: 'rgba(246,243,236,0.55)', fontWeight: 600, marginBottom: 4 }}>{t.from}</p>
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--cream)', marginBottom: 18 }}>{t.metric}</p>
-                  <div style={{ width: 36, height: 1, background: 'var(--coral)', marginBottom: 18, position: 'relative' }}>
-                    <span style={{ position: 'absolute', right: -4, top: -3, width: 7, height: 7, borderRight: '1px solid var(--coral)', borderTop: '1px solid var(--coral)', transform: 'rotate(45deg)', display: 'block' }} />
-                  </div>
-                  <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 18, letterSpacing: '-0.015em', lineHeight: 1.3, color: 'var(--coral)', margin: 0 }}>{t.to}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
 
         {/* ── FEATURE SPOTLIGHT ── */}
@@ -1008,103 +875,9 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── THREE PROMISES ── */}
-        <section id="never" className="ft-section" style={{ background: 'var(--paper)', borderTop: '1px solid var(--hairline)' }}>
-          <div className="ft-wrap">
-            <Eyebrow label="Three things we'll never do" />
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 60px)', letterSpacing: '-0.045em', lineHeight: 0.96, margin: '0 0 20px', maxWidth: 820 }}>
-              Three promises that <span style={{ color: 'var(--coral-deep)' }}>define this product.</span>
-            </h2>
-            <p style={{ fontSize: 19, color: 'var(--ink-soft)', maxWidth: 620, margin: '0 0 56px', lineHeight: 1.45 }}>These rules are enforced in code, not just in spirit.</p>
-            <div className="ft-never-grid">
-              {[
-                { tag: 'Promise 01', h: 'We never tell you what to buy.', p: 'No price targets. No "strong buy" calls. No predictions. We describe whether the reasons you bought a company still hold - the decision is always yours.' },
-                { tag: 'Promise 02', h: 'We never hide the source.', p: "Every story shows you exactly what we read to write it - the filing, the earnings call, the article. If we can't cite a source, we don't write the story." },
-                { tag: 'Promise 03', h: 'We never manufacture urgency.', p: 'Most financial media is built to make you panic. Urgency is reserved for moments a reason in your thesis actually breaks - and that\'s rare. We also watch the price alongside the story. When a stock has run, we keep watching both - and we tell you when either one turns. Until then: silence.' },
-              ].map(n => (
-                <div key={n.tag} className="ft-never-item">
-                  <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--rust-tint)', color: 'var(--rust)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-sans)', fontSize: 26, fontWeight: 700, marginBottom: 24, flexShrink: 0 }}>×</div>
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--coral-deep)', fontWeight: 700, marginBottom: 8 }}>{n.tag}</p>
-                  <h3 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 22, letterSpacing: '-0.03em', lineHeight: 1.1, margin: '0 0 14px' }}>{n.h}</h3>
-                  <p style={{ fontSize: 15, color: 'var(--ink-soft)', lineHeight: 1.5, margin: 0 }}>{n.p}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        {/* ── STAT BAND ── */}
-        <section className="ft-section" style={{ background: 'var(--coral-tint)', textAlign: 'center' }}>
-          <div className="ft-wrap">
-            <Eyebrow label="Built right" />
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(32px, 4.5vw, 52px)', letterSpacing: '-0.04em', lineHeight: 1, margin: '14px 0 56px', color: 'var(--ink)' }}>Designed for people, not portfolios.</h2>
-            <div className="ft-stat-row">
-              {[
-                { n: '100%', l: 'Of sources cited', s: 'Every story shows where it came from.' },
-                { n: '0', l: 'Times we say "buy" or "sell"', s: 'The decision stays yours.' },
-                { n: '60s', l: 'To read your daily check', s: 'Faster than your coffee.' },
-              ].map(s => (
-                <div key={s.n}>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(56px, 7vw, 96px)', lineHeight: 0.9, letterSpacing: '-0.05em', color: 'var(--coral-deep)' }}>{s.n}</div>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 17, letterSpacing: '-0.015em', color: 'var(--ink)', marginTop: 12 }}>{s.l}</div>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: 'var(--ink-soft)', marginTop: 6, lineHeight: 1.4 }}>{s.s}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        {/* ── FOR / NOT FOR ── */}
-        <section className="ft-section">
-          <div className="ft-wrap">
-            <Eyebrow label="Is this for you?" />
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(32px, 4.5vw, 52px)', letterSpacing: '-0.04em', lineHeight: 0.98, margin: '0 0 56px', maxWidth: 760 }}>Honest about who we&apos;re built for.</h2>
-            <div className="ft-fit-grid">
-              {[
-                { yes: true, h: 'Built for you if', items: ["You own a few stocks and don't fully understand what they do.", "You bought based on a headline and want a better reason.", "You hold for years, not days.", "You want to be informed, not entertained.", "You'd rather understand one company well than guess at ten."] },
-                { yes: false, h: 'Not for you if', items: ["You day-trade and want chart patterns.", "You want someone to tell you what to buy.", "You're hunting for the next 10×.", "You like financial jargon and want more of it.", "You think feelings have no place in investing."] },
-              ].map(col => (
-                <div key={col.h} className="ft-fit-col">
-                  <h3 style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 22, letterSpacing: '-0.025em', margin: '0 0 24px', display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <span style={{ width: 28, height: 28, borderRadius: '50%', background: col.yes ? 'var(--sage)' : 'var(--rust)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--cream)', fontSize: 15, fontWeight: 700, flexShrink: 0 }}>{col.yes ? '✓' : '✕'}</span>
-                    {col.h}
-                  </h3>
-                  <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-                    {col.items.map((item, i) => (
-                      <li key={i} style={{ padding: '14px 0', borderTop: '1px solid var(--hairline-soft)', fontSize: 16, lineHeight: 1.45, color: 'var(--ink-soft)', display: 'flex', gap: 10, alignItems: 'baseline' }}>
-                        <span style={{ color: col.yes ? 'var(--coral)' : 'var(--muted-2)', fontWeight: 700, fontSize: 22, lineHeight: 1, flexShrink: 0 }}>·</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        {/* ── FAQ ── */}
-        <section id="faq" className="ft-section" style={{ background: 'var(--paper)' }}>
-          <div className="ft-wrap">
-            <Eyebrow label="Common questions" />
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 56px)', letterSpacing: '-0.04em', margin: '0 0 50px' }}>Things worth asking.</h2>
-            <div style={{ maxWidth: 820 }}>
-              {[
-                { q: 'Is this investment advice?', a: 'No. We never say buy or sell. We explain businesses, help you write down why you\'d own them, and tell you whether those reasons still hold. Every action is yours.' },
-                { q: 'Who writes the stories and theses?', a: 'A two-stage AI pipeline grounded in real filings and news sources, with a hand-written voice. Every story shows its sources. You can flag anything that doesn\'t sound right.' },
-                { q: 'What markets do you cover?', a: 'At launch, a hand-picked set of NSE and BSE stocks - across FMCG, banks, IT services, pharma, energy, and auto. We expand based on what the waitlist tells us they own.' },
-                { q: 'Will you sell my data?', a: 'No. Your feedback trains your filter, never anyone else\'s. We charge users for a paid tier eventually - that\'s it.' },
-                { q: 'Is there a mobile app?', a: 'At launch, we ship as a web app that installs to your home screen - push notifications and all. Native iOS and Android come once we know exactly what to build.' },
-                { q: 'Free or paid?', a: 'Free at launch. The daily check stays free forever. A future paid tier adds unlimited theses and a Sunday "deep dive" - nothing that hurts the core habit.' },
-              ].map((faq, i, arr) => (
-                <div key={i} className="ft-faq-item" style={i === arr.length - 1 ? { borderBottom: '1px solid var(--hairline)' } : {}}>
-                  <h3 style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 21, letterSpacing: '-0.025em', margin: '0 0 10px' }}>{faq.q}</h3>
-                  <p style={{ fontSize: 16.5, color: 'var(--ink-soft)', lineHeight: 1.5, margin: 0, maxWidth: 720 }}>{faq.a}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ── FINAL CTA ── */}
         <section className="ft-section" style={{ background: 'var(--ink)', color: 'var(--cream)', textAlign: 'center' }}>
@@ -1142,7 +915,7 @@ export default function HomePage() {
                 <div style={{ marginTop: 16 }}><CountrySwitcher active="in" /></div>
               </div>
               {[
-                { h: 'Product', links: [['#how','How it works'],['#morning','The Morning Check'],['#voice','The voice'],['#faq','FAQ']] },
+                { h: 'Product', links: [['#how','How it works'],['#morning','The Morning Check'],] },
                 { h: 'Company', links: [['#','About'],['#','Manifesto'],['#','Careers'],['#','Contact']] },
                 { h: 'Follow', links: [['#','Twitter / X'],['#','Instagram'],['#','LinkedIn'],['#','Substack']] },
               ].map(col => (
