@@ -23,9 +23,9 @@ function PhoneMockup({ screen = 'digest' }: { screen?: 'digest' | 'detail' }) {
         boxShadow: '0 48px 96px rgba(0,0,0,0.30), 0 16px 32px rgba(0,0,0,0.18), 0 4px 8px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.65), inset 0 -1px 0 rgba(0,0,0,0.25)',
       }}>
         {/* Inner black bezel */}
-        <div style={{ borderRadius: 50, padding: 2, background: '#030C15', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)' }}>
+        <div style={{ borderRadius: 50, padding: 2, background: '#111', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)' }}>
           {/* Screen */}
-          <div style={{ borderRadius: 48, overflow: 'hidden', background: '#FAFAF8', position: 'relative', height: 620 }}>
+          <div style={{ borderRadius: 48, overflow: 'hidden', background: 'var(--paper)', position: 'relative', height: 620 }}>
             {/* Screen glare overlay */}
             <div style={{ position: 'absolute', inset: 0, borderRadius: 48, zIndex: 40, pointerEvents: 'none', background: 'linear-gradient(135deg,rgba(255,255,255,0.14) 0%,rgba(255,255,255,0.04) 35%,transparent 55%)' }} />
             {/* Status bar */}
@@ -644,28 +644,6 @@ export default function HomePage() {
     <>
       {/* Responsive styles injected inline - works in all browsers without PostCSS */}
       <style>{`
-        :root {
-          /* Option B — deep navy background, rose gold accent, warm white text */
-          --cream:         #FAFAF8;
-          --cream-deep:    #F0EBE8;
-          --paper:         #0D1B2A;
-          --card:          #142233;
-          --ink:           #FAFAF8;
-          --ink-soft:      rgba(250,250,248,0.75);
-          --muted:         rgba(250,250,248,0.45);
-          --muted-2:       rgba(250,250,248,0.3);
-          --hairline:      rgba(250,250,248,0.1);
-          --hairline-soft: rgba(250,250,248,0.06);
-          --coral:         #B07A6E;
-          --coral-deep:    #C8998E;
-          --coral-tint:    rgba(176,122,110,0.15);
-          --sage:          #5B9E8F;
-          --sage-tint:     rgba(91,158,143,0.15);
-          --rust:          #B07A6E;
-          --rust-tint:     rgba(176,122,110,0.12);
-          --amber:         #C8A96E;
-          --amber-tint:    rgba(200,169,110,0.15);
-        }
         * { box-sizing: border-box; }
         .ft-landing { background: var(--cream); font-family: var(--font-sans); color: var(--ink); overflow-x: hidden; }
         .ft-nav-links { display: flex; }
@@ -740,7 +718,7 @@ export default function HomePage() {
             </div>
             <div style={{ flex: 1 }} />
             <CountrySwitcher active="in" />
-            <a href="#waitlist" onClick={() => trackEvent('cta_clicked', { location: 'hero', market: 'in' })} style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 14, letterSpacing: '-0.005em', background: '#B07A6E', color: '#FAFAF8', padding: '10px 18px', borderRadius: 999, cursor: 'pointer', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, flexShrink: 0, whiteSpace: 'nowrap' }}>
+            <a href="#waitlist" onClick={() => trackEvent('cta_clicked', { location: 'hero', market: 'in' })} style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 14, letterSpacing: '-0.005em', background: 'var(--ink)', color: 'var(--cream)', padding: '10px 18px', borderRadius: 999, cursor: 'pointer', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, flexShrink: 0, whiteSpace: 'nowrap' }}>
               Get early access <span>→</span>
             </a>
           </div>
@@ -801,7 +779,7 @@ export default function HomePage() {
 
 
         {/* ── SEE HOW IT WORKS ── */}
-        <section style={{ background: '#081422', padding: '0' }}>
+        <section style={{ background: 'var(--ink)', padding: '0' }}>
           <div className="ft-wrap" style={{ padding: '0 28px' }}>
             <a href="/sample" onClick={() => trackEvent('sample_opened', { market: 'in' })} style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -863,7 +841,7 @@ export default function HomePage() {
 
 
         {/* ── FEATURE SPOTLIGHT ── */}
-        <section id="morning" className="ft-section" style={{ padding: '120px 0', background: '#0A1628' }}>
+        <section id="morning" className="ft-section" style={{ padding: '120px 0' }}>
           <div className="ft-wrap">
             <div className="ft-feature-grid">
               <div>
@@ -902,7 +880,7 @@ export default function HomePage() {
 
 
         {/* ── FINAL CTA ── */}
-        <section className="ft-section" style={{ background: '#081422', color: '#FAFAF8', textAlign: 'center' }}>
+        <section className="ft-section" style={{ background: 'var(--ink)', color: 'var(--cream)', textAlign: 'center' }}>
           <div className="ft-wrap">
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(246,243,236,0.5)', fontWeight: 600, marginBottom: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
               <span style={{ display: 'inline-block', width: 18, height: 1, background: 'var(--coral)' }} />Get early access
