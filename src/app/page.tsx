@@ -23,7 +23,7 @@ function PhoneMockup({ screen = 'digest' }: { screen?: 'digest' | 'detail' }) {
         boxShadow: '0 48px 96px rgba(0,0,0,0.30), 0 16px 32px rgba(0,0,0,0.18), 0 4px 8px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.65), inset 0 -1px 0 rgba(0,0,0,0.25)',
       }}>
         {/* Inner black bezel */}
-        <div style={{ borderRadius: 50, padding: 2, background: '#111', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)' }}>
+        <div style={{ borderRadius: 50, padding: 2, background: '#050D18', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)' }}>
           {/* Screen */}
           <div style={{ borderRadius: 48, overflow: 'hidden', background: 'var(--paper)', position: 'relative', height: 620 }}>
             {/* Screen glare overlay */}
@@ -644,6 +644,27 @@ export default function HomePage() {
     <>
       {/* Responsive styles injected inline - works in all browsers without PostCSS */}
       <style>{`
+        :root {
+          --cream:         #F0EBE8;
+          --cream-deep:    #E8E0DC;
+          --paper:         #FAFAF8;
+          --card:          #ffffff;
+          --ink:           #0D1B2A;
+          --ink-soft:      #1E3245;
+          --muted:         #64748B;
+          --muted-2:       #8899AA;
+          --hairline:      #DDD5D0;
+          --hairline-soft: #E8E2DE;
+          --coral:         #B07A6E;
+          --coral-deep:    #8A5A50;
+          --coral-tint:    #F0E6E3;
+          --sage:          #4A7C6F;
+          --sage-tint:     #D8ECEA;
+          --rust:          #8A4A3A;
+          --rust-tint:     #F0DDD8;
+          --amber:         #A07040;
+          --amber-tint:    #EDE0D0;
+        }
         * { box-sizing: border-box; }
         .ft-landing { background: var(--cream); font-family: var(--font-sans); color: var(--ink); overflow-x: hidden; }
         .ft-nav-links { display: flex; }
@@ -718,7 +739,7 @@ export default function HomePage() {
             </div>
             <div style={{ flex: 1 }} />
             <CountrySwitcher active="in" />
-            <a href="#waitlist" onClick={() => trackEvent('cta_clicked', { location: 'hero', market: 'in' })} style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 14, letterSpacing: '-0.005em', background: 'var(--ink)', color: 'var(--cream)', padding: '10px 18px', borderRadius: 999, cursor: 'pointer', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, flexShrink: 0, whiteSpace: 'nowrap' }}>
+            <a href="#waitlist" onClick={() => trackEvent('cta_clicked', { location: 'hero', market: 'in' })} style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 14, letterSpacing: '-0.005em', background: '#0D1B2A', color: '#F0EBE8', padding: '10px 18px', borderRadius: 999, cursor: 'pointer', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, flexShrink: 0, whiteSpace: 'nowrap' }}>
               Get early access <span>→</span>
             </a>
           </div>
@@ -779,7 +800,7 @@ export default function HomePage() {
 
 
         {/* ── SEE HOW IT WORKS ── */}
-        <section style={{ background: 'var(--ink)', padding: '0' }}>
+        <section style={{ background: '#050D18', padding: '0' }}>
           <div className="ft-wrap" style={{ padding: '0 28px' }}>
             <a href="/sample" onClick={() => trackEvent('sample_opened', { market: 'in' })} style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -880,7 +901,7 @@ export default function HomePage() {
 
 
         {/* ── FINAL CTA ── */}
-        <section className="ft-section" style={{ background: 'var(--ink)', color: 'var(--cream)', textAlign: 'center' }}>
+        <section className="ft-section" style={{ background: '#0D1B2A', color: '#F0EBE8', textAlign: 'center' }}>
           <div className="ft-wrap">
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(246,243,236,0.5)', fontWeight: 600, marginBottom: 18, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
               <span style={{ display: 'inline-block', width: 18, height: 1, background: 'var(--coral)' }} />Get early access
