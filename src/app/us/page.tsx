@@ -701,50 +701,7 @@ export default function USPage() {
             </p>
           </div>
         </section>
-
-        {/* ── FIVE MOMENTS ── */}
-        <section id="moments" className="ft-section" style={{ borderTop: '1px solid var(--hairline)' }}>
-          <div className="ft-wrap">
-            <Eyebrow label="The full lifecycle" />
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 60px)', letterSpacing: '-0.045em', lineHeight: 0.96, margin: '0 0 18px', maxWidth: 820 }}>
-              Three phases.<br />
-              <span style={{ color: 'var(--coral-deep)' }}>We own all of them.</span>
-            </h2>
-            <p style={{ fontSize: 19, color: 'var(--ink-soft)', maxWidth: 640, margin: '0 0 56px', lineHeight: 1.45 }}>Whether you&apos;re researching, just bought, or have held for years.</p>
-            <div className="ft-moments">
-              {[
-                {
-                  phase: 'Before you buy',
-                  icon: '01',
-                  headline: 'Should I even own this?',
-                  body: 'We answer 5 questions about any stock in plain English. What it does. How it makes money. Whether the story holds up. Whether the price makes sense. And what your reason to own actually is. No jargon. No charts to decode.',
-                  current: false,
-                },
-                {
-                  phase: 'While you hold',
-                  icon: '02',
-                  headline: 'Is my reason to hold this still true?',
-                  body: 'Every morning we scan results, Fed decisions, headlines and sector news. We check if any of it touches your specific reason to own each stock. When results drop and you do not know if the numbers are good or bad, we tell you in plain English. If nothing touched your reason to own, we send nothing. Most mornings, we send nothing.',
-                  current: true,
-                },
-                {
-                  phase: 'When to leave',
-                  icon: '03',
-                  headline: 'Is it time to go?',
-                  body: 'We watch whether your reason to own is still intact and whether the price is starting to turn. When either changes, we tell you clearly. Not a tip. Just the facts. The decision is always yours.',
-                  current: false,
-                },
-              ].map(m => (
-                <div key={m.phase} className={`ft-moment${m.current ? ' current' : ''}`} style={{ minHeight: 0 }}>
-                  <div style={{ width: 40, height: 40, borderRadius: '50%', background: m.current ? 'var(--coral)' : 'var(--ink)', boxShadow: m.current ? '0 0 0 4px var(--coral-tint)' : 'none', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700, margin: '0 auto 14px', flexShrink: 0 }}>{m.icon}</div>
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: m.current ? 'var(--coral-deep)' : 'var(--muted)', fontWeight: 700, textAlign: 'center', marginBottom: 12 }}>{m.phase}</p>
-                  <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 18, letterSpacing: '-0.028em', lineHeight: 1.2, margin: '0 0 14px', color: 'var(--ink)', textAlign: 'center' }}>{m.headline}</p>
-                  <p style={{ marginTop: 'auto', paddingTop: 14, borderTop: '1px solid var(--hairline-soft)', fontFamily: 'var(--font-sans)', fontSize: 14, lineHeight: 1.55, color: 'var(--ink-soft)', fontWeight: 400, textAlign: 'center' }}>{m.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Lifecycle phases moved to hero above */}
 
         {/* ── HOW IT WORKS ── */}
         <section id="how" className="ft-section">

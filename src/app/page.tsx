@@ -744,6 +744,8 @@ export default function HomePage() {
         .ft-hero-phone { justify-self: center; }
         .ft-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
         .ft-moments { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; position: relative; }
+        .ft-hero-phases { } /* 3-col by default */
+        @media (max-width: 768px) { .ft-hero-phases { grid-template-columns: 1fr !important; } }
         .ft-translations { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
         .ft-feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
         .ft-never-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
@@ -817,28 +819,58 @@ export default function HomePage() {
         </nav>
 
         {/* ── HERO ── */}
-        <section className="ft-section" style={{ padding: '48px 0 72px' }}>
+        {/* ── HERO ── */}
+        <section className="ft-section" style={{ padding: '56px 0 0' }}>
           <div className="ft-wrap">
-            <div className="ft-hero-grid" style={{ alignItems: 'flex-start' }}>
-              <div>
-                <Eyebrow label="For people who don't speak finance" />
-                <h1 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(40px, 5.5vw, 72px)', lineHeight: 0.93, letterSpacing: '-0.052em', margin: '14px 0 22px', color: 'var(--ink)' }}>
-                  We&apos;re with you<br />
-                  <span style={{ color: 'var(--coral-deep)' }}>for the whole ride.</span>
-                </h1>
-                <div style={{ margin: '0 0 28px', maxWidth: 480 }}>
-                  <p style={{ fontSize: 18, fontWeight: 400, lineHeight: 1.6, letterSpacing: '-0.01em', color: 'var(--ink-soft)', margin: '0 0 14px' }}>
-                    From your first question about a stock to the day you decide to leave it, we are there at every step.
-                  </p>
-                  <p style={{ fontSize: 16, fontWeight: 500, lineHeight: 1.5, letterSpacing: '-0.005em', color: 'var(--ink)', margin: 0 }}>
-                    Plain English. No tips. Just your reason to own, watched every morning.
-                  </p>
+            <Eyebrow label="For people who don't speak finance" />
+            <h1 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(40px, 5.5vw, 72px)', lineHeight: 0.93, letterSpacing: '-0.052em', margin: '14px 0 20px', color: 'var(--ink)', maxWidth: 760 }}>
+              We&apos;re with you<br />
+              <span style={{ color: 'var(--coral-deep)' }}>for the whole ride.</span>
+            </h1>
+            <p style={{ fontSize: 18, fontWeight: 400, lineHeight: 1.6, letterSpacing: '-0.01em', color: 'var(--ink-soft)', margin: '0 0 6px', maxWidth: 560 }}>
+              From your first question about a stock to the day you decide to leave it, we are there at every step.
+            </p>
+            <p style={{ fontSize: 16, fontWeight: 500, lineHeight: 1.5, color: 'var(--ink)', margin: '0 0 36px', maxWidth: 560 }}>
+              Plain English. No tips. Just your reason to own, watched every morning.
+            </p>
+
+            {/* ── Three phase cards inline ── */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14, margin: '0 0 40px' }} className="ft-hero-phases">
+              {[
+                { icon: '01', phase: 'Before you buy', headline: 'Should I even own this?', body: 'Five questions about any stock. Plain English. No jargon.' },
+                { icon: '02', phase: 'While you hold', headline: 'Is my reason to hold this still true?', body: 'Every morning, filtered against your reason to own. We tell you if it matters. Most mornings, we send nothing.', active: true },
+                { icon: '03', phase: 'When to leave', headline: 'Is it time to go?', body: 'When your reason breaks or the price turns, we tell you. Not a tip. Just the facts.' },
+              ].map(m => (
+                <div key={m.phase} style={{
+                  padding: '20px 18px',
+                  background: m.active ? 'var(--ink)' : 'var(--card)',
+                  border: `1px solid ${m.active ? 'var(--ink)' : 'var(--hairline)'}`,
+                  borderRadius: 16,
+                  display: 'flex', flexDirection: 'column', gap: 8,
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, color: m.active ? 'var(--coral)' : 'var(--coral-deep)', letterSpacing: '0.08em' }}>{m.icon}</span>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: m.active ? 'rgba(246,243,236,0.45)' : 'var(--muted)' }}>{m.phase}</span>
+                  </div>
+                  <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 16, letterSpacing: '-0.025em', lineHeight: 1.2, color: m.active ? 'var(--cream)' : 'var(--ink)', margin: 0 }}>{m.headline}</p>
+                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: 13, lineHeight: 1.5, color: m.active ? 'rgba(246,243,236,0.55)' : 'var(--ink-soft)', margin: 0, fontWeight: 400 }}>{m.body}</p>
                 </div>
-                <div id="waitlist"><EmailForm source="landing-in-hero" /></div>
-              </div>
-              <div className="ft-hero-phone" style={{ paddingTop: 8 }}>
-                <PhoneMockup screen="digest" />
-              </div>
+              ))}
+            </div>
+
+            <div id="waitlist"><EmailForm source="landing-in-hero" /></div>
+          </div>
+        </section>
+
+        {/* ── PRODUCT IN ACTION — phone mockup ── */}
+        <section style={{ padding: '72px 0', background: 'var(--paper)', borderTop: '1px solid var(--hairline)', borderBottom: '1px solid var(--hairline)', marginTop: 64 }}>
+          <div className="ft-wrap" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Eyebrow label="What it looks like every morning" />
+            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(28px, 4vw, 44px)', letterSpacing: '-0.04em', lineHeight: 1.05, margin: '10px 0 48px', textAlign: 'center', color: 'var(--ink)', maxWidth: 580 }}>
+              A morning check that reads like a message from a friend who happened to study the business.
+            </h2>
+            <div style={{ maxWidth: 380, width: '100%' }}>
+              <PhoneMockup screen="digest" />
             </div>
           </div>
         </section>
@@ -893,52 +925,7 @@ export default function HomePage() {
             </p>
           </div>
         </section>
-
-        {/* ── FIVE MOMENTS ── */}
-        <section id="moments" className="ft-section" style={{ borderTop: '1px solid var(--hairline)' }}>
-          <div className="ft-wrap">
-            <Eyebrow label="The full lifecycle" />
-            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(36px, 5vw, 60px)', letterSpacing: '-0.045em', lineHeight: 0.96, margin: '0 0 18px', maxWidth: 820 }}>
-              Three phases.<br />
-              <span style={{ color: 'var(--coral-deep)' }}>We own all of them.</span>
-            </h2>
-            <p style={{ fontSize: 19, color: 'var(--ink-soft)', maxWidth: 640, margin: '0 0 56px', lineHeight: 1.45 }}>
-              Most finance apps help you pick a stock and disappear. FT stays. The three phases below are the full lifecycle of owning a stock, done properly.
-            </p>
-            <div className="ft-moments">
-              {[
-                {
-                  phase: 'Before you buy',
-                  icon: '01',
-                  headline: 'Should I even own this?',
-                  body: 'We answer 5 questions about any stock in plain English. What it does. How it makes money. Whether the story holds up. Whether the price makes sense. And what your reason to own actually is. No jargon. No charts to decode.',
-                  current: false,
-                },
-                {
-                  phase: 'While you hold',
-                  icon: '02',
-                  headline: 'Is my reason to hold this still true?',
-                  body: 'Every morning we scan results, RBI decisions, headlines and sector news. We check if any of it touches your specific reason to own each stock. When results drop and you do not know if the numbers are good or bad, we tell you in plain English. If nothing touched your reason to own, we send nothing. Most mornings, we send nothing.',
-                  current: true,
-                },
-                {
-                  phase: 'When to leave',
-                  icon: '03',
-                  headline: 'Is it time to go?',
-                  body: 'We watch whether your reason to own is still intact and whether the price is starting to turn. When either changes, we tell you clearly. Not a tip. Just the facts. The decision is always yours.',
-                  current: false,
-                },
-              ].map(m => (
-                <div key={m.phase} className={`ft-moment${m.current ? ' current' : ''}`} style={{ minHeight: 0 }}>
-                  <div style={{ width: 40, height: 40, borderRadius: '50%', background: m.current ? 'var(--coral)' : 'var(--ink)', boxShadow: m.current ? '0 0 0 4px var(--coral-tint)' : 'none', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700, margin: '0 auto 14px', flexShrink: 0 }}>{m.icon}</div>
-                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: m.current ? 'var(--coral-deep)' : 'var(--muted)', fontWeight: 700, textAlign: 'center', marginBottom: 12 }}>{m.phase}</p>
-                  <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 18, letterSpacing: '-0.028em', lineHeight: 1.2, margin: '0 0 14px', color: 'var(--ink)', textAlign: 'center' }}>{m.headline}</p>
-                  <p style={{ marginTop: 'auto', paddingTop: 14, borderTop: '1px solid var(--hairline-soft)', fontFamily: 'var(--font-sans)', fontSize: 14, lineHeight: 1.55, color: 'var(--ink-soft)', fontWeight: 400, letterSpacing: '-0.005em', textAlign: 'center' }}>{m.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Lifecycle phases moved to hero above */}
 
         {/* ── HOW IT WORKS ── */}
         <section id="how" className="ft-section">
