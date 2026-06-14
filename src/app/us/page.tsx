@@ -696,7 +696,7 @@ export default function USPage() {
                 </p>
 
                 {/* Inline form — above the fold */}
-                <div style={{ marginBottom: 32 }}>
+                <div id="waitlist" style={{ marginBottom: 32 }}>
                   <EmailForm source="landing-us-inline" compact />
                 </div>
 
@@ -728,7 +728,6 @@ export default function USPage() {
                   Plain English. No tips. Just your reason to own, watched every morning.
                 </p>
 
-                <div id="waitlist"><EmailForm source="landing-us-hero" /></div>
               </div>
 
               {/* Right — phone showing the morning check */}

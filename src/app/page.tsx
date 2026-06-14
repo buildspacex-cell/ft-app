@@ -759,7 +759,7 @@ export default function HomePage() {
                 </p>
 
                 {/* Inline form — above the fold */}
-                <div style={{ marginBottom: 32 }}>
+                <div id="waitlist" style={{ marginBottom: 32 }}>
                   <EmailForm source="landing-in-inline" compact />
                 </div>
 
@@ -791,7 +791,6 @@ export default function HomePage() {
                   Plain English. No tips. Just your reason to own, watched every morning.
                 </p>
 
-                <div id="waitlist"><EmailForm source="landing-in-hero" /></div>
               </div>
 
               {/* Right — phone showing the morning check */}
