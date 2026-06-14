@@ -438,7 +438,7 @@ function PhoneStep({ dark = false, defaultCountry = 'IN' }: { dark?: boolean; de
 
 // ─── Email form ───────────────────────────────────────────────────────────────
 
-function EmailForm({ dark = false, source = 'landing-us' }: { dark?: boolean; source?: string }) {
+function EmailForm({ dark = false, source = 'landing-us', compact = false }: { dark?: boolean; source?: string; compact?: boolean }) {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
 
@@ -547,7 +547,7 @@ function EmailForm({ dark = false, source = 'landing-us' }: { dark?: boolean; so
 
   return (
     <div>
-      <form onSubmit={handleSubmit} style={{
+      <form onSubmit={handleSubmit} className={compact ? 'ft-inline-form' : undefined} style={{
         display: 'flex', flexWrap: 'wrap', gap: 8,
         background: dark ? 'rgba(246,243,236,0.08)' : 'var(--card)',
         padding: '6px 6px 6px 18px', borderRadius: 999,
@@ -624,9 +624,13 @@ export default function USPage() {
         .ft-faq-item { padding: 26px 0; border-top: 1px solid var(--hairline); }
         .ft-nav-link { font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.15s; }
         .ft-nav-link:hover { color: var(--ink); }
+        .ft-inline-form { display: flex; gap: 8px; align-items: stretch; }
+        .ft-inline-form input { flex: 1; min-width: 0; }
+        .ft-inline-form button { flex-shrink: 0; white-space: nowrap; }
         .ft-footer-link { display: block; font-size: 14px; color: var(--ink-soft); text-decoration: none; padding: 4px 0; }
         .ft-footer-link:hover { color: var(--coral-deep); }
         @media (max-width: 960px) {
+          .ft-steps { grid-template-columns: 1fr 1fr !important; }
           .ft-hero-grid { grid-template-columns: 1fr; gap: 48px; }
           .ft-steps, .ft-never-grid { grid-template-columns: 1fr; gap: 16px; }
           .ft-moments { grid-template-columns: repeat(2, 1fr); }
@@ -638,6 +642,11 @@ export default function USPage() {
           .ft-wrap { padding: 0 20px; }
         }
         @media (max-width: 600px) {
+          .ft-steps { grid-template-columns: 1fr !important; }
+          .ft-hero-questions { gap: 0 !important; }
+          .ft-inline-form { flex-direction: column !important; }
+          .ft-inline-form input { border-radius: 12px !important; margin-bottom: 8px; }
+          .ft-inline-form button { border-radius: 12px !important; width: 100% !important; }
           .ft-nav-links { display: none; }
           .ft-moments, .ft-translations, .ft-footer-grid { grid-template-columns: 1fr; }
           .ft-section { padding: 48px 0; }
@@ -680,8 +689,19 @@ export default function USPage() {
                   <span style={{ color: 'var(--coral-deep)' }}>for the whole ride.</span>
                 </h1>
 
+                {/* Delivery mechanism — one line clarity */}
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--coral-deep)', marginBottom: 28, display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ display: 'inline-block', width: 16, height: 1.5, background: 'var(--coral-deep)' }} />
+                  A 7am app notification. 60 seconds. Plain English.
+                </p>
+
+                {/* Inline form — above the fold */}
+                <div style={{ marginBottom: 32 }}>
+                  <EmailForm source="landing-us-inline" compact />
+                </div>
+
                 {/* Three questions — clean, no body copy */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: 36 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 0, marginBottom: 36 }} className="ft-hero-questions">
                   {[
                     { n: '01', phase: 'Before you buy',  q: 'Should I even own this?' },
                     { n: '02', phase: 'While you hold',  q: 'Is my reason to hold this still true?', active: true },
@@ -731,7 +751,7 @@ export default function USPage() {
             <div className="ft-steps">
               {[
                 { n: '01', h: 'Explain the business like a shop on your street.', p: 'What they sell, who buys it, how much they keep. Numbers always come paired with a plain sentence - never on their own.', badge: 'No jargon, ever' },
-                { n: '02', h: 'We build the investment thesis for you.', p: 'Once you understand the business, we draft the investment thesis, the core reasons to own the stock, in plain English. It is ready for you to read and alter if anything does not fit. Once saved, every morning update is measured against it.', badge: 'We build · you refine' },
+                { n: '02', h: 'We build the investment thesis for you.', p: 'We draft the investment thesis instantly, the core reasons most investors own this stock, in plain English. One tap to confirm it. One tap to swap a reason if something does not fit. Once saved, every morning update is measured against it. No writing required.', badge: 'We build · you refine' },
                 { n: '03', h: 'We track everything and keep you updated when something touches your reason.', p: 'Every morning we scan results, Fed decisions, headlines and sector moves. We check each one against your saved reason to own. If something touches it, we tell you in plain English. If nothing does, we stay quiet. Most mornings, we stay quiet.', badge: 'We track · we update' },
               ].map(s => (
                 <div key={s.n} className="ft-step">
@@ -813,6 +833,9 @@ export default function USPage() {
                   <svg width="28" height="28" viewBox="0 0 28 28" style={{flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><path d="M14.0 3.9 A10.1 10.1 0 0 0 14.0 24.1 Z" transform="translate(-0.98 0)" fill="#1a1a1a"/><path d="M14.0 3.9 A10.1 10.1 0 0 1 14.0 24.1 Z" transform="translate(0.98 0)" fill="#d97757"/></svg>
                   Fundamentally True
                 </a>
+                <p style={{ fontSize: 14, lineHeight: 1.65, color: 'var(--ink-soft)', maxWidth: 340, marginBottom: 14 }}>
+                  Built by people who held stocks for years and realised they couldn&apos;t explain why. We got tired of mistaking price movement for business change.
+                </p>
                 <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, lineHeight: 1.6, color: 'var(--muted)', maxWidth: 380 }}>
                   For informational and educational purposes only. We do not provide investment advice. All investment decisions are yours.
                 </p>
