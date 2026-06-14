@@ -917,7 +917,7 @@ export default function HomePage() {
                 {
                   phase: 'While you hold',
                   icon: '02',
-                  headline: 'Is my reason still true?',
+                  headline: 'Is my reason to hold this still true?',
                   body: 'Every morning we scan results, RBI decisions, headlines and sector news. We check if any of it touches your specific reason to own each stock. When results drop and you do not know if the numbers are good or bad, we tell you in plain English. If nothing touched your reason to own, we send nothing. Most mornings, we send nothing.',
                   current: true,
                 },
