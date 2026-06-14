@@ -7,65 +7,59 @@ import { useState, useEffect } from 'react'
 
 function PhoneMockup({ screen = 'digest' }: { screen?: 'digest' | 'detail' }) {
   return (
-    <div style={{
-      width: 280, height: 580, borderRadius: 42, overflow: 'hidden',
-      position: 'relative', background: 'var(--paper)',
-      boxShadow: '0 32px 64px rgba(0,0,0,0.16), 0 0 0 1.5px rgba(0,0,0,0.1)',
-      flexShrink: 0,
-    }}>
-      {/* Outer frame ring */}
-      <div style={{ position: 'absolute', inset: 0, borderRadius: 42, boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.08)', zIndex: 30, pointerEvents: 'none' }} />
+    <div style={{ position: 'relative', width: 300, flexShrink: 0 }}>
+      {/* Side buttons left */}
+      <div style={{ position: 'absolute', left: -3, top: 110, width: 3, height: 30, background: 'linear-gradient(180deg,#c0c0c0,#909090)', borderRadius: '3px 0 0 3px', zIndex: 10 }} />
+      <div style={{ position: 'absolute', left: -3, top: 154, width: 3, height: 52, background: 'linear-gradient(180deg,#c0c0c0,#909090)', borderRadius: '3px 0 0 3px', zIndex: 10 }} />
+      <div style={{ position: 'absolute', left: -3, top: 218, width: 3, height: 52, background: 'linear-gradient(180deg,#c0c0c0,#909090)', borderRadius: '3px 0 0 3px', zIndex: 10 }} />
+      {/* Power button right */}
+      <div style={{ position: 'absolute', right: -3, top: 162, width: 3, height: 72, background: 'linear-gradient(180deg,#c0c0c0,#909090)', borderRadius: '0 3px 3px 0', zIndex: 10 }} />
 
-      {/* Status bar row - split into 3 zones so dynamic island sits in the middle */}
+      {/* Titanium outer shell */}
       <div style={{
-        display: 'grid', gridTemplateColumns: '1fr auto 1fr',
-        alignItems: 'center',
-        padding: '14px 20px 0',
-        position: 'relative', zIndex: 10,
+        borderRadius: 52,
+        padding: 3,
+        background: 'linear-gradient(145deg,#d8d8d8 0%,#a8a8a8 25%,#c8c8c8 50%,#969696 75%,#b8b8b8 100%)',
+        boxShadow: '0 48px 96px rgba(0,0,0,0.30), 0 16px 32px rgba(0,0,0,0.18), 0 4px 8px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.65), inset 0 -1px 0 rgba(0,0,0,0.25)',
       }}>
-        {/* Left: time */}
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, color: 'var(--ink)', letterSpacing: '-0.01em' }}>
-          9:41
-        </span>
-
-        {/* Centre: dynamic island */}
-        <div style={{ width: 100, height: 30, borderRadius: 20, background: '#000', margin: '0 auto' }} />
-
-        {/* Right: icons */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 5 }}>
-          {/* Signal */}
-          <svg width="15" height="11" viewBox="0 0 16 11" fill="none">
-            <rect x="0" y="7" width="2.5" height="4" rx="0.5" fill="var(--ink)"/>
-            <rect x="4" y="5" width="2.5" height="6" rx="0.5" fill="var(--ink)"/>
-            <rect x="8" y="2.5" width="2.5" height="8.5" rx="0.5" fill="var(--ink)"/>
-            <rect x="12" y="0" width="2.5" height="11" rx="0.5" fill="var(--ink)"/>
-          </svg>
-          {/* Wifi */}
-          <svg width="14" height="11" viewBox="0 0 20 15" fill="none">
-            <path d="M10 13h.01M6.5 10.5c.95-.95 2.24-1.5 3.5-1.5s2.55.55 3.5 1.5M3 7.5C4.9 5.6 7.35 4.5 10 4.5s5.1 1.1 7 3M0 4.5C2.85 1.65 6.75 0 10 0s7.15 1.65 10 4.5" stroke="var(--ink)" strokeWidth="1.5" strokeLinecap="round"/>
-          </svg>
-          {/* Battery */}
-          <svg width="22" height="11" viewBox="0 0 24 12" fill="none">
-            <rect x="0.5" y="0.5" width="20" height="11" rx="3" stroke="var(--ink)" strokeOpacity="0.35"/>
-            <rect x="2" y="2" width="15" height="8" rx="1.5" fill="var(--ink)"/>
-            <path d="M22 4v4" stroke="var(--ink)" strokeOpacity="0.35" strokeWidth="1.5" strokeLinecap="round"/>
-          </svg>
+        {/* Inner black bezel */}
+        <div style={{ borderRadius: 50, padding: 2, background: '#111', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)' }}>
+          {/* Screen */}
+          <div style={{ borderRadius: 48, overflow: 'hidden', background: 'var(--paper)', position: 'relative', height: 620 }}>
+            {/* Screen glare overlay */}
+            <div style={{ position: 'absolute', inset: 0, borderRadius: 48, zIndex: 40, pointerEvents: 'none', background: 'linear-gradient(135deg,rgba(255,255,255,0.14) 0%,rgba(255,255,255,0.04) 35%,transparent 55%)' }} />
+            {/* Status bar */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', padding: '14px 22px 0', position: 'relative', zIndex: 10 }}>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, color: 'var(--ink)', letterSpacing: '-0.01em' }}>9:41</span>
+              <div style={{ width: 106, height: 32, borderRadius: 20, background: '#000', margin: '0 auto', boxShadow: '0 0 0 1px rgba(255,255,255,0.07)' }} />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 5 }}>
+                <svg width="15" height="11" viewBox="0 0 16 11" fill="none">
+                  <rect x="0" y="7" width="2.5" height="4" rx="0.5" fill="var(--ink)"/>
+                  <rect x="4" y="5" width="2.5" height="6" rx="0.5" fill="var(--ink)"/>
+                  <rect x="8" y="2.5" width="2.5" height="8.5" rx="0.5" fill="var(--ink)"/>
+                  <rect x="12" y="0" width="2.5" height="11" rx="0.5" fill="var(--ink)"/>
+                </svg>
+                <svg width="14" height="11" viewBox="0 0 20 15" fill="none">
+                  <path d="M10 13h.01M6.5 10.5c.95-.95 2.24-1.5 3.5-1.5s2.55.55 3.5 1.5M3 7.5C4.9 5.6 7.35 4.5 10 4.5s5.1 1.1 7 3M0 4.5C2.85 1.65 6.75 0 10 0s7.15 1.65 10 4.5" stroke="var(--ink)" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+                <svg width="22" height="11" viewBox="0 0 24 12" fill="none">
+                  <rect x="0.5" y="0.5" width="20" height="11" rx="3" stroke="var(--ink)" strokeOpacity="0.35"/>
+                  <rect x="2" y="2" width="15" height="8" rx="1.5" fill="var(--ink)"/>
+                  <path d="M22 4v4" stroke="var(--ink)" strokeOpacity="0.35" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              </div>
+            </div>
+            {/* App bar */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 22px 0' }}>
+              <svg width="20" height="20" viewBox="0 0 20 20" style={{flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><rect width="20" height="20" rx="5" fill="#171717"/><path d="M10.0 3.2 A6.8 6.8 0 0 0 10.0 16.8 Z" transform="translate(-0.80 0)" fill="#f6f3ec"/><path d="M10.0 3.2 A6.8 6.8 0 0 1 10.0 16.8 Z" transform="translate(0.80 0)" fill="#d97757"/></svg>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>· MORNING CHECK · 7AM</span>
+            </div>
+            {screen === 'digest' ? <DigestScreen /> : <DetailScreen />}
+            {/* Home indicator */}
+            <div style={{ position: 'absolute', bottom: 8, left: '50%', transform: 'translateX(-50%)', width: 120, height: 5, background: 'rgba(0,0,0,0.18)', borderRadius: 3 }} />
+          </div>
         </div>
       </div>
-
-      {/* App bar: FT badge + label */}
-      <div style={{
-        display: 'flex', alignItems: 'center', gap: 6,
-        padding: '8px 20px 0',
-      }}>
-        <svg width="20" height="20" viewBox="0 0 20 20" style={{flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><rect width="20" height="20" rx="5" fill="#171717"/><path d="M10.0 3.2 A6.8 6.8 0 0 0 10.0 16.8 Z" transform="translate(-0.80 0)" fill="#f6f3ec"/><path d="M10.0 3.2 A6.8 6.8 0 0 1 10.0 16.8 Z" transform="translate(0.80 0)" fill="#d97757"/></svg>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-          · MORNING CHECK · 7AM
-        </span>
-      </div>
-
-      {/* Screen content */}
-      {screen === 'digest' ? <DigestScreen /> : <DetailScreen />}
     </div>
   )
 }
