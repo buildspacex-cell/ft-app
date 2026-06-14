@@ -824,7 +824,7 @@ export default function HomePage() {
             <div className="ft-steps">
               {[
                 { n: '01', h: 'We explain the business in plain English so you actually understand what you own.', p: 'What the company does, how it makes money, what the numbers actually mean. No charts to decode, no jargon to Google. By the end you know exactly what you are buying into.', badge: 'Plain English · no jargon' },
-                { n: '02', h: 'We draft the reasons to hold so you have clarity when it matters.', p: 'Once you understand the business, we write the 3 to 5 reasons most investors own it. You pick the ones that match why you actually bought it. Those reasons get saved as the investment thesis. Every future update is measured against it.', badge: 'We draft · you own it' },
+                { n: '02', h: 'We build the investment thesis for you.', p: 'Once you understand the business, we draft the investment thesis — the core reasons to own the stock, in plain English. It is ready for you to read and alter if anything does not fit. Once saved, every morning update is measured against it.', badge: 'We build · you refine' },
                 { n: '03', h: 'We track everything and keep you updated when something touches your reason.', p: f'Every morning we scan results, {rbi}, headlines and sector moves. We check each one against your saved reason to own. If something touches it, we tell you in plain English. If nothing does, we stay quiet. Most mornings, we stay quiet.', badge: 'We track · we update' },
               ].map(s => (
                 <div key={s.n} className="ft-step">
