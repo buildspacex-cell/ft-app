@@ -731,8 +731,8 @@ export default function USPage() {
             <div className="ft-steps">
               {[
                 { n: '01', h: 'Explain the business like a shop on your street.', p: 'What they sell, who buys it, how much they keep. Numbers always come paired with a plain sentence - never on their own.', badge: 'No jargon, ever' },
-                { n: '02', h: 'Write the 3–5 reasons you might want to own it.', p: "You read them, decide which you actually believe, keep those. The reasons you keep become your thesis - a contract with yourself, in words you understand.", badge: 'You curate · we draft' },
-                { n: '03', h: 'Check whether those reasons still hold.', p: "When the Fed moves, when earnings drop, when a supply chain story breaks - we check if any of it touches a reason in your thesis. Every morning. Not just on earnings day.", badge: 'You decide · we notice' },
+                { n: '02', h: 'We identify your reason to own and save it.', p: 'Tell us the stock. We surface the reasons most investors own it, in plain English. You pick the one that actually matches why you bought it. That reason gets saved and becomes what we watch every morning.', badge: 'We identify · you confirm' },
+                { n: '03', h: 'Check whether those reasons still hold.', p: "When the Fed moves, when earnings drop, when a supply chain story breaks - we check if any of it touches a reason in your thesis. Every morning. Not just on earnings day.", badge: 'We watch · you decide' },
               ].map(s => (
                 <div key={s.n} className="ft-step">
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: 36, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--coral-deep)', lineHeight: 1, marginBottom: 18 }}>{s.n}</div>
