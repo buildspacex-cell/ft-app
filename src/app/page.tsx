@@ -744,8 +744,7 @@ export default function HomePage() {
         .ft-hero-phone { justify-self: center; }
         .ft-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
         .ft-moments { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; position: relative; }
-        .ft-hero-phases { } /* 3-col by default */
-        @media (max-width: 768px) { .ft-hero-phases { grid-template-columns: 1fr !important; } }
+        @media (max-width: 768px) { .ft-hero-split { grid-template-columns: 1fr !important; } }
         .ft-translations { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
         .ft-feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
         .ft-never-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
@@ -818,51 +817,74 @@ export default function HomePage() {
           </div>
         </nav>
 
-        {/* ── HERO ── */}
-        {/* ── HERO ── */}
-        <section className="ft-section" style={{ padding: '56px 0 0' }}>
+                {/* ── HERO ── */}
+        <section className="ft-section" style={{ padding: '56px 0 72px' }}>
           <div className="ft-wrap">
-            <Eyebrow label="For people who don't speak finance" />
-            <h1 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(40px, 5.5vw, 72px)', lineHeight: 0.93, letterSpacing: '-0.052em', margin: '14px 0 20px', color: 'var(--ink)', maxWidth: 760 }}>
-              We&apos;re with you<br />
-              <span style={{ color: 'var(--coral-deep)' }}>for the whole ride.</span>
-            </h1>
-            <p style={{ fontSize: 18, fontWeight: 400, lineHeight: 1.6, letterSpacing: '-0.01em', color: 'var(--ink-soft)', margin: '0 0 6px', maxWidth: 560 }}>
-              From your first question about a stock to the day you decide to leave it, we are there at every step.
-            </p>
-            <p style={{ fontSize: 16, fontWeight: 500, lineHeight: 1.5, color: 'var(--ink)', margin: '0 0 36px', maxWidth: 560 }}>
-              Plain English. No tips. Just your reason to own, watched every morning.
-            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }} className="ft-hero-split">
 
-            {/* ── Three phase cards inline ── */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14, margin: '0 0 40px' }} className="ft-hero-phases">
-              {[
-                { icon: '01', phase: 'Before you buy', headline: 'Should I even own this?', body: 'Five questions about any stock. Plain English. No jargon.' },
-                { icon: '02', phase: 'While you hold', headline: 'Is my reason to hold this still true?', body: 'Every morning, filtered against your reason to own. We tell you if it matters. Most mornings, we send nothing.', active: true },
-                { icon: '03', phase: 'When to leave', headline: 'Is it time to go?', body: 'When your reason breaks or the price turns, we tell you. Not a tip. Just the facts.' },
-              ].map(m => (
-                <div key={m.phase} style={{
-                  padding: '20px 18px',
-                  background: m.active ? 'var(--ink)' : 'var(--card)',
-                  border: `1px solid ${m.active ? 'var(--ink)' : 'var(--hairline)'}`,
-                  borderRadius: 16,
-                  display: 'flex', flexDirection: 'column', gap: 8,
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, color: m.active ? 'var(--coral)' : 'var(--coral-deep)', letterSpacing: '0.08em' }}>{m.icon}</span>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: m.active ? 'rgba(246,243,236,0.45)' : 'var(--muted)' }}>{m.phase}</span>
+              {/* Left — headline + sub + form */}
+              <div>
+                <Eyebrow label="For people who don't speak finance" />
+                <h1 style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(40px, 5.5vw, 72px)', lineHeight: 0.93, letterSpacing: '-0.052em', margin: '14px 0 22px', color: 'var(--ink)' }}>
+                  We&apos;re with you<br />
+                  <span style={{ color: 'var(--coral-deep)' }}>for the whole ride.</span>
+                </h1>
+                <p style={{ fontSize: 18, fontWeight: 400, lineHeight: 1.6, letterSpacing: '-0.01em', color: 'var(--ink-soft)', margin: '0 0 8px', maxWidth: 440 }}>
+                  From your first question about a stock to the day you decide to leave it, we are there at every step.
+                </p>
+                <p style={{ fontSize: 16, fontWeight: 500, lineHeight: 1.5, color: 'var(--ink)', margin: '0 0 36px', maxWidth: 440 }}>
+                  Plain English. No tips. Just your reason to own, watched every morning.
+                </p>
+                <div id="waitlist"><EmailForm source="landing-in-hero" /></div>
+              </div>
+
+              {/* Right — three stacked cards */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {[
+                  {
+                    icon: '01', phase: 'Before you buy',
+                    headline: 'Should I even own this?',
+                    body: 'Five questions about any stock. Plain English. No jargon.',
+                    active: false,
+                  },
+                  {
+                    icon: '02', phase: 'While you hold',
+                    headline: 'Is my reason to hold this still true?',
+                    body: 'Every morning, filtered against your reason to own. We tell you if it matters. Most mornings, we send nothing.',
+                    active: true,
+                  },
+                  {
+                    icon: '03', phase: 'When to leave',
+                    headline: 'Is it time to go?',
+                    body: 'When your reason breaks or the price turns, we tell you. Not a tip. Just the facts.',
+                    active: false,
+                  },
+                ].map(m => (
+                  <div key={m.phase} style={{
+                    padding: '20px 22px',
+                    background: m.active ? 'var(--ink)' : 'var(--card)',
+                    border: `1px solid ${m.active ? 'var(--ink)' : 'var(--hairline)'}`,
+                    borderRadius: 16,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 6,
+                    transition: 'box-shadow 0.15s',
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 2 }}>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, color: m.active ? 'var(--coral)' : 'var(--coral-deep)', letterSpacing: '0.08em' }}>{m.icon}</span>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: m.active ? 'rgba(246,243,236,0.4)' : 'var(--muted)' }}>{m.phase}</span>
+                    </div>
+                    <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 17, letterSpacing: '-0.025em', lineHeight: 1.2, color: m.active ? 'var(--cream)' : 'var(--ink)', margin: 0 }}>{m.headline}</p>
+                    <p style={{ fontFamily: 'var(--font-sans)', fontSize: 13, lineHeight: 1.55, color: m.active ? 'rgba(246,243,236,0.5)' : 'var(--ink-soft)', margin: 0, fontWeight: 400 }}>{m.body}</p>
                   </div>
-                  <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 16, letterSpacing: '-0.025em', lineHeight: 1.2, color: m.active ? 'var(--cream)' : 'var(--ink)', margin: 0 }}>{m.headline}</p>
-                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: 13, lineHeight: 1.5, color: m.active ? 'rgba(246,243,236,0.55)' : 'var(--ink-soft)', margin: 0, fontWeight: 400 }}>{m.body}</p>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
 
-            <div id="waitlist"><EmailForm source="landing-in-hero" /></div>
+            </div>
           </div>
         </section>
 
-        {/* ── PRODUCT IN ACTION — phone mockup ── */}
+        {/* ── PRODUCT IN ACTION{/* ── PRODUCT IN ACTION — phone mockup ── */}
         <section style={{ padding: '72px 0', background: 'var(--paper)', borderTop: '1px solid var(--hairline)', borderBottom: '1px solid var(--hairline)', marginTop: 64 }}>
           <div className="ft-wrap" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Eyebrow label="What it looks like every morning" />
