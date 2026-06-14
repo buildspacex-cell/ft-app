@@ -7,88 +7,33 @@ import { useState, useEffect } from 'react'
 
 function PhoneMockup({ screen = 'digest' }: { screen?: 'digest' | 'detail' }) {
   return (
-    <div style={{ position: 'relative', width: 340, flexShrink: 0, perspective: '1200px' }}>
-
-      {/* ── Floating card 1 — story card top left ── */}
-      <div style={{
-        position: 'absolute', top: 80, left: -140, zIndex: 20,
-        background: '#fff', borderRadius: 14, padding: '12px 14px', width: 200,
-        boxShadow: '0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08)',
-        transform: 'translateZ(20px)',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 6 }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, background: '#f1e3bd', color: '#b88828', fontFamily: 'var(--font-mono)', fontSize: 8, fontWeight: 700, letterSpacing: '0.08em', padding: '2px 6px', borderRadius: 20, textTransform: 'uppercase' }}>
-            <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'currentColor' }} />WORTH KNOWING
-          </span>
-        </div>
-        <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '-0.015em', lineHeight: 1.3, color: '#171717', margin: '0 0 4px' }}>HDFC Bank bad loans ticked up. Agri stress, not a crack.</p>
-        <p style={{ fontSize: 10, color: '#777068', lineHeight: 1.4, margin: 0 }}>Your reason to hold — loan quality — is wobbling, not broken.</p>
-      </div>
-
-      {/* ── Floating card 2 — quiet morning bottom right ── */}
-      <div style={{
-        position: 'absolute', bottom: 130, right: -130, zIndex: 20,
-        background: '#171717', borderRadius: 14, padding: '12px 14px', width: 180,
-        boxShadow: '0 8px 32px rgba(0,0,0,0.24)',
-        transform: 'translateZ(20px)',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
-          <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#5b7a55', flexShrink: 0 }} />
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#5b7a55' }}>All clear today</span>
-        </div>
-        <p style={{ fontSize: 11, fontWeight: 600, color: '#f6f3ec', lineHeight: 1.35, margin: '0 0 3px' }}>Nothing touched your reasons today.</p>
-        <p style={{ fontSize: 10, color: 'rgba(246,243,236,0.45)', lineHeight: 1.4, margin: 0 }}>Quiet days are a feature.</p>
-      </div>
-
-      {/* ── Phone — 3D tilted ── */}
-      <div style={{
-        transform: 'rotateY(-14deg) rotateX(2deg)',
-        transformStyle: 'preserve-3d',
-        transition: 'transform 0.3s ease',
-      }}>
-        {/* Side buttons left */}
-        <div style={{ position: 'absolute', left: -4, top: 110, width: 4, height: 30, background: 'linear-gradient(180deg,#c8c8c8,#888)', borderRadius: '3px 0 0 3px', zIndex: 10, transform: 'translateZ(-2px)' }} />
-        <div style={{ position: 'absolute', left: -4, top: 154, width: 4, height: 52, background: 'linear-gradient(180deg,#c8c8c8,#888)', borderRadius: '3px 0 0 3px', zIndex: 10, transform: 'translateZ(-2px)' }} />
-        <div style={{ position: 'absolute', left: -4, top: 218, width: 4, height: 52, background: 'linear-gradient(180deg,#c8c8c8,#888)', borderRadius: '3px 0 0 3px', zIndex: 10, transform: 'translateZ(-2px)' }} />
-        {/* Power button right */}
-        <div style={{ position: 'absolute', right: -4, top: 162, width: 4, height: 72, background: 'linear-gradient(180deg,#c8c8c8,#888)', borderRadius: '0 3px 3px 0', zIndex: 10, transform: 'translateZ(-2px)' }} />
-
-        {/* Titanium shell */}
-        <div style={{
-          borderRadius: 52,
-          padding: 3,
-          background: 'linear-gradient(145deg,#e0e0e0 0%,#a8a8a8 25%,#d0d0d0 50%,#909090 75%,#c0c0c0 100%)',
-          boxShadow: '0 48px 80px rgba(0,0,0,0.38), 0 20px 40px rgba(0,0,0,0.22), 12px 0 32px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -1px 0 rgba(0,0,0,0.3)',
-        }}>
-          {/* Inner bezel */}
-          <div style={{ borderRadius: 50, padding: 2, background: '#0d0d0d' }}>
-            {/* Screen */}
-            <div style={{ borderRadius: 48, overflow: 'hidden', background: 'var(--paper)', position: 'relative', height: 620, width: 294 }}>
-              {/* Glare */}
-              <div style={{ position: 'absolute', inset: 0, borderRadius: 48, zIndex: 40, pointerEvents: 'none', background: 'linear-gradient(125deg,rgba(255,255,255,0.16) 0%,rgba(255,255,255,0.05) 30%,transparent 50%)' }} />
-              {/* Status bar */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', padding: '14px 22px 0', position: 'relative', zIndex: 10 }}>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, color: 'var(--ink)', letterSpacing: '-0.01em' }}>9:41</span>
-                <div style={{ width: 106, height: 32, borderRadius: 20, background: '#000', margin: '0 auto', boxShadow: '0 0 0 1px rgba(255,255,255,0.06)' }} />
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 5 }}>
-                  <svg width="15" height="11" viewBox="0 0 16 11" fill="none"><rect x="0" y="7" width="2.5" height="4" rx="0.5" fill="var(--ink)"/><rect x="4" y="5" width="2.5" height="6" rx="0.5" fill="var(--ink)"/><rect x="8" y="2.5" width="2.5" height="8.5" rx="0.5" fill="var(--ink)"/><rect x="12" y="0" width="2.5" height="11" rx="0.5" fill="var(--ink)"/></svg>
-                  <svg width="14" height="11" viewBox="0 0 20 15" fill="none"><path d="M10 13h.01M6.5 10.5c.95-.95 2.24-1.5 3.5-1.5s2.55.55 3.5 1.5M3 7.5C4.9 5.6 7.35 4.5 10 4.5s5.1 1.1 7 3M0 4.5C2.85 1.65 6.75 0 10 0s7.15 1.65 10 4.5" stroke="var(--ink)" strokeWidth="1.5" strokeLinecap="round"/></svg>
-                  <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="0.5" y="0.5" width="20" height="11" rx="3" stroke="var(--ink)" strokeOpacity="0.35"/><rect x="2" y="2" width="15" height="8" rx="1.5" fill="var(--ink)"/><path d="M22 4v4" stroke="var(--ink)" strokeOpacity="0.35" strokeWidth="1.5" strokeLinecap="round"/></svg>
-                </div>
+    <div style={{ position: 'relative', width: 300, flexShrink: 0 }}>
+      <div style={{ position: 'absolute', left: -3, top: 110, width: 3, height: 30, background: 'linear-gradient(180deg,#c0c0c0,#909090)', borderRadius: '3px 0 0 3px', zIndex: 10 }} />
+      <div style={{ position: 'absolute', left: -3, top: 154, width: 3, height: 52, background: 'linear-gradient(180deg,#c0c0c0,#909090)', borderRadius: '3px 0 0 3px', zIndex: 10 }} />
+      <div style={{ position: 'absolute', left: -3, top: 218, width: 3, height: 52, background: 'linear-gradient(180deg,#c0c0c0,#909090)', borderRadius: '3px 0 0 3px', zIndex: 10 }} />
+      <div style={{ position: 'absolute', right: -3, top: 162, width: 3, height: 72, background: 'linear-gradient(180deg,#c0c0c0,#909090)', borderRadius: '0 3px 3px 0', zIndex: 10 }} />
+      <div style={{ borderRadius: 52, padding: 3, background: 'linear-gradient(145deg,#d8d8d8 0%,#a8a8a8 25%,#c8c8c8 50%,#969696 75%,#b8b8b8 100%)', boxShadow: '0 48px 96px rgba(0,0,0,0.30), 0 16px 32px rgba(0,0,0,0.18), 0 4px 8px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.65), inset 0 -1px 0 rgba(0,0,0,0.25)' }}>
+        <div style={{ borderRadius: 50, padding: 2, background: '#111', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)' }}>
+          <div style={{ borderRadius: 48, overflow: 'hidden', background: 'var(--paper)', position: 'relative', height: 620 }}>
+            <div style={{ position: 'absolute', inset: 0, borderRadius: 48, zIndex: 40, pointerEvents: 'none', background: 'linear-gradient(135deg,rgba(255,255,255,0.14) 0%,rgba(255,255,255,0.04) 35%,transparent 55%)' }} />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', padding: '14px 22px 0', position: 'relative', zIndex: 10 }}>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 600, color: 'var(--ink)', letterSpacing: '-0.01em' }}>9:41</span>
+              <div style={{ width: 106, height: 32, borderRadius: 20, background: '#000', margin: '0 auto', boxShadow: '0 0 0 1px rgba(255,255,255,0.07)' }} />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 5 }}>
+                <svg width="15" height="11" viewBox="0 0 16 11" fill="none"><rect x="0" y="7" width="2.5" height="4" rx="0.5" fill="var(--ink)"/><rect x="4" y="5" width="2.5" height="6" rx="0.5" fill="var(--ink)"/><rect x="8" y="2.5" width="2.5" height="8.5" rx="0.5" fill="var(--ink)"/><rect x="12" y="0" width="2.5" height="11" rx="0.5" fill="var(--ink)"/></svg>
+                <svg width="14" height="11" viewBox="0 0 20 15" fill="none"><path d="M10 13h.01M6.5 10.5c.95-.95 2.24-1.5 3.5-1.5s2.55.55 3.5 1.5M3 7.5C4.9 5.6 7.35 4.5 10 4.5s5.1 1.1 7 3M0 4.5C2.85 1.65 6.75 0 10 0s7.15 1.65 10 4.5" stroke="var(--ink)" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="0.5" y="0.5" width="20" height="11" rx="3" stroke="var(--ink)" strokeOpacity="0.35"/><rect x="2" y="2" width="15" height="8" rx="1.5" fill="var(--ink)"/><path d="M22 4v4" stroke="var(--ink)" strokeOpacity="0.35" strokeWidth="1.5" strokeLinecap="round"/></svg>
               </div>
-              {/* App bar */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 22px 0' }}>
-                <svg width="20" height="20" viewBox="0 0 20 20" style={{flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><rect width="20" height="20" rx="5" fill="#171717"/><path d="M10.0 3.2 A6.8 6.8 0 0 0 10.0 16.8 Z" transform="translate(-0.80 0)" fill="#f6f3ec"/><path d="M10.0 3.2 A6.8 6.8 0 0 1 10.0 16.8 Z" transform="translate(0.80 0)" fill="#d97757"/></svg>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>· MORNING CHECK · 7AM</span>
-              </div>
-              {screen === 'digest' ? <USDigestScreen /> : <USDetailScreen />}
-              {/* Home indicator */}
-              <div style={{ position: 'absolute', bottom: 8, left: '50%', transform: 'translateX(-50%)', width: 120, height: 5, background: 'rgba(0,0,0,0.18)', borderRadius: 3 }} />
             </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 22px 0' }}>
+              <svg width="20" height="20" viewBox="0 0 20 20" style={{flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><rect width="20" height="20" rx="5" fill="#171717"/><path d="M10.0 3.2 A6.8 6.8 0 0 0 10.0 16.8 Z" transform="translate(-0.80 0)" fill="#f6f3ec"/><path d="M10.0 3.2 A6.8 6.8 0 0 1 10.0 16.8 Z" transform="translate(0.80 0)" fill="#d97757"/></svg>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>· MORNING CHECK · 7AM</span>
+            </div>
+            {screen === 'digest' ? <USDigestScreen /> : <USDetailScreen />}
+            <div style={{ position: 'absolute', bottom: 8, left: '50%', transform: 'translateX(-50%)', width: 120, height: 5, background: 'rgba(0,0,0,0.18)', borderRadius: 3 }} />
           </div>
         </div>
       </div>
-
     </div>
   )
 }
@@ -725,7 +670,7 @@ export default function USPage() {
         {/* ── HERO ── */}
         <section className="ft-section" style={{ padding: '56px 0 72px' }}>
           <div className="ft-wrap">
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: 40, alignItems: 'center' }} className="ft-hero-split">
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'center' }} className="ft-hero-split">
 
               {/* Left — headline + three questions only + form */}
               <div>
@@ -767,8 +712,7 @@ export default function USPage() {
               </div>
 
               {/* Right — phone showing the morning check */}
-              <div className="ft-hero-phone" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'linear-gradient(135deg,#0f0f14 0%,#1a1a24 100%)', borderRadius: 28, padding: '48px 32px 48px 48px', minHeight: 580, overflow: 'visible', position: 'relative' }}>
-                <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 280, height: 400, background: 'radial-gradient(ellipse,rgba(217,119,87,0.12) 0%,transparent 70%)', pointerEvents: 'none' }} />
+              <div className="ft-hero-phone" style={{ display: 'flex', justifyContent: 'center' }}>
                 <PhoneMockup screen="digest" />
               </div>
 
