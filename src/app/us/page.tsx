@@ -664,7 +664,7 @@ export default function USPage() {
               Fundamentally True
             </a>
             <div className="ft-nav-links" style={{ gap: 24, alignItems: 'center' }}>
-              {[['#moments','The lifecycle'],['#how','How it works'],['#morning','The Morning Check'],['#never','Our promises']].map(([href,label]) => (
+              {[['#moments','The lifecycle'],['#how','How it works'],['#morning','The Morning Check'],].map(([href,label]) => (
                 <a key={href} href={href} className="ft-nav-link">{label}</a>
               ))}
             </div>
