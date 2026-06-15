@@ -926,42 +926,31 @@ export default function HomePage() {
         </section>
 
         {/* ── FOOTER ── */}
-        <footer style={{ background: 'var(--cream)', padding: '56px 0 80px', borderTop: '1px solid var(--hairline)' }}>
+        <footer style={{ background: 'var(--cream)', padding: '40px 0 48px', borderTop: '1px solid var(--hairline)' }}>
           <div className="ft-wrap">
-            <div className="ft-footer-grid">
-              <div>
-                <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700, fontSize: 16, letterSpacing: '-0.025em', textDecoration: 'none', color: 'var(--ink)', marginBottom: 16 }}>
-                  <svg width="28" height="28" viewBox="0 0 28 28" style={{flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><path d="M14.0 3.9 A10.1 10.1 0 0 0 14.0 24.1 Z" transform="translate(-0.98 0)" fill="#1a1a1a"/><path d="M14.0 3.9 A10.1 10.1 0 0 1 14.0 24.1 Z" transform="translate(0.98 0)" fill="#d97757"/></svg>
-                  Fundamentally True
-                </a>
-                <p style={{ fontSize: 14, lineHeight: 1.65, color: 'var(--ink-soft)', maxWidth: 340, marginBottom: 14 }}>
-                  Built by people who held stocks for years and realised they couldn&apos;t explain why. We got tired of mistaking price movement for business change.
-                </p>
-                <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, lineHeight: 1.6, color: 'var(--muted)', maxWidth: 380 }}>
-                  For informational and educational purposes only. We do not provide investment advice. All investment decisions are yours.
-                </p>
-                <div style={{ marginTop: 16 }}><CountrySwitcher active="in" /></div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+
+              {/* Logo + tagline */}
+              <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700, fontSize: 16, letterSpacing: '-0.025em', textDecoration: 'none', color: 'var(--ink)', width: 'fit-content' }}>
+                <svg width="28" height="28" viewBox="0 0 28 28" style={{flexShrink:0,display:'block'}} xmlns="http://www.w3.org/2000/svg"><path d="M14.0 3.9 A10.1 10.1 0 0 0 14.0 24.1 Z" transform="translate(-0.98 0)" fill="#1a1a1a"/><path d="M14.0 3.9 A10.1 10.1 0 0 1 14.0 24.1 Z" transform="translate(0.98 0)" fill="#d97757"/></svg>
+                Fundamentally True
+              </a>
+
+              {/* Why we built this */}
+              <p style={{ fontSize: 14, lineHeight: 1.65, color: 'var(--ink-soft)', maxWidth: 400 }}>
+                Built by people who held stocks for years and realised they couldn&apos;t explain why. We got tired of mistaking price movement for business change.
+              </p>
+
+              {/* Country switcher */}
+              <div><CountrySwitcher active="in" /></div>
+
+              {/* Divider + legal */}
+              <div style={{ borderTop: '1px solid var(--hairline)', paddingTop: 20, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted)', letterSpacing: '0.04em' }}>© 2026 Fundamentally True</span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, lineHeight: 1.6, color: 'var(--muted)' }}>For informational purposes only. Not investment advice. All decisions are yours.</span>
               </div>
-              {[
-                { h: 'Product', links: [['#how','How it works'],['#morning','The Morning Check'],] },
-                { h: 'Company', links: [['#','About'],['#','Manifesto'],['#','Careers'],['#','Contact']] },
-                { h: 'Follow', links: [['#','Twitter / X'],['#','Instagram'],['#','LinkedIn'],['#','Substack']] },
-              ].map(col => (
-                <div key={col.h}>
-                  <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--muted)', margin: '0 0 14px', fontWeight: 600 }}>{col.h}</h4>
-                  {col.links.map(([href, label]) => (
-                    <a key={label} href={href} className="ft-footer-link">{label}</a>
-                  ))}
-                </div>
-              ))}
+
             </div>
-            <div style={{ borderTop: '1px solid var(--hairline)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--muted-2)', letterSpacing: '0.04em' }}>
-              <span>© 2026 Fundamentally True · Built for clarity.</span>
-              <span>Privacy · Terms</span>
-            </div>
-          <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid var(--hairline)' }}>
-            <MarketSwitch currentMarket="in" />
-          </div>
           </div>
         </footer>
 
